@@ -727,6 +727,16 @@
         }
       }
     },
+    "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag in the wheel to change the base color’s hue. Saturation and lightness apply to the whole harmony."
+          }
+        }
+      }
+    },
     "Eksisterende paletter": {
       "localizations": {
         "en": {
@@ -2339,6 +2349,16 @@
         }
       }
     },
+    "Lyshet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightness"
+          }
+        }
+      }
+    },
     "Med lysere og mørkere rader": {
       "localizations": {
         "en": {
@@ -3113,6 +3133,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "To model"
+          }
+        }
+      }
+    },
+    "Tilbakestill til grunnfargen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset to base color"
           }
         }
       }

@@ -16,9 +16,53 @@ struct HarmoniSeksjon: View {
     @AppStorage("harmoniVinkel") private var vinkel = 30.0
     @AppStorage("harmoniSirkel") private var sirkel: Fargesirkel = .okLCH
 
-    private var farger: [Farge] {
+    /// Felles metning og lyshet for hele harmonien (0…1), som i HSL. `nil` = følg hver farge.
+    /// Med HSL-sirkelen er det HSL-metning og -lyshet; ellers OKLCH-lyshet og metning som andel av
+    /// høyeste kroma innenfor gamut (100 % = så mettet som fargen kan bli).
+    @State private var metning: Double?
+    @State private var lyshet: Double?
+
+    private var råfarger: [Farge] {
         harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel, gamut: gamut)
-            .map { begrens($0.gamutKartlagt(til: gamut)) }
+    }
+
+    private var farger: [Farge] {
+        råfarger.map { begrens(juster($0).gamutKartlagt(til: gamut)) }
+    }
+
+    private func juster(_ f: Farge) -> Farge {
+        guard metning != nil || lyshet != nil else { return f }
+        if sirkel == .hsl {
+            var h = f.hsl
+            if let metning { h.s = metning }
+            if let lyshet { h.l = lyshet }
+            return Farge(hsl: h, alfa: f.alfa)
+        }
+        let lch = f.okLCH
+        let l = lyshet ?? lch.l
+        let andel = metning ?? relativMetning(f)
+        return Farge(okLCH: OKLCH(l: l, c: andel * Farge.maksKroma(lyshet: l, kulør: lch.h, i: gamut), h: lch.h), alfa: f.alfa)
+    }
+
+    private func relativMetning(_ f: Farge) -> Double {
+        let lch = f.okLCH
+        let maks = Farge.maksKroma(lyshet: lch.l, kulør: lch.h, i: gamut)
+        return maks > 0 ? min(lch.c / maks, 1) : 0
+    }
+
+    /// Grunnfargens egne verdier, som gliderne starter på.
+    private var grunnMetning: Double { sirkel == .hsl ? grunnfarge.hsl.s : relativMetning(grunnfarge) }
+    private var grunnLyshet: Double { sirkel == .hsl ? grunnfarge.hsl.l : grunnfarge.okLCH.l }
+
+    private func glider(_ tittel: LocalizedStringKey, verdi: Binding<Double?>, grunn: Double) -> some View {
+        HStack(spacing: 10) {
+            Text(tittel).lineLimit(1).minimumScaleFactor(0.8).frame(width: 96, alignment: .leading)
+            Slider(value: Binding(get: { verdi.wrappedValue ?? grunn }, set: { verdi.wrappedValue = $0 }), in: 0...1)
+            Text(verdi.wrappedValue ?? grunn, format: .percent.precision(.fractionLength(0)))
+                .font(.callout.monospacedDigit())
+                .foregroundStyle(Color.sekundærTekst)
+                .frame(width: 48, alignment: .trailing)
+        }
     }
 
     var body: some View {
@@ -42,19 +86,31 @@ struct HarmoniSeksjon: View {
                 ForEach(Fargesirkel.allCases) { Text($0.navn).tag($0) }
             }
 
+            glider("Metning", verdi: $metning, grunn: grunnMetning)
+            glider("Lyshet", verdi: $lyshet, grunn: grunnLyshet)
+            if metning != nil || lyshet != nil {
+                Button("Tilbakestill til grunnfargen", systemImage: "arrow.uturn.backward") {
+                    metning = nil
+                    lyshet = nil
+                }
+            }
+
             Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg)
                 .frame(height: 220)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
             HStack(spacing: 4) {
-                ForEach(Array(farger.enumerated()), id: \.offset) { _, farge in
+                ForEach(Array(farger.enumerated()), id: \.offset) { i, farge in
                     FargeRute(farge: farge, visTekst: false, hjørne: 6,
                               lagre: { lagreEnkeltfarger([PalettFarge(farge: $0)], i: kontekst) },
                               leggIPalett: { lagre([PalettFarge(farge: $0)], "") },
                               valgBoble: true)
                         .frame(height: 44)
                         .overlay {
-                            if farge == grunnfarge { RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2) }
+                            // Rammen markerer harmoniens grunnfarge, også når metning/lyshet er justert.
+                            if råfarger.indices.contains(i), råfarger[i] == grunnfarge {
+                                RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
+                            }
                         }
                         .onTapGesture { velg(farge) }
                 }
@@ -66,8 +122,10 @@ struct HarmoniSeksjon: View {
         } header: {
             Text("Fargeharmonier")
         } footer: {
-            Text(sirkel.forklaring + " Dra i sirkelen for å endre grunnfargens kulør.")
+            Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien."))
         }
+        // Gliderne betyr noe annet i HSL enn i OKLCH; start på nytt ved bytte av sirkel.
+        .onChange(of: sirkel) { _, _ in metning = nil; lyshet = nil }
     }
 }
 
