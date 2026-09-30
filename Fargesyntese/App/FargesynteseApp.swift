@@ -6,6 +6,7 @@ import SwiftUI
 @main
 struct FargesynteseApp: App {
     @State private var arbeidsbenk = Arbeidsbenk()
+    @State private var profiler = ProfilBibliotek()
 
     init() {
         FargesynteseSnarveier.updateAppShortcutParameters()
@@ -15,6 +16,7 @@ struct FargesynteseApp: App {
         WindowGroup {
             InnholdsVisning()
                 .environment(arbeidsbenk)
+                .environment(profiler)
         }
         .modelContainer(Lagring.container)
         #if os(macOS)
@@ -37,7 +39,7 @@ final class Arbeidsbenk {
     var modell: Fargemodell = .okLCH
     var valgtFane: Fane = .studio
 
-    enum Fane: Hashable { case studio, paletter, overgang, kamera, verdiord }
+    enum Fane: Hashable { case studio, paletter, overgang, utplukk, verdiord }
 }
 
 struct InnholdsVisning: View {
@@ -55,8 +57,8 @@ struct InnholdsVisning: View {
             Tab("Overgang", systemImage: "square.stack.3d.forward.dottedline", value: .overgang) {
                 NavigationStack { OvergangVisning() }
             }
-            Tab("Kamera", systemImage: "camera.viewfinder", value: .kamera) {
-                NavigationStack { KameraVisning() }
+            Tab("Utplukk", systemImage: "eyedropper.halffull", value: .utplukk) {
+                NavigationStack { UtplukkVisning() }
             }
             Tab("Verdiord", systemImage: "sparkles", value: .verdiord) {
                 NavigationStack { VerdiordVisning() }

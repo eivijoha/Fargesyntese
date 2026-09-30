@@ -1,5 +1,6 @@
 #if canImport(CoreGraphics)
 import CoreGraphics
+import CryptoKit
 import Foundation
 
 /// Fargestyrt konvertering via ICC-profiler (ColorSync under panseret).
@@ -28,8 +29,9 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
         self.navngittRom = nil
         self.modell = rom.model
         self.antallKomponenter = rom.numberOfComponents
-        self.navn = navn ?? (rom.name as String?) ?? "ICC-profil"
-        self.id = "icc:\(data.hashValue)"
+        self.navn = ICCBeskrivelse.les(data) ?? navn ?? (rom.name as String?) ?? "ICC-profil"
+        // Stabil id på tvers av oppstarter, slik at valgt profil kan huskes.
+        self.id = "icc:" + SHA256.hash(data: data).prefix(12).map { String(format: "%02x", $0) }.joined()
     }
 
     private init(navngitt: CFString, visningsnavn: String) {
@@ -48,6 +50,20 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
     public static let genericCMYK = ICCProfil(navngitt: CGColorSpace.genericCMYK, visningsnavn: "Generisk CMYK")
 
     public static let innebygde: [ICCProfil] = [.sRGB, .displayP3, .adobeRGB, .genericCMYK]
+
+    /// Kortnavn for komponentene, i profilens rekkefølge.
+    public var komponentnavn: [String] {
+        switch modell {
+        case .cmyk: ["C", "M", "Y", "K"]
+        case .rgb: ["R", "G", "B"]
+        case .lab: ["L", "a", "b"]
+        case .monochrome: ["Grå"]
+        default: (1...antallKomponenter).map { "K\($0)" }
+        }
+    }
+
+    /// Om komponentene er 0…1-verdier som kan redigeres direkte (CMYK, RGB, grå).
+    public var kanRedigeres: Bool { [.cmyk, .rgb, .monochrome].contains(modell) }
 }
 
 public enum Gjengivelseshensikt: String, CaseIterable, Codable, Sendable {
@@ -85,6 +101,15 @@ public extension Farge {
               let k = c.components
         else { return nil }
         return Array(k.prefix(profil.antallKomponenter)).map { Double($0) }
+    }
+
+    /// Perseptuelt avvik (ΔE_OK) etter en rundtur gjennom profilen. Over ~0,02 er fargen
+    /// merkbart utenfor profilens gamut – f.eks. en mettet skjermfarge som ikke kan trykkes.
+    func avvik(i profil: ICCProfil, hensikt: Gjengivelseshensikt = .relativKolorimetrisk) -> Double? {
+        guard let k = komponenter(i: profil, hensikt: hensikt),
+              let tilbake = Farge(komponenter: k, i: profil, alfa: alfa)
+        else { return nil }
+        return avstandOK(til: tilbake)
     }
 
     /// Lager en farge fra komponenter i en profil (f.eks. CMYK-verdier fra et trykkeri).

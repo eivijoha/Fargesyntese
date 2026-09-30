@@ -24,6 +24,15 @@ enum Utklippstavle {
         #endif
     }
 
+    static func kopierTekst(_ tekst: String) {
+        #if canImport(UIKit)
+        UIPasteboard.general.string = tekst
+        #elseif canImport(AppKit)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(tekst, forType: .string)
+        #endif
+    }
+
     /// Kopierer en hel palett som tekstlinjer (én farge per linje).
     static func kopier(_ palett: Palett, som modell: Fargemodell? = nil) {
         let linjer = palett.farger.map { f in
@@ -38,6 +47,23 @@ enum Utklippstavle {
         #endif
     }
 
+    /// Leser flere farger: fargeobjekter hvis det er flere, ellers én farge per tekstlinje.
+    static func limInnListe() -> [PalettFarge] {
+        #if canImport(UIKit)
+        let objekter = UIPasteboard.general.colors ?? []
+        let tekst = UIPasteboard.general.string
+        #elseif canImport(AppKit)
+        let objekter = NSPasteboard.general.readObjects(forClasses: [NSColor.self]) as? [NSColor] ?? []
+        let tekst = NSPasteboard.general.string(forType: .string)
+        #endif
+        if objekter.count > 1 {
+            return objekter.compactMap { Farge(cgFarge: $0.cgColor) }.map { PalettFarge(farge: $0) }
+        }
+        let fraTekst = tekst.map(Fargetolk.tolkListe) ?? []
+        if !fraTekst.isEmpty { return fraTekst }
+        return limInn().map { [PalettFarge(farge: $0)] } ?? []
+    }
+
     /// Leser en farge fra utklippstavlen: fargeobjekt først, deretter hex/CSS-tekst.
     static func limInn() -> Farge? {
         #if canImport(UIKit)
@@ -47,12 +73,5 @@ enum Utklippstavle {
         if let c = NSColor(from: .general) { return Farge(cgFarge: c.cgColor) }
         return NSPasteboard.general.string(forType: .string).flatMap(Fargetolk.tolk)
         #endif
-    }
-}
-
-/// Tolker fri tekst som farge: hex nå, CSS-funksjoner (oklch(), lab(), rgb()) er neste steg.
-enum Fargetolk {
-    static func tolk(_ tekst: String) -> Farge? {
-        Farge(hex: tekst.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 }

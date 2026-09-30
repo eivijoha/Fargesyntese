@@ -47,10 +47,6 @@ struct KameraVisning: View {
             .padding()
             .background(.bar)
         }
-        .navigationTitle("Kamera")
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
         .toolbar {
             Button("Lagre", systemImage: "square.and.arrow.down") { visLagre = true }
                 .disabled(fanget.isEmpty)

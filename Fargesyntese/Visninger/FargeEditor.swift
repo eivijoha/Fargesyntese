@@ -5,7 +5,6 @@ import SwiftUI
 struct FargeEditor: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var hexTekst = ""
-    @State private var cmykProfil: ICCProfil = .genericCMYK
     @State private var visLagreTilPalett = false
 
     var body: some View {
@@ -18,10 +17,12 @@ struct FargeEditor: View {
                     .frame(height: 160)
                     .listRowInsets(EdgeInsets())
                 HStack {
-                    TextField("Hex", text: $hexTekst)
+                    TextField("Hex eller CSS-farge", text: $hexTekst)
                         .font(.body.monospaced())
                         .autocorrectionDisabled()
-                        .onSubmit { if let f = Farge(hex: hexTekst) { arbeidsbenk.aktivFarge = f } }
+                        .onSubmit {
+                            if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
+                        }
                     PipetteKnapp { arbeidsbenk.aktivFarge = $0 }
                         .labelStyle(.iconOnly)
                 }
@@ -48,18 +49,7 @@ struct FargeEditor: View {
                 }
             }
 
-            Section("Trykk (ICC)") {
-                Picker("Profil", selection: $cmykProfil) {
-                    ForEach(ICCProfil.innebygde.filter { $0.antallKomponenter == 4 }) { Text($0.navn).tag($0) }
-                }
-                if let k = farge.komponenter(i: cmykProfil) {
-                    LabeledContent("CMYK") {
-                        Text(k.map { String(format: "%.0f", $0 * 100) }.joined(separator: " / "))
-                            .font(.callout.monospaced())
-                    }
-                }
-                // TODO: import av egne .icc-profiler via fileImporter (FOGRA39, GRACoL …)
-            }
+            ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
 
             Section("Lysere og mørkere") {
                 let varianter = Toneskala.variasjoner(av: farge, lysere: 3, mørkere: 3)

@@ -43,7 +43,7 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
 
 | Funksjon | iPhone/iPad | Mac |
 |---|---|---|
-| Skjermpipette | Systemets `ColorPicker`-pipette (kun i appens vindu). iOS tillater ikke utplukk utenfor appen. | `NSColorSampler`, hele skjermen |
+| Skjermpipette | Systemets `ColorPicker`-pipette (kun i appens vindu). iOS tillater ikke utplukk utenfor appen – bruk skjermbilde + Utplukk › Bilde. | `NSColorSampler`, hele skjermen |
 | Kamera | Bakkamera | Innebygd kamera / Continuity Camera |
 | Kopier | `UIPasteboard`: fargeobjekt + tekst i samme element | `NSPasteboard`: `NSColor` + streng; ⌥⌘C / ⌥⌘V |
 | Dra og slipp | `Transferable` (hex til andre apper, full presisjon internt) | Samme |
@@ -60,14 +60,22 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
 - [x] App Intents: lag palett fra verdiord, lag overgang, konverter farge; AppShortcuts med norske fraser
 - [x] 15 enhetstester (referanseverdier fra CSS Color 4)
 
+## Status (fase 1 – påbegynt)
+
+- [x] Import av egne ICC-profiler (.icc/.icm), lagret i Application Support/Profiler, navn lest fra `desc`/`mluc`
+- [x] Profilverdier i Studio med gjengivelseshensikt, glidere i profilens komponenter (CMYK/RGB/grå)
+- [x] Varsel når fargen er utenfor profilens gamut (ΔE_OK etter rundtur > 0,02)
+- [x] `Fargetolk`: hex, `rgb()`, `hsl()`, `hwb()`, `lab()`, `lch()`, `oklab()`, `oklch()`, `color()`, `cmyk()`, CSS-navn;
+      Studio-feltet tar CSS-tekst, paletter kan lime inn lister (også `--navn: verdi;`)
+- [x] Utplukk fra bilder (Bilder/Filer): fargestyrt via bildets profil, lupe, dominerende farger (k-means i OKLab)
+
 ## Veikart
 
 **Fase 1 – kjernen i bruk**
-- Import av egne ICC-profiler (`fileImporter`), profilbibliotek, visning av «utenfor trykkgamut»
-- Tolking av CSS-fargetekst ved innliming (`oklch()`, `lab()`, `rgb()`, `hsl()`)
+- Softproof: vis fargen slik den blir på trykk (rundtur gjennom profilen) side om side med skjermfargen
 - Overgangsmodus: OKLab (standard) / OKLCH (kortere/lengre kulørvei) / easing-kurver
 - Omorganisering, navngiving og låsing av farger i palett; angre/gjør om
-- Fargeutplukk fra bilder og skjermbilder (PhotosPicker + lupe) – iOS-alternativet til skjermpipette
+- Bildeutplukk: zoom/panorering, dra-og-slipp av bilder, velge region for dominerende farger
 - Hvitbalanse-lås og referansekort for kamera
 
 **Fase 2 – designerflyt**

@@ -91,6 +91,9 @@ struct PalettDetalj: View {
                 Button("Legg til aktiv farge", systemImage: "plus") {
                     dokument.farger.append(PalettFarge(farge: arbeidsbenk.aktivFarge))
                 }
+                Button("Lim inn farger", systemImage: "doc.on.clipboard") {
+                    dokument.farger += Utklippstavle.limInnListe()
+                }
                 Menu("Eksporter", systemImage: "square.and.arrow.up") {
                     ForEach(Eksportformat.allCases) { f in
                         Button(f.navn) { eksportformat = f }
