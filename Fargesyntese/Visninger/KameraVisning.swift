@@ -102,6 +102,8 @@ struct KameraVisning: View {
                 fanget.fang(farge)
                 arbeidsbenk.aktivFarge = farge
                 arbeidsbenk.registrerMåling(farge)
+                // Klar for neste farge: punktet tilbake i midten.
+                plukker.tilbakestillMarkør()
                 if slukkEtterFangst {
                     if plukker.lyktPå { plukker.settLykt(på: false) }
                     #if os(macOS)

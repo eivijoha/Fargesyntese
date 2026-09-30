@@ -138,9 +138,12 @@ final class KameraFargeplukker {
         if let gjeldende { vedFangst?(gjeldende) }
     }
 
+    /// Målpunkt, fokus og eksponering tilbake til midten av bildet.
     func tilbakestillMarkør() {
+        let midten = CGPoint(x: 0.5, y: 0.5)
         markør = nil
-        leser.sett(mål: CGPoint(x: 0.5, y: 0.5), fang: false)
+        fokuser(på: midten)
+        leser.sett(mål: midten, fang: false)
     }
 
     private func konfigurer() {
