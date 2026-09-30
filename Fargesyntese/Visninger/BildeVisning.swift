@@ -44,6 +44,11 @@ struct BildeVisning: View {
     /// Utplukkspunkt, normalisert 0…1 i bildet.
     @State private var punkt = CGPoint(x: 0.5, y: 0.5)
     @State private var drar = false
+    /// Zoom (1 = hele bildet) og forskyvning av det zoomede bildet.
+    @State private var skala: CGFloat = 1
+    @State private var forskyvning: CGSize = .zero
+    @State private var knipStart: (skala: CGFloat, forskyvning: CGSize, senter: CGPoint)?
+    @State private var knipIDenneBerøringen = false
     @State private var fanget: [Farge] = []
     @State private var antallKlynger = 6
     @State private var klynger: [Bildepalett.Klynge] = []
@@ -111,43 +116,123 @@ struct BildeVisning: View {
     private func bildeflate(_ bilde: CGImage) -> some View {
         GeometryReader { geo in
             let ramme = tilpasset(bilde: bilde, i: geo.size)
+            let vist = vistRamme(ramme)
             ZStack(alignment: .topLeading) {
                 Image(decorative: bilde, scale: 1)
                     .resizable()
-                    .interpolation(.high)
-                    .frame(width: ramme.width, height: ramme.height)
-                    .offset(x: ramme.minX, y: ramme.minY)
+                    .interpolation(skala > 2 ? .none : .high)
+                    .frame(width: vist.width, height: vist.height)
+                    .offset(x: vist.minX, y: vist.minY)
 
                 if let farge = gjeldende {
                     Lupe(farge: farge)
-                        .position(x: ramme.minX + punkt.x * ramme.width, y: ramme.minY + punkt.y * ramme.height - (drar ? 70 : 0))
+                        .position(x: vist.minX + punkt.x * vist.width, y: vist.minY + punkt.y * vist.height - (drar ? 70 : 0))
                         .animation(.snappy(duration: 0.15), value: drar)
                         .allowsHitTesting(false)
                 }
+
+                #if os(iOS)
+                BildeGester(
+                    vedBerøring: { p, fase in berøring(p, fase: fase, ramme: ramme) },
+                    vedKnip: { skalaEndring, senter, fase in knip(skalaEndring, senter: senter, fase: fase, ramme: ramme) }
+                )
+                #endif
             }
+            // Flaten har alltid visningens størrelse, selv når det zoomede bildet er større.
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .topLeading)
             .contentShape(Rectangle())
+            #if os(macOS)
             .gesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { g in
-                        drar = true
-                        punkt = CGPoint(x: min(1, max(0, (g.location.x - ramme.minX) / ramme.width)),
-                                        y: min(1, max(0, (g.location.y - ramme.minY) / ramme.height)))
-                    }
-                    .onEnded { _ in
-                        // Trykk/klikk (eller slipp etter dra) fanger fargen – samme oppførsel som kameraet.
-                        drar = false
-                        if let målt = gjeldende {
-                            let f = arbeidsbenk.begrens(målt)
-                            arbeidsbenk.aktivFarge = f
-                            arbeidsbenk.registrerMåling(f)
-                            fanget.fang(f)
-                        }
-                    }
+                    .onChanged { g in berøring(g.location, fase: .endret, ramme: ramme) }
+                    .onEnded { g in berøring(g.location, fase: .slutt, ramme: ramme) }
             )
+            .simultaneousGesture(
+                MagnifyGesture()
+                    .onChanged { v in knip(v.magnification, senter: v.startLocation, fase: knipStart == nil ? .start : .endret, ramme: ramme) }
+                    .onEnded { v in knip(v.magnification, senter: v.startLocation, fase: .slutt, ramme: ramme) }
+            )
+            #endif
+            .overlay(alignment: .topTrailing) {
+                if skala > 1.01 {
+                    Button {
+                        withAnimation(.snappy) { skala = 1; forskyvning = .zero }
+                    } label: {
+                        Text("\(skala, format: .number.precision(.fractionLength(1)))× · 1×")
+                            .font(.callout.weight(.semibold).monospacedDigit())
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(.regularMaterial, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .padding(10)
+                    .accessibilityLabel("Tilbakestill zoom")
+                }
+            }
         }
         .clipped()
         .background(.black.opacity(0.9))
-        .accessibilityLabel("Bilde. Trykk eller dra for å plukke farge.")
+        .accessibilityLabel("Bilde. Trykk eller dra for å plukke farge, knip for å zoome.")
+    }
+
+    enum Fase { case start, endret, slutt, avbrutt }
+
+    /// Bildets ramme på skjermen etter zoom og forskyvning.
+    private func vistRamme(_ ramme: CGRect) -> CGRect {
+        CGRect(x: ramme.minX + forskyvning.width, y: ramme.minY + forskyvning.height,
+               width: ramme.width * skala, height: ramme.height * skala)
+    }
+
+    /// Én finger: flytt utplukkspunktet; slipp fanger fargen (ikke hvis berøringen ble et knip).
+    private func berøring(_ p: CGPoint, fase: Fase, ramme: CGRect) {
+        if fase == .start { knipIDenneBerøringen = false }
+        guard !knipIDenneBerøringen else {
+            if fase == .slutt || fase == .avbrutt { drar = false }
+            return
+        }
+        let vist = vistRamme(ramme)
+        switch fase {
+        case .start, .endret:
+            drar = true
+            punkt = CGPoint(x: min(1, max(0, (p.x - vist.minX) / vist.width)),
+                            y: min(1, max(0, (p.y - vist.minY) / vist.height)))
+        case .slutt:
+            // Trykk/klikk (eller slipp etter dra) fanger fargen – samme oppførsel som kameraet.
+            drar = false
+            if let målt = gjeldende {
+                let f = arbeidsbenk.begrens(målt)
+                arbeidsbenk.aktivFarge = f
+                arbeidsbenk.registrerMåling(f)
+                fanget.fang(f)
+            }
+        case .avbrutt:
+            drar = false
+        }
+    }
+
+    /// To fingre: zoom (1–12×) rundt knipets senter, og flytt bildet når senteret beveger seg.
+    private func knip(_ skalaEndring: CGFloat, senter: CGPoint, fase: Fase, ramme: CGRect) {
+        switch fase {
+        case .start:
+            knipIDenneBerøringen = true
+            drar = false
+            knipStart = (skala, forskyvning, senter)
+        case .endret:
+            guard let start = knipStart else { knipStart = (skala, forskyvning, senter); return }
+            let ny = min(max(start.skala * skalaEndring, 1), 12)
+            // Punktet i bildet som lå under knipets startsenter, skal ligge under nåværende senter.
+            let qx = (start.senter.x - ramme.minX - start.forskyvning.width) / (ramme.width * start.skala)
+            let qy = (start.senter.y - ramme.minY - start.forskyvning.height) / (ramme.height * start.skala)
+            var ox = senter.x - ramme.minX - qx * ramme.width * ny
+            var oy = senter.y - ramme.minY - qy * ramme.height * ny
+            // Hold bildet innenfor rammen, så det ikke kan skyves ut av syne.
+            ox = min(0, max(ramme.width - ramme.width * ny, ox))
+            oy = min(0, max(ramme.height - ramme.height * ny, oy))
+            skala = ny
+            forskyvning = ny <= 1.001 ? .zero : CGSize(width: ox, height: oy)
+        case .slutt, .avbrutt:
+            knipStart = nil
+        }
     }
 
     private func tilpasset(bilde: CGImage, i størrelse: CGSize) -> CGRect {
@@ -242,6 +327,8 @@ struct BildeVisning: View {
         bilde = resultat.bilde
         prøve = resultat.prøve
         punkt = CGPoint(x: 0.5, y: 0.5)
+        skala = 1
+        forskyvning = .zero
         beregnKlynger()
     }
 
@@ -281,3 +368,60 @@ private struct Lupe: View {
         .shadow(radius: 4)
     }
 }
+
+#if os(iOS)
+/// Berøringsflate for bildet: én finger (umiddelbart, uten forsinkelse) plukker farge, to fingre
+/// zoomer og flytter samtidig – knipets senter følger fingrene.
+private struct BildeGester: UIViewRepresentable {
+    var vedBerøring: (CGPoint, BildeVisning.Fase) -> Void
+    var vedKnip: (CGFloat, CGPoint, BildeVisning.Fase) -> Void
+
+    final class Flate: UIView, UIGestureRecognizerDelegate {
+        var vedBerøring: (CGPoint, BildeVisning.Fase) -> Void = { _, _ in }
+        var vedKnip: (CGFloat, CGPoint, BildeVisning.Fase) -> Void = { _, _, _ in }
+
+        @objc func berørt(_ g: UILongPressGestureRecognizer) {
+            let p = g.location(in: self)
+            switch g.state {
+            case .began: vedBerøring(p, .start)
+            case .changed: vedBerøring(p, .endret)
+            case .ended: vedBerøring(p, .slutt)
+            case .cancelled, .failed: vedBerøring(p, .avbrutt)
+            default: break
+            }
+        }
+
+        @objc func knepet(_ g: UIPinchGestureRecognizer) {
+            let senter = g.location(in: self)
+            switch g.state {
+            case .began: vedKnip(g.scale, senter, .start)
+            case .changed: vedKnip(g.scale, senter, .endret)
+            case .ended: vedKnip(g.scale, senter, .slutt)
+            case .cancelled, .failed: vedKnip(g.scale, senter, .avbrutt)
+            default: break
+            }
+        }
+
+        func gestureRecognizer(_ g: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith annen: UIGestureRecognizer) -> Bool { true }
+    }
+
+    func makeUIView(context: Context) -> Flate {
+        let v = Flate()
+        v.backgroundColor = .clear
+        let berøring = UILongPressGestureRecognizer(target: v, action: #selector(Flate.berørt(_:)))
+        berøring.minimumPressDuration = 0
+        berøring.allowableMovement = .greatestFiniteMagnitude
+        berøring.delegate = v
+        let knip = UIPinchGestureRecognizer(target: v, action: #selector(Flate.knepet(_:)))
+        knip.delegate = v
+        v.addGestureRecognizer(berøring)
+        v.addGestureRecognizer(knip)
+        return v
+    }
+
+    func updateUIView(_ v: Flate, context: Context) {
+        v.vedBerøring = vedBerøring
+        v.vedKnip = vedKnip
+    }
+}
+#endif

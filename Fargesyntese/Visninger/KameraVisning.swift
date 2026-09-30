@@ -12,13 +12,26 @@ struct KameraVisning: View {
     /// Slukk lykt/lysfelt når en farge er fanget (lyset trengs bare under målingen).
     @AppStorage("slukkLysEtterFangst") private var slukkEtterFangst = true
 
+    @ViewBuilder private var kameraflate: some View {
+        #if os(iOS)
+        KameraForhåndsvisning(
+            økt: plukker.økt,
+            vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) },
+            vedKnip: { skala, begynner in plukker.knip(skala, begynner: begynner) },
+            vedDobbelttrykk: { plukker.settZoom(1) }
+        )
+        #else
+        KameraForhåndsvisning(økt: plukker.økt) { enhet, visning in
+            plukker.plukk(enhetspunkt: enhet, visningspunkt: visning)
+        }
+        #endif
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geo in
                 ZStack {
-                    KameraForhåndsvisning(økt: plukker.økt) { enhet, visning in
-                        plukker.plukk(enhetspunkt: enhet, visningspunkt: visning)
-                    }
+                    kameraflate
                     Circle()
                         .strokeBorder(.white, lineWidth: 2)
                         .shadow(radius: 2)
@@ -32,6 +45,7 @@ struct KameraVisning: View {
                             .background(.regularMaterial)
                     }
                 }
+                .overlay(alignment: .topTrailing) { ZoomMerke(plukker: plukker) }
                 .onChange(of: geo.size) { plukker.tilbakestillMarkør() }
             }
             .clipped()
@@ -172,5 +186,22 @@ extension Array where Element == Farge {
     mutating func fang(_ farge: Farge) {
         append(farge)
         if count > Self.maksFanget { removeFirst(count - Self.maksFanget) }
+    }
+}
+
+/// Viser zoomnivået når det avviker fra 1×. Egen visning, så zoomendringer ikke tegner alt på nytt.
+private struct ZoomMerke: View {
+    let plukker: KameraFargeplukker
+
+    var body: some View {
+        if abs(plukker.zoom - 1) > 0.01 {
+            Text("\(plukker.zoom, format: .number.precision(.fractionLength(1)))×")
+                .font(.callout.weight(.semibold).monospacedDigit())
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(.regularMaterial, in: Capsule())
+                .padding(10)
+                .allowsHitTesting(false)
+        }
     }
 }

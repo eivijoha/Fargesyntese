@@ -28,6 +28,10 @@ final class KameraFargeplukker {
     private(set) var lyktPå = false
     /// Lysstyrke 0…1 (der enheten støtter trinnløs styrke).
     private(set) var lyktNivå: Float = 1
+    /// Zoom relativt til vanlig 1×-utsnitt (0,5 = ultravidvinkel på iPhone).
+    private(set) var zoom: CGFloat = 1
+    @ObservationIgnored private var grunnZoom: CGFloat = 1
+    @ObservationIgnored private var zoomVedStart: CGFloat = 1
 
     func start() async {
         guard await AVCaptureDevice.requestAccess(for: .video) else {
@@ -87,8 +91,11 @@ final class KameraFargeplukker {
     }
 
     /// Kontinuerlig autofokus med vekt på korte avstander, og kontinuerlig eksponering.
-    private static func stillInnFokus(_ enhet: AVCaptureDevice) {
-        guard (try? enhet.lockForConfiguration()) != nil else { return }
+    /// Returnerer zoomfaktoren som tilsvarer vanlig 1×.
+    @discardableResult
+    private static func stillInnFokus(_ enhet: AVCaptureDevice) -> CGFloat {
+        var grunn: CGFloat = 1
+        guard (try? enhet.lockForConfiguration()) != nil else { return grunn }
         defer { enhet.unlockForConfiguration() }
         if enhet.isFocusModeSupported(.continuousAutoFocus) { enhet.focusMode = .continuousAutoFocus }
         if enhet.isExposureModeSupported(.continuousAutoExposure) { enhet.exposureMode = .continuousAutoExposure }
@@ -96,7 +103,8 @@ final class KameraFargeplukker {
         // Virtuelt multikamera: start på vanlig 1×-utsnitt (første overgang), og la iOS bytte til
         // ultravidvinkel automatisk når motivet er for nært for vidvinkelen (som makro i Kamera-appen).
         if let overgang = enhet.virtualDeviceSwitchOverVideoZoomFactors.first {
-            enhet.videoZoomFactor = CGFloat(truncating: overgang)
+            grunn = CGFloat(truncating: overgang)
+            enhet.videoZoomFactor = grunn
             if enhet.activePrimaryConstituentDeviceSwitchingBehavior != .unsupported {
                 enhet.setPrimaryConstituentDeviceSwitchingBehavior(.auto, restrictedSwitchingBehaviorConditions: [])
             }
@@ -104,7 +112,31 @@ final class KameraFargeplukker {
         if enhet.isAutoFocusRangeRestrictionSupported { enhet.autoFocusRangeRestriction = .near }
         if enhet.isSmoothAutoFocusSupported { enhet.isSmoothAutoFocusEnabled = false }
         #endif
+        return grunn
     }
+
+    #if os(iOS)
+    /// Knip i forhåndsvisningen: `skala` er relativ til zoomen da knipet startet.
+    func knip(_ skala: CGFloat, begynner: Bool) {
+        if begynner { zoomVedStart = zoom }
+        settZoom(zoomVedStart * skala)
+    }
+
+    /// Setter zoom relativt til 1× (0,5× … 10×, innenfor det kameraet støtter).
+    func settZoom(_ relativ: CGFloat) {
+        guard let enhet else { return }
+        let minst = enhet.minAvailableVideoZoomFactor / grunnZoom
+        let mest = min(enhet.maxAvailableVideoZoomFactor / grunnZoom, 10)
+        let ny = min(max(relativ, minst), mest)
+        zoom = ny
+        let faktor = ny * grunnZoom
+        kø.async {
+            guard (try? enhet.lockForConfiguration()) != nil else { return }
+            enhet.videoZoomFactor = faktor
+            enhet.unlockForConfiguration()
+        }
+    }
+    #endif
 
     /// Fokus og eksponering på punktet brukeren trykket på (normaliserte enhetskoordinater).
     private func fokuser(på punkt: CGPoint) {
@@ -153,7 +185,8 @@ final class KameraFargeplukker {
         guard let enhet = Self.velgKamera(),
               let inn = try? AVCaptureDeviceInput(device: enhet), økt.canAddInput(inn)
         else { return }
-        Self.stillInnFokus(enhet)
+        grunnZoom = Self.stillInnFokus(enhet)
+        zoom = 1
         økt.addInput(inn)
         self.enhet = enhet
         harLykt = enhet.hasTorch
@@ -237,30 +270,53 @@ nonisolated private final class BufferLeser: NSObject, AVCaptureVideoDataOutputS
 struct KameraForhåndsvisning: UIViewRepresentable {
     let økt: AVCaptureSession
     var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
+    /// (skala relativt til start av knipet, om knipet nettopp begynte)
+    var vedKnip: (CGFloat, Bool) -> Void = { _, _ in }
+    var vedDobbelttrykk: () -> Void = {}
 
     final class Visning: UIView {
         override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
         var lag: AVCaptureVideoPreviewLayer { layer as! AVCaptureVideoPreviewLayer }
         var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
+        var vedKnip: (CGFloat, Bool) -> Void = { _, _ in }
+        var vedDobbelttrykk: () -> Void = {}
 
         @objc func trykket(_ g: UITapGestureRecognizer) {
             let p = g.location(in: self)
             vedTrykk(lag.captureDevicePointConverted(fromLayerPoint: p), p)
         }
+
+        @objc func knepet(_ g: UIPinchGestureRecognizer) {
+            switch g.state {
+            case .began: vedKnip(g.scale, true)
+            case .changed: vedKnip(g.scale, false)
+            default: break
+            }
+        }
+
+        @objc func dobbelttrykket(_ g: UITapGestureRecognizer) { vedDobbelttrykk() }
     }
 
     func makeUIView(context: Context) -> Visning {
         let v = Visning()
         v.lag.session = økt
         v.lag.videoGravity = .resizeAspectFill
-        v.addGestureRecognizer(UITapGestureRecognizer(target: v, action: #selector(Visning.trykket(_:))))
+        let enkelt = UITapGestureRecognizer(target: v, action: #selector(Visning.trykket(_:)))
+        let dobbelt = UITapGestureRecognizer(target: v, action: #selector(Visning.dobbelttrykket(_:)))
+        dobbelt.numberOfTapsRequired = 2
+        enkelt.require(toFail: dobbelt)
+        v.addGestureRecognizer(enkelt)
+        v.addGestureRecognizer(dobbelt)
+        v.addGestureRecognizer(UIPinchGestureRecognizer(target: v, action: #selector(Visning.knepet(_:))))
         v.isAccessibilityElement = true
-        v.accessibilityLabel = "Kamerabilde. Trykk for å plukke fargen der."
+        v.accessibilityLabel = "Kamerabilde. Trykk for å plukke fargen der, knip for å zoome."
         return v
     }
 
     func updateUIView(_ uiView: Visning, context: Context) {
         uiView.vedTrykk = vedTrykk
+        uiView.vedKnip = vedKnip
+        uiView.vedDobbelttrykk = vedDobbelttrykk
     }
 }
 #elseif canImport(AppKit)
