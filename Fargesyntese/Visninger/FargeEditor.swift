@@ -92,7 +92,6 @@ struct FargeEditor: View {
                 Button("Lim inn", systemImage: "doc.on.clipboard") {
                     if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
                 }
-                Button("Sammenlign (ΔE2000)", systemImage: "square.split.2x1") { arbeidsbenk.sammenlign(farge, nil) }
                 Button("Lagre farge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
                     lagreEnkeltfarger([PalettFarge(farge: farge)], i: kontekst)
                     lagret = true
