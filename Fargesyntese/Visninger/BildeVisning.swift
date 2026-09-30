@@ -167,12 +167,12 @@ struct BildeVisning: View {
                 .help("Legg sist fangede farge i en palett")
                 ScrollView(.horizontal) {
                     HStack(spacing: 6) {
-                        ForEach(fanget.indices, id: \.self) { i in
-                            FargeRute(farge: fanget[i], visTekst: false, hjørne: 6,
+                        ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in
+                            FargeRute(farge: farge, visTekst: false, hjørne: 6,
                                       leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] },
-                                      fjern: { fanget.remove(at: i) })
+                                      fjern: { if fanget.indices.contains(i) { fanget.remove(at: i) } })
                                 .frame(width: 36, height: 36)
-                                .onTapGesture { arbeidsbenk.aktivFarge = fanget[i] }
+                                .onTapGesture { arbeidsbenk.aktivFarge = farge }
                         }
                     }
                 }

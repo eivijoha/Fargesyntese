@@ -34,12 +34,13 @@ struct OvergangVisning: View {
             }
             Section {
                 Grid(horizontalSpacing: 3, verticalSpacing: 3) {
-                    ForEach(rader.indices, id: \.self) { r in
+                    let midtrad = arbeidsbenk.lyshetstrinn.antallLysere
+                    ForEach(Array(rader.enumerated()), id: \.offset) { r, rad in
                         GridRow {
-                            ForEach(rader[r].indices, id: \.self) { k in
-                                FargeRute(farge: rader[r][k], visTekst: false, hjørne: 4)
-                                    .frame(minHeight: r == arbeidsbenk.lyshetstrinn.antallLysere ? 56 : 36)
-                                    .onTapGesture { arbeidsbenk.aktivFarge = rader[r][k] }
+                            ForEach(Array(rad.enumerated()), id: \.offset) { _, farge in
+                                FargeRute(farge: farge, visTekst: false, hjørne: 4)
+                                    .frame(minHeight: r == midtrad ? 56 : 36)
+                                    .onTapGesture { arbeidsbenk.aktivFarge = farge }
                             }
                         }
                     }

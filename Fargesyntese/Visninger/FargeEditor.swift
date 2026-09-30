@@ -1,4 +1,5 @@
 import FargeKjerne
+import SwiftData
 import SwiftUI
 
 /// Studio: rediger aktiv farge i valgfri fargemodell, se alle representasjoner.
@@ -7,6 +8,8 @@ struct FargeEditor: View {
     @State private var hexTekst = ""
     @State private var lagreFarger: [PalettFarge]?
     @State private var lagreNavn = ""
+    @State private var lagret = false
+    @Environment(\.modelContext) private var kontekst
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
@@ -56,17 +59,17 @@ struct FargeEditor: View {
             Section {
                 let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge)
                 HStack(spacing: 4) {
-                    ForEach(varianter.indices, id: \.self) { i in
+                    ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
                         VStack(spacing: 2) {
-                            FargeRute(farge: varianter[i], visTekst: false, hjørne: 6)
+                            FargeRute(farge: variant, visTekst: false, hjørne: 6)
                                 .frame(height: 44)
                                 .overlay {
                                     if i == arbeidsbenk.lyshetstrinn.antallLysere {
                                         RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
                                     }
                                 }
-                                .onTapGesture { arbeidsbenk.aktivFarge = varianter[i] }
-                            Text(varianter[i].okLCH.l * 100, format: .number.precision(.fractionLength(0)))
+                                .onTapGesture { arbeidsbenk.aktivFarge = variant }
+                            Text(variant.okLCH.l * 100, format: .number.precision(.fractionLength(0)))
                                 .font(.caption2.monospacedDigit())
                                 .foregroundStyle(.secondary)
                         }
@@ -96,6 +99,13 @@ struct FargeEditor: View {
                     if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
                 }
                 Button("Sammenlign (ΔE2000)", systemImage: "square.split.2x1") { arbeidsbenk.sammenlign(farge, nil) }
+                Button("Lagre farge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
+                    lagreEnkeltfarger([PalettFarge(farge: farge)], i: kontekst)
+                    lagret = true
+                    Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
+                }
+                .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
+                .help("Lagre som enkeltfarge (uten palett)")
                 Button("Legg i palett", systemImage: "plus.square.on.square") {
                     lagreNavn = ""
                     lagreFarger = [PalettFarge(farge: farge)]
@@ -129,6 +139,8 @@ struct KomponentGlidere: View {
 
     var body: some View {
         ForEach(Array(modell.komponenter.enumerated()), id: \.offset) { i, k in
+            // Vern: ved bytte av modell (f.eks. CMYK → RGB) kan en rad bli tegnet før listen er oppdatert.
+            if i < gjeldende.count {
             VStack(alignment: .leading, spacing: 2) {
                 HStack {
                     Text(k.navn)
@@ -141,11 +153,13 @@ struct KomponentGlidere: View {
                     get: { gjeldende[i] },
                     set: { ny in
                         var v = gjeldende
+                        guard v.indices.contains(i) else { return }
                         v[i] = ny
                         verdier = v
                         farge = modell.farge(fra: v, alfa: farge.alfa)
                     }
                 ), in: k.område)
+            }
             }
         }
         .onChange(of: modell) { _, ny in verdier = ny.verdier(for: farge) }

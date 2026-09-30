@@ -6,6 +6,8 @@ struct KameraVisning: View {
     @State private var plukker = KameraFargeplukker()
     @State private var fanget: [Farge] = []
     @State private var lagre: [PalettFarge]?
+    /// Slukk lykt/lysfelt når en farge er fanget (lyset trengs bare under målingen).
+    @AppStorage("slukkLysEtterFangst") private var slukkEtterFangst = true
 
     var body: some View {
         VStack(spacing: 0) {
@@ -44,12 +46,12 @@ struct KameraVisning: View {
                 .help("Legg sist fangede farge i en palett")
                 ScrollView(.horizontal) {
                     HStack(spacing: 6) {
-                        ForEach(fanget.indices, id: \.self) { i in
-                            FargeRute(farge: fanget[i], visTekst: false, hjørne: 6,
+                        ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in
+                            FargeRute(farge: farge, visTekst: false, hjørne: 6,
                                       leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .kamera)] },
-                                      fjern: { fanget.remove(at: i) })
+                                      fjern: { if fanget.indices.contains(i) { fanget.remove(at: i) } })
                                 .frame(width: 40, height: 40)
-                                .onTapGesture { arbeidsbenk.aktivFarge = fanget[i] }
+                                .onTapGesture { arbeidsbenk.aktivFarge = farge }
                         }
                     }
                 }
@@ -67,7 +69,7 @@ struct KameraVisning: View {
         }
         .toolbar {
             ToolbarItemGroup {
-                LyskildeKnapper(plukker: plukker)
+                LyskildeKnapper(plukker: plukker, slukkEtterFangst: $slukkEtterFangst)
                 Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
                     lagre = fanget.map { PalettFarge(farge: $0, opphav: .kamera) }
                 }
@@ -82,6 +84,12 @@ struct KameraVisning: View {
                 fanget.append(farge)
                 arbeidsbenk.aktivFarge = farge
                 arbeidsbenk.registrerMåling(farge)
+                if slukkEtterFangst {
+                    if plukker.lyktPå { plukker.settLykt(på: false) }
+                    #if os(macOS)
+                    if Lysfelt.delt.erSynlig { Lysfelt.delt.skjul() }
+                    #endif
+                }
             }
             await plukker.start()
         }
@@ -92,6 +100,7 @@ struct KameraVisning: View {
 /// Lyskilder for utplukk: kameraets lykt der den finnes, og lysfelt på Mac-skjermen.
 private struct LyskildeKnapper: View {
     let plukker: KameraFargeplukker
+    @Binding var slukkEtterFangst: Bool
     #if os(macOS)
     @State private var lysfelt = Lysfelt.delt
     #endif
@@ -103,6 +112,8 @@ private struct LyskildeKnapper: View {
                     Button("\(Int(nivå * 100)) %") { plukker.settLykt(på: true, nivå: Float(nivå)) }
                 }
                 if plukker.lyktPå { Button("Slå av", systemImage: "flashlight.off.fill") { plukker.settLykt(på: false) } }
+                Divider()
+                Toggle("Slukk etter fangst", isOn: $slukkEtterFangst)
             } label: {
                 Label("Lykt", systemImage: plukker.lyktPå ? "flashlight.on.fill" : "flashlight.off.fill")
             } primaryAction: {
@@ -111,11 +122,13 @@ private struct LyskildeKnapper: View {
             .accessibilityValue(plukker.lyktPå ? "På, \(Int(plukker.lyktNivå * 100)) prosent" : "Av")
         }
         #if os(macOS)
-        Button {
-            lysfelt.veksle()
+        Menu {
+            Toggle("Slukk etter fangst", isOn: $slukkEtterFangst)
         } label: {
             Label(lysfelt.erSynlig ? "Skjul lysfelt" : "Vis lysfelt",
                   systemImage: lysfelt.erSynlig ? "lightbulb.fill" : "lightbulb")
+        } primaryAction: {
+            lysfelt.veksle()
         }
         .help("Hvitt, flyttbart lysfelt på skjermen som lyskilde for kameraet")
         #endif

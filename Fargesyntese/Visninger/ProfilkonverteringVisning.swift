@@ -27,7 +27,7 @@ struct ProfilkonverteringVisning: View {
                 profilvelger("Kildeprofil", valgt: $fraID)
                 if fra.kanRedigeres {
                     ForEach(Array(fra.komponentnavn.enumerated()), id: \.offset) { i, navn in
-                        komponentrad(navn: navn, indeks: i)
+                        if i < gyldigeVerdier.count { komponentrad(navn: navn, indeks: i) }
                     }
                 } else {
                     Text("Verdier for denne profiltypen hentes fra aktiv farge.").font(.callout).foregroundStyle(.secondary)
@@ -90,17 +90,19 @@ struct ProfilkonverteringVisning: View {
         HStack {
             Text(navn).frame(width: 36, alignment: .leading)
             Slider(value: Binding(
-                get: { gyldigeVerdier[i] },
+                get: { gyldigeVerdier.indices.contains(i) ? gyldigeVerdier[i] : 0 },
                 set: { ny in
                     var v = gyldigeVerdier
+                    guard v.indices.contains(i) else { return }
                     v[i] = ny
                     verdier = v
                 }
             ), in: 0...1)
             TextField("", value: Binding(
-                get: { (gyldigeVerdier[i] * 100).rounded() },
+                get: { gyldigeVerdier.indices.contains(i) ? (gyldigeVerdier[i] * 100).rounded() : 0 },
                 set: { ny in
                     var v = gyldigeVerdier
+                    guard v.indices.contains(i) else { return }
                     v[i] = min(max(ny / 100, 0), 1)
                     verdier = v
                 }

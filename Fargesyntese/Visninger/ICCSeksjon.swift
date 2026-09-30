@@ -120,9 +120,10 @@ private struct ProfilGlidere: View {
                 HStack {
                     Text(navn).frame(width: 36, alignment: .leading)
                     Slider(value: Binding(
-                        get: { gjeldende[i] },
+                        get: { gjeldende.indices.contains(i) ? gjeldende[i] : 0 },
                         set: { ny in
                             var v = gjeldende
+                            guard v.indices.contains(i) else { return }
                             v[i] = ny
                             verdier = v
                             if let f = Farge(komponenter: v, i: profil, alfa: farge.alfa) { farge = f }

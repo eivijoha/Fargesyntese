@@ -7,41 +7,152 @@ import UniformTypeIdentifiers
 struct PalettListe: View {
     @Environment(\.modelContext) private var kontekst
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
-    @State private var valgt: PalettDokument?
+    @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
+    @State private var valgt: Valg?
     @State private var målrettet: UUID?
+    @State private var enkeltfargerMålrettet = false
+
+    enum Valg: Hashable {
+        case enkeltfarger
+        case palett(PalettDokument)
+    }
 
     var body: some View {
         NavigationSplitView {
             List(selection: $valgt) {
-                ForEach(paletter) { p in
-                    NavigationLink(value: p) {
-                        PalettRad(dokument: p)
+                Section {
+                    NavigationLink(value: Valg.enkeltfarger) {
+                        EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge))
                     }
                     .dropDestination(for: PalettFarge.self) { farger, _ in
-                        leggTil(farger, i: p)
-                    } isTargeted: { over in
-                        målrettet = over ? p.id : (målrettet == p.id ? nil : målrettet)
-                    }
-                    .listRowBackground(målrettet == p.id ? Color.accentColor.opacity(0.15) : nil)
+                        lagreEnkeltfarger(farger, i: kontekst)
+                        return true
+                    } isTargeted: { enkeltfargerMålrettet = $0 }
+                    .listRowBackground(enkeltfargerMålrettet ? Color.accentColor.opacity(0.15) : nil)
                 }
-                .onDelete { indekser in indekser.map { paletter[$0] }.forEach(kontekst.delete) }
+                Section("Paletter") {
+                    ForEach(paletter) { p in
+                        NavigationLink(value: Valg.palett(p)) {
+                            PalettRad(dokument: p)
+                        }
+                        .dropDestination(for: PalettFarge.self) { farger, _ in
+                            leggTil(farger, i: p)
+                        } isTargeted: { over in
+                            målrettet = over ? p.id : (målrettet == p.id ? nil : målrettet)
+                        }
+                        .listRowBackground(målrettet == p.id ? Color.accentColor.opacity(0.15) : nil)
+                    }
+                    .onDelete { indekser in indekser.map { paletter[$0] }.forEach(kontekst.delete) }
+                    if paletter.isEmpty {
+                        Text("Ingen paletter ennå. Lag en fra Studio, Overgang, Utplukk eller Verdiord.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
             .navigationTitle("Paletter")
-            .overlay {
-                if paletter.isEmpty {
-                    ContentUnavailableView("Ingen paletter ennå", systemImage: "swatchpalette",
-                                           description: Text("Lag en fra Studio, Overgang, Kamera eller Verdiord."))
-                }
-            }
             .toolbar {
                 Button("Ny palett", systemImage: "plus") {
                     let p = PalettDokument(navn: "Ny palett")
                     kontekst.insert(p)
-                    valgt = p
+                    valgt = .palett(p)
                 }
             }
         } detail: {
-            if let valgt { PalettDetalj(dokument: valgt) } else { Text("Velg en palett").foregroundStyle(.secondary) }
+            switch valgt {
+            case .enkeltfarger: EnkeltfargerVisning()
+            case .palett(let p): PalettDetalj(dokument: p)
+            case nil: Text("Velg en palett").foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+/// Lagrer farger som enkeltfarger (uten palett), med nye identiteter.
+func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) {
+    for f in farger { kontekst.insert(LagretFarge(f.kopi)) }
+}
+
+struct EnkeltfargerRad: View {
+    let farger: [PalettFarge]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Label("Enkeltfarger", systemImage: "bookmark.fill").font(.headline)
+                Spacer()
+                Text("\(farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 3) {
+                    ForEach(farger.prefix(40)) { pf in
+                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 4, palettFarge: pf)
+                            .frame(width: 26, height: 26)
+                    }
+                    if farger.isEmpty {
+                        Text("Farger lagret uten palett havner her").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+/// Alle enkeltfarger som rutenett.
+struct EnkeltfargerVisning: View {
+    @Environment(\.modelContext) private var kontekst
+    @Environment(Arbeidsbenk.self) private var arbeidsbenk
+    @Query(sort: \LagretFarge.opprettet, order: .reverse) private var lagrede: [LagretFarge]
+    @State private var leggIPalett: [PalettFarge]?
+
+    private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: rutenett, spacing: 10) {
+                ForEach(lagrede) { lagret in
+                    let pf = lagret.palettFarge
+                    FargeRute(farge: pf.farge, navn: pf.navn,
+                              leggIPalett: { _ in leggIPalett = [pf] },
+                              fjern: { kontekst.delete(lagret) }, palettFarge: pf)
+                        .aspectRatio(1, contentMode: .fit)
+                        .onTapGesture {
+                            arbeidsbenk.aktivFarge = pf.farge
+                            arbeidsbenk.valgtFane = .studio
+                        }
+                }
+            }
+            .padding()
+        }
+        .overlay {
+            if lagrede.isEmpty {
+                ContentUnavailableView("Ingen enkeltfarger", systemImage: "bookmark",
+                                       description: Text("Lagre en farge uten palett fra Studio, Utplukk eller «Legg i palett»."))
+            }
+        }
+        .navigationTitle("Enkeltfarger")
+        .dropDestination(for: PalettFarge.self) { farger, _ in
+            let eksisterende = Set(lagrede.map(\.id))
+            lagreEnkeltfarger(farger.filter { !eksisterende.contains($0.id) }, i: kontekst)
+            return true
+        }
+        .toolbar {
+            ToolbarItemGroup {
+                Button("Lagre aktiv farge", systemImage: "bookmark") {
+                    lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.aktivFarge)], i: kontekst)
+                }
+                Button("Lim inn farger", systemImage: "doc.on.clipboard") {
+                    lagreEnkeltfarger(Utklippstavle.limInnListe(), i: kontekst)
+                }
+                Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
+                    leggIPalett = lagrede.map(\.palettFarge)
+                }
+                .disabled(lagrede.isEmpty)
+            }
+        }
+        .sheet(isPresented: Binding(get: { leggIPalett != nil }, set: { if !$0 { leggIPalett = nil } })) {
+            VelgPalettArk(farger: leggIPalett ?? [], tilbyEnkeltfarger: false)
         }
     }
 }
@@ -89,7 +200,7 @@ struct PalettStripe: View {
     let farger: [Farge]
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(farger.indices, id: \.self) { farger[$0].swiftUI }
+            ForEach(Array(farger.enumerated()), id: \.offset) { $1.swiftUI }
         }
         .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
     }
@@ -260,6 +371,8 @@ struct EksportDokument: FileDocument {
 struct VelgPalettArk: View {
     let farger: [PalettFarge]
     var foreslåttNavn: String = ""
+    /// Vis «Lagre uten palett» (skjules når kilden allerede er enkeltfargene).
+    var tilbyEnkeltfarger = true
     @Environment(\.modelContext) private var kontekst
     @Environment(\.dismiss) private var lukk
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
@@ -271,6 +384,17 @@ struct VelgPalettArk: View {
             Form {
                 Section {
                     PalettStripe(farger: farger.map(\.farge)).frame(height: 32)
+                }
+                if tilbyEnkeltfarger {
+                    Section {
+                        Button(farger.count == 1 ? "Lagre som enkeltfarge" : "Lagre som \(farger.count) enkeltfarger",
+                               systemImage: "bookmark") {
+                            lagreEnkeltfarger(farger, i: kontekst)
+                            lukk()
+                        }
+                    } footer: {
+                        Text("Lagres uten palett, under «Enkeltfarger» i Paletter.")
+                    }
                 }
                 Section("Ny palett") {
                     TextField("Navn på paletten", text: $nyttNavn)
@@ -284,7 +408,7 @@ struct VelgPalettArk: View {
                     Section("Eksisterende paletter") {
                         ForEach(paletter) { p in
                             Button {
-                                p.farger += farger
+                                p.farger += farger.map(\.kopi)
                                 lukk()
                             } label: {
                                 HStack {
@@ -299,7 +423,7 @@ struct VelgPalettArk: View {
                 }
             }
             .formStyle(.grouped)
-            .navigationTitle(farger.count == 1 ? "Legg farge i palett" : "Legg \(farger.count) farger i palett")
+            .navigationTitle(farger.count == 1 ? "Lagre farge" : "Lagre \(farger.count) farger")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -315,7 +439,7 @@ struct VelgPalettArk: View {
     private func opprett() {
         let navn = nyttNavn.trimmingCharacters(in: .whitespaces)
         guard !navn.isEmpty else { return }
-        kontekst.insert(PalettDokument(navn: navn, farger: farger))
+        kontekst.insert(PalettDokument(navn: navn, farger: farger.map(\.kopi)))
         lukk()
     }
 }

@@ -34,6 +34,24 @@ final class PalettDokument {
     var palett: Palett { Palett(id: id, navn: navn, farger: farger) }
 }
 
+/// En enkeltfarge lagret uten palett («Enkeltfarger»).
+@Model
+final class LagretFarge {
+    var id: UUID = UUID()
+    var opprettet: Date = Date.now
+    private var data: Data = Data()
+
+    init(_ farge: PalettFarge) {
+        self.id = farge.id
+        self.palettFarge = farge
+    }
+
+    var palettFarge: PalettFarge {
+        get { (try? JSONDecoder().decode(PalettFarge.self, from: data)) ?? PalettFarge(id: id, farge: Farge(lineærR: 0, g: 0, b: 0)) }
+        set { data = (try? JSONEncoder().encode(newValue)) ?? Data() }
+    }
+}
+
 /// Felles lagring for app og App Intents (intents kjører i appens prosess).
 enum Lagring {
     static let container: ModelContainer = {
@@ -42,7 +60,7 @@ enum Lagring {
             // iCloud Drive), og da forsøker SwiftData ellers å synke via CloudKit – som ikke er
             // aktivert – og krasjer ved oppstart.
             let oppsett = ModelConfiguration(cloudKitDatabase: .none)
-            return try ModelContainer(for: PalettDokument.self, configurations: oppsett)
+            return try ModelContainer(for: PalettDokument.self, LagretFarge.self, configurations: oppsett)
         } catch {
             fatalError("Kunne ikke åpne palettlageret: \(error)")
         }

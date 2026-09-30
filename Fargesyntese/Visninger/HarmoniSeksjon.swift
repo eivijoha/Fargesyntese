@@ -42,13 +42,13 @@ struct HarmoniSeksjon: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
             HStack(spacing: 4) {
-                ForEach(farger.indices, id: \.self) { i in
-                    FargeRute(farge: farger[i], visTekst: false, hjørne: 6)
+                ForEach(Array(farger.enumerated()), id: \.offset) { _, farge in
+                    FargeRute(farge: farge, visTekst: false, hjørne: 6)
                         .frame(height: 44)
                         .overlay {
-                            if farger[i] == grunnfarge { RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2) }
+                            if farge == grunnfarge { RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2) }
                         }
-                        .onTapGesture { velg(farger[i]) }
+                        .onTapGesture { velg(farge) }
                 }
             }
 
