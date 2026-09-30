@@ -96,10 +96,21 @@ struct ICCSeksjon: View {
         UTType("com.apple.colorsync-profile"), UTType(filenameExtension: "icc"), UTType(filenameExtension: "icm"),
     ].compactMap { $0 }
 
-    private func formatert(_ v: [Double]) -> String {
-        switch profil.modell {
-        case .lab: v.map { String(format: "%.1f", $0) }.joined(separator: " / ")
-        default: v.map { String(format: "%.0f", $0 * 100) }.joined(separator: " / ") + " %"
+    private func formatert(_ v: [Double]) -> String { profil.formatert(v) }
+}
+
+extension ICCProfil {
+    /// Visningsskala etter bransjekonvensjon: RGB 0–255, CMYK og grå i prosent.
+    var visningsskala: Double { modell == .rgb ? 255 : 100 }
+    /// Enhet som vises etter tallene («%» for CMYK/grå, ingen for RGB).
+    var visningsenhet: String { modell == .rgb ? "" : "%" }
+
+    func formatert(_ v: [Double]) -> String {
+        switch modell {
+        case .lab: return v.map { String(format: "%.1f", $0) }.joined(separator: " / ")
+        default:
+            let tall = v.map { String(format: "%.0f", $0 * visningsskala) }.joined(separator: " / ")
+            return visningsenhet.isEmpty ? tall : "\(tall) \(visningsenhet)"
         }
     }
 }
@@ -129,7 +140,7 @@ private struct ProfilGlidere: View {
                             if let f = Farge(komponenter: v, i: profil, alfa: farge.alfa) { farge = f }
                         }
                     ), in: 0...1)
-                    Text(gjeldende[i] * 100, format: .number.precision(.fractionLength(0)))
+                    Text(gjeldende[i] * profil.visningsskala, format: .number.precision(.fractionLength(0)))
                         .monospacedDigit()
                         .frame(width: 36, alignment: .trailing)
                 }

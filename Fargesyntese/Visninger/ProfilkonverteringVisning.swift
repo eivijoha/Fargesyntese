@@ -99,11 +99,11 @@ struct ProfilkonverteringVisning: View {
                 }
             ), in: 0...1)
             TextField("", value: Binding(
-                get: { gyldigeVerdier.indices.contains(i) ? (gyldigeVerdier[i] * 100).rounded() : 0 },
+                get: { gyldigeVerdier.indices.contains(i) ? (gyldigeVerdier[i] * fra.visningsskala).rounded() : 0 },
                 set: { ny in
                     var v = gyldigeVerdier
                     guard v.indices.contains(i) else { return }
-                    v[i] = min(max(ny / 100, 0), 1)
+                    v[i] = min(max(ny / fra.visningsskala, 0), 1)
                     verdier = v
                 }
             ), format: .number)
@@ -113,7 +113,7 @@ struct ProfilkonverteringVisning: View {
             #if os(iOS)
             .keyboardType(.numberPad)
             #endif
-            Text("%").foregroundStyle(.secondary)
+            Text(fra.visningsenhet).foregroundStyle(.secondary).frame(minWidth: 12)
         }
     }
 
@@ -143,10 +143,5 @@ struct ProfilkonverteringVisning: View {
         .onTapGesture { hensikt = h }
     }
 
-    private func formatert(_ v: [Double], i profil: ICCProfil) -> String {
-        switch profil.modell {
-        case .lab: v.map { String(format: "%.1f", $0) }.joined(separator: " / ")
-        default: v.map { String(format: "%.0f", $0 * 100) }.joined(separator: " / ") + " %"
-        }
-    }
+    private func formatert(_ v: [Double], i profil: ICCProfil) -> String { profil.formatert(v) }
 }
