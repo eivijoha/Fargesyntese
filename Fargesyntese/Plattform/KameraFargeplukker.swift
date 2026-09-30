@@ -73,12 +73,63 @@ final class KameraFargeplukker {
         kø.async { økt.stopRunning() }
     }
 
+    /// Velger kamera. På iPhone foretrekkes de virtuelle multikameraene, som automatisk bytter til
+    /// ultravidvinkel (makro) på kort hold – vidvinkelen alene fokuserer ikke nærmere enn ca. 15–20 cm.
+    private static func velgKamera() -> AVCaptureDevice? {
+        #if os(iOS)
+        let typer: [AVCaptureDevice.DeviceType] = [.builtInTripleCamera, .builtInDualWideCamera, .builtInWideAngleCamera]
+        let søk = AVCaptureDevice.DiscoverySession(deviceTypes: typer, mediaType: .video, position: .back)
+        for type in typer {
+            if let enhet = søk.devices.first(where: { $0.deviceType == type }) { return enhet }
+        }
+        #endif
+        return AVCaptureDevice.default(for: .video)
+    }
+
+    /// Kontinuerlig autofokus med vekt på korte avstander, og kontinuerlig eksponering.
+    private static func stillInnFokus(_ enhet: AVCaptureDevice) {
+        guard (try? enhet.lockForConfiguration()) != nil else { return }
+        defer { enhet.unlockForConfiguration() }
+        if enhet.isFocusModeSupported(.continuousAutoFocus) { enhet.focusMode = .continuousAutoFocus }
+        if enhet.isExposureModeSupported(.continuousAutoExposure) { enhet.exposureMode = .continuousAutoExposure }
+        #if os(iOS)
+        // Virtuelt multikamera: start på vanlig 1×-utsnitt (første overgang), og la iOS bytte til
+        // ultravidvinkel automatisk når motivet er for nært for vidvinkelen (som makro i Kamera-appen).
+        if let overgang = enhet.virtualDeviceSwitchOverVideoZoomFactors.first {
+            enhet.videoZoomFactor = CGFloat(truncating: overgang)
+            if enhet.activePrimaryConstituentDeviceSwitchingBehavior != .unsupported {
+                enhet.setPrimaryConstituentDeviceSwitchingBehavior(.auto, restrictedSwitchingBehaviorConditions: [])
+            }
+        }
+        if enhet.isAutoFocusRangeRestrictionSupported { enhet.autoFocusRangeRestriction = .near }
+        if enhet.isSmoothAutoFocusSupported { enhet.isSmoothAutoFocusEnabled = false }
+        #endif
+    }
+
+    /// Fokus og eksponering på punktet brukeren trykket på (normaliserte enhetskoordinater).
+    private func fokuser(på punkt: CGPoint) {
+        guard let enhet else { return }
+        kø.async {
+            guard (try? enhet.lockForConfiguration()) != nil else { return }
+            defer { enhet.unlockForConfiguration() }
+            if enhet.isFocusPointOfInterestSupported {
+                enhet.focusPointOfInterest = punkt
+                if enhet.isFocusModeSupported(.continuousAutoFocus) { enhet.focusMode = .continuousAutoFocus }
+            }
+            if enhet.isExposurePointOfInterestSupported {
+                enhet.exposurePointOfInterest = punkt
+                if enhet.isExposureModeSupported(.continuousAutoExposure) { enhet.exposureMode = .continuousAutoExposure }
+            }
+        }
+    }
+
     /// Flytter målpunktet og fanger fargen der fra neste bilde.
     /// - Parameters:
     ///   - enhetspunkt: normalisert punkt (0…1) i kamerabufferens koordinater.
     ///   - visningspunkt: samme punkt i forhåndsvisningen, for markøren.
     func plukk(enhetspunkt: CGPoint, visningspunkt: CGPoint) {
         markør = visningspunkt
+        fokuser(på: enhetspunkt)
         leser.sett(mål: enhetspunkt, fang: true)
     }
 
@@ -96,9 +147,10 @@ final class KameraFargeplukker {
         økt.beginConfiguration()
         defer { økt.commitConfiguration() }
         økt.sessionPreset = .high
-        guard let enhet = AVCaptureDevice.default(for: .video),
+        guard let enhet = Self.velgKamera(),
               let inn = try? AVCaptureDeviceInput(device: enhet), økt.canAddInput(inn)
         else { return }
+        Self.stillInnFokus(enhet)
         økt.addInput(inn)
         self.enhet = enhet
         harLykt = enhet.hasTorch
