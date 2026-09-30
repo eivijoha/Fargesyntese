@@ -15,6 +15,7 @@ struct PalettListe: View {
     @State private var kolonne: NavigationSplitViewColumn = .sidebar
     @State private var målrettet: Valg?
     @State private var slettes: PalettDokument?
+    @State private var visVerdiord = false
 
     enum Valg: Hashable {
         case enkeltfarger
@@ -36,7 +37,7 @@ struct PalettListe: View {
 
                     Text("Paletter").font(.title3.weight(.semibold)).padding(.top, 8)
                     if paletter.isEmpty {
-                        Text("Ingen paletter ennå. Lag en fra Studio, Overgang, Utplukk eller Verdiord.")
+                        Text("Ingen paletter ennå. Trykk + for en tom palett eller en palett fra verdiord, eller lag en fra Studio, Overgang eller Utplukk.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                     }
@@ -56,10 +57,21 @@ struct PalettListe: View {
             .background(Color(white: 0.5).opacity(0.06))
             .navigationTitle("Paletter")
             .toolbar {
-                Button("Ny palett", systemImage: "plus") {
-                    let p = PalettDokument(navn: "Ny palett")
-                    kontekst.insert(p)
-                    velg(.palett(p))
+                Menu("Ny palett", systemImage: "plus") {
+                    Button("Ny tom palett", systemImage: "square.dashed") {
+                        let p = PalettDokument(navn: "Ny palett")
+                        kontekst.insert(p)
+                        velg(.palett(p))
+                    }
+                    Button("Ny palett fra verdiord (KI)", systemImage: "sparkles") { visVerdiord = true }
+                }
+            }
+            .sheet(isPresented: $visVerdiord) {
+                NavigationStack {
+                    VerdiordVisning()
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) { Button("Lukk") { visVerdiord = false } }
+                        }
                 }
             }
             .confirmationDialog("Slette «\(slettes?.navn ?? "")»?", isPresented: Binding(get: { slettes != nil }, set: { if !$0 { slettes = nil } }),

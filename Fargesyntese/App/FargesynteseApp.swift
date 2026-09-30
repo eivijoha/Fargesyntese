@@ -62,7 +62,7 @@ final class Arbeidsbenk {
             ?? Lyshetstrinn()
     }
 
-    enum Fane: Hashable { case studio, paletter, overgang, utplukk, verdiord }
+    enum Fane: Hashable { case studio, paletter, overgang, utplukk, vurdering }
 
     /// Siste målte farger (kamera, bilde, pipette), nyeste sist – brukes i sammenligning.
     private(set) var målinger: [Farge] = []
@@ -107,8 +107,8 @@ struct InnholdsVisning: View {
             Tab("Utplukk", systemImage: "eyedropper.halffull", value: .utplukk) {
                 NavigationStack { UtplukkVisning() }
             }
-            Tab("Verdiord", systemImage: "sparkles", value: .verdiord) {
-                NavigationStack { VerdiordVisning() }
+            Tab("Vurdering", systemImage: "checkmark.seal", value: .vurdering) {
+                NavigationStack { VurderingVisning() }
             }
         }
         .tabViewStyle(.sidebarAdaptable)

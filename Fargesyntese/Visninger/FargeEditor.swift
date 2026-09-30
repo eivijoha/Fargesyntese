@@ -10,6 +10,27 @@ struct FargeEditor: View {
     @State private var lagreNavn = ""
     @State private var lagret = false
     @Environment(\.modelContext) private var kontekst
+    @AppStorage("studioModus") private var modus: Modus = .farge
+
+    /// Studio er delt i moduser, så harmonier og toner ikke gjemmer seg nederst i en lang liste.
+    enum Modus: String, CaseIterable, Identifiable {
+        case farge, toner, harmoni
+        var id: String { rawValue }
+        var navn: String {
+            switch self {
+            case .farge: "Farge"
+            case .toner: "Toner"
+            case .harmoni: "Harmoni"
+            }
+        }
+        var symbol: String {
+            switch self {
+            case .farge: "slider.horizontal.3"
+            case .toner: "square.3.layers.3d"
+            case .harmoni: "circle.hexagongrid"
+            }
+        }
+    }
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
@@ -39,69 +60,21 @@ struct FargeEditor: View {
             }
 
             Section {
-                Toggle(isOn: $arbeidsbenk.kunSRGB) {
-                    Label("Begrens til sRGB", systemImage: "square.dashed.inset.filled")
+                Picker("Modus", selection: $modus) {
+                    ForEach(Modus.allCases) { Label($0.navn, systemImage: $0.symbol).tag($0) }
                 }
-            } footer: {
-                Text(arbeidsbenk.kunSRGB
-                     ? "Alle nye farger holdes innenfor sRGB – trygt for web, e-post, Office og skjermer uten bred gamut."
-                     : "Farger kan gå ut i Display P3 (bred gamut). Slå på for å holde alt innenfor sRGB.")
+                .pickerStyle(.segmented)
+                .labelsHidden()
             }
 
-            Section {
-                Picker("Fargemodell", selection: $arbeidsbenk.modell) {
-                    ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
+            switch modus {
+            case .farge: fargeModus(farge)
+            case .toner: tonerModus(farge)
+            case .harmoni:
+                HarmoniSeksjon(grunnfarge: farge, gamut: arbeidsbenk.gamut, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
+                    lagreFarger = farger
+                    lagreNavn = navn
                 }
-                KomponentGlidere(modell: arbeidsbenk.modell, farge: $arbeidsbenk.aktivFarge)
-            }
-
-            Section("Verdier") {
-                VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
-                ForEach(Fargemodell.allCases) { modell in
-                    VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
-                }
-                LabeledContent("Gamut") {
-                    Text(farge.erISRGB ? "sRGB" : farge.erIDisplayP3 ? "Display P3" : "Utenfor P3")
-                }
-            }
-
-            KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
-
-            ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
-
-            Section {
-                let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge, gamut: arbeidsbenk.gamut)
-                HStack(spacing: 4) {
-                    ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
-                        VStack(spacing: 2) {
-                            FargeRute(farge: variant, visTekst: false, hjørne: 6)
-                                .frame(height: 44)
-                                .overlay {
-                                    if i == arbeidsbenk.lyshetstrinn.antallLysere {
-                                        RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
-                                    }
-                                }
-                                .onTapGesture { arbeidsbenk.aktivFarge = variant }
-                            Text(variant.okLCH.l * 100, format: .number.precision(.fractionLength(0)))
-                                .font(.caption2.monospacedDigit())
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-                LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
-                Button("Legg raden i palett", systemImage: "plus.square.on.square") {
-                    lagreNavn = "Lysere og mørkere \(farge.hex())"
-                    lagreFarger = varianter.map { PalettFarge(farge: $0, opphav: .toneskala) }
-                }
-            } header: {
-                Text("Lysere og mørkere")
-            } footer: {
-                Text("Tallene under hver prøve er OKLCH-lyshet i prosent.")
-            }
-
-            HarmoniSeksjon(grunnfarge: farge, gamut: arbeidsbenk.gamut, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
-                lagreFarger = farger
-                lagreNavn = navn
             }
         }
         .formStyle(.grouped)
@@ -134,6 +107,75 @@ struct FargeEditor: View {
             guard let f = farger.first else { return false }
             arbeidsbenk.aktivFarge = f
             return true
+        }
+    }
+}
+
+extension FargeEditor {
+    @ViewBuilder
+    fileprivate func fargeModus(_ farge: Farge) -> some View {
+        @Bindable var arbeidsbenk = arbeidsbenk
+        Section {
+            Toggle(isOn: $arbeidsbenk.kunSRGB) {
+                Label("Begrens til sRGB", systemImage: "square.dashed.inset.filled")
+            }
+        } footer: {
+            Text(arbeidsbenk.kunSRGB
+                 ? "Alle nye farger holdes innenfor sRGB – trygt for web, e-post, Office og skjermer uten bred gamut."
+                 : "Farger kan gå ut i Display P3 (bred gamut). Slå på for å holde alt innenfor sRGB.")
+        }
+
+        Section {
+            Picker("Fargemodell", selection: $arbeidsbenk.modell) {
+                ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
+            }
+            KomponentGlidere(modell: arbeidsbenk.modell, farge: $arbeidsbenk.aktivFarge)
+        }
+
+        Section("Verdier") {
+            VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
+            ForEach(Fargemodell.allCases) { modell in
+                VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
+            }
+            LabeledContent("Gamut") {
+                Text(farge.erISRGB ? "sRGB" : farge.erIDisplayP3 ? "Display P3" : "Utenfor P3")
+            }
+        }
+
+        ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
+    }
+
+    @ViewBuilder
+    fileprivate func tonerModus(_ farge: Farge) -> some View {
+        @Bindable var arbeidsbenk = arbeidsbenk
+        Section {
+            let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge, gamut: arbeidsbenk.gamut)
+            HStack(spacing: 4) {
+                ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
+                    VStack(spacing: 2) {
+                        FargeRute(farge: variant, visTekst: false, hjørne: 6)
+                            .frame(height: 44)
+                            .overlay {
+                                if i == arbeidsbenk.lyshetstrinn.antallLysere {
+                                    RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
+                                }
+                            }
+                            .onTapGesture { arbeidsbenk.aktivFarge = variant }
+                        Text(variant.okLCH.l * 100, format: .number.precision(.fractionLength(0)))
+                            .font(.caption2.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
+            Button("Legg raden i palett", systemImage: "plus.square.on.square") {
+                lagreNavn = "Lysere og mørkere \(farge.hex())"
+                lagreFarger = varianter.map { PalettFarge(farge: $0, opphav: .toneskala) }
+            }
+        } header: {
+            Text("Lysere og mørkere")
+        } footer: {
+            Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge.")
         }
     }
 }
