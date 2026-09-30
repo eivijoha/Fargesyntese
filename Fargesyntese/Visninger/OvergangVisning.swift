@@ -181,7 +181,7 @@ struct CSSGradientSeksjon: View {
         } header: { Group {
             Text("CSS-gradient")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Moderne nettlesere bruker `in oklab` og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.")
+            Text("Moderne nettlesere bruker «in oklab» og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.")
         }
     }
 
