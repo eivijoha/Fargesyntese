@@ -8,7 +8,6 @@ struct FargeEditor: View {
     @State private var hexTekst = ""
     @State private var lagreFarger: [PalettFarge]?
     @State private var lagreNavn = ""
-    @State private var lagret = false
     @Environment(\.modelContext) private var kontekst
     @AppStorage("studioModus") private var modus: Modus = .farge
     @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
@@ -96,17 +95,6 @@ struct FargeEditor: View {
             ToolbarItemGroup {
                 Button("Lim inn", systemImage: "doc.on.clipboard") {
                     if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
-                }
-                Button("Lagre farge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
-                    lagreEnkeltfarger([PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: arbeidsbenk.modell, farge: farge))], i: kontekst)
-                    lagret = true
-                    Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
-                }
-                .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
-                .help("Lagre som enkeltfarge (uten palett)")
-                Button("Legg i palett", systemImage: "plus.square.on.square") {
-                    lagreNavn = ""
-                    lagreFarger = [PalettFarge(farge: farge)]
                 }
             }
         }
@@ -385,7 +373,7 @@ struct Fargeflate: View {
                 .padding(12)
             }
             .overlay(alignment: .topTrailing) {
-                LagreHalvdelKnapp(farge: pf, lagre: lagre)
+                LagreHalvdelKnapp(farge: pf, lagre: lagre, leggIPalett: leggIPalett)
                     .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                     .padding(6)
             }
@@ -400,26 +388,32 @@ struct Fargeflate: View {
     }
 }
 
-/// Bokmerkeknapp i hver halvdel av fargeflaten, med kort bekreftelse.
+/// «+»-knapp i hver halvdel av fargeflaten: lagre som enkeltfarge eller legg i palett.
+/// Viser en kort hake etter lagring.
 private struct LagreHalvdelKnapp: View {
     let farge: PalettFarge
     var lagre: (PalettFarge) -> Void
+    var leggIPalett: (PalettFarge) -> Void
     @State private var lagret = false
 
     var body: some View {
-        Button {
-            lagre(farge)
-            lagret = true
-            Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
+        Menu {
+            Button("Lagre som enkeltfarge", systemImage: "bookmark") {
+                lagre(farge)
+                lagret = true
+                Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
+            }
+            Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
         } label: {
-            Image(systemName: lagret ? "bookmark.fill" : "bookmark")
+            Image(systemName: lagret ? "checkmark.square.fill" : "plus.square")
                 .font(.body.weight(.semibold))
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .menuIndicator(.hidden)
         .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
-        .accessibilityLabel(lagret ? String(localized: "Lagret") : String(localized: "Lagre som enkeltfarge"))
+        .accessibilityLabel(lagret ? String(localized: "Lagret") : String(localized: "Lagre farge"))
     }
 }
 
