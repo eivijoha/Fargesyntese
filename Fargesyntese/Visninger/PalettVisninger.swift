@@ -184,7 +184,7 @@ struct EnkeltfargerRad: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Label("Enkeltfarger", systemImage: "bookmark.fill").font(.headline)
+                Label("Enkeltfarger", systemImage: "square.fill").font(.headline)
                 Spacer()
                 Text("\(farger.count)").font(.caption).foregroundStyle(Color.sekundærTekst).monospacedDigit()
             }
@@ -234,7 +234,7 @@ struct EnkeltfargerVisning: View {
         }
         .overlay {
             if lagrede.isEmpty {
-                ContentUnavailableView("Ingen enkeltfarger", systemImage: "bookmark",
+                ContentUnavailableView("Ingen enkeltfarger", systemImage: "square.dashed",
                                        description: Text("Lagre en farge uten palett fra Studio, Utplukk eller «Legg i palett»."))
             }
         }
@@ -244,7 +244,7 @@ struct EnkeltfargerVisning: View {
         }
         .toolbar {
             ToolbarItemGroup {
-                Button("Lagre aktiv farge", systemImage: "bookmark") {
+                Button("Lagre aktiv farge", systemImage: "plus") {
                     lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.aktivFarge)], i: kontekst)
                 }
                 Button("Lim inn farger", systemImage: "doc.on.clipboard") {
@@ -520,7 +520,7 @@ struct VelgPalettArk: View {
                 if tilbyEnkeltfarger {
                     Section {
                         Button(farger.count == 1 ? "Lagre som enkeltfarge" : "Lagre som \(farger.count) enkeltfarger",
-                               systemImage: "bookmark") {
+                               systemImage: "plus.square") {
                             lagreEnkeltfarger(farger, i: kontekst)
                             lukk()
                         }

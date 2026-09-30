@@ -61,7 +61,7 @@ struct LagretFargeArk: View {
                 VStack(alignment: .leading, spacing: 20) {
                     gruppe(String(localized: "Aktiv farge"), [PalettFarge(farge: arbeidsbenk.aktivFarge)])
                     if !enkeltfarger.isEmpty {
-                        gruppe(String(localized: "Enkeltfarger"), enkeltfarger.map(\.palettFarge), symbol: "bookmark.fill")
+                        gruppe(String(localized: "Enkeltfarger"), enkeltfarger.map(\.palettFarge), symbol: "square.fill")
                     }
                     ForEach(paletter) { p in
                         if !p.farger.isEmpty {

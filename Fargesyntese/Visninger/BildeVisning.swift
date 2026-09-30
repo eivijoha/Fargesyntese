@@ -53,7 +53,6 @@ struct BildeVisning: View {
     @State private var antallKlynger = 6
     @State private var klynger: [Bildepalett.Klynge] = []
     @State private var lagre: [PalettFarge]?
-    @State private var lagret = false
     @Environment(\.modelContext) private var kontekst
 
     private var gjeldende: Farge? {
@@ -257,22 +256,15 @@ struct BildeVisning: View {
                 FargeRute(farge: gjeldende ?? Farge(hex: "#808080")!, hjørne: 10,
                           leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] })
                     .frame(width: 88, height: 56)
-                VStack(spacing: 10) {
-                    Button("Lagre som enkeltfarge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
-                        guard let f = fanget.last ?? gjeldende else { return }
-                        lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)], i: kontekst)
-                        lagret = true
-                        Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
-                    }
-                    .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
-                    .help("Lagre sist fangede farge som enkeltfarge")
-                    Button("Legg i palett", systemImage: "plus.square.on.square") {
-                        if let f = fanget.last ?? gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)] }
-                    }
-                    .help("Legg sist fangede farge i en palett")
-                }
-                .labelStyle(.iconOnly)
-                .font(.title3)
+                LagreMeny(lagre: {
+                    guard let f = fanget.last ?? gjeldende else { return }
+                    lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)], i: kontekst)
+                }, leggIPalett: {
+                    if let f = fanget.last ?? gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)] }
+                })
+                .font(.title2)
+                .foregroundStyle(.tint)
+                .help("Lagre sist fangede farge")
                 ScrollView(.horizontal) {
                     HStack(spacing: 6) {
                         ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in

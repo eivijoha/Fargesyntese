@@ -773,16 +773,6 @@
         }
       }
     },
-    "Fargevelger med pipette": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Color picker with eyedropper"
-          }
-        }
-      }
-    },
     "Faste steg": {
       "localizations": {
         "en": {
@@ -1159,6 +1149,16 @@
         }
       }
     },
+    "Hvitt, flyttbart lysfelt på skjermen som lyskilde for kameraet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "White, movable light panel on the screen as a light source for the camera"
+          }
+        }
+      }
+    },
     "Ikke bestått": {
       "localizations": {
         "en": {
@@ -1477,6 +1477,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copy CSS"
+          }
+        }
+      }
+    },
+    "Kopier aktiv farge som OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy active color as OKLCH"
           }
         }
       }
@@ -1811,12 +1821,12 @@
         }
       }
     },
-    "Lagre sist fangede farge som enkeltfarge": {
+    "Lagre sist fangede farge": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save the last captured color as a single color"
+            "value": "Save last captured color"
           }
         }
       }
@@ -1849,16 +1859,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save as single color"
-          }
-        }
-      }
-    },
-    "Lagre som enkeltfarge (uten palett)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save as single color (no palette)"
           }
         }
       }
@@ -1953,16 +1953,6 @@
         }
       }
     },
-    "Legg sist fangede farge i en palett": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add the last captured color to a palette"
-          }
-        }
-      }
-    },
     "Legg til": {
       "localizations": {
         "en": {
@@ -1989,6 +1979,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Paste"
+          }
+        }
+      }
+    },
+    "Lim inn farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste color"
           }
         }
       }
@@ -2383,12 +2383,42 @@
         }
       }
     },
+    "Pipette": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eyedropper"
+          }
+        }
+      }
+    },
+    "Plukk en farge fra hvor som helst på skjermen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a color from anywhere on the screen"
+          }
+        }
+      }
+    },
     "Plukk farger fra et bilde": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Pick colors from an image"
+          }
+        }
+      }
+    },
+    "Plukk fra skjermen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick from screen"
           }
         }
       }
@@ -2529,6 +2559,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Check the contrast of ${forgrunn} on ${bakgrunn}"
+          }
+        }
+      }
+    },
+    "Skjul": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide"
+          }
+        }
+      }
+    },
+    "Skjul lysfelt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide light panel"
           }
         }
       }
@@ -3027,6 +3077,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Angle"
+          }
+        }
+      }
+    },
+    "Vis lysfelt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show light panel"
           }
         }
       }

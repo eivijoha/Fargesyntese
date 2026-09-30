@@ -373,47 +373,19 @@ struct Fargeflate: View {
                 .padding(12)
             }
             .overlay(alignment: .topTrailing) {
-                LagreHalvdelKnapp(farge: pf, lagre: lagre, leggIPalett: leggIPalett)
+                LagreMeny(lagre: { lagre(pf) }, leggIPalett: { leggIPalett(pf) })
+                    .font(.body.weight(.semibold))
                     .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                     .padding(6)
             }
             .contextMenu {
-                Button("Lagre som enkeltfarge", systemImage: "bookmark") { lagre(pf) }
+                Button("Lagre som enkeltfarge", systemImage: "plus.square") { lagre(pf) }
                 Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(pf) }
                 Button("Kopier verdier", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
                 Button("Kopier hex", systemImage: "number") { Utklippstavle.kopier(f) }
             }
             .accessibilityElement(children: .contain)
             .accessibilityLabel("\(tittel): \(tekst)")
-    }
-}
-
-/// «+»-knapp i hver halvdel av fargeflaten: lagre som enkeltfarge eller legg i palett.
-/// Viser en kort hake etter lagring.
-private struct LagreHalvdelKnapp: View {
-    let farge: PalettFarge
-    var lagre: (PalettFarge) -> Void
-    var leggIPalett: (PalettFarge) -> Void
-    @State private var lagret = false
-
-    var body: some View {
-        Menu {
-            Button("Lagre som enkeltfarge", systemImage: "bookmark") {
-                lagre(farge)
-                lagret = true
-                Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
-            }
-            Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
-        } label: {
-            Image(systemName: lagret ? "checkmark.square.fill" : "plus.square")
-                .font(.body.weight(.semibold))
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .menuIndicator(.hidden)
-        .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
-        .accessibilityLabel(lagret ? String(localized: "Lagret") : String(localized: "Lagre farge"))
     }
 }
 
