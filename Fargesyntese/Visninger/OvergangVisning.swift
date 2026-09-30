@@ -98,7 +98,9 @@ struct OvergangVisning: View {
             }
             Seksjon("Lysere og mørkere rader") {
                 @Bindable var arbeidsbenk = arbeidsbenk
-                LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
+                // Forklaringen regnes fra midterste tone i overgangen.
+                LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn,
+                                       grunnlyshet: toner.isEmpty ? 0.6 : toner[toner.count / 2].okLCH.l)
             }
             // Selve overgangen: venstre ende er nøyaktig «Fra», høyre ende nøyaktig «Til».
             Section {
