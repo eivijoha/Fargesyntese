@@ -4,13 +4,17 @@ import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// Palettoversikt som kort i en rullevisning (ikke `List`): i en `List` tar raden over
+/// dra-gesten, slik at enkeltfarger ikke kan dras ut av den. Her kan hver fargeprøve dras,
+/// og hvert kort tar imot farger som slippes på det.
 struct PalettListe: View {
     @Environment(\.modelContext) private var kontekst
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
     @State private var valgt: Valg?
-    @State private var målrettet: UUID?
-    @State private var enkeltfargerMålrettet = false
+    @State private var kolonne: NavigationSplitViewColumn = .sidebar
+    @State private var målrettet: Valg?
+    @State private var slettes: PalettDokument?
 
     enum Valg: Hashable {
         case enkeltfarger
@@ -18,45 +22,56 @@ struct PalettListe: View {
     }
 
     var body: some View {
-        NavigationSplitView {
-            List(selection: $valgt) {
-                Section {
-                    NavigationLink(value: Valg.enkeltfarger) {
-                        EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge))
+        NavigationSplitView(preferredCompactColumn: $kolonne) {
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    kort(.enkeltfarger) {
+                        EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge), paletter: paletter)
+                    } slipp: { farger in
+                        let eksisterende = Set(enkeltfarger.map(\.id))
+                        let nye = farger.filter { !eksisterende.contains($0.id) }
+                        lagreEnkeltfarger(nye, i: kontekst)
+                        return !nye.isEmpty
                     }
-                    .dropDestination(for: PalettFarge.self) { farger, _ in
-                        lagreEnkeltfarger(farger, i: kontekst)
-                        return true
-                    } isTargeted: { enkeltfargerMålrettet = $0 }
-                    .listRowBackground(enkeltfargerMålrettet ? Color.accentColor.opacity(0.15) : nil)
-                }
-                Section("Paletter") {
-                    ForEach(paletter) { p in
-                        NavigationLink(value: Valg.palett(p)) {
-                            PalettRad(dokument: p)
-                        }
-                        .dropDestination(for: PalettFarge.self) { farger, _ in
-                            leggTil(farger, i: p)
-                        } isTargeted: { over in
-                            målrettet = over ? p.id : (målrettet == p.id ? nil : målrettet)
-                        }
-                        .listRowBackground(målrettet == p.id ? Color.accentColor.opacity(0.15) : nil)
-                    }
-                    .onDelete { indekser in indekser.map { paletter[$0] }.forEach(kontekst.delete) }
+
+                    Text("Paletter").font(.title3.weight(.semibold)).padding(.top, 8)
                     if paletter.isEmpty {
                         Text("Ingen paletter ennå. Lag en fra Studio, Overgang, Utplukk eller Verdiord.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                     }
+                    ForEach(paletter) { p in
+                        kort(.palett(p)) {
+                            PalettRad(dokument: p)
+                        } slipp: { farger in
+                            leggTil(farger, i: p)
+                        }
+                        .contextMenu {
+                            Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
+                        }
+                    }
                 }
+                .padding()
             }
+            .background(Color(white: 0.5).opacity(0.06))
             .navigationTitle("Paletter")
             .toolbar {
                 Button("Ny palett", systemImage: "plus") {
                     let p = PalettDokument(navn: "Ny palett")
                     kontekst.insert(p)
-                    valgt = .palett(p)
+                    velg(.palett(p))
                 }
+            }
+            .confirmationDialog("Slette «\(slettes?.navn ?? "")»?", isPresented: Binding(get: { slettes != nil }, set: { if !$0 { slettes = nil } }),
+                                titleVisibility: .visible) {
+                Button("Slett palett", role: .destructive) {
+                    if let p = slettes {
+                        if valgt == .palett(p) { valgt = nil }
+                        kontekst.delete(p)
+                    }
+                }
+            } message: {
+                Text("Fargene i paletten slettes også. Dette kan ikke angres.")
             }
         } detail: {
             switch valgt {
@@ -65,6 +80,37 @@ struct PalettListe: View {
             case nil: Text("Velg en palett").foregroundStyle(.secondary)
             }
         }
+    }
+
+    private func velg(_ v: Valg) {
+        valgt = v
+        kolonne = .detail
+    }
+
+    /// Kort som kan trykkes (åpner) og som tar imot slippede farger.
+    private func kort<Innhold: View>(_ v: Valg, @ViewBuilder innhold: () -> Innhold,
+                                     slipp: @escaping ([PalettFarge]) -> Bool) -> some View {
+        HStack(alignment: .center, spacing: 8) {
+            innhold()
+            Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
+        }
+        .padding(12)
+        .background(.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .strokeBorder(målrettet == v ? Color.accentColor : (valgt == v ? Color.secondary.opacity(0.5) : .clear),
+                              lineWidth: målrettet == v ? 3 : 1)
+        }
+        .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .onTapGesture { velg(v) }
+        .dropDestination(for: PalettFarge.self) { farger, _ in
+            slipp(farger)
+        } isTargeted: { over in
+            målrettet = over ? v : (målrettet == v ? nil : målrettet)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction { velg(v) }
     }
 }
 
@@ -75,19 +121,21 @@ func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) {
 
 struct EnkeltfargerRad: View {
     let farger: [PalettFarge]
+    let paletter: [PalettDokument]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Label("Enkeltfarger", systemImage: "bookmark.fill").font(.headline)
                 Spacer()
                 Text("\(farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 3) {
-                    ForEach(farger.prefix(40)) { pf in
-                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 4, palettFarge: pf)
-                            .frame(width: 26, height: 26)
+                HStack(spacing: 4) {
+                    ForEach(farger.prefix(60)) { pf in
+                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6,
+                                  palettFarge: pf, ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: nil)))
+                            .frame(width: 36, height: 36)
                     }
                     if farger.isEmpty {
                         Text("Farger lagret uten palett havner her").font(.caption).foregroundStyle(.secondary)
@@ -95,7 +143,6 @@ struct EnkeltfargerRad: View {
                 }
             }
         }
-        .padding(.vertical, 4)
     }
 }
 
@@ -182,9 +229,9 @@ struct PalettRad: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 3) {
                     ForEach(dokument.farger) { pf in
-                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 4, palettFarge: pf,
+                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6, palettFarge: pf,
                                   ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
-                            .frame(width: 26, height: 26)
+                            .frame(width: 36, height: 36)
                     }
                     if dokument.farger.isEmpty {
                         Text("Slipp farger her").font(.caption).foregroundStyle(.secondary)
@@ -192,7 +239,6 @@ struct PalettRad: View {
                 }
             }
         }
-        .padding(.vertical, 4)
     }
 }
 
@@ -485,22 +531,24 @@ struct ToneskalaArk: View {
     }
 }
 
-/// «Kopier til» / «Flytt til» en annen palett.
+/// «Kopier til» / «Flytt til» en annen palett. Uten `fra` (enkeltfarger) vises «Legg i palett».
 struct FlyttMeny: View {
     let farge: PalettFarge
-    let fra: PalettDokument
+    let fra: PalettDokument?
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
 
     var body: some View {
-        let andre = paletter.filter { $0.id != fra.id }
+        let andre = paletter.filter { $0.id != fra?.id }
         if !andre.isEmpty {
-            Menu("Kopier til", systemImage: "doc.on.doc") {
+            Menu(fra == nil ? "Legg i palett" : "Kopier til", systemImage: fra == nil ? "plus.square.on.square" : "doc.on.doc") {
                 ForEach(andre) { p in Button(p.navn.isEmpty ? "Uten navn" : p.navn) { leggTil([farge], i: p) } }
             }
-            Menu("Flytt til", systemImage: "arrow.right.square") {
-                ForEach(andre) { p in
-                    Button(p.navn.isEmpty ? "Uten navn" : p.navn) {
-                        if leggTil([farge], i: p) { fra.farger.removeAll { $0.id == farge.id } }
+            if let fra {
+                Menu("Flytt til", systemImage: "arrow.right.square") {
+                    ForEach(andre) { p in
+                        Button(p.navn.isEmpty ? "Uten navn" : p.navn) {
+                            if leggTil([farge], i: p) { fra.farger.removeAll { $0.id == farge.id } }
+                        }
                     }
                 }
             }
