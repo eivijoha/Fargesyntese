@@ -16,6 +16,7 @@ struct FargeRute: View {
     /// Valgfrie handlinger i kontekstmenyen (trykk og hold / høyreklikk).
     var leggIPalett: ((Farge) -> Void)? = nil
     var fjern: (() -> Void)? = nil
+    var navngi: (() -> Void)? = nil
     /// Når satt, dras fargen med navn (mellom paletter); ellers som ren farge.
     var palettFarge: PalettFarge? = nil
     /// Ekstra menypunkter (f.eks. «Flytt til …»).
@@ -59,6 +60,9 @@ struct FargeRute: View {
                 }
             }
             .contextMenu {
+                if let navngi {
+                    Button("Gi navn …", systemImage: "character.cursor.ibeam", action: navngi)
+                }
                 if let leggIPalett {
                     Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
                 }

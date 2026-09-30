@@ -164,6 +164,7 @@ struct EnkeltfargerVisning: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var lagrede: [LagretFarge]
     @State private var leggIPalett: [PalettFarge]?
+    @State private var navngis: LagretFarge?
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
@@ -174,7 +175,8 @@ struct EnkeltfargerVisning: View {
                     let pf = lagret.palettFarge
                     FargeRute(farge: pf.farge, navn: pf.navn,
                               leggIPalett: { _ in leggIPalett = [pf] },
-                              fjern: { kontekst.delete(lagret) }, palettFarge: pf)
+                              fjern: { kontekst.delete(lagret) },
+                              navngi: { navngis = lagret }, palettFarge: pf)
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
                             arbeidsbenk.aktivFarge = pf.farge
@@ -212,6 +214,13 @@ struct EnkeltfargerVisning: View {
         }
         .sheet(isPresented: Binding(get: { leggIPalett != nil }, set: { if !$0 { leggIPalett = nil } })) {
             VelgPalettArk(farger: leggIPalett ?? [], tilbyEnkeltfarger: false)
+        }
+        .sheet(item: $navngis) { lagret in
+            NavngiArk(farge: lagret.palettFarge) { navn in
+                var pf = lagret.palettFarge
+                pf.navn = navn
+                lagret.palettFarge = pf
+            }
         }
     }
 }
@@ -274,6 +283,7 @@ struct PalettDetalj: View {
     @State private var foreslåtteNavn: [String]?
     @State private var kiArbeider = false
     @State private var kiFeil: String?
+    @State private var navngisPalettfarge: PalettFarge?
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
@@ -281,7 +291,8 @@ struct PalettDetalj: View {
         ScrollView {
             LazyVGrid(columns: rutenett, spacing: 10) {
                 ForEach(dokument.farger) { pf in
-                    FargeRute(farge: pf.farge, navn: pf.navn, palettFarge: pf,
+                    FargeRute(farge: pf.farge, navn: pf.navn,
+                              navngi: { navngisPalettfarge = pf }, palettFarge: pf,
                               ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
@@ -349,6 +360,13 @@ struct PalettDetalj: View {
             ToneskalaArk(grunnfarge: pf) { nye in dokument.farger += nye }
         }
         .sheet(isPresented: $visKontrast) { KontrastmatriseArk(palett: dokument.palett) }
+        .sheet(item: $navngisPalettfarge) { pf in
+            NavngiArk(farge: pf) { navn in
+                var f = dokument.farger
+                if let i = f.firstIndex(where: { $0.id == pf.id }) { f[i].navn = navn }
+                dokument.farger = f
+            }
+        }
         .sheet(item: $vurdering) { VurderingArk(vurdering: $0) }
         .confirmationDialog("Bruke foreslåtte navn?", isPresented: Binding(get: { foreslåtteNavn != nil }, set: { if !$0 { foreslåtteNavn = nil } }),
                             titleVisibility: .visible) {
@@ -574,5 +592,72 @@ struct FlyttMeny: View {
                 }
             }
         }
+    }
+}
+
+/// Gi en farge navn, med fargebeskrivelse som hjelp og forslag fra KI.
+struct NavngiArk: View {
+    let farge: PalettFarge
+    var lagre: (String) -> Void
+    @Environment(\.dismiss) private var lukk
+    @State private var navn = ""
+    @State private var foreslår = false
+    @FocusState private var fokus: Bool
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    HStack(spacing: 12) {
+                        FargeRute(farge: farge.farge, visTekst: false, hjørne: 8).frame(width: 56, height: 40)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(farge.farge.hex()).font(.callout.monospaced())
+                            Text(Fargebeskrivelse.beskriv(farge.farge)).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    TextField("Navn, f.eks. «Fjordblå»", text: $navn)
+                        .focused($fokus)
+                        .submitLabel(.done)
+                        .onSubmit(lagreOgLukk)
+                }
+                Section {
+                    Button {
+                        Task { await foreslå() }
+                    } label: {
+                        if foreslår { ProgressView() } else { Label("Foreslå navn", systemImage: "sparkles") }
+                    }
+                    .disabled(foreslår)
+                } footer: {
+                    Text("Forslaget lages med Apple Intelligence på enheten når det er tilgjengelig.")
+                }
+            }
+            .formStyle(.grouped)
+            .navigationTitle("Gi navn")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Avbryt") { lukk() } }
+                ToolbarItem(placement: .confirmationAction) { Button("Lagre", action: lagreOgLukk) }
+            }
+            .onAppear {
+                navn = farge.navn
+                fokus = true
+            }
+        }
+        .presentationDetents([.medium])
+    }
+
+    private func lagreOgLukk() {
+        lagre(navn.trimmingCharacters(in: .whitespacesAndNewlines))
+        lukk()
+    }
+
+    private func foreslå() async {
+        foreslår = true
+        defer { foreslår = false }
+        let beskrivelse = Fargebeskrivelse.beskriv(farge.farge)
+        let reserve = beskrivelse.prefix(1).uppercased() + beskrivelse.dropFirst()
+        navn = (try? await Fargenavngiver.navngi([farge.farge]).first) ?? reserve
     }
 }
