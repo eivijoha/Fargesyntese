@@ -7,6 +7,10 @@ struct FargeRute: View {
     var navn: String? = nil
     var visTekst = true
     var hjørne: CGFloat = 12
+    /// Rette hjørner nederst (når ruten sitter oppå et felt, som i Studio).
+    var retteBunnhjørner = false
+    /// Ekstra innrykk for P3-merket (store flater, som i Studio).
+    var ekstraMerkeInnrykk: CGFloat = 0
     /// Valgfrie handlinger i kontekstmenyen (trykk og hold / høyreklikk).
     var leggIPalett: ((Farge) -> Void)? = nil
     var fjern: (() -> Void)? = nil
@@ -23,8 +27,14 @@ struct FargeRute: View {
         }
     }
 
+    private var form: UnevenRoundedRectangle {
+        let bunn = retteBunnhjørner ? 0 : hjørne
+        return UnevenRoundedRectangle(topLeadingRadius: hjørne, bottomLeadingRadius: bunn,
+                                      bottomTrailingRadius: bunn, topTrailingRadius: hjørne, style: .continuous)
+    }
+
     private var rute: some View {
-        RoundedRectangle(cornerRadius: hjørne, style: .continuous)
+        form
             .fill(farge.swiftUI)
             .overlay(alignment: .bottomLeading) {
                 if visTekst {
@@ -41,7 +51,7 @@ struct FargeRute: View {
                     Text("P3")
                         .font(.caption2.weight(.bold))
                         // Innrykket følger hjørneradiusen, så merket ikke klippes av det avrundede hjørnet.
-                        .padding(hjørne * 0.3 + 4)
+                        .padding(hjørne * 0.3 + 4 + ekstraMerkeInnrykk)
                         .foregroundStyle(farge.lesbarTekstfarge.swiftUI)
                         .accessibilityLabel("Utenfor sRGB")
                 }

@@ -17,7 +17,7 @@ struct FargeEditor: View {
 
         Form {
             Section {
-                FargeRute(farge: farge, visTekst: false, hjørne: 20)
+                FargeRute(farge: farge, visTekst: false, hjørne: 20, retteBunnhjørner: true, ekstraMerkeInnrykk: 8)
                     .frame(height: 160)
                     .listRowInsets(EdgeInsets())
                 HStack {
@@ -27,11 +27,14 @@ struct FargeEditor: View {
                         .onSubmit {
                             if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
                         }
+                    #if os(macOS)
+                    // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
                     PipetteKnapp {
                         arbeidsbenk.aktivFarge = $0
                         arbeidsbenk.registrerMåling($0)
                     }
-                        .labelStyle(.iconOnly)
+                    .labelStyle(.iconOnly)
+                    #endif
                 }
             }
 
