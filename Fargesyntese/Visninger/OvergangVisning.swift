@@ -31,13 +31,10 @@ struct OvergangVisning: View {
     @State private var leggIPalett: [PalettFarge]?
     @Environment(\.modelContext) private var kontekst
 
-    /// «+» i øvre høyre hjørne av overgangen: lagre gradienten, eller fargene som palett.
+    /// «+» i øvre høyre hjørne av den trinnvise overgangen: lagre tonene som palett, med eller uten
+    /// lysere og mørkere rader. (Hele gradienten lagres fra «+» på selve gradienten.)
     private var lagremeny: some View {
         Menu {
-            Button("Lagre gradient …", systemImage: "square.stack") {
-                gradientnavn = String(localized: "Overgang \(start.hex()) → \(slutt.hex())")
-                navngirGradient = true
-            }
             Button("Lagre tonene som palett …", systemImage: "swatchpalette") {
                 somPalett = toner.map { PalettFarge(farge: $0, opphav: .overgang) }
             }
@@ -47,7 +44,7 @@ struct OvergangVisning: View {
                 }
             }
         } label: {
-            Image(systemName: gradientLagret ? "checkmark.square.fill" : "plus.square")
+            Image(systemName: "plus.square")
                 .font(.body.weight(.semibold))
                 .foregroundStyle((toner.last ?? slutt).lesbarTekstfarge.swiftUI)
                 .frame(width: 44, height: 44)
@@ -55,8 +52,7 @@ struct OvergangVisning: View {
         }
         .buttonStyle(.plain)
         .menuIndicator(.hidden)
-        .sensoryFeedback(.success, trigger: gradientLagret) { _, ny in ny }
-        .accessibilityLabel(gradientLagret ? String(localized: "Lagret") : String(localized: "Lagre overgang"))
+        .accessibilityLabel(String(localized: "Lagre tonene som palett"))
     }
 
     private func lagreGradient() {
@@ -153,7 +149,10 @@ struct OvergangVisning: View {
                 }
             }
 
-            CSSGradientSeksjon(start: start, slutt: slutt, toner: toner)
+            CSSGradientSeksjon(start: start, slutt: slutt, toner: toner, lagret: gradientLagret) {
+                gradientnavn = String(localized: "Overgang \(start.hex()) → \(slutt.hex())")
+                navngirGradient = true
+            }
         }
         .formStyle(.grouped)
         .navigationTitle("Overgang")
@@ -179,6 +178,10 @@ struct CSSGradientSeksjon: View {
     let start: Farge
     let slutt: Farge
     let toner: [Farge]
+    /// Viser en hake i «+»-knappen rett etter lagring.
+    var lagret = false
+    /// «+» i hjørnet av gradienten: lagre hele gradienten under «Gradienter» i Paletter.
+    var lagreGradient: () -> Void = {}
     @AppStorage("gradientForm") private var form: CSSGradient.Form = .lineær
     @AppStorage("gradientVinkel") private var vinkel = 90.0
     @AppStorage("gradientTrinnvis") private var trinnvis = false
@@ -204,6 +207,18 @@ struct CSSGradientSeksjon: View {
         Section {
             forhåndsvisning
                 .frame(height: 96)
+                .overlay(alignment: .topTrailing) {
+                    Button(action: lagreGradient) {
+                        Image(systemName: lagret ? "checkmark.square.fill" : "plus.square")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(slutt.lesbarTekstfarge.swiftUI)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
+                    .accessibilityLabel(lagret ? String(localized: "Lagret") : String(localized: "Lagre gradient"))
+                }
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
             Picker("Form", selection: $form) {
