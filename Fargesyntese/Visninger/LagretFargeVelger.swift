@@ -27,6 +27,7 @@ struct FargeValgRad: View {
             Button("Velg", systemImage: "swatchpalette") { visVelger = true }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
+                .fixedSize()
             Menu("Mer", systemImage: "ellipsis.circle") {
                 Button("Aktiv farge", systemImage: "slider.horizontal.3") { farge = arbeidsbenk.aktivFarge }
                 Button("Lim inn", systemImage: "doc.on.clipboard") { if let f = Utklippstavle.limInn() { farge = f } }

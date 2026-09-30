@@ -11,6 +11,8 @@ struct Seksjon<Innhold: View>: View {
         self.innhold = innhold()
     }
 
+    /// Uttoner for kjøretidstekst; literaler går til `LocalizedStringKey`-varianten og lokaliseres.
+    @_disfavoredOverload
     init<S: StringProtocol>(_ tittel: S, @ViewBuilder innhold: () -> Innhold) {
         self.tittel = Text(tittel)
         self.innhold = innhold()
