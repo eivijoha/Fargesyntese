@@ -35,10 +35,29 @@ struct FargesynteseApp: App {
 /// Delt arbeidstilstand på tvers av faner: fargen man jobber med nå og foretrukket modell.
 @Observable
 final class Arbeidsbenk {
+    /// Verdiene brukeren sist skrev inn direkte i en ICC-profil (CMYK/RGB-gliderne koblet til
+    /// valgt profil i Studio). Gjelder bare så lenge aktiv farge er nettopp den fargen –
+    /// en rundtur gjennom profilen kan ellers gi andre (likeverdige) verdier, f.eks. annen sortgenerering.
+    struct Profilverdier: Equatable {
+        var profilID: String
+        var verdier: [Double]
+        var farge: Farge
+    }
+    var profilverdier: Profilverdier?
+
+    func profilverdier(for profil: ICCProfil) -> [Double]? {
+        guard let p = profilverdier, p.profilID == profil.id, p.farge == aktivFarge else { return nil }
+        return p.verdier
+    }
+
     var aktivFarge = Farge(hex: "#2F7FD8")! {
         didSet {
             // Unngå løkke: begrens bare når fargen faktisk er utenfor.
-            if let profil = begrensning, !aktivFarge.erInnenfor(profil) { aktivFarge = aktivFarge.begrenset(til: profil) }
+            // Verdier angitt direkte i begrensningsprofilen er innenfor per definisjon (en rundtur kan
+            // likevel gi små avvik, særlig i mørke CMYK-farger).
+            if let profil = begrensning, profilverdier(for: profil) == nil, !aktivFarge.erInnenfor(profil) {
+                aktivFarge = aktivFarge.begrenset(til: profil)
+            }
         }
     }
 

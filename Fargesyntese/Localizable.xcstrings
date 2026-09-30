@@ -143,6 +143,22 @@
         }
       }
     },
+    "%@-verdiene angis i %@ og vises slik de gjengis i dette fargerommet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ values are entered in %2$@ and shown as they render in that color space."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@-verdiene angis i %2$@ og vises slik de gjengis i dette fargerommet."
+          }
+        }
+      }
+    },
     "%@: %@": {
       "localizations": {
         "en": {

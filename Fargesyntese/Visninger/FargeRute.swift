@@ -180,8 +180,9 @@ struct FargeValgBoble: View {
 private struct JustertEtikett: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 10) {
-            configuration.icon.frame(width: 24)
-            configuration.title
+            // Ikonet i aksentfarge, teksten i vanlig tekstfarge (blå tekst leses dårlig på glassbakgrunn).
+            configuration.icon.frame(width: 24).foregroundStyle(.tint)
+            configuration.title.foregroundStyle(.primary)
         }
         .frame(minHeight: 36)
     }

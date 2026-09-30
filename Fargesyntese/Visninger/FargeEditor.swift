@@ -16,6 +16,17 @@ struct FargeEditor: View {
 
     private var visOgsåProfil: ICCProfil { bibliotek.profil(id: visOgsåID) ?? .sRGB }
 
+    /// Når fargemodellen og valgt ICC-profil er av samme slag (CMYK + CMYK-profil, RGB + RGB-profil),
+    /// angis verdiene direkte i profilen: gliderne er profilens CMYK/RGB, og fargen er alltid innenfor.
+    private var kobletProfil: ICCProfil? {
+        let p = visOgsåProfil
+        switch (arbeidsbenk.modell, p.modell) {
+        case (.cmyk, .cmyk): return p
+        case (.rgb, .rgb): return p.id == ICCProfil.sRGB.id ? nil : p
+        default: return nil
+        }
+    }
+
     /// Studio er delt i moduser, så harmonier og toner ikke gjemmer seg nederst i en lang liste.
     enum Modus: String, CaseIterable, Identifiable {
         case farge, toner, harmoni
@@ -43,6 +54,7 @@ struct FargeEditor: View {
         Form {
             Section {
                 Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
+                           kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
                            lagre: { lagreEnkeltfarger([$0], i: kontekst) },
                            leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
                     .frame(height: 140)
@@ -123,7 +135,15 @@ extension FargeEditor {
             Picker("Fargemodell", selection: $arbeidsbenk.modell) {
                 ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
             }
-            KomponentGlidere(modell: arbeidsbenk.modell, farge: $arbeidsbenk.aktivFarge)
+            KomponentGlidere(modell: arbeidsbenk.modell, profil: kobletProfil, hensikt: hensikt,
+                             farge: $arbeidsbenk.aktivFarge) { profil, verdier, farge in
+                arbeidsbenk.profilverdier = .init(profilID: profil.id, verdier: verdier, farge: farge)
+            }
+        } footer: {
+            if let p = kobletProfil {
+                Text("\(arbeidsbenk.modell.navn)-verdiene angis i \(p.navn) og vises slik de gjengis i dette fargerommet.")
+                    .foregroundStyle(Color.sekundærTekst)
+            }
         }
 
         Seksjon("Verdier") {
@@ -179,12 +199,27 @@ extension FargeEditor {
 /// kulør ikke «hopper» for grå farger (der kulør er udefinert).
 struct KomponentGlidere: View {
     let modell: Fargemodell
+    /// Når satt, er verdiene komponentene i denne ICC-profilen (samme antall og område 0…1 som modellen).
+    var profil: ICCProfil? = nil
+    var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
     @Binding var farge: Farge
+    /// Meldes når verdier er skrevet inn i profilen, så visningen kan vise nøyaktig de verdiene.
+    var profilverdier: (ICCProfil, [Double], Farge) -> Void = { _, _, _ in }
     @State private var verdier: [Double] = []
+
+    private func verdier(for f: Farge) -> [Double] {
+        if let profil, let k = f.komponenter(i: profil, hensikt: hensikt) { return k.map { min(max($0, 0), 1) } }
+        return modell.verdier(for: f)
+    }
+
+    private func farge(fra v: [Double], alfa: Double) -> Farge {
+        if let profil, let f = Farge(komponenter: v, i: profil, alfa: alfa) { return f }
+        return modell.farge(fra: v, alfa: alfa)
+    }
 
     /// Lokale verdier når de hører til gjeldende modell, ellers utledet fra fargen.
     private var gjeldende: [Double] {
-        verdier.count == modell.komponenter.count ? verdier : modell.verdier(for: farge)
+        verdier.count == modell.komponenter.count ? verdier : verdier(for: farge)
     }
 
     var body: some View {
@@ -205,7 +240,10 @@ struct KomponentGlidere: View {
                         guard v.indices.contains(i) else { return }
                         v[i] = ny
                         verdier = v
-                        farge = modell.farge(fra: v, alfa: farge.alfa)
+                        let ny = farge(fra: v, alfa: farge.alfa)
+                        // Meld verdiene før fargen settes, så begrensningen ser at de er angitt i profilen.
+                        if let profil { profilverdier(profil, v, ny) }
+                        farge = ny
                     }
                 ), in: k.område)
                 Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
@@ -217,12 +255,13 @@ struct KomponentGlidere: View {
             .accessibilityElement(children: .contain)
             }
         }
-        .onChange(of: modell) { _, ny in verdier = ny.verdier(for: farge) }
+        .onChange(of: modell) { _, _ in verdier = verdier(for: farge) }
+        .onChange(of: profil?.id) { _, _ in verdier = verdier(for: farge) }
         .onChange(of: farge) { _, ny in
             // Oppdater bare når endringen kom utenfra (ikke fra våre egne glidere).
             if verdier.count != modell.komponenter.count
-                || modell.farge(fra: verdier, alfa: ny.alfa).avstandOK(til: ny) > 1e-4 {
-                verdier = modell.verdier(for: ny)
+                || farge(fra: verdier, alfa: ny.alfa).avstandOK(til: ny) > 1e-4 {
+                verdier = verdier(for: ny)
             }
         }
     }
@@ -328,6 +367,9 @@ struct Fargeflate: View {
     let modell: Fargemodell
     let profil: ICCProfil
     var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
+    /// Verdiene i profilen når modellen er koblet til den (CMYK/RGB angitt direkte i profilen).
+    /// Da er fargen per definisjon innenfor rommet, og begge halvdeler viser profilverdiene.
+    var kobletVerdier: [Double]? = nil
     /// Lagre en halvdel som enkeltfarge, eller åpne «Legg i palett» for den.
     var lagre: (PalettFarge) -> Void = { _ in }
     var leggIPalett: (PalettFarge) -> Void = { _ in }
@@ -335,6 +377,7 @@ struct Fargeflate: View {
     /// Nærmeste farge i profilens rom og verdiene der. sRGB bruker perseptuell gamut-kartlegging
     /// (CSS Color 4), andre rom går via ICC-profilen med valgt gjengivelseshensikt.
     private var motpart: (farge: Farge, tekst: String, verdier: [Double]) {
+        if let kobletVerdier { return (farge, profil.formatert(kobletVerdier), kobletVerdier) }
         if profil.id == ICCProfil.sRGB.id {
             let s = farge.gamutKartlagt(til: .sRGB)
             let v = s.sRGB
@@ -348,14 +391,18 @@ struct Fargeflate: View {
 
     var body: some View {
         let høyre = motpart
-        let venstre = PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
         let høyreFarge = PalettFarge(farge: høyre.farge, representasjon: Fargerepresentasjon(
             rom: .icc(id: profil.id, navn: profil.navn), verdier: høyre.verdier, tekst: høyre.tekst))
+        // Koblet: venstre er verdiene slik de er angitt i profilen, og lagres i profilen.
+        let venstre = kobletVerdier == nil
+            ? PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
+            : høyreFarge
         HStack(spacing: 0) {
-            halvdel(venstre, tittel: modell.navn, tekst: modell.tekst(for: farge),
+            halvdel(venstre, tittel: kobletVerdier == nil ? modell.navn : "\(modell.navn) · \(profil.navn)",
+                    tekst: kobletVerdier == nil ? modell.tekst(for: farge) : høyre.tekst,
                     merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
             halvdel(høyreFarge, tittel: profil.navn, tekst: høyre.tekst,
-                    merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
+                    merknad: kobletVerdier != nil || farge.erInnenfor(profil, hensikt: hensikt) ? nil
                         : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
