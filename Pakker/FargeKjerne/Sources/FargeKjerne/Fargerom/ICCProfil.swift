@@ -66,6 +66,24 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
     public var kanRedigeres: Bool { [.cmyk, .rgb, .monochrome].contains(modell) }
 }
 
+public extension ICCProfil {
+    /// Konverterer komponentverdier fra én profil til en annen med valgt gjengivelseshensikt,
+    /// f.eks. CMYK i FOGRA39 → CMYK i GRACoL, eller Adobe RGB → sRGB.
+    ///
+    /// Merk: hensikten får bare effekt når profilene har tabeller for den (typisk LUT-baserte
+    /// CMYK-profiler). Rene matriseprofiler (sRGB, Display P3) oppfører seg kolorimetrisk uansett.
+    static func konverter(_ komponenter: [Double], fra kilde: ICCProfil, til mål: ICCProfil,
+                          hensikt: Gjengivelseshensikt, alfa: Double = 1) -> [Double]? {
+        guard komponenter.count == kilde.antallKomponenter,
+              let fraRom = kilde.fargerom, let tilRom = mål.fargerom,
+              let cg = CGColor(colorSpace: fraRom, components: komponenter.map { CGFloat($0) } + [alfa]),
+              let ut = cg.converted(to: tilRom, intent: hensikt.cg, options: nil),
+              let k = ut.components
+        else { return nil }
+        return Array(k.prefix(mål.antallKomponenter)).map { Double($0) }
+    }
+}
+
 public enum Gjengivelseshensikt: String, CaseIterable, Codable, Sendable {
     case perseptuell, relativKolorimetrisk, metning, absoluttKolorimetrisk
 

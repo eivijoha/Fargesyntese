@@ -96,6 +96,14 @@ appen faller da tilbake til leksikonet. Samme kode fungerer mot modellen på mac
       limes inn som fylte former)
 - [x] **CSS-gradient** fra Overgang: lineær/radiell/konisk, retning, trinnvis, `in oklab` + sRGB-reserve, forhåndsvisning
 
+- [x] **Lyskilder**: lykt på iPhone/iPad (og Continuity-iPhone på Mac) med styrke; lysfelt på Mac-skjermen
+- [x] **Fargesirkler**: OKLCH, CIE LCH, HSL og RYB (kunstnersirkel); interaktiv sirkel
+- [x] **Paletter**: dra farger mellom paletter (også i listen på iPhone), «Kopier til» / «Flytt til»,
+      hver utplukket farge kan legges i palett
+- [x] **ICC via iCloud Drive**: importerte profiler i «Fargesyntese › Profiler» (synlig i Filer/Finder), med
+      NSMetadataQuery for endringer fra andre enheter; lokal reserve uten iCloud
+- [x] **Profil-til-profil-konvertering** med valgt gjengivelseshensikt, sammenligning av alle fire hensikter med ΔE00
+
 Gjenstår i disse sporene: Adobe Color-tema direkte (krever Adobe-konto/API), Figma REST-API for variabler
 (krever Enterprise-plan) eller egen Figma-plugin, RYB-«kunstnersirkel» for harmonier.
 

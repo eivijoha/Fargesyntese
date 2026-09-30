@@ -11,7 +11,9 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
   - `FargeKI`: verdiord → palett. Foundation Models på enheten, `LeksikonTolker` som reserve.
 - `Fargesyntese/` – appen (filsystem-synkronisert gruppe; nye filer plukkes opp automatisk).
   `App/`, `Modell/` (SwiftData), `Visninger/`, `Plattform/` (kamera, pipette, utklippstavle), `Intents/`.
-- `Konfigurasjon/Info.plist` – kun det som ikke kan settes med `INFOPLIST_KEY_*` (eksportert UTType).
+- `Konfigurasjon/Info.plist` – kun det som ikke kan settes med `INFOPLIST_KEY_*` (eksporterte UTType-er,
+  iCloud Drive-mappen). `Konfigurasjon/Fargesyntese.entitlements` – iCloud Documents (`iCloud.no.engenett.Fargesyntese`).
+- Fysisk testenhet: «Burgund» (iPhone 18 Pro). Bygg med `-allowProvisioningUpdates`, installer med `xcrun devicectl`.
 - `Dokumentasjon/Grunnlag.md` – arkitektur, beslutninger og veikart.
 
 ## Konvensjoner

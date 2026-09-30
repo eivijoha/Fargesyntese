@@ -78,6 +78,23 @@ struct ICCOgBildeTests {
         #expect(try #require(grå.avvik(i: .genericCMYK)) < 0.02)
     }
 
+    @Test func profilTilProfil() throws {
+        // sRGB-rød i Display P3 skal stemme med vår egen matriseberegning.
+        let p3 = try #require(ICCProfil.konverter([1, 0, 0], fra: .sRGB, til: .displayP3, hensikt: .relativKolorimetrisk))
+        let fasit = Farge(hex: "#FF0000")!.displayP3
+        #expect(abs(p3[0] - fasit.r) < 2e-3 && abs(p3[1] - fasit.g) < 2e-3 && abs(p3[2] - fasit.b) < 2e-3)
+
+        // CMYK → sRGB → CMYK gir omtrent samme verdier tilbake for en farge innenfor begge gamuter.
+        let cmyk = [0.2, 0.4, 0.6, 0.1]
+        let rgb = try #require(ICCProfil.konverter(cmyk, fra: .genericCMYK, til: .sRGB, hensikt: .relativKolorimetrisk))
+        let tilbake = try #require(ICCProfil.konverter(rgb, fra: .sRGB, til: .genericCMYK, hensikt: .relativKolorimetrisk))
+        let a = try #require(Farge(komponenter: cmyk, i: .genericCMYK))
+        let b = try #require(Farge(komponenter: tilbake, i: .genericCMYK))
+        #expect(a.deltaE2000(til: b) < 1.5)
+
+        #expect(ICCProfil.konverter([1, 0], fra: .sRGB, til: .displayP3, hensikt: .perseptuell) == nil)
+    }
+
     @Test func bildeprøveLeserRiktigRadOgFarge() throws {
         let rom = CGColorSpace(name: CGColorSpace.sRGB)!
         let k = try #require(CGContext(data: nil, width: 4, height: 4, bitsPerComponent: 8, bytesPerRow: 16,

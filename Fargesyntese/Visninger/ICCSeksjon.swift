@@ -51,20 +51,31 @@ struct ICCSeksjon: View {
                     }
                 }
             }
+            NavigationLink {
+                ProfilkonverteringVisning()
+            } label: {
+                Label("Konverter mellom profiler …", systemImage: "arrow.triangle.swap")
+            }
         } header: {
             Text("Fargestyring (ICC)")
         } footer: {
-            HStack {
-                Button("Importer profil …", systemImage: "square.and.arrow.down") { importerer = true }
-                if bibliotek.importerte.contains(where: { $0.id == profil.id }) {
-                    Button("Fjern", systemImage: "trash", role: .destructive) {
-                        bibliotek.fjern(profil)
-                        valgtProfilID = ICCProfil.genericCMYK.id
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Button("Importer profil …", systemImage: "square.and.arrow.down") { importerer = true }
+                    if bibliotek.importerte.contains(where: { $0.id == profil.id }) {
+                        Button("Fjern", systemImage: "trash", role: .destructive) {
+                            bibliotek.fjern(profil)
+                            valgtProfilID = ICCProfil.genericCMYK.id
+                        }
                     }
                 }
+                .buttonStyle(.borderless)
+                .font(.callout)
+                Text(bibliotek.brukerICloud
+                     ? "Importerte profiler ligger i iCloud Drive › Fargesyntese › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder."
+                     : "Importerte profiler lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
+                    .font(.caption)
             }
-            .buttonStyle(.borderless)
-            .font(.callout)
         }
         .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
             do {
