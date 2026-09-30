@@ -78,6 +78,17 @@ struct ICCOgBildeTests {
         #expect(try #require(grå.avvik(i: .genericCMYK)) < 0.02)
     }
 
+    @Test func gamutPerProfil() {
+        let p3Grønn = Farge(displayP3: DisplayP3(r: 0, g: 1, b: 0))
+        #expect(!p3Grønn.erInnenfor(.sRGB) && p3Grønn.erInnenfor(.displayP3))
+        #expect(!p3Grønn.erInnenfor(.genericCMYK))
+        let begrenset = p3Grønn.begrenset(til: .genericCMYK)
+        #expect(begrenset.erInnenfor(.genericCMYK))
+        let grå = Farge(hex: "#808080")!
+        #expect(ICCProfil.innebygde.allSatisfy { grå.erInnenfor($0) })
+        #expect(grå.begrenset(til: .genericCMYK) == grå)
+    }
+
     @Test func profilTilProfil() throws {
         // sRGB-rød i Display P3 skal stemme med vår egen matriseberegning.
         let p3 = try #require(ICCProfil.konverter([1, 0, 0], fra: .sRGB, til: .displayP3, hensikt: .relativKolorimetrisk))

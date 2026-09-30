@@ -11,6 +11,11 @@ struct FargeEditor: View {
     @State private var lagret = false
     @Environment(\.modelContext) private var kontekst
     @AppStorage("studioModus") private var modus: Modus = .farge
+    @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
+    @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
+    @Environment(ProfilBibliotek.self) private var bibliotek
+
+    private var visOgsåProfil: ICCProfil { bibliotek.profil(id: visOgsåID) ?? .sRGB }
 
     /// Studio er delt i moduser, så harmonier og toner ikke gjemmer seg nederst i en lang liste.
     enum Modus: String, CaseIterable, Identifiable {
@@ -38,7 +43,7 @@ struct FargeEditor: View {
 
         Form {
             Section {
-                Fargeflate(farge: farge)
+                Fargeflate(farge: farge, profil: visOgsåProfil, hensikt: hensikt)
                     .frame(height: 140)
                     .listRowInsets(EdgeInsets())
                 HStack {
@@ -48,10 +53,7 @@ struct FargeEditor: View {
                         .onSubmit {
                             if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
                         }
-                    Toggle("Kun sRGB", isOn: $arbeidsbenk.kunSRGB)
-                        .fixedSize()
-                        .font(.callout)
-                        .help("Hold alle nye farger innenfor sRGB – trygt for web, e-post, Office og vanlige skjermer")
+                    VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
                     #if os(macOS)
                     // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
                     PipetteKnapp {
@@ -75,7 +77,8 @@ struct FargeEditor: View {
             case .farge: fargeModus(farge)
             case .toner: tonerModus(farge)
             case .harmoni:
-                HarmoniSeksjon(grunnfarge: farge, gamut: arbeidsbenk.gamut, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
+                HarmoniSeksjon(grunnfarge: farge, gamut: arbeidsbenk.gamut, begrens: arbeidsbenk.begrens,
+                               velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
                     lagreFarger = farger
                     lagreNavn = navn
                 }
@@ -108,7 +111,11 @@ struct FargeEditor: View {
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
             VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
         }
-        .onAppear { hexTekst = farge.hex() }
+        .onAppear {
+            hexTekst = farge.hex()
+            arbeidsbenk.begrensProfil = visOgsåProfil
+        }
+        .onChange(of: visOgsåID) { arbeidsbenk.begrensProfil = visOgsåProfil }
         .onChange(of: farge) { _, ny in hexTekst = ny.hex() }
         .dropDestination(for: Farge.self) { farger, _ in
             guard let f = farger.first else { return false }
@@ -134,9 +141,7 @@ extension FargeEditor {
             ForEach(Fargemodell.allCases) { modell in
                 VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
             }
-            LabeledContent("Gamut") {
-                Text(farge.erISRGB ? "sRGB" : farge.erIDisplayP3 ? "Display P3" : "Utenfor P3")
-            }
+            GamutOversikt(farge: farge)
         }
 
         ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
@@ -146,7 +151,7 @@ extension FargeEditor {
     fileprivate func tonerModus(_ farge: Farge) -> some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         Section {
-            let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge, gamut: arbeidsbenk.gamut)
+            let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge, gamut: arbeidsbenk.gamut).map(arbeidsbenk.begrens)
             HStack(spacing: 4) {
                 ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
                     VStack(spacing: 2) {
@@ -321,39 +326,132 @@ private extension Double {
     func clamped(to r: ClosedRange<Double>) -> Double { Swift.min(Swift.max(self, r.lowerBound), r.upperBound) }
 }
 
-/// Stor fargeflate øverst i Studio. Farger utenfor sRGB vises delt: sRGB-versjonen til venstre
-/// (slik de fleste skjermer, web og Office viser den) og den faktiske P3-fargen til høyre,
-/// hver med sin hex. Farger innenfor sRGB vises som én flate.
+/// Stor fargeflate øverst i Studio, alltid delt: Display P3 til venstre (fargen slik den er) og
+/// nærmeste tilsvarende farge i valgt fargerom til høyre. Høyre side viser hex for sRGB,
+/// ellers fargeverdiene i rommet (RGB 0–255, CMYK i %).
 struct Fargeflate: View {
     let farge: Farge
+    let profil: ICCProfil
+    var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
 
-    var body: some View {
-        if farge.erISRGB {
-            FargeRute(farge: farge, visTekst: false, hjørne: 20, retteBunnhjørner: true, ekstraMerkeInnrykk: 8)
-        } else {
-            let sRGB = farge.gamutKartlagt(til: .sRGB)
-            HStack(spacing: 0) {
-                halvdel(sRGB, tittel: "sRGB", hex: sRGB.hex())
-                halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", hex: farge.p3Hex(),
-                        merknad: "mer mettet enn sRGB")
-            }
-            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
+    /// Nærmeste farge i profilens rom. sRGB bruker perseptuell gamut-kartlegging (CSS Color 4),
+    /// andre rom går via ICC-profilen med valgt gjengivelseshensikt.
+    private var motpart: (farge: Farge, tekst: String) {
+        if profil.id == ICCProfil.sRGB.id {
+            let s = farge.gamutKartlagt(til: .sRGB)
+            return (s, s.hex())
         }
+        guard let k = farge.komponenter(i: profil, hensikt: hensikt),
+              let f = Farge(komponenter: k, i: profil, alfa: farge.alfa)
+        else { return (farge, "–") }
+        return (f, profil.formatert(k))
     }
 
-    private func halvdel(_ f: Farge, tittel: String, hex: String, merknad: String? = nil) -> some View {
+    var body: some View {
+        let høyre = motpart
+        HStack(spacing: 0) {
+            halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", tekst: farge.p3Hex())
+            halvdel(høyre.farge, tittel: profil.navn, tekst: høyre.tekst,
+                    merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
+                        : "⚠︎ Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))")
+        }
+        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
+    }
+
+    private func halvdel(_ f: Farge, tittel: String, tekst: String, merknad: String? = nil) -> some View {
         FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
             .overlay(alignment: .bottomLeading) {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(tittel).font(.caption.weight(.semibold))
-                    Text(hex).font(.caption2.monospaced())
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(tittel).font(.caption.weight(.semibold)).lineLimit(1)
+                    Text(tekst).font(.caption.monospaced()).lineLimit(1).minimumScaleFactor(0.7)
                     if let merknad { Text(merknad).font(.caption2) }
                 }
                 .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                 .padding(12)
             }
             .contextMenu {
-                Button("Kopier \(tittel)-hex", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(hex) }
+                Button("Kopier \(tekst)", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
             }
+    }
+}
+
+/// «Vis også: …» – velg fargerommet som vises til høyre i fargeflaten.
+struct VisOgsåMeny: View {
+    @Binding var valgtID: String
+    @Binding var begrens: Bool
+    let farge: Farge
+    @Environment(ProfilBibliotek.self) private var bibliotek
+
+    private var standard: [ICCProfil] { ICCProfil.innebygde.filter { $0.id != ICCProfil.displayP3.id } }
+    private var valgtNavn: String { bibliotek.profil(id: valgtID)?.navn ?? ICCProfil.sRGB.navn }
+
+    /// Menyvalg med varsel når fargen er utenfor rommets gamut.
+    @ViewBuilder private func valg(_ p: ICCProfil) -> some View {
+        if farge.erInnenfor(p) {
+            Text(p.navn).tag(p.id)
+        } else {
+            Label("\(p.navn) – utenfor gamut", systemImage: "exclamationmark.triangle").tag(p.id)
+        }
+    }
+
+    var body: some View {
+        Menu {
+            Picker("Standard", selection: $valgtID) {
+                ForEach(standard) { valg($0) }
+            }
+            .pickerStyle(.inline)
+            if !bibliotek.importerte.isEmpty {
+                Picker("Installerte ICC-profiler", selection: $valgtID) {
+                    ForEach(bibliotek.importerte) { valg($0) }
+                }
+                .pickerStyle(.inline)
+            }
+            Divider()
+            Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
+        } label: {
+            HStack(spacing: 4) {
+                if !farge.erInnenfor(bibliotek.profil(id: valgtID) ?? .sRGB) {
+                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                }
+                Text("Vis også:").foregroundStyle(.secondary)
+                Text(valgtNavn).lineLimit(1)
+                Image(systemName: "chevron.down").font(.caption.weight(.semibold))
+            }
+            .font(.callout)
+        }
+        .fixedSize()
+        .menuIndicator(.hidden)
+        .help("Velg fargerommet som vises ved siden av Display P3")
+    }
+}
+
+/// Status for fargen i alle standardrom og installerte ICC-profiler.
+struct GamutOversikt: View {
+    let farge: Farge
+    @Environment(ProfilBibliotek.self) private var bibliotek
+
+    var body: some View {
+        DisclosureGroup {
+            ForEach(bibliotek.alle) { p in
+                let innenfor = farge.erInnenfor(p)
+                HStack {
+                    Text(p.navn).font(.callout)
+                    Spacer()
+                    Label(innenfor ? "Innenfor" : "Utenfor", systemImage: innenfor ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                        .font(.callout)
+                        .foregroundStyle(innenfor ? .green : .orange)
+                }
+            }
+        } label: {
+            let utenfor = bibliotek.alle.filter { !farge.erInnenfor($0) }
+            LabeledContent("Gamut") {
+                if utenfor.isEmpty {
+                    Label("Innenfor alle", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+                } else {
+                    Label("Utenfor \(utenfor.count) av \(bibliotek.alle.count)", systemImage: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                }
+            }
+        }
     }
 }

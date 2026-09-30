@@ -28,7 +28,7 @@ struct OvergangVisning: View {
     /// Rader fra lysest til mørkest; midtraden er selve overgangen.
     private var rader: [[Farge]] {
         let trinn = arbeidsbenk.lyshetstrinn
-        let variasjoner = toner.map { trinn.toner(for: $0, gamut: arbeidsbenk.gamut) }
+        let variasjoner = toner.map { trinn.toner(for: $0, gamut: arbeidsbenk.gamut).map(arbeidsbenk.begrens) }
         return (0..<(trinn.antallLysere + trinn.antallMørkere + 1)).map { rad in variasjoner.map { $0[rad] } }
     }
 

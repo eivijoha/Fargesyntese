@@ -5,6 +5,7 @@ import SwiftUI
 struct HarmoniSeksjon: View {
     let grunnfarge: Farge
     var gamut: Gamut = .displayP3
+    var begrens: (Farge) -> Farge = { $0 }
     var velg: (Farge) -> Void
     var lagre: ([PalettFarge], String) -> Void
 
@@ -15,7 +16,7 @@ struct HarmoniSeksjon: View {
 
     private var farger: [Farge] {
         harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel, gamut: gamut)
-            .map { $0.gamutKartlagt(til: gamut) }
+            .map { begrens($0.gamutKartlagt(til: gamut)) }
     }
 
     var body: some View {

@@ -130,6 +130,27 @@ public extension Farge {
         return avstandOK(til: tilbake)
     }
 
+    /// Om fargen kan gjengis i profilens rom. sRGB og Display P3 avgjøres eksakt; andre profiler
+    /// via rundtur gjennom profilen (avvik under én merkbar forskjell, ΔE_OK < 0,02).
+    func erInnenfor(_ profil: ICCProfil, hensikt: Gjengivelseshensikt = .relativKolorimetrisk) -> Bool {
+        if profil.id == ICCProfil.sRGB.id { return erISRGB }
+        if profil.id == ICCProfil.displayP3.id { return erIDisplayP3 }
+        guard let avvik = avvik(i: profil, hensikt: hensikt) else { return true }
+        return avvik < 0.02
+    }
+
+    /// Nærmeste farge som kan gjengis i profilens rom (for begrensning av nye farger).
+    /// sRGB/P3 bruker perseptuell gamut-kartlegging; andre profiler går via profilen.
+    func begrenset(til profil: ICCProfil, hensikt: Gjengivelseshensikt = .relativKolorimetrisk) -> Farge {
+        if profil.id == ICCProfil.sRGB.id { return gamutKartlagt(til: .sRGB) }
+        if profil.id == ICCProfil.displayP3.id { return gamutKartlagt(til: .displayP3) }
+        if erInnenfor(profil, hensikt: hensikt) { return self }
+        guard let k = komponenter(i: profil, hensikt: hensikt),
+              let f = Farge(komponenter: k, i: profil, alfa: alfa)
+        else { return self }
+        return f
+    }
+
     /// Lager en farge fra komponenter i en profil (f.eks. CMYK-verdier fra et trykkeri).
     init?(komponenter: [Double], i profil: ICCProfil, alfa: Double = 1) {
         guard komponenter.count == profil.antallKomponenter,

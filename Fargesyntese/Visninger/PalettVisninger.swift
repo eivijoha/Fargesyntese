@@ -587,7 +587,7 @@ struct ToneskalaArk: View {
 
     private var toner: [Farge] {
         let lysheter = antall == 11 ? Toneskala.standardLysheter : Toneskala.jevn(antall: antall)
-        return Toneskala(lysheter: lysheter, kromaDemping: demping, gamut: arbeidsbenk.gamut).toner(for: grunnfarge.farge)
+        return Toneskala(lysheter: lysheter, kromaDemping: demping, gamut: arbeidsbenk.gamut).toner(for: grunnfarge.farge).map(arbeidsbenk.begrens)
     }
 
     var body: some View {

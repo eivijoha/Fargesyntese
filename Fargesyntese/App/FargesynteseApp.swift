@@ -36,20 +36,34 @@ struct FargesynteseApp: App {
 @Observable
 final class Arbeidsbenk {
     var aktivFarge = Farge(hex: "#2F7FD8")! {
-        didSet { if kunSRGB && !aktivFarge.erISRGB { aktivFarge = aktivFarge.gamutKartlagt(til: .sRGB) } }
-    }
-
-    /// «Begrens til sRGB»: alle nye og redigerte farger holdes innenfor sRGB (gamut-kartlagt).
-    var kunSRGB = UserDefaults.standard.bool(forKey: "kunSRGB") {
         didSet {
-            UserDefaults.standard.set(kunSRGB, forKey: "kunSRGB")
-            if kunSRGB { aktivFarge = begrens(aktivFarge) }
+            // Unngå løkke: begrens bare når fargen faktisk er utenfor.
+            if let profil = begrensning, !aktivFarge.erInnenfor(profil) { aktivFarge = aktivFarge.begrenset(til: profil) }
         }
     }
 
-    var gamut: Gamut { kunSRGB ? .sRGB : .displayP3 }
+    /// «Begrens nye farger til …»: alle nye og redigerte farger holdes innenfor valgt ICC-profil.
+    var begrensAktiv = UserDefaults.standard.bool(forKey: "kunSRGB") {
+        didSet {
+            UserDefaults.standard.set(begrensAktiv, forKey: "kunSRGB")
+            aktivFarge = begrens(aktivFarge)
+        }
+    }
 
-    func begrens(_ farge: Farge) -> Farge { farge.gamutKartlagt(til: gamut) }
+    /// Profilen som velges under «Vis også» og som begrensningen gjelder. Settes av Studio.
+    var begrensProfil: ICCProfil = .sRGB {
+        didSet { if begrensAktiv { aktivFarge = begrens(aktivFarge) } }
+    }
+
+    var begrensning: ICCProfil? { begrensAktiv ? begrensProfil : nil }
+
+    /// Grov gamut for beregninger i kjernen; den nøyaktige begrensningen gjøres av `begrens`.
+    var gamut: Gamut { begrensAktiv && begrensProfil.id == ICCProfil.sRGB.id ? .sRGB : .displayP3 }
+
+    func begrens(_ farge: Farge) -> Farge {
+        guard let profil = begrensning else { return farge }
+        return farge.begrenset(til: profil)
+    }
     var modell: Fargemodell = .okLCH
     var valgtFane: Fane = .studio
     /// Lysere/mørkere-innstillinger, delt mellom Studio og Overgang og husket mellom oppstarter.
