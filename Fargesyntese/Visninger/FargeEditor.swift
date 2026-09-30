@@ -118,13 +118,6 @@ struct FargeEditor: View {
         #endif
         .environment(\.defaultMinListRowHeight, 44)
         .navigationTitle("Studio")
-        .toolbar {
-            ToolbarItemGroup {
-                Button("Lim inn", systemImage: "doc.on.clipboard") {
-                    if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
-                }
-            }
-        }
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
             VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
         }
