@@ -17,7 +17,7 @@ struct HarmoniSeksjon: View {
     @AppStorage("harmoniSirkel") private var sirkel: Fargesirkel = .okLCH
 
     /// Felles metning og lyshet for hele harmonien (0…1), som i HSL. `nil` = følg hver farge.
-    /// Med HSL-sirkelen er det HSL-metning og -lyshet; ellers OKLCH-lyshet og metning som andel av
+    /// Med HSL- og RYB-sirkelen er det HSL-metning og -lyshet; ellers OKLCH-lyshet og metning som andel av
     /// høyeste kroma innenfor gamut (100 % = så mettet som fargen kan bli).
     @State private var metning: Double?
     @State private var lyshet: Double?
@@ -32,7 +32,7 @@ struct HarmoniSeksjon: View {
 
     private func juster(_ f: Farge) -> Farge {
         guard metning != nil || lyshet != nil else { return f }
-        if sirkel == .hsl {
+        if sirkel == .hsl || sirkel == .ryb {
             var h = f.hsl
             if let metning { h.s = metning }
             if let lyshet { h.l = lyshet }
@@ -50,9 +50,24 @@ struct HarmoniSeksjon: View {
         return maks > 0 ? min(lch.c / maks, 1) : 0
     }
 
+    /// Fargen i ringen ved en vinkel, med gjeldende metning og lyshet (grunnfargens når gliderne ikke er rørt).
+    private func ringfarge(vinkel: Double) -> Farge {
+        let f = sirkel.farge(grunnfarge, vinkel: vinkel, gamut: gamut)
+        let m = metning ?? grunnMetning, l = lyshet ?? grunnLyshet
+        if sirkel == .hsl || sirkel == .ryb {
+            var h = f.hsl
+            h.s = m
+            h.l = l
+            return Farge(hsl: h)
+        }
+        let h = f.okLCH.h
+        return Farge(okLCH: OKLCH(l: l, c: m * Farge.maksKroma(lyshet: l, kulør: h, i: gamut), h: h)).gamutKartlagt(til: gamut)
+    }
+
     /// Grunnfargens egne verdier, som gliderne starter på.
-    private var grunnMetning: Double { sirkel == .hsl ? grunnfarge.hsl.s : relativMetning(grunnfarge) }
-    private var grunnLyshet: Double { sirkel == .hsl ? grunnfarge.hsl.l : grunnfarge.okLCH.l }
+    private var brukerHSL: Bool { sirkel == .hsl || sirkel == .ryb }
+    private var grunnMetning: Double { brukerHSL ? grunnfarge.hsl.s : relativMetning(grunnfarge) }
+    private var grunnLyshet: Double { brukerHSL ? grunnfarge.hsl.l : grunnfarge.okLCH.l }
 
     private func glider(_ tittel: LocalizedStringKey, verdi: Binding<Double?>, grunn: Double) -> some View {
         HStack(spacing: 10) {
@@ -86,6 +101,12 @@ struct HarmoniSeksjon: View {
                 ForEach(Fargesirkel.allCases) { Text($0.navn).tag($0) }
             }
 
+            // Ringen og midten tegnes med gjeldende metning og lyshet, så gliderne under virker direkte på sirkelen.
+            Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg,
+                               ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut))
+                .frame(height: 220)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 4)
             glider("Metning", verdi: $metning, grunn: grunnMetning)
             glider("Lyshet", verdi: $lyshet, grunn: grunnLyshet)
             if metning != nil || lyshet != nil {
@@ -94,11 +115,6 @@ struct HarmoniSeksjon: View {
                     lyshet = nil
                 }
             }
-
-            Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg)
-                .frame(height: 220)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 4)
             HStack(spacing: 4) {
                 ForEach(Array(farger.enumerated()), id: \.offset) { i, farge in
                     FargeRute(farge: farge, visTekst: false, hjørne: 6,
@@ -135,6 +151,10 @@ struct Fargesirkelvisning: View {
     let farger: [Farge]
     let sirkel: Fargesirkel
     var velg: ((Farge) -> Void)? = nil
+    /// Ringens farge ved en vinkel; standard er sirkelens egen ringfarge.
+    var ringfarge: ((Double) -> Farge)? = nil
+    /// Fargen i midten; standard er grunnfargen.
+    var midtfarge: Farge? = nil
 
     var body: some View {
         GeometryReader { geo in
@@ -147,7 +167,7 @@ struct Fargesirkelvisning: View {
                     let a0 = Double(i) / Double(segmenter) * 360, a1 = Double(i + 1) / Double(segmenter) * 360
                     var sti = Path()
                     sti.addArc(center: senter, radius: r * 0.8, startAngle: .degrees(a0 - 90), endAngle: .degrees(a1 - 89.5), clockwise: false)
-                    ctx.stroke(sti, with: .color(sirkel.ringfarge(vinkel: a0, grunn: grunnfarge).swiftUI), lineWidth: r * 0.3)
+                    ctx.stroke(sti, with: .color((ringfarge?(a0) ?? sirkel.ringfarge(vinkel: a0, grunn: grunnfarge)).swiftUI), lineWidth: r * 0.3)
                 }
                 for f in farger.reversed() {
                     let v = (sirkel.vinkel(for: f) - 90) * .pi / 180
@@ -156,7 +176,7 @@ struct Fargesirkelvisning: View {
                     linje.move(to: senter)
                     linje.addLine(to: p)
                     ctx.stroke(linje, with: .color(.primary.opacity(0.35)), lineWidth: 1)
-                    let erGrunn = f == grunnfarge
+                    let erGrunn = f == (midtfarge ?? grunnfarge)
                     let d = erGrunn ? r * 0.26 : r * 0.19
                     let rute = CGRect(x: p.x - d / 2, y: p.y - d / 2, width: d, height: d)
                     ctx.fill(Path(ellipseIn: rute), with: .color(f.swiftUI))
@@ -165,7 +185,7 @@ struct Fargesirkelvisning: View {
                 // Midten viser grunnfargen.
                 let m = r * 0.34
                 ctx.fill(Path(ellipseIn: CGRect(x: senter.x - m, y: senter.y - m, width: m * 2, height: m * 2)),
-                         with: .color(grunnfarge.swiftUI))
+                         with: .color((midtfarge ?? grunnfarge).swiftUI))
             }
             .contentShape(Circle())
             .gesture(
