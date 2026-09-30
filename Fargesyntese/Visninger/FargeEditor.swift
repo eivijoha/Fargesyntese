@@ -136,7 +136,7 @@ extension FargeEditor {
             KomponentGlidere(modell: arbeidsbenk.modell, farge: $arbeidsbenk.aktivFarge)
         }
 
-        Section("Verdier") {
+        Seksjon("Verdier") {
             VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
             ForEach(Fargemodell.allCases) { modell in
                 VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
@@ -165,7 +165,7 @@ extension FargeEditor {
                             .onTapGesture { arbeidsbenk.aktivFarge = variant }
                         Text(variant.okLCH.l * 100, format: .number.precision(.fractionLength(0)))
                             .font(.caption2.monospacedDigit())
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.sekundærTekst)
                     }
                 }
             }
@@ -174,9 +174,9 @@ extension FargeEditor {
                 lagreNavn = String(localized: "Lysere og mørkere \(farge.hex())")
                 lagreFarger = varianter.map { PalettFarge(farge: $0, opphav: .toneskala) }
             }
-        } header: {
+        } header: { Group {
             Text("Lysere og mørkere")
-        } footer: {
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge.")
         }
     }
@@ -217,7 +217,7 @@ struct KomponentGlidere: View {
                 ), in: k.område)
                 Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
                     .font(.callout.monospacedDigit())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.sekundærTekst)
                     .frame(width: 52, alignment: .trailing)
             }
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -248,7 +248,7 @@ struct VerdiRad: View {
             Spacer(minLength: 12)
             Text(tekst)
                 .font(.callout.monospaced())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.sekundærTekst)
                 .textSelection(.enabled)
                 .multilineTextAlignment(.trailing)
             Button {
@@ -308,7 +308,7 @@ struct LyshetstrinnKontroller: View {
                 .disabled(trinn.antallLysere == 0 && trinn.antallMørkere == 0)
             Text(stegtekst)
                 .font(.callout.monospacedDigit())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.sekundærTekst)
                 .frame(minWidth: 96, alignment: .trailing)
         }
         .onChange(of: trinn.modus) { _, _ in
@@ -353,7 +353,7 @@ struct Fargeflate: View {
             halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : String(localized: "Utenfor P3"), tekst: farge.p3Hex())
             halvdel(høyre.farge, tittel: profil.navn, tekst: høyre.tekst,
                     merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
-                        : String(localized: "⚠︎ Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
+                        : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
     }
@@ -364,7 +364,9 @@ struct Fargeflate: View {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(tittel).font(.caption.weight(.semibold)).lineLimit(1)
                     Text(tekst).font(.caption.monospaced()).lineLimit(1).minimumScaleFactor(0.7)
-                    if let merknad { Text(merknad).font(.caption2) }
+                    if let merknad {
+                        Label(merknad, systemImage: "exclamationmark.triangle.fill").font(.caption2)
+                    }
                 }
                 .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                 .padding(12)
@@ -411,11 +413,13 @@ struct VisOgsåMeny: View {
         } label: {
             HStack(spacing: 4) {
                 if !farge.erInnenfor(bibliotek.profil(id: valgtID) ?? .sRGB) {
-                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(Color.advarsel)
                 }
-                Text("Vis også:").foregroundStyle(.secondary)
-                Text(valgtNavn).lineLimit(1)
-                Image(systemName: "chevron.down").font(.caption.weight(.semibold))
+                // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av
+                // aksenten ga bare 1,9:1 kontrast.
+                Text("Vis også:").foregroundStyle(Color.sekundærTekst)
+                Text(valgtNavn).lineLimit(1).foregroundStyle(Color.accentColor)
+                Image(systemName: "chevron.down").font(.caption.weight(.semibold)).foregroundStyle(Color.accentColor)
             }
             .font(.callout)
         }
@@ -439,17 +443,17 @@ struct GamutOversikt: View {
                     Spacer()
                     Label(innenfor ? "Innenfor" : "Utenfor", systemImage: innenfor ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
                         .font(.callout)
-                        .foregroundStyle(innenfor ? .green : .orange)
+                        .foregroundStyle(innenfor ? Color.suksess : Color.advarsel)
                 }
             }
         } label: {
             let utenfor = bibliotek.alle.filter { !farge.erInnenfor($0) }
             LabeledContent("Gamut") {
                 if utenfor.isEmpty {
-                    Label("Innenfor alle", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+                    Label("Innenfor alle", systemImage: "checkmark.circle.fill").foregroundStyle(Color.suksess)
                 } else {
                     Label("Utenfor \(utenfor.count) av \(bibliotek.alle.count)", systemImage: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.advarsel)
                 }
             }
         }

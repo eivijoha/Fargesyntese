@@ -37,7 +37,7 @@ struct PalettListe: View {
                     if paletter.isEmpty {
                         Text("Ingen paletter ennå. Trykk + for en tom palett eller en palett fra verdiord, eller lag en fra Studio, Overgang eller Utplukk.")
                             .font(.callout)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.sekundærTekst)
                     }
                     // Rutenett som tilpasser seg bredden: én kolonne på iPhone, flere på iPad og Mac.
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 12, alignment: .top)],
@@ -58,7 +58,7 @@ struct PalettListe: View {
                                                 : "Paletter og enkeltfarger lagres bare på denne enheten.",
                           systemImage: Lagring.synkroniserer ? "icloud" : "iphone")
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.sekundærTekst)
                         .padding(.top, 8)
                 }
                 .padding()
@@ -113,7 +113,7 @@ struct PalettListe: View {
                                      slipp: @escaping ([PalettFarge]) -> Bool) -> some View {
         HStack(alignment: .center, spacing: 8) {
             innhold()
-            Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
+            Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(Color.tertiærTekst)
         }
         .padding(12)
         .background(.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -186,7 +186,7 @@ struct EnkeltfargerRad: View {
             HStack {
                 Label("Enkeltfarger", systemImage: "bookmark.fill").font(.headline)
                 Spacer()
-                Text("\(farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                Text("\(farger.count)").font(.caption).foregroundStyle(Color.sekundærTekst).monospacedDigit()
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 4) {
@@ -196,7 +196,7 @@ struct EnkeltfargerRad: View {
                             .frame(width: 36, height: 36)
                     }
                     if farger.isEmpty {
-                        Text("Farger lagret uten palett havner her").font(.caption).foregroundStyle(.secondary)
+                        Text("Farger lagret uten palett havner her").font(.caption).foregroundStyle(Color.sekundærTekst)
                     }
                 }
             }
@@ -289,7 +289,7 @@ struct PalettRad: View {
             HStack {
                 Text(dokument.navn.isEmpty ? String(localized: "Uten navn") : dokument.navn).font(.headline)
                 Spacer()
-                Text("\(dokument.farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                Text("\(dokument.farger.count)").font(.caption).foregroundStyle(Color.sekundærTekst).monospacedDigit()
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 3) {
@@ -299,7 +299,7 @@ struct PalettRad: View {
                             .frame(width: 36, height: 36)
                     }
                     if dokument.farger.isEmpty {
-                        Text("Slipp farger her").font(.caption).foregroundStyle(.secondary)
+                        Text("Slipp farger her").font(.caption).foregroundStyle(Color.sekundærTekst)
                     }
                 }
             }
@@ -457,18 +457,18 @@ struct VurderingArk: View {
         NavigationStack {
             List {
                 Section { Text(vurdering.oppsummering) }
-                punktliste(String(localized: "Styrker"), vurdering.styrker, symbol: "plus.circle.fill", farge: .green)
-                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "exclamationmark.triangle.fill", farge: .orange)
-                punktliste(String(localized: "Forslag"), vurdering.forslag, symbol: "arrow.right.circle.fill", farge: .blue)
+                punktliste(String(localized: "Styrker"), vurdering.styrker, symbol: "plus.circle.fill", farge: Color.suksess)
+                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "exclamationmark.triangle.fill", farge: Color.advarsel)
+                punktliste(String(localized: "Forslag"), vurdering.forslag, symbol: "arrow.right.circle.fill", farge: Color.accentColor)
                 Section {
                     DisclosureGroup("Fakta vurderingen bygger på") {
                         ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
                     }
-                } footer: {
+                } footer: { Group {
                     Text(vurdering.kilde == .appleIntelligence
                          ? "Laget med Apple Intelligence på enheten. Kontrasttallene er beregnet eksakt."
                          : "Regelbasert vurdering.")
-                }
+                }.foregroundStyle(Color.sekundærTekst) }
             }
             .navigationTitle("Vurdering")
             .toolbar { Button("Ferdig") { lukk() } }
@@ -478,7 +478,7 @@ struct VurderingArk: View {
     @ViewBuilder
     private func punktliste(_ tittel: String, _ punkter: [String], symbol: String, farge: Color) -> some View {
         if !punkter.isEmpty {
-            Section(tittel) {
+            Seksjon(tittel) {
                 ForEach(punkter, id: \.self) { p in
                     Label { Text(p) } icon: { Image(systemName: symbol).foregroundStyle(farge) }
                 }
@@ -524,11 +524,11 @@ struct VelgPalettArk: View {
                             lagreEnkeltfarger(farger, i: kontekst)
                             lukk()
                         }
-                    } footer: {
+                    } footer: { Group {
                         Text("Lagres uten palett, under «Enkeltfarger» i Paletter.")
-                    }
+                    }.foregroundStyle(Color.sekundærTekst) }
                 }
-                Section("Ny palett") {
+                Seksjon("Ny palett") {
                     TextField("Navn på paletten", text: $nyttNavn)
                         .focused($navnIFokus)
                         .submitLabel(.done)
@@ -537,7 +537,7 @@ struct VelgPalettArk: View {
                         .disabled(nyttNavn.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
                 if !paletter.isEmpty {
-                    Section("Eksisterende paletter") {
+                    Seksjon("Eksisterende paletter") {
                         ForEach(paletter) { p in
                             Button {
                                 p.farger += farger.map(\.kopi)
@@ -546,7 +546,7 @@ struct VelgPalettArk: View {
                                 HStack {
                                     Text(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn).foregroundStyle(.primary)
                                     Spacer()
-                                    Text("\(p.farger.count)").foregroundStyle(.secondary).monospacedDigit()
+                                    Text("\(p.farger.count)").foregroundStyle(Color.sekundærTekst).monospacedDigit()
                                     PalettStripe(farger: p.farger.map(\.farge)).frame(width: 90, height: 20)
                                 }
                             }
@@ -660,7 +660,7 @@ struct NavngiArk: View {
                         FargeRute(farge: farge.farge, visTekst: false, hjørne: 8).frame(width: 56, height: 40)
                         VStack(alignment: .leading, spacing: 1) {
                             Text(farge.farge.hex()).font(.callout.monospaced())
-                            Text(Fargebeskrivelse.beskriv(farge.farge)).font(.caption).foregroundStyle(.secondary)
+                            Text(Fargebeskrivelse.beskriv(farge.farge)).font(.caption).foregroundStyle(Color.sekundærTekst)
                         }
                     }
                     TextField("Navn, f.eks. «Fjordblå»", text: $navn)
@@ -675,9 +675,9 @@ struct NavngiArk: View {
                         if foreslår { ProgressView() } else { Label("Foreslå navn", systemImage: "sparkles") }
                     }
                     .disabled(foreslår)
-                } footer: {
+                } footer: { Group {
                     Text("Forslaget lages med Apple Intelligence på enheten når det er tilgjengelig.")
-                }
+                }.foregroundStyle(Color.sekundærTekst) }
             }
             .formStyle(.grouped)
             .navigationTitle("Gi navn")

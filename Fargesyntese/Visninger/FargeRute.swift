@@ -51,10 +51,16 @@ struct FargeRute: View {
             }
             .overlay(alignment: .topTrailing) {
                 if visMerke && !farge.erISRGB {
-                    Text("P3")
+                    // Varseltrekant: fargen ligger utenfor sRGB og vises ulikt på vanlige skjermer.
+                    // Ikon og tekst når det er plass, bare ikonet på små prøver.
+                    ViewThatFits(in: .horizontal) {
+                        Label("P3", systemImage: "exclamationmark.triangle.fill").labelStyle(.titleAndIcon)
+                        Image(systemName: "exclamationmark.triangle.fill")
+                    }
                         .font(.caption2.weight(.bold))
+                        .imageScale(.small)
                         // Innrykket følger hjørneradiusen, så merket ikke klippes av det avrundede hjørnet.
-                        .padding(hjørne * 0.3 + 4 + ekstraMerkeInnrykk)
+                        .padding(min(hjørne * 0.3 + 4, 6) + ekstraMerkeInnrykk)
                         .foregroundStyle(farge.lesbarTekstfarge.swiftUI)
                         .accessibilityLabel("Utenfor sRGB")
                 }

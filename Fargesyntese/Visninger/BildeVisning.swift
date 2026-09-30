@@ -302,7 +302,7 @@ struct BildeVisning: View {
             }
 
             HStack(spacing: 8) {
-                Text("Dominerende").font(.caption).foregroundStyle(.secondary)
+                Text("Dominerende").font(.caption).foregroundStyle(Color.sekundærTekst)
                 GeometryReader { geo in
                     HStack(spacing: 0) {
                         ForEach(klynger, id: \.self) { k in

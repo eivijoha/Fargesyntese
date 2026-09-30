@@ -20,7 +20,7 @@ struct FargeValgRad: View {
             .buttonStyle(.plain)
             .accessibilityLabel("\(tittel): \(farge.hex()). Velg fra lagrede farger")
             VStack(alignment: .leading, spacing: 1) {
-                Text(tittel).font(.caption).foregroundStyle(.secondary)
+                Text(tittel).font(.caption).foregroundStyle(Color.sekundærTekst)
                 Text(farge.hex()).font(.callout.monospaced())
             }
             Spacer()
@@ -75,7 +75,7 @@ struct LagretFargeArk: View {
                     if enkeltfarger.isEmpty && paletter.allSatisfy({ $0.farger.isEmpty }) {
                         Text("Ingen lagrede farger ennå. Lagre farger fra Studio eller Utplukk, eller lag en palett.")
                             .font(.callout)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.sekundærTekst)
                     }
                 }
                 .padding()
@@ -106,7 +106,7 @@ struct LagretFargeArk: View {
                                 .frame(height: 52)
                                 .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(.secondary.opacity(0.3), lineWidth: 1))
                             if !pf.navn.isEmpty {
-                                Text(pf.navn).font(.caption2).lineLimit(1).foregroundStyle(.secondary)
+                                Text(pf.navn).font(.caption2).lineLimit(1).foregroundStyle(Color.sekundærTekst)
                             }
                         }
                     }

@@ -47,7 +47,7 @@ struct SammenligningVisning: View {
                 VStack(spacing: 2) {
                     Text("ΔE00 \(de00, format: .number.precision(.fractionLength(2)))")
                         .font(.largeTitle.weight(.semibold).monospacedDigit())
-                    Text(Fargeavstand.tolkning(de00)).font(.headline).foregroundStyle(.secondary)
+                    Text(Fargeavstand.tolkning(de00)).font(.headline).foregroundStyle(Color.sekundærTekst)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 6)
@@ -65,9 +65,9 @@ struct SammenligningVisning: View {
                 rad("ΔL* (lyshet)", lb.l - la.l, 2)
                 rad("ΔC* (kroma)", cb.c - ca.c, 2)
                 rad("Δh (kulør, grader)", kulørforskjell(ca.h, cb.h), 1)
-            } header: {
+            } header: { Group {
                 Text("Detaljer")
-            } footer: {
+            }.foregroundStyle(Color.sekundærTekst) } footer: {
                 Text("Beregnet i CIELab D50. Tolkning: under 1 er ikke merkbart, 1–2 merkbart ved nøye sammenligning, 2–3,5 merkbart, over 5 regnes som ulike farger. Kameramålinger påvirkes av lys og hvitbalanse.")
             }
         }

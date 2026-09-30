@@ -131,3 +131,11 @@ struct InnholdsVisning: View {
         }
     }
 }
+
+extension Color {
+    /// Sekundærtekst med minst 4,5:1 kontrast mot lyse og mørke bakgrunner (se Assets).
+    static let sekundærTekst = Color("SekundaerTekst")
+    static let tertiærTekst = Color("TertiaerTekst")
+    // Statusfargene .advarsel, .suksess og .feil genereres fra Assets (minst 4,5:1 i lys og mørk modus;
+    // systemets .orange/.green er ca. 2,2:1 mot hvit).
+}

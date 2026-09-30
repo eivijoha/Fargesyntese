@@ -2915,6 +2915,16 @@
         }
       }
     },
+    "Utenfor gamut · ΔE00 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Out of gamut · ΔE00 %@"
+          }
+        }
+      }
+    },
     "Utenfor profilens gamut (ΔE OK %@)": {
       "localizations": {
         "en": {
@@ -3147,16 +3157,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "ΔE00 measures the deviation from the source color. The intents only differ when the profiles have their own tables for them, typically CMYK profiles from print shops; pure matrix profiles like sRGB and Display P3 give the same result for all."
-          }
-        }
-      }
-    },
-    "⚠︎ Utenfor gamut · ΔE00 %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "⚠︎ Out of gamut · ΔE00 %@"
           }
         }
       }

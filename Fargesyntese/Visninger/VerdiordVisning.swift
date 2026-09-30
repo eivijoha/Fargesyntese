@@ -37,12 +37,12 @@ struct VerdiordVisning: View {
                     Label(samtale.forslag == nil ? "Foreslå palett" : "Nytt forslag", systemImage: "sparkles")
                 }
                 .disabled(verdiord.trimmingCharacters(in: .whitespaces).isEmpty || samtale.arbeider)
-            } header: {
+            } header: { Group {
                 Text("Verdiord")
-            }
+            }.foregroundStyle(Color.sekundærTekst) }
 
             if let feil = samtale.feil {
-                Section { Label(feil.localizedDescription, systemImage: "exclamationmark.triangle").foregroundStyle(.orange) }
+                Section { Label(feil.localizedDescription, systemImage: "exclamationmark.triangle").foregroundStyle(Color.advarsel) }
             }
 
             if let forslag = samtale.forslag {
@@ -91,7 +91,7 @@ struct VerdiordVisning: View {
                         Text(f.navn.isEmpty ? "…" : f.navn).font(.headline)
                         Text("\(f.rollenavn) · \(f.farge.hex())")
                             .font(.caption.monospaced())
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.sekundærTekst)
                         if !f.begrunnelse.isEmpty { Text(f.begrunnelse).font(.caption) }
                     }
                 }
@@ -100,12 +100,12 @@ struct VerdiordVisning: View {
                 .contextMenu { KopierMeny(farge: f.farge) }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
-        } header: {
+        } header: { Group {
             HStack {
                 Text(forslag.tittel.isEmpty ? "Forslag" : forslag.tittel)
                 if samtale.arbeider { ProgressView().controlSize(.small) }
             }
-        } footer: {
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text(forslag.kilde == .appleIntelligence
                  ? "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen."
                  : "Laget med innebygd leksikon.")
@@ -140,11 +140,11 @@ struct VerdiordVisning: View {
             if samtale.logg.count > 1 {
                 Text(samtale.logg.joined(separator: " → "))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.sekundærTekst)
             }
-        } header: {
+        } header: { Group {
             Text("Juster")
-        } footer: {
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text("Hurtigknappene endrer fargene presist i OKLCH. Fritekst tolkes av språkmodellen, som husker samtalen.")
         }
     }

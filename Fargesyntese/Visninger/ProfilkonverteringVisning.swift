@@ -23,21 +23,21 @@ struct ProfilkonverteringVisning: View {
 
     var body: some View {
         Form {
-            Section("Fra") {
+            Seksjon("Fra") {
                 profilvelger("Kildeprofil", valgt: $fraID)
                 if fra.kanRedigeres {
                     ForEach(Array(fra.komponentnavn.enumerated()), id: \.offset) { i, navn in
                         if i < gyldigeVerdier.count { komponentrad(navn: navn, indeks: i) }
                     }
                 } else {
-                    Text("Verdier for denne profiltypen hentes fra aktiv farge.").font(.callout).foregroundStyle(.secondary)
+                    Text("Verdier for denne profiltypen hentes fra aktiv farge.").font(.callout).foregroundStyle(Color.sekundærTekst)
                 }
                 Button("Hent fra aktiv farge", systemImage: "arrow.down.circle") {
                     verdier = arbeidsbenk.aktivFarge.komponenter(i: fra) ?? []
                 }
             }
 
-            Section("Til") {
+            Seksjon("Til") {
                 profilvelger("Målprofil", valgt: $tilID)
                 Picker("Gjengivelseshensikt", selection: $hensikt) {
                     ForEach(Gjengivelseshensikt.allCases, id: \.self) { Text($0.visningsnavn).tag($0) }
@@ -66,9 +66,9 @@ struct ProfilkonverteringVisning: View {
                 ForEach(Gjengivelseshensikt.allCases, id: \.self) { h in
                     hensiktsrad(h)
                 }
-            } header: {
+            } header: { Group {
                 Text("Alle gjengivelseshensikter")
-            } footer: {
+            }.foregroundStyle(Color.sekundærTekst) } footer: {
                 Text("ΔE00 måler avviket fra kildefargen. Hensiktene skiller seg bare når profilene har egne tabeller for dem, typisk CMYK-profiler fra trykkerier; rene matriseprofiler som sRGB og Display P3 gir samme svar for alle.")
             }
         }
@@ -79,9 +79,9 @@ struct ProfilkonverteringVisning: View {
 
     private func profilvelger(_ tittel: String, valgt: Binding<String>) -> some View {
         Picker(tittel, selection: valgt) {
-            Section("Innebygde") { ForEach(ICCProfil.innebygde) { Text($0.navn).tag($0.id) } }
+            Seksjon("Innebygde") { ForEach(ICCProfil.innebygde) { Text($0.navn).tag($0.id) } }
             if !bibliotek.importerte.isEmpty {
-                Section("Importerte") { ForEach(bibliotek.importerte) { Text($0.navn).tag($0.id) } }
+                Seksjon("Importerte") { ForEach(bibliotek.importerte) { Text($0.navn).tag($0.id) } }
             }
         }
     }
@@ -113,7 +113,7 @@ struct ProfilkonverteringVisning: View {
             #if os(iOS)
             .keyboardType(.numberPad)
             #endif
-            Text(fra.visningsenhet).foregroundStyle(.secondary).frame(minWidth: 12)
+            Text(fra.visningsenhet).foregroundStyle(Color.sekundærTekst).frame(minWidth: 12)
         }
     }
 
@@ -129,14 +129,14 @@ struct ProfilkonverteringVisning: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(h.visningsnavn).fontWeight(h == hensikt ? .semibold : .regular)
                 if let resultat {
-                    Text(formatert(resultat, i: til)).font(.caption.monospaced()).foregroundStyle(.secondary)
+                    Text(formatert(resultat, i: til)).font(.caption.monospaced()).foregroundStyle(Color.sekundærTekst)
                 }
             }
             Spacer()
             if let avvik {
                 Text("ΔE00 \(avvik, format: .number.precision(.fractionLength(2)))")
                     .font(.callout.monospacedDigit())
-                    .foregroundStyle(avvik > 2 ? .orange : .secondary)
+                    .foregroundStyle(avvik > 2 ? Color.advarsel : Color.sekundærTekst)
             }
         }
         .contentShape(Rectangle())

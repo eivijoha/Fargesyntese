@@ -35,9 +35,9 @@ struct KontrastSeksjon: View {
             ForEach(WCAGKrav.allCases) { krav in
                 KravRad(krav: krav, test: test) { forgrunn = test.rettet(for: krav) }
             }
-        } header: {
+        } header: { Group {
             Text("Kontrast (WCAG 2.2)")
-        } footer: {
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning.")
         }
     }
@@ -86,13 +86,13 @@ struct KravRad: View {
         let bestått = test.består(krav)
         HStack {
             Image(systemName: bestått ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(bestått ? .green : .red)
+                .foregroundStyle(bestått ? Color.suksess : Color.feil)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 0) {
                 Text(krav.navn)
                 Text("\(krav.suksesskriterium) · minst \(krav.minimum, format: .number.precision(.fractionLength(1))):1")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.sekundærTekst)
             }
             Spacer()
             if !bestått {
@@ -119,7 +119,7 @@ struct KontrastmatriseArk: View {
                 let f = palett.farger
                 Grid(horizontalSpacing: 4, verticalSpacing: 4) {
                     GridRow {
-                        Text("Tekst ↓ / bakgrunn →").font(.caption2).foregroundStyle(.secondary).frame(width: 72)
+                        Text("Tekst ↓ / bakgrunn →").font(.caption2).foregroundStyle(Color.sekundærTekst).frame(width: 72)
                         ForEach(f) { bg in
                             FargeRute(farge: bg.farge, visTekst: false, hjørne: 6).frame(width: 64, height: 28)
                         }
@@ -179,7 +179,7 @@ struct KontrastmatriseArk: View {
                 .overlay(alignment: .topTrailing) {
                     Image(systemName: bestått ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .font(.caption2)
-                        .foregroundStyle(bestått ? .green : .red)
+                        .foregroundStyle(bestått ? Color.suksess : Color.feil)
                         .background(Circle().fill(.background))
                         .offset(x: 4, y: -4)
                 }

@@ -101,17 +101,17 @@ private struct PalettVurderingDel: View {
                     .disabled(valgt?.farger.isEmpty ?? true || arbeider)
                     Button("Kontrastmatrise", systemImage: "square.grid.3x3.fill") { visMatrise = true }
                         .disabled((valgt?.farger.count ?? 0) < 2)
-                } footer: {
+                } footer: { Group {
                     Text("Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Kontrasttallene er beregnet eksakt.")
-                }
+                }.foregroundStyle(Color.sekundærTekst) }
                 if let feil {
-                    Section { Label(feil, systemImage: "exclamationmark.triangle").foregroundStyle(.orange) }
+                    Section { Label(feil, systemImage: "exclamationmark.triangle").foregroundStyle(Color.advarsel) }
                 }
                 if let vurdering {
-                    Section("Oppsummering") { Text(vurdering.oppsummering) }
-                    punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", .green)
-                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "exclamationmark.triangle.fill", .orange)
-                    punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", .blue)
+                    Seksjon("Oppsummering") { Text(vurdering.oppsummering) }
+                    punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", Color.suksess)
+                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "exclamationmark.triangle.fill", Color.advarsel)
+                    punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", Color.accentColor)
                     Section {
                         DisclosureGroup("Fakta vurderingen bygger på") {
                             ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
@@ -130,7 +130,7 @@ private struct PalettVurderingDel: View {
     @ViewBuilder
     private func punkter(_ tittel: String, _ liste: [String], _ symbol: String, _ farge: Color) -> some View {
         if !liste.isEmpty {
-            Section(tittel) {
+            Seksjon(tittel) {
                 ForEach(liste, id: \.self) { p in
                     Label { Text(p) } icon: { Image(systemName: symbol).foregroundStyle(farge) }
                 }

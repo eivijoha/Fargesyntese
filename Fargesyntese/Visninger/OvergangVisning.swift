@@ -35,13 +35,13 @@ struct OvergangVisning: View {
     private func endepunkt(_ tittel: String, _ farge: Farge, trailing: Bool = false) -> some View {
         VStack(alignment: trailing ? .trailing : .leading, spacing: 0) {
             Text(tittel).font(.caption.weight(.semibold))
-            Text(farge.hex()).font(.caption2.monospaced()).foregroundStyle(.secondary)
+            Text(farge.hex()).font(.caption2.monospaced()).foregroundStyle(Color.sekundærTekst)
         }
     }
 
     var body: some View {
         Form {
-            Section("Endepunkter") {
+            Seksjon("Endepunkter") {
                 FargeValgRad(tittel: String(localized: "Fra"), farge: Binding(get: { start }, set: { start = $0 }))
                 FargeValgRad(tittel: String(localized: "Til"), farge: Binding(get: { slutt }, set: { slutt = $0 }))
                 Button("Bytt om", systemImage: "arrow.left.arrow.right") {
@@ -50,10 +50,10 @@ struct OvergangVisning: View {
                     slutt = a
                 }
             }
-            Section("Overgang") {
+            Seksjon("Overgang") {
                 Stepper("Toner: \(antall)", value: $antall, in: 2...24)
             }
-            Section("Lysere og mørkere rader") {
+            Seksjon("Lysere og mørkere rader") {
                 @Bindable var arbeidsbenk = arbeidsbenk
                 LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
             }
@@ -71,9 +71,9 @@ struct OvergangVisning: View {
                     Spacer()
                     endepunkt(String(localized: "Til"), slutt, trailing: true)
                 }
-            } header: {
+            } header: { Group {
                 Text("Overgang i OKLab – \(antall) toner")
-            }
+            }.foregroundStyle(Color.sekundærTekst) }
 
             // Lysere og mørkere varianter av hver tone; overgangsraden er markert med ramme.
             if rader.count > 1 {
@@ -96,9 +96,9 @@ struct OvergangVisning: View {
                         }
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-                } header: {
+                } header: { Group {
                     Text("Med lysere og mørkere rader")
-                } footer: {
+                }.foregroundStyle(Color.sekundærTekst) } footer: {
                     Text("Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.")
                 }
             }
@@ -164,7 +164,7 @@ struct CSSGradientSeksjon: View {
             Text(gradient.deklarasjon)
                 .font(.caption.monospaced())
                 .textSelection(.enabled)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.sekundærTekst)
             HStack {
                 Button(kopiert ? "Kopiert" : "Kopier CSS", systemImage: kopiert ? "checkmark" : "doc.on.doc") {
                     Utklippstavle.kopierTekst(gradient.deklarasjon)
@@ -178,9 +178,9 @@ struct CSSGradientSeksjon: View {
                 }
             }
             .buttonStyle(.borderless)
-        } header: {
+        } header: { Group {
             Text("CSS-gradient")
-        } footer: {
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text("Moderne nettlesere bruker `in oklab` og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.")
         }
     }

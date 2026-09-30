@@ -42,7 +42,7 @@ struct ICCSeksjon: View {
                 if let avvik = farge.avvik(i: profil, hensikt: hensikt), avvik > 0.02 {
                     Label("Utenfor profilens gamut (ΔE\u{2009}OK \(avvik, format: .number.precision(.fractionLength(3))))",
                           systemImage: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.advarsel)
                         .font(.callout)
                 }
                 if profil.kanRedigeres {
