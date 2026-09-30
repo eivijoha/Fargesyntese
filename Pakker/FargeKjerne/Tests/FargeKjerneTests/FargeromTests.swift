@@ -84,6 +84,21 @@ struct FargeromTests {
 
 @Suite("Paletter")
 struct PalettTests {
+    @Test func representasjonKodesOgEldreFargerLesesFortsatt() throws {
+        let f = Farge(hex: "#2F7FD8")!
+        let pf = PalettFarge(farge: f, representasjon: .init(modell: .cmyk, farge: f))
+        let data = try JSONEncoder().encode(pf)
+        let tilbake = try JSONDecoder().decode(PalettFarge.self, from: data)
+        #expect(tilbake.representasjon?.rom == .modell(.cmyk))
+        #expect(tilbake.representasjon?.verdier.count == 4)
+        // Eldre JSON uten representasjon
+        let gammel = #"{"id":"6F1B6A3C-3E5C-4C2B-9C2B-1A2B3C4D5E6F","navn":"","farge":{"r":0.5,"g":0.5,"b":0.5,"alfa":1},"opphav":"manuell"}"#
+        let lest = try JSONDecoder().decode(PalettFarge.self, from: Data(gammel.utf8))
+        #expect(lest.representasjon == nil)
+        let icc = Fargerepresentasjon(rom: .icc(id: "icc:abc", navn: "FOGRA39"), verdier: [0.1, 0.2, 0.3, 0.4], tekst: "10 / 20 / 30 / 40 %")
+        #expect(icc.romnavn == "FOGRA39")
+    }
+
     @Test func overgangLikeSteg() {
         let a = Farge(hex: "#0033AA")!, b = Farge(hex: "#FFCC00")!
         let toner = Overgang.toner(fra: a, til: b, antall: 7)

@@ -51,7 +51,7 @@ nonisolated extension PalettFarge: @retroactive Transferable {
     }
 
     /// Kopi med ny identitet, for innsetting i en annen palett.
-    var kopi: PalettFarge { PalettFarge(navn: navn, farge: farge, opphav: opphav) }
+    var kopi: PalettFarge { PalettFarge(navn: navn, farge: farge, opphav: opphav, representasjon: representasjon) }
 }
 
 nonisolated extension UTType {

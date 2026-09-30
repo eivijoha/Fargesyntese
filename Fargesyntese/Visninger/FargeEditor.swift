@@ -43,7 +43,9 @@ struct FargeEditor: View {
 
         Form {
             Section {
-                Fargeflate(farge: farge, profil: visOgsåProfil, hensikt: hensikt)
+                Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
+                           lagre: { lagreEnkeltfarger([$0], i: kontekst) },
+                           leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
                     .frame(height: 140)
                     .listRowInsets(EdgeInsets())
                 HStack {
@@ -96,7 +98,7 @@ struct FargeEditor: View {
                     if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
                 }
                 Button("Lagre farge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
-                    lagreEnkeltfarger([PalettFarge(farge: farge)], i: kontekst)
+                    lagreEnkeltfarger([PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: arbeidsbenk.modell, farge: farge))], i: kontekst)
                     lagret = true
                     Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
                 }
@@ -331,39 +333,50 @@ private extension Double {
 /// ellers fargeverdiene i rommet (RGB 0–255, CMYK i %).
 struct Fargeflate: View {
     let farge: Farge
+    /// Fargemodellen som er valgt i Studio – venstre halvdel viser verdiene i den.
+    let modell: Fargemodell
     let profil: ICCProfil
     var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
+    /// Lagre en halvdel som enkeltfarge, eller åpne «Legg i palett» for den.
+    var lagre: (PalettFarge) -> Void = { _ in }
+    var leggIPalett: (PalettFarge) -> Void = { _ in }
 
-    /// Nærmeste farge i profilens rom. sRGB bruker perseptuell gamut-kartlegging (CSS Color 4),
-    /// andre rom går via ICC-profilen med valgt gjengivelseshensikt.
-    private var motpart: (farge: Farge, tekst: String) {
+    /// Nærmeste farge i profilens rom og verdiene der. sRGB bruker perseptuell gamut-kartlegging
+    /// (CSS Color 4), andre rom går via ICC-profilen med valgt gjengivelseshensikt.
+    private var motpart: (farge: Farge, tekst: String, verdier: [Double]) {
         if profil.id == ICCProfil.sRGB.id {
             let s = farge.gamutKartlagt(til: .sRGB)
-            return (s, s.hex())
+            let v = s.sRGB
+            return (s, s.hex(), [v.r, v.g, v.b])
         }
         guard let k = farge.komponenter(i: profil, hensikt: hensikt),
               let f = Farge(komponenter: k, i: profil, alfa: farge.alfa)
-        else { return (farge, "–") }
-        return (f, profil.formatert(k))
+        else { return (farge, "–", []) }
+        return (f, profil.formatert(k), k)
     }
 
     var body: some View {
         let høyre = motpart
+        let venstre = PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
+        let høyreFarge = PalettFarge(farge: høyre.farge, representasjon: Fargerepresentasjon(
+            rom: .icc(id: profil.id, navn: profil.navn), verdier: høyre.verdier, tekst: høyre.tekst))
         HStack(spacing: 0) {
-            halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : String(localized: "Utenfor P3"), tekst: farge.p3Hex())
-            halvdel(høyre.farge, tittel: profil.navn, tekst: høyre.tekst,
+            halvdel(venstre, tittel: modell.navn, tekst: modell.tekst(for: farge),
+                    merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
+            halvdel(høyreFarge, tittel: profil.navn, tekst: høyre.tekst,
                     merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
                         : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
     }
 
-    private func halvdel(_ f: Farge, tittel: String, tekst: String, merknad: String? = nil) -> some View {
-        FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
+    private func halvdel(_ pf: PalettFarge, tittel: String, tekst: String, merknad: String? = nil) -> some View {
+        let f = pf.farge
+        return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(tittel).font(.caption.weight(.semibold)).lineLimit(1)
-                    Text(tekst).font(.caption.monospaced()).lineLimit(1).minimumScaleFactor(0.7)
+                    Text(tekst).font(.caption.monospaced()).lineLimit(2).minimumScaleFactor(0.6)
                     if let merknad {
                         Label(merknad, systemImage: "exclamationmark.triangle.fill").font(.caption2)
                     }
@@ -371,9 +384,42 @@ struct Fargeflate: View {
                 .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                 .padding(12)
             }
-            .contextMenu {
-                Button("Kopier \(tekst)", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
+            .overlay(alignment: .topTrailing) {
+                LagreHalvdelKnapp(farge: pf, lagre: lagre)
+                    .foregroundStyle(f.lesbarTekstfarge.swiftUI)
+                    .padding(6)
             }
+            .contextMenu {
+                Button("Lagre som enkeltfarge", systemImage: "bookmark") { lagre(pf) }
+                Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(pf) }
+                Button("Kopier verdier", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
+                Button("Kopier hex", systemImage: "number") { Utklippstavle.kopier(f) }
+            }
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("\(tittel): \(tekst)")
+    }
+}
+
+/// Bokmerkeknapp i hver halvdel av fargeflaten, med kort bekreftelse.
+private struct LagreHalvdelKnapp: View {
+    let farge: PalettFarge
+    var lagre: (PalettFarge) -> Void
+    @State private var lagret = false
+
+    var body: some View {
+        Button {
+            lagre(farge)
+            lagret = true
+            Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
+        } label: {
+            Image(systemName: lagret ? "bookmark.fill" : "bookmark")
+                .font(.body.weight(.semibold))
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
+        .accessibilityLabel(lagret ? String(localized: "Lagret") : String(localized: "Lagre som enkeltfarge"))
     }
 }
 

@@ -127,6 +127,22 @@
         }
       }
     },
+    "%@: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$@"
+          }
+        }
+      }
+    },
     "%@: %@. Velg fra lagrede farger": {
       "localizations": {
         "en": {
@@ -597,32 +613,12 @@
         }
       }
     },
-    "Eksisterende paletter": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Existing palettes"
-          }
-        }
-      }
-    },
     "Eksporter": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Export"
-          }
-        }
-      }
-    },
-    "Endepunkter": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Endpoints"
           }
         }
       }
@@ -1887,6 +1883,16 @@
         }
       }
     },
+    "Lagret": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved"
+          }
+        }
+      }
+    },
     "Laster bilde …": {
       "localizations": {
         "en": {
@@ -2033,16 +2039,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lighter and darker %@"
-          }
-        }
-      }
-    },
-    "Lysere og mørkere rader": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lighter and darker rows"
           }
         }
       }
@@ -2267,16 +2263,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Create and add"
-          }
-        }
-      }
-    },
-    "Oppsummering": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Summary"
           }
         }
       }
@@ -3011,16 +2997,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose from Photos"
-          }
-        }
-      }
-    },
-    "Verdier": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Values"
           }
         }
       }

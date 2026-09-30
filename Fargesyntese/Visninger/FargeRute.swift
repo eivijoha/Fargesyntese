@@ -43,6 +43,10 @@ struct FargeRute: View {
                 if visTekst {
                     VStack(alignment: .leading, spacing: 0) {
                         if let navn, !navn.isEmpty { Text(navn).font(.caption.weight(.semibold)) }
+                        if let rep = palettFarge?.representasjon {
+                            Text(rep.romnavn).font(.caption2.weight(.medium)).lineLimit(1)
+                            Text(rep.tekst).font(.caption2.monospaced()).lineLimit(1).minimumScaleFactor(0.6)
+                        }
                         Text(farge.hex()).font(.caption2.monospaced())
                     }
                     .foregroundStyle(farge.lesbarTekstfarge.swiftUI)
