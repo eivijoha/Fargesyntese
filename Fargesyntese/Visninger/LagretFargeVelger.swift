@@ -24,10 +24,10 @@ struct FargeValgRad: View {
                 Text(farge.hex()).font(.callout.monospaced())
             }
             Spacer()
-            Button("Velg", systemImage: "swatchpalette") { visVelger = true }
+            Button("Velg") { visVelger = true }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
-                .fixedSize()
+                .lineLimit(1)
             Menu("Mer", systemImage: "ellipsis.circle") {
                 Button("Aktiv farge", systemImage: "slider.horizontal.3") { farge = arbeidsbenk.aktivFarge }
                 Button("Lim inn", systemImage: "doc.on.clipboard") { if let f = Utklippstavle.limInn() { farge = f } }

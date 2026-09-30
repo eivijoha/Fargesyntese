@@ -78,6 +78,16 @@ final class Arbeidsbenk {
 
     enum Fane: Hashable { case studio, paletter, overgang, utplukk, vurdering }
 
+    /// Åpner en lagret gradient i Overgang (endepunktene huskes via `@AppStorage` der).
+    func åpne(_ gradient: Gradientoppsett) {
+        let d = UserDefaults.standard
+        d.set(OvergangVisning.lagringstekst(gradient.fra), forKey: "overgangFra")
+        d.set(OvergangVisning.lagringstekst(gradient.til), forKey: "overgangTil")
+        d.set(gradient.antall, forKey: "overgangAntall")
+        lyshetstrinn = gradient.trinn
+        valgtFane = .overgang
+    }
+
     /// Siste målte farger (kamera, bilde, pipette), nyeste sist – brukes i sammenligning.
     private(set) var målinger: [Farge] = []
     /// Åpent sammenligningsark (A/B med ΔE2000), hvis noe.

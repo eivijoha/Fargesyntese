@@ -127,6 +127,22 @@
         }
       }
     },
+    "%@, %@ til %@, %lld toner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@ to %3$@, %4$lld tones"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@ til %3$@, %4$lld toner"
+          }
+        }
+      }
+    },
     "%@: %@": {
       "localizations": {
         "en": {
@@ -249,6 +265,16 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "%lld toner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld tones"
           }
         }
       }
@@ -589,6 +615,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Details"
+          }
+        }
+      }
+    },
+    "Dette kan ikke angres.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This can’t be undone."
           }
         }
       }
@@ -969,6 +1005,16 @@
         }
       }
     },
+    "Gi gradienten navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name the gradient"
+          }
+        }
+      }
+    },
     "Gi navn": {
       "localizations": {
         "en": {
@@ -1045,6 +1091,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rendering intent"
+          }
+        }
+      }
+    },
+    "Gradienten lagres under «Gradienter» i Paletter og kan åpnes igjen her.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The gradient is saved under “Gradients” in Palettes and can be opened here again."
+          }
+        }
+      }
+    },
+    "Gradienter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gradients"
           }
         }
       }
@@ -1245,6 +1311,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No single colors"
+          }
+        }
+      }
+    },
+    "Ingen gradienter ennå. Lagre en fra Overgang med lagre-knappen øverst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No gradients yet. Save one from Gradient with the save button at the top."
           }
         }
       }
@@ -1851,6 +1927,36 @@
         }
       }
     },
+    "Lagre farger som palett …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save colors as palette …"
+          }
+        }
+      }
+    },
+    "Lagre gradient": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save gradient"
+          }
+        }
+      }
+    },
+    "Lagre gradient …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save gradient …"
+          }
+        }
+      }
+    },
     "Lagre sist fangede farge": {
       "localizations": {
         "en": {
@@ -2403,22 +2509,22 @@
         }
       }
     },
-    "Paletter og enkeltfarger lagres bare på denne enheten.": {
+    "Paletter, gradienter og enkeltfarger lagres bare på denne enheten.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes and single colors are stored only on this device."
+            "value": "Palettes, gradients and single colors are stored only on this device."
           }
         }
       }
     },
-    "Paletter og enkeltfarger synkroniseres via iCloud.": {
+    "Paletter, gradienter og enkeltfarger synkroniseres via iCloud.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes and single colors sync via iCloud."
+            "value": "Palettes, gradients and single colors sync via iCloud."
           }
         }
       }
@@ -2629,6 +2735,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide light panel"
+          }
+        }
+      }
+    },
+    "Slett gradient": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete gradient"
           }
         }
       }
@@ -2955,6 +3071,16 @@
         }
       }
     },
+    "Trykk på en farge for å gjøre den aktiv, eller trykk og hold for å lagre den.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap a color to make it active, or touch and hold to save it."
+          }
+        }
+      }
+    },
     "Uten navn": {
       "localizations": {
         "en": {
@@ -3217,6 +3343,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "±%lld %%-points"
+          }
+        }
+      }
+    },
+    "Åpne i Overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open in Gradient"
+          }
+        }
+      }
+    },
+    "Åpner gradienten i Overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the gradient in Gradient"
           }
         }
       }

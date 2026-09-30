@@ -1,4 +1,5 @@
 import FargeKjerne
+import SwiftData
 import SwiftUI
 
 /// Overgangstoner i like OKLab-steg mellom to farger, med lysere/mørkere rader.
@@ -17,11 +18,28 @@ struct OvergangVisning: View {
         nonmutating set { sluttTekst = Self.lagringstekst(newValue) }
     }
 
-    private static func lagringstekst(_ f: Farge) -> String {
+    static func lagringstekst(_ f: Farge) -> String {
         f.erISRGB ? f.hex() : Fargemodell.displayP3.tekst(for: f)
     }
-    @State private var antall = 7
+    @AppStorage("overgangAntall") private var antall = 7
     @State private var visLagre = false
+    @State private var navngirGradient = false
+    @State private var gradientnavn = ""
+    @State private var gradientLagret = false
+    /// Én farge fra overgangen som skal legges i en palett (trykk og hold).
+    @State private var leggIPalett: [PalettFarge]?
+    @Environment(\.modelContext) private var kontekst
+
+    private func lagreGradient() {
+        let navn = gradientnavn.trimmingCharacters(in: .whitespacesAndNewlines)
+        let oppsett = Gradientoppsett(fra: start, til: slutt, antall: antall, trinn: arbeidsbenk.lyshetstrinn)
+        kontekst.insert(LagretGradient(navn: navn.isEmpty ? String(localized: "Uten navn") : navn, oppsett: oppsett))
+        gradientLagret = true
+        Task { try? await Task.sleep(for: .seconds(1.5)); gradientLagret = false }
+    }
+
+    private func lagre(_ f: Farge) { lagreEnkeltfarger([PalettFarge(farge: f, opphav: .overgang)], i: kontekst) }
+    private func velgPalett(_ f: Farge) { leggIPalett = [PalettFarge(farge: f, opphav: .overgang)] }
 
     private var toner: [Farge] { Overgang.toner(fra: start, til: slutt, antall: antall).map(arbeidsbenk.begrens) }
 
@@ -61,7 +79,7 @@ struct OvergangVisning: View {
             Section {
                 HStack(spacing: 3) {
                     ForEach(Array(toner.enumerated()), id: \.offset) { _, farge in
-                        FargeRute(farge: farge, visTekst: false, hjørne: 4)
+                        FargeRute(farge: farge, visTekst: false, hjørne: 4, lagre: lagre, leggIPalett: velgPalett)
                             .frame(height: 56)
                             .onTapGesture { arbeidsbenk.aktivFarge = farge }
                     }
@@ -73,7 +91,9 @@ struct OvergangVisning: View {
                 }
             } header: { Group {
                 Text("Overgang i OKLab – \(antall) toner")
-            }.foregroundStyle(Color.sekundærTekst) }
+            }.foregroundStyle(Color.sekundærTekst) } footer: {
+                Text("Trykk på en farge for å gjøre den aktiv, eller trykk og hold for å lagre den.")
+            }
 
             // Lysere og mørkere varianter av hver tone; overgangsraden er markert med ramme.
             if rader.count > 1 {
@@ -83,7 +103,7 @@ struct OvergangVisning: View {
                         ForEach(Array(rader.enumerated()), id: \.offset) { r, rad in
                             GridRow {
                                 ForEach(Array(rad.enumerated()), id: \.offset) { _, farge in
-                                    FargeRute(farge: farge, visTekst: false, hjørne: 4)
+                                    FargeRute(farge: farge, visTekst: false, hjørne: 4, lagre: lagre, leggIPalett: velgPalett)
                                         .frame(minHeight: 36)
                                         .overlay {
                                             if r == midtrad {
@@ -108,7 +128,24 @@ struct OvergangVisning: View {
         .formStyle(.grouped)
         .navigationTitle("Overgang")
         .toolbar {
-            Button("Lagre som palett", systemImage: "square.and.arrow.down") { visLagre = true }
+            Menu("Lagre", systemImage: gradientLagret ? "checkmark" : "square.and.arrow.down") {
+                Button("Lagre gradient …", systemImage: "square.stack") {
+                    gradientnavn = String(localized: "Overgang \(start.hex()) → \(slutt.hex())")
+                    navngirGradient = true
+                }
+                Button("Lagre farger som palett …", systemImage: "swatchpalette") { visLagre = true }
+            }
+            .sensoryFeedback(.success, trigger: gradientLagret) { _, ny in ny }
+        }
+        .alert("Lagre gradient", isPresented: $navngirGradient) {
+            TextField("Navn", text: $gradientnavn)
+            Button("Avbryt", role: .cancel) {}
+            Button("Lagre") { lagreGradient() }
+        } message: {
+            Text("Gradienten lagres under «Gradienter» i Paletter og kan åpnes igjen her.")
+        }
+        .sheet(isPresented: Binding(get: { leggIPalett != nil }, set: { if !$0 { leggIPalett = nil } })) {
+            VelgPalettArk(farger: leggIPalett ?? [])
         }
         .sheet(isPresented: $visLagre) {
             VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) },

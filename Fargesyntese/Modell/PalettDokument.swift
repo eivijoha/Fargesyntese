@@ -52,14 +52,57 @@ final class LagretFarge {
     }
 }
 
+/// Innstillingene som definerer en gradient i Overgang: endepunkter, antall toner og
+/// lysere/mørkere rader.
+nonisolated struct Gradientoppsett: Codable, Hashable, Sendable {
+    var fra: Farge
+    var til: Farge
+    var antall: Int
+    var trinn: Lyshetstrinn
+
+    var toner: [Farge] { Overgang.toner(fra: fra, til: til, antall: antall) }
+
+    /// Rader fra lysest til mørkest; midtraden er selve overgangen.
+    var rader: [[Farge]] {
+        let variasjoner = toner.map { trinn.toner(for: $0) }
+        return (0..<(trinn.antallLysere + trinn.antallMørkere + 1)).map { rad in variasjoner.map { $0[rad] } }
+    }
+
+    var css: String { CSSGradient(farger: [fra, til]).deklarasjon }
+}
+
+/// En lagret gradient («Gradienter» i Paletter). Kan åpnes igjen i Overgang.
+@Model
+final class LagretGradient {
+    var id: UUID = UUID()
+    var navn: String = ""
+    var opprettet: Date = Date.now
+    var endret: Date = Date.now
+    private var data: Data = Data()
+
+    init(navn: String, oppsett: Gradientoppsett) {
+        self.id = UUID()
+        self.navn = navn
+        self.oppsett = oppsett
+    }
+
+    var oppsett: Gradientoppsett? {
+        get { try? JSONDecoder().decode(Gradientoppsett.self, from: data) }
+        set {
+            data = (try? JSONEncoder().encode(newValue)) ?? Data()
+            endret = .now
+        }
+    }
+}
+
 /// Felles lagring for app og App Intents (intents kjører i appens prosess).
 ///
-/// Paletter og enkeltfarger synkroniseres via iCloud (CloudKit, privat database) når brukeren er
+/// Paletter, gradienter og enkeltfarger synkroniseres via iCloud (CloudKit, privat database) når brukeren er
 /// logget inn i iCloud. Ellers lagres de lokalt. Modellene oppfyller CloudKit-kravene: alle felt
 /// har standardverdier, ingen unike begrensninger og ingen påkrevde relasjoner.
 enum Lagring {
     static let containerID = "iCloud.no.engenett.Fargesyntese"
-    private static let skjema = Schema([PalettDokument.self, LagretFarge.self])
+    private static let skjema = Schema([PalettDokument.self, LagretFarge.self, LagretGradient.self])
 
     /// Om lageret synkroniseres via iCloud (for visning i appen).
     private(set) static var synkroniserer = false

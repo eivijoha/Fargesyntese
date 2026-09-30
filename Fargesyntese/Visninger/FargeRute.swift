@@ -14,6 +14,7 @@ struct FargeRute: View {
     /// Vis «P3»-merket for farger utenfor sRGB.
     var visMerke = true
     /// Valgfrie handlinger i kontekstmenyen (trykk og hold / høyreklikk).
+    var lagre: ((Farge) -> Void)? = nil
     var leggIPalett: ((Farge) -> Void)? = nil
     var fjern: (() -> Void)? = nil
     var navngi: (() -> Void)? = nil
@@ -73,6 +74,9 @@ struct FargeRute: View {
                 if let navngi {
                     Button("Gi navn …", systemImage: "character.cursor.ibeam", action: navngi)
                 }
+                if let lagre {
+                    Button("Lagre som enkeltfarge", systemImage: "plus.square") { lagre(farge) }
+                }
                 if let leggIPalett {
                     Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
                 }
@@ -81,6 +85,11 @@ struct FargeRute: View {
                 if let fjern {
                     Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)
                 }
+            } preview: {
+                // Egen forhåndsvisning: i lister løfter iOS ellers hele raden, så det er uklart
+                // hvilken farge menyen gjelder.
+                FargeRute(farge: farge, navn: navn, hjørne: 16, palettFarge: palettFarge)
+                    .frame(width: 220, height: 160)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(navn ?? farge.hex())

@@ -33,6 +33,8 @@ struct PalettListe: View {
                         flyttTilEnkeltfarger(farger, i: kontekst)
                     }
 
+                    GradientSeksjon()
+
                     Text("Paletter").font(.title3.weight(.semibold)).padding(.top, 8)
                     if paletter.isEmpty {
                         Text("Ingen paletter ennå. Trykk + for en tom palett eller en palett fra verdiord, eller lag en fra Studio, Overgang eller Utplukk.")
@@ -54,8 +56,8 @@ struct PalettListe: View {
                             }
                         }
                     }
-                    Label(Lagring.synkroniserer ? "Paletter og enkeltfarger synkroniseres via iCloud."
-                                                : "Paletter og enkeltfarger lagres bare på denne enheten.",
+                    Label(Lagring.synkroniserer ? "Paletter, gradienter og enkeltfarger synkroniseres via iCloud."
+                                                : "Paletter, gradienter og enkeltfarger lagres bare på denne enheten.",
                           systemImage: Lagring.synkroniserer ? "icloud" : "iphone")
                         .font(.footnote)
                         .foregroundStyle(Color.sekundærTekst)
