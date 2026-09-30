@@ -7,16 +7,15 @@ struct OvergangVisning: View {
     @State private var start = Farge(hex: "#1B3A6B")!
     @State private var slutt = Farge(hex: "#F2B84B")!
     @State private var antall = 7
-    @State private var lysereRader = 1
-    @State private var mørkereRader = 1
     @State private var visLagre = false
 
     private var toner: [Farge] { Overgang.toner(fra: start, til: slutt, antall: antall) }
 
     /// Rader fra lysest til mørkest; midtraden er selve overgangen.
     private var rader: [[Farge]] {
-        let variasjoner = toner.map { Toneskala.variasjoner(av: $0, lysere: lysereRader, mørkere: mørkereRader) }
-        return (0..<(lysereRader + mørkereRader + 1)).map { rad in variasjoner.map { $0[rad] } }
+        let trinn = arbeidsbenk.lyshetstrinn
+        let variasjoner = toner.map { trinn.toner(for: $0) }
+        return (0..<(trinn.antallLysere + trinn.antallMørkere + 1)).map { rad in variasjoner.map { $0[rad] } }
     }
 
     var body: some View {
@@ -26,10 +25,12 @@ struct OvergangVisning: View {
                 FargeVelgerRad(tittel: "Til", farge: $slutt)
                 Button("Bytt om", systemImage: "arrow.left.arrow.right") { swap(&start, &slutt) }
             }
-            Section("Steg") {
+            Section("Overgang") {
                 Stepper("Toner: \(antall)", value: $antall, in: 2...24)
-                Stepper("Lysere rader: \(lysereRader)", value: $lysereRader, in: 0...5)
-                Stepper("Mørkere rader: \(mørkereRader)", value: $mørkereRader, in: 0...5)
+            }
+            Section("Lysere og mørkere rader") {
+                @Bindable var arbeidsbenk = arbeidsbenk
+                LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
             }
             Section {
                 Grid(horizontalSpacing: 3, verticalSpacing: 3) {
@@ -37,7 +38,7 @@ struct OvergangVisning: View {
                         GridRow {
                             ForEach(rader[r].indices, id: \.self) { k in
                                 FargeRute(farge: rader[r][k], visTekst: false, hjørne: 4)
-                                    .frame(minHeight: r == lysereRader ? 56 : 36)
+                                    .frame(minHeight: r == arbeidsbenk.lyshetstrinn.antallLysere ? 56 : 36)
                                     .onTapGesture { arbeidsbenk.aktivFarge = rader[r][k] }
                             }
                         }
@@ -54,7 +55,8 @@ struct OvergangVisning: View {
             Button("Lagre som palett", systemImage: "square.and.arrow.down") { visLagre = true }
         }
         .sheet(isPresented: $visLagre) {
-            VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) })
+            VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) },
+                          foreslåttNavn: "Overgang \(start.hex()) → \(slutt.hex())")
         }
     }
 }

@@ -18,7 +18,7 @@ enum FargemodellAppEnum: String, AppEnum {
 
 struct UgyldigFarge: Error, CustomLocalizedStringResourceConvertible {
     let tekst: String
-    var localizedStringResource: LocalizedStringResource { "«\(tekst)» er ikke en gyldig farge. Bruk hex, f.eks. #2F7FD8." }
+    var localizedStringResource: LocalizedStringResource { "«\(tekst)» er ikke en gyldig farge. Bruk hex eller CSS, f.eks. #2F7FD8 eller oklch(0.6 0.15 250)." }
 }
 
 // MARK: - Verdiord → palett
@@ -72,8 +72,8 @@ struct LagOvergangIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<[String]> {
-        guard let a = Farge(hex: fra) else { throw UgyldigFarge(tekst: fra) }
-        guard let b = Farge(hex: til) else { throw UgyldigFarge(tekst: til) }
+        guard let a = Fargetolk.tolk(fra) else { throw UgyldigFarge(tekst: fra) }
+        guard let b = Fargetolk.tolk(til) else { throw UgyldigFarge(tekst: til) }
         let toner = Overgang.toner(fra: a, til: b, antall: antall)
         if lagre {
             let dokument = PalettDokument(navn: "Overgang \(a.hex()) → \(b.hex())",
@@ -103,9 +103,34 @@ struct KonverterFargeIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog {
-        guard let f = Farge(hex: farge) else { throw UgyldigFarge(tekst: farge) }
+        guard let f = Fargetolk.tolk(farge) else { throw UgyldigFarge(tekst: farge) }
         let tekst = modell.modell.tekst(for: f)
         return .result(value: tekst, dialog: "\(tekst)")
+    }
+}
+
+// MARK: - Kontrast
+
+struct SjekkKontrastIntent: AppIntent {
+    static let title: LocalizedStringResource = "Sjekk kontrast"
+    static let description = IntentDescription("Tester to farger mot WCAG 2.2-kravene til kontrast for tekst og grafikk.")
+
+    @Parameter(title: "Tekstfarge", description: "Hex eller CSS-farge, f.eks. #767676")
+    var forgrunn: String
+
+    @Parameter(title: "Bakgrunn", default: "#FFFFFF")
+    var bakgrunn: String
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Sjekk kontrasten til \(\.$forgrunn) på \(\.$bakgrunn)")
+    }
+
+    func perform() async throws -> some IntentResult & ReturnsValue<Double> & ProvidesDialog {
+        guard let fg = Fargetolk.tolk(forgrunn) else { throw UgyldigFarge(tekst: forgrunn) }
+        guard let bg = Fargetolk.tolk(bakgrunn) else { throw UgyldigFarge(tekst: bakgrunn) }
+        let test = Kontrasttest(forgrunn: fg, bakgrunn: bg)
+        let krav = WCAGKrav.allCases.map { "\($0.navn): \(test.består($0) ? "bestått" : "ikke bestått")" }.joined(separator: ", ")
+        return .result(value: test.forhold, dialog: "Kontrasten er \(test.formatert) (\(test.sammendrag)). \(krav).")
     }
 }
 
@@ -128,6 +153,12 @@ struct FargesynteseSnarveier: AppShortcutsProvider {
             phrases: ["Lag overgangstoner i \(.applicationName)", "Lag en fargeovergang med \(.applicationName)"],
             shortTitle: "Overgangstoner",
             systemImageName: "square.stack.3d.forward.dottedline"
+        )
+        AppShortcut(
+            intent: SjekkKontrastIntent(),
+            phrases: ["Sjekk kontrast i \(.applicationName)", "Test fargekontrast med \(.applicationName)"],
+            shortTitle: "Sjekk kontrast",
+            systemImageName: "circle.lefthalf.filled"
         )
         AppShortcut(
             intent: KonverterFargeIntent(),

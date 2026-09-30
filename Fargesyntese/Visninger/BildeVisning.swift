@@ -130,14 +130,18 @@ struct BildeVisning: View {
                                         y: min(1, max(0, (g.location.y - ramme.minY) / ramme.height)))
                     }
                     .onEnded { _ in
+                        // Trykk/klikk (eller slipp etter dra) fanger fargen – samme oppførsel som kameraet.
                         drar = false
-                        if let f = gjeldende { arbeidsbenk.aktivFarge = f }
+                        if let f = gjeldende {
+                            arbeidsbenk.aktivFarge = f
+                            fanget.append(f)
+                        }
                     }
             )
         }
         .clipped()
         .background(.black.opacity(0.9))
-        .accessibilityLabel("Bilde. Dra for å plukke farge.")
+        .accessibilityLabel("Bilde. Trykk eller dra for å plukke farge.")
     }
 
     private func tilpasset(bilde: CGImage, i størrelse: CGSize) -> CGRect {

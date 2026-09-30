@@ -71,10 +71,70 @@ public struct Toneskala: Sendable {
 
     /// Lysere og mørkere varianter av en farge i like OKLab-lyshetssteg.
     public static func variasjoner(av farge: Farge, lysere: Int, mørkere: Int, steg: Double = 0.08, gamut: Gamut = .displayP3) -> [Farge] {
+        Lyshetstrinn(antallLysere: lysere, antallMørkere: mørkere, lysereSteg: steg, mørkereSteg: steg).toner(for: farge, gamut: gamut)
+    }
+}
+
+/// Hvor mange lysere/mørkere varianter, og hvor store stegene er – hver retning for seg.
+///
+/// - ``Modus/fast``: hvert steg endrer OKLCH-lyshet med et fast antall prosentpoeng
+///   (0,08 = 8 %-poeng). Gir perseptuelt like store sprang.
+/// - ``Modus/relativ``: hvert steg tar en andel av avstanden som gjenstår til hvitt
+///   (lysere) eller sort (mørkere). Stegene blir mindre mot ytterpunktene og treffer aldri
+///   helt hvitt/sort – slik mange designsystemer bygger tint/shade.
+public struct Lyshetstrinn: Hashable, Codable, Sendable {
+    public enum Modus: String, CaseIterable, Codable, Sendable {
+        case fast, relativ
+    }
+
+    public var antallLysere: Int
+    public var antallMørkere: Int
+    public var lysereSteg: Double
+    public var mørkereSteg: Double
+    public var modus: Modus
+
+    public init(antallLysere: Int = 3, antallMørkere: Int = 3, lysereSteg: Double = 0.08, mørkereSteg: Double = 0.08, modus: Modus = .fast) {
+        self.antallLysere = antallLysere
+        self.antallMørkere = antallMørkere
+        self.lysereSteg = lysereSteg
+        self.mørkereSteg = mørkereSteg
+        self.modus = modus
+    }
+
+    /// OKLCH-lysheter fra lysest til mørkest; grunnfargens lyshet ligger på indeks `antallLysere`.
+    public func lysheter(fra l: Double) -> [Double] {
+        let lysere = (1...max(antallLysere, 1)).prefix(antallLysere).map { k -> Double in
+            let k = Double(k)
+            switch modus {
+            case .fast: return l + lysereSteg * k
+            case .relativ: return 1 - (1 - l) * pow(1 - lysereSteg, k)
+            }
+        }
+        let mørkere = (1...max(antallMørkere, 1)).prefix(antallMørkere).map { k -> Double in
+            let k = Double(k)
+            switch modus {
+            case .fast: return l - mørkereSteg * k
+            case .relativ: return l * pow(1 - mørkereSteg, k)
+            }
+        }
+        return (lysere.reversed() + [l] + mørkere).map { $0.klampet(0, 1) }
+    }
+
+    /// Variantene fra lysest til mørkest, med grunnfargen uendret i midten.
+    /// Kulør og kroma bevares; hvert trinn gamut-kartlegges.
+    public func toner(for farge: Farge, gamut: Gamut = .displayP3) -> [Farge] {
         let g = farge.okLCH
-        let trinn = (-lysere...mørkere).map { g.l - Double($0) * steg }
-        return trinn.map { l in
-            Farge(okLCH: OKLCH(l: l.klampet(0, 1), c: g.c, h: g.h), alfa: farge.alfa).gamutKartlagt(til: gamut)
+        return lysheter(fra: g.l).enumerated().map { i, l in
+            i == antallLysere ? farge : Farge(okLCH: OKLCH(l: l, c: g.c, h: g.h), alfa: farge.alfa).gamutKartlagt(til: gamut)
+        }
+    }
+
+    /// Menneskelig beskrivelse av ett steg, f.eks. «+8 %-poeng» eller «20 % mot hvitt».
+    public func stegtekst(lysere: Bool) -> String {
+        let v = Int(((lysere ? lysereSteg : mørkereSteg) * 100).rounded())
+        switch modus {
+        case .fast: return "\(lysere ? "+" : "−")\(v) %-poeng"
+        case .relativ: return "\(v) % mot \(lysere ? "hvitt" : "sort")"
         }
     }
 }

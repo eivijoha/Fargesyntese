@@ -91,6 +91,6 @@ public struct LeksikonTolker: VerdiordTolker {
                                     farge: Farge(okLCH: l).gamutKartlagt(til: .displayP3))
             },
             kilde: .leksikon
-        )
+        ).medRolleregler()
     }
 }

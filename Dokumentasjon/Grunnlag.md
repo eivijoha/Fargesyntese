@@ -69,6 +69,31 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
       Studio-feltet tar CSS-tekst, paletter kan lime inn lister (også `--navn: verdi;`)
 - [x] Utplukk fra bilder (Bilder/Filer): fargestyrt via bildets profil, lupe, dominerende farger (k-means i OKLab)
 
+## Status (fase 1b – KI, WCAG og steg)
+
+- [x] KI med Foundation Models: strømmende forslag, samtale med fritekstjusteringer, navngiving,
+      vurdering med verktøykall (`kontrast`) og eksakte WCAG-fakta, automatisk leksikon-reserve
+- [x] Rolleregler etter generering: bakgrunn tydelig lys/mørk, tekst minst WCAG AA
+- [x] Hurtigjusteringer i OKLCH (varmere, kaldere, lysere, mørkere, mettet, dempet, kontrast)
+- [x] WCAG 2.2: kontrasttest i Studio (AA/AAA tekst, stor tekst, grafikk 1.4.11), «Rett opp», kontrastmatrise per palett,
+      Siri/Snarveier-handling «Sjekk kontrast»
+- [x] Lysere/mørkere: antall og stegstørrelse per retning, faste steg (%-poeng) eller relativt mot hvitt/sort
+- [x] Kopieringsknapp per rad i «Verdier»; «Legg i palett» kan opprette ny palett med navn
+- [x] Trykk/klikk i kamerabildet plukker fargen der (iOS, iPadOS, macOS); trykk i bilde fanger også
+- [x] `swift run kiprove` – kommandolinjeverktøy for å prøve promptene mot modellen på Macen
+
+Kjent: i iOS-simulatoren feiler Foundation Models med `promptTemplateNotFound` (simulator/modell-misforhold);
+appen faller da tilbake til leksikonet. Samme kode fungerer mot modellen på macOS.
+
+## Kø (bestilt, ikke påbegynt)
+
+1. **Fargeharmonier**: komplementær, split-komplementær, analog og jevn fordeling rundt fargesirkelen
+   med valgfritt antall (3, 4, 5 …) – beregnet i OKLCH
+2. **ΔE2000** mellom to målte farger (kamera, skjermpipette på macOS, bilde, utklippstavle) – A/B-sammenligning,
+   CIEDE2000 testet mot Sharma-datasettet
+3. **Adobe**: ASE (finnes, uten 5-fargersgrense), ACO (Photoshop), Adobe Color-temaer (5 farger), CC-biblioteker
+4. **Figma**: variabler (JSON/REST-API), Tokens Studio, eventuelt egen plugin
+
 ## Veikart
 
 **Fase 1 – kjernen i bruk**

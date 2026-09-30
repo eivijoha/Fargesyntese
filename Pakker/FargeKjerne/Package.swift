@@ -14,6 +14,8 @@ let package = Package(
         .target(name: "FargeKjerne"),
         // Verdiord → fargeforslag (Foundation Models på enheten + leksikon-reserve).
         .target(name: "FargeKI", dependencies: ["FargeKjerne"]),
+        // Utviklerverktøy for å prøve KI-promptene mot modellen på Macen: `swift run kiprove`.
+        .executableTarget(name: "kiprove", dependencies: ["FargeKjerne", "FargeKI"], path: "Sources/KIProve"),
         .testTarget(name: "FargeKjerneTests", dependencies: ["FargeKjerne", "FargeKI"]),
     ]
 )

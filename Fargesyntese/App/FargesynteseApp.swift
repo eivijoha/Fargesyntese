@@ -38,6 +38,15 @@ final class Arbeidsbenk {
     var aktivFarge = Farge(hex: "#2F7FD8")!
     var modell: Fargemodell = .okLCH
     var valgtFane: Fane = .studio
+    /// Lysere/mørkere-innstillinger, delt mellom Studio og Overgang og husket mellom oppstarter.
+    var lyshetstrinn: Lyshetstrinn = Arbeidsbenk.lastTrinn() {
+        didSet { try? UserDefaults.standard.set(JSONEncoder().encode(lyshetstrinn), forKey: "lyshetstrinn") }
+    }
+
+    private static func lastTrinn() -> Lyshetstrinn {
+        UserDefaults.standard.data(forKey: "lyshetstrinn").flatMap { try? JSONDecoder().decode(Lyshetstrinn.self, from: $0) }
+            ?? Lyshetstrinn()
+    }
 
     enum Fane: Hashable { case studio, paletter, overgang, utplukk, verdiord }
 }

@@ -9,17 +9,25 @@ struct KameraVisning: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                KameraForhåndsvisning(økt: plukker.økt)
-                Circle()
-                    .strokeBorder(.white, lineWidth: 2)
-                    .shadow(radius: 2)
-                    .frame(width: 44, height: 44)
-                if plukker.tilgangNektet {
-                    ContentUnavailableView("Ingen kameratilgang", systemImage: "camera.fill",
-                                           description: Text("Gi tilgang i Innstillinger for å plukke farger fra omgivelsene."))
-                        .background(.regularMaterial)
+            GeometryReader { geo in
+                ZStack {
+                    KameraForhåndsvisning(økt: plukker.økt) { enhet, visning in
+                        plukker.plukk(enhetspunkt: enhet, visningspunkt: visning)
+                    }
+                    Circle()
+                        .strokeBorder(.white, lineWidth: 2)
+                        .shadow(radius: 2)
+                        .frame(width: 44, height: 44)
+                        .position(plukker.markør ?? CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
+                        .animation(.snappy(duration: 0.2), value: plukker.markør)
+                        .allowsHitTesting(false)
+                    if plukker.tilgangNektet {
+                        ContentUnavailableView("Ingen kameratilgang", systemImage: "camera.fill",
+                                               description: Text("Gi tilgang i Innstillinger for å plukke farger fra omgivelsene."))
+                            .background(.regularMaterial)
+                    }
                 }
+                .onChange(of: geo.size) { plukker.tilbakestillMarkør() }
             }
             .clipped()
 
@@ -34,10 +42,7 @@ struct KameraVisning: View {
                     }
                 }
                 Button {
-                    if let f = plukker.gjeldende {
-                        fanget.append(f)
-                        arbeidsbenk.aktivFarge = f
-                    }
+                    plukker.fang()
                 } label: {
                     Image(systemName: "circle.inset.filled").font(.system(size: 44))
                 }
@@ -54,7 +59,13 @@ struct KameraVisning: View {
         .sheet(isPresented: $visLagre) {
             VelgPalettArk(farger: fanget.map { PalettFarge(farge: $0, opphav: .kamera) })
         }
-        .task { await plukker.start() }
+        .task {
+            plukker.vedFangst = { farge in
+                fanget.append(farge)
+                arbeidsbenk.aktivFarge = farge
+            }
+            await plukker.start()
+        }
         .onDisappear { plukker.stopp() }
     }
 }
