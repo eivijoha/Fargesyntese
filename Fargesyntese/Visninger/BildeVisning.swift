@@ -142,15 +142,23 @@ struct BildeVisning: View {
             .frame(width: geo.size.width, height: geo.size.height, alignment: .topLeading)
             .contentShape(Rectangle())
             #if os(macOS)
+            // Klikk plukker fargen der man klikker; dra flytter lupen og plukker ved slipp.
+            .onTapGesture(coordinateSpace: .local) { p in
+                berøring(p, fase: .start, ramme: ramme)
+                berøring(p, fase: .slutt, ramme: ramme)
+            }
             .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { g in berøring(g.location, fase: .endret, ramme: ramme) }
+                DragGesture(minimumDistance: 2)
+                    .onChanged { g in berøring(g.location, fase: drar ? .endret : .start, ramme: ramme) }
                     .onEnded { g in berøring(g.location, fase: .slutt, ramme: ramme) }
             )
             .simultaneousGesture(
                 MagnifyGesture()
                     .onChanged { v in knip(v.magnification, senter: v.startLocation, fase: knipStart == nil ? .start : .endret, ramme: ramme) }
-                    .onEnded { v in knip(v.magnification, senter: v.startLocation, fase: .slutt, ramme: ramme) }
+                    .onEnded { v in
+                        knip(v.magnification, senter: v.startLocation, fase: .slutt, ramme: ramme)
+                        knipIDenneBerøringen = false  // styreflate-knip er adskilt fra klikk på Mac
+                    }
             )
             #endif
             .overlay(alignment: .topTrailing) {

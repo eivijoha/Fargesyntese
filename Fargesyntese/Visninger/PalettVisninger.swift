@@ -11,8 +11,8 @@ struct PalettListe: View {
     @Environment(\.modelContext) private var kontekst
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
-    @State private var valgt: Valg?
-    @State private var kolonne: NavigationSplitViewColumn = .sidebar
+    /// Navigasjonssti: oversikten fyller hele hovedvisningen (også på Mac og iPad), valgt palett åpnes over.
+    @State private var sti: [Valg] = []
     @State private var målrettet: Valg?
     @State private var slettes: PalettDokument?
     @State private var omdøpes: PalettDokument?
@@ -24,7 +24,7 @@ struct PalettListe: View {
     }
 
     var body: some View {
-        NavigationSplitView(preferredCompactColumn: $kolonne) {
+        NavigationStack(path: $sti) {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     kort(.enkeltfarger) {
@@ -39,15 +39,19 @@ struct PalettListe: View {
                             .font(.callout)
                             .foregroundStyle(.secondary)
                     }
-                    ForEach(paletter) { p in
-                        kort(.palett(p)) {
-                            PalettRad(dokument: p)
-                        } slipp: { farger in
-                            flytt(farger, til: p, i: kontekst)
-                        }
-                        .contextMenu {
-                            Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
-                            Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
+                    // Rutenett som tilpasser seg bredden: én kolonne på iPhone, flere på iPad og Mac.
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 12, alignment: .top)],
+                              alignment: .leading, spacing: 12) {
+                        ForEach(paletter) { p in
+                            kort(.palett(p)) {
+                                PalettRad(dokument: p)
+                            } slipp: { farger in
+                                flytt(farger, til: p, i: kontekst)
+                            }
+                            .contextMenu {
+                                Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
+                                Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
+                            }
                         }
                     }
                     Label(Lagring.synkroniserer ? "Paletter og enkeltfarger synkroniseres via iCloud."
@@ -84,25 +88,24 @@ struct PalettListe: View {
                                 titleVisibility: .visible) {
                 Button("Slett palett", role: .destructive) {
                     if let p = slettes {
-                        if valgt == .palett(p) { valgt = nil }
+                        sti.removeAll { $0 == .palett(p) }
                         kontekst.delete(p)
                     }
                 }
             } message: {
                 Text("Fargene i paletten slettes også. Dette kan ikke angres.")
             }
-        } detail: {
-            switch valgt {
-            case .enkeltfarger: EnkeltfargerVisning()
-            case .palett(let p): PalettDetalj(dokument: p)
-            case nil: Text("Velg en palett").foregroundStyle(.secondary)
+            .navigationDestination(for: Valg.self) { v in
+                switch v {
+                case .enkeltfarger: EnkeltfargerVisning()
+                case .palett(let p): PalettDetalj(dokument: p)
+                }
             }
         }
     }
 
     private func velg(_ v: Valg) {
-        valgt = v
-        kolonne = .detail
+        sti = [v]
     }
 
     /// Kort som kan trykkes (åpner) og som tar imot slippede farger.
@@ -116,7 +119,7 @@ struct PalettListe: View {
         .background(.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .strokeBorder(målrettet == v ? Color.accentColor : (valgt == v ? Color.secondary.opacity(0.5) : .clear),
+                .strokeBorder(målrettet == v ? Color.accentColor : .clear,
                               lineWidth: målrettet == v ? 3 : 1)
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))

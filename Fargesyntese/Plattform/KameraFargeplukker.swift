@@ -345,6 +345,9 @@ struct KameraForhåndsvisning: NSViewRepresentable {
         }
 
         override func resetCursorRects() { addCursorRect(bounds, cursor: .crosshair) }
+
+        /// Første klikk plukker farge også når vinduet ikke er aktivt.
+        override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
     }
 
     func makeNSView(context: Context) -> Visning { Visning(økt: økt) }
