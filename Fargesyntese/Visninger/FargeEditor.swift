@@ -85,7 +85,7 @@ struct FargeEditor: View {
         #if os(iOS)
         .listSectionSpacing(.compact)
         #endif
-        .environment(\.defaultMinListRowHeight, 36)
+        .environment(\.defaultMinListRowHeight, 44)
         .navigationTitle("Studio")
         .toolbar {
             ToolbarItemGroup {
@@ -216,7 +216,7 @@ struct KomponentGlidere: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 52, alignment: .trailing)
             }
-            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             .accessibilityElement(children: .contain)
             }
         }
