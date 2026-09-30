@@ -37,7 +37,7 @@ struct FargeEditor: View {
 
             Section {
                 Picker("Fargemodell", selection: $arbeidsbenk.modell) {
-                    ForEach(Fargemodell.allCases) { Text($0.navn).tag($0) }
+                    ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
                 }
                 KomponentGlidere(modell: arbeidsbenk.modell, farge: $arbeidsbenk.aktivFarge)
             }

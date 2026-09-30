@@ -40,7 +40,8 @@ struct FargeRute: View {
                 if !farge.erISRGB {
                     Text("P3")
                         .font(.caption2.weight(.bold))
-                        .padding(4)
+                        // Innrykket følger hjørneradiusen, så merket ikke klippes av det avrundede hjørnet.
+                        .padding(hjørne * 0.3 + 4)
                         .foregroundStyle(farge.lesbarTekstfarge.swiftUI)
                         .accessibilityLabel("Utenfor sRGB")
                 }

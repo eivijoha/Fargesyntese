@@ -7,6 +7,10 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
 
     public var id: String { rawValue }
 
+    /// Modellene som tilbys som redigeringsvelger. Display P3 utelates: RGB-gliderne dekker
+    /// samme behov, og P3-verdiene vises og kan kopieres under «Verdier».
+    public static let redigerbare: [Fargemodell] = allCases.filter { $0 != .displayP3 }
+
     public var navn: String {
         switch self {
         case .okLCH: "OKLCH"
