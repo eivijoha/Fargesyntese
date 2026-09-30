@@ -2055,6 +2055,26 @@
         }
       }
     },
+    "Lagre med lysere og mørkere toner …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save with lighter and darker tones …"
+          }
+        }
+      }
+    },
+    "Lagre overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save gradient"
+          }
+        }
+      }
+    },
     "Lagre sist fangede farge": {
       "localizations": {
         "en": {
@@ -2103,6 +2123,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save as palette"
+          }
+        }
+      }
+    },
+    "Lagre tonene som palett …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save tones as palette …"
           }
         }
       }

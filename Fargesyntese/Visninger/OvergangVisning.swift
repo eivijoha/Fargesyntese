@@ -22,13 +22,42 @@ struct OvergangVisning: View {
         f.erISRGB ? f.hex() : Fargemodell.displayP3.tekst(for: f)
     }
     @AppStorage("overgangAntall") private var antall = 7
-    @State private var visLagre = false
+    /// Farger som skal lagres som palett: bare overgangen, eller med lysere og mørkere rader.
+    @State private var somPalett: [PalettFarge]?
     @State private var navngirGradient = false
     @State private var gradientnavn = ""
     @State private var gradientLagret = false
     /// Én farge fra overgangen som skal legges i en palett (trykk og hold).
     @State private var leggIPalett: [PalettFarge]?
     @Environment(\.modelContext) private var kontekst
+
+    /// «+» i øvre høyre hjørne av overgangen: lagre gradienten, eller fargene som palett.
+    private var lagremeny: some View {
+        Menu {
+            Button("Lagre gradient …", systemImage: "square.stack") {
+                gradientnavn = String(localized: "Overgang \(start.hex()) → \(slutt.hex())")
+                navngirGradient = true
+            }
+            Button("Lagre tonene som palett …", systemImage: "swatchpalette") {
+                somPalett = toner.map { PalettFarge(farge: $0, opphav: .overgang) }
+            }
+            if rader.count > 1 {
+                Button("Lagre med lysere og mørkere toner …", systemImage: "square.grid.3x3") {
+                    somPalett = rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) }
+                }
+            }
+        } label: {
+            Image(systemName: gradientLagret ? "checkmark.square.fill" : "plus.square")
+                .font(.body.weight(.semibold))
+                .foregroundStyle((toner.last ?? slutt).lesbarTekstfarge.swiftUI)
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .menuIndicator(.hidden)
+        .sensoryFeedback(.success, trigger: gradientLagret) { _, ny in ny }
+        .accessibilityLabel(gradientLagret ? String(localized: "Lagret") : String(localized: "Lagre overgang"))
+    }
 
     private func lagreGradient() {
         let navn = gradientnavn.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -84,6 +113,7 @@ struct OvergangVisning: View {
                             .onTapGesture { arbeidsbenk.aktivFarge = farge }
                     }
                 }
+                .overlay(alignment: .topTrailing) { lagremeny }
                 HStack(alignment: .top) {
                     endepunkt(String(localized: "Fra"), start)
                     Spacer()
@@ -127,16 +157,6 @@ struct OvergangVisning: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Overgang")
-        .toolbar {
-            Menu("Lagre", systemImage: gradientLagret ? "checkmark" : "square.and.arrow.down") {
-                Button("Lagre gradient …", systemImage: "square.stack") {
-                    gradientnavn = String(localized: "Overgang \(start.hex()) → \(slutt.hex())")
-                    navngirGradient = true
-                }
-                Button("Lagre farger som palett …", systemImage: "swatchpalette") { visLagre = true }
-            }
-            .sensoryFeedback(.success, trigger: gradientLagret) { _, ny in ny }
-        }
         .alert("Lagre gradient", isPresented: $navngirGradient) {
             TextField("Navn", text: $gradientnavn)
             Button("Avbryt", role: .cancel) {}
@@ -147,8 +167,8 @@ struct OvergangVisning: View {
         .sheet(isPresented: Binding(get: { leggIPalett != nil }, set: { if !$0 { leggIPalett = nil } })) {
             VelgPalettArk(farger: leggIPalett ?? [])
         }
-        .sheet(isPresented: $visLagre) {
-            VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) },
+        .sheet(isPresented: Binding(get: { somPalett != nil }, set: { if !$0 { somPalett = nil } })) {
+            VelgPalettArk(farger: somPalett ?? [],
                           foreslåttNavn: String(localized: "Overgang \(start.hex()) → \(slutt.hex())"))
         }
     }

@@ -131,7 +131,8 @@ Gjenstår i disse sporene: Adobe Color-tema direkte (krever Adobe-konto/API), Fi
 - Modellen velger familie/lyshet/metning (relativ til gamut); minste metning per rolle og en «brunvakt» hindrer
   grå og brune toner når begrepene ikke ber om dem.
 - `kiprove eval`: 15 faste verdiord × 2. Før: primær i forventet kulør 5/18, brune 15 %, lite kulør 26 %,
-  snittkroma 0,084. Etter: 17/17, 7 %, 6 %, 0,134 (før brunvakt).
+  snittkroma 0,084. Etter (kunnskapsbase + regler): 17/18, 7 % (nesten bare «høst»), 8 %, 0,132.
+  Kontroll uten kunnskapsbasen (bare fargespråk og regler): 12/17 – begrepene bærer betydningen.
 - «Beskriv en farge» (App Intent, Siri og Studio-feltet): beskrivelse → farge i OKLCH, vist i Studio.
   Eksplisitte ord (pastell, dyp, neon …) overstyrer modellen.
 
