@@ -38,7 +38,11 @@ final class PalettDokument {
 enum Lagring {
     static let container: ModelContainer = {
         do {
-            return try ModelContainer(for: PalettDokument.self)
+            // CloudKit må slås av eksplisitt: appen har iCloud-rettighet (for profilmappen i
+            // iCloud Drive), og da forsøker SwiftData ellers å synke via CloudKit – som ikke er
+            // aktivert – og krasjer ved oppstart.
+            let oppsett = ModelConfiguration(cloudKitDatabase: .none)
+            return try ModelContainer(for: PalettDokument.self, configurations: oppsett)
         } catch {
             fatalError("Kunne ikke åpne palettlageret: \(error)")
         }
