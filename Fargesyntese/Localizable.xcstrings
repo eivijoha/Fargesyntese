@@ -2135,12 +2135,12 @@
         }
       }
     },
-    "Moderne nettlesere bruker «in oklab» og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.": {
+    "Moderne nettlesere bruker OKLab og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modern browsers use “in oklab” and show exactly the same gradient as here. Older browsers get dense sRGB stops that mimic it."
+            "value": "Modern browsers use OKLab and show exactly the same gradient as here. Older browsers get dense sRGB stops that mimic it."
           }
         }
       }
