@@ -1,0 +1,99 @@
+#if canImport(CoreGraphics)
+import CoreGraphics
+import Foundation
+
+/// Fargestyrt konvertering via ICC-profiler (ColorSync under panseret).
+///
+/// Brukes til reell CMYK for trykk (f.eks. FOGRA39/ISO Coated v2, GRACoL, PSO Uncoated)
+/// og til å tolke farger fra filer/kamera som er merket med en profil.
+public struct ICCProfil: Sendable, Hashable, Identifiable {
+    public let id: String
+    public let navn: String
+    public let antallKomponenter: Int
+    public let modell: CGColorSpaceModel
+    /// Rå ICC-data når profilen er lastet fra fil (nil for innebygde).
+    public let data: Data?
+    private let navngittRom: String?
+
+    public var fargerom: CGColorSpace? {
+        if let data { return CGColorSpace(iccData: data as CFData) }
+        if let navngittRom { return CGColorSpace(name: navngittRom as CFString) }
+        return nil
+    }
+
+    /// Laster en .icc/.icm-fil.
+    public init?(data: Data, navn: String? = nil) {
+        guard let rom = CGColorSpace(iccData: data as CFData) else { return nil }
+        self.data = data
+        self.navngittRom = nil
+        self.modell = rom.model
+        self.antallKomponenter = rom.numberOfComponents
+        self.navn = navn ?? (rom.name as String?) ?? "ICC-profil"
+        self.id = "icc:\(data.hashValue)"
+    }
+
+    private init(navngitt: CFString, visningsnavn: String) {
+        let rom = CGColorSpace(name: navngitt)!
+        self.data = nil
+        self.navngittRom = navngitt as String
+        self.modell = rom.model
+        self.antallKomponenter = rom.numberOfComponents
+        self.navn = visningsnavn
+        self.id = navngitt as String
+    }
+
+    public static let sRGB = ICCProfil(navngitt: CGColorSpace.sRGB, visningsnavn: "sRGB IEC61966-2.1")
+    public static let displayP3 = ICCProfil(navngitt: CGColorSpace.displayP3, visningsnavn: "Display P3")
+    public static let adobeRGB = ICCProfil(navngitt: CGColorSpace.adobeRGB1998, visningsnavn: "Adobe RGB (1998)")
+    public static let genericCMYK = ICCProfil(navngitt: CGColorSpace.genericCMYK, visningsnavn: "Generisk CMYK")
+
+    public static let innebygde: [ICCProfil] = [.sRGB, .displayP3, .adobeRGB, .genericCMYK]
+}
+
+public enum Gjengivelseshensikt: String, CaseIterable, Codable, Sendable {
+    case perseptuell, relativKolorimetrisk, metning, absoluttKolorimetrisk
+
+    var cg: CGColorRenderingIntent {
+        switch self {
+        case .perseptuell: .perceptual
+        case .relativKolorimetrisk: .relativeColorimetric
+        case .metning: .saturation
+        case .absoluttKolorimetrisk: .absoluteColorimetric
+        }
+    }
+}
+
+public extension Farge {
+    /// Fargen som `CGColor` i utvidet lineær sRGB – ingen klipping.
+    var cgFarge: CGColor {
+        let rom = CGColorSpace(name: CGColorSpace.extendedLinearSRGB)!
+        return CGColor(colorSpace: rom, components: [r, g, b, alfa])!
+    }
+
+    init?(cgFarge: CGColor) {
+        guard let rom = CGColorSpace(name: CGColorSpace.extendedLinearSRGB),
+              let c = cgFarge.converted(to: rom, intent: .relativeColorimetric, options: nil),
+              let k = c.components, k.count >= 3
+        else { return nil }
+        self.init(lineærR: k[0], g: k[1], b: k[2], alfa: k.count > 3 ? k[3] : 1)
+    }
+
+    /// Komponentverdier (0…1) i profilens rom, f.eks. [C, M, Y, K] for en CMYK-profil.
+    func komponenter(i profil: ICCProfil, hensikt: Gjengivelseshensikt = .relativKolorimetrisk) -> [Double]? {
+        guard let rom = profil.fargerom,
+              let c = cgFarge.converted(to: rom, intent: hensikt.cg, options: nil),
+              let k = c.components
+        else { return nil }
+        return Array(k.prefix(profil.antallKomponenter)).map { Double($0) }
+    }
+
+    /// Lager en farge fra komponenter i en profil (f.eks. CMYK-verdier fra et trykkeri).
+    init?(komponenter: [Double], i profil: ICCProfil, alfa: Double = 1) {
+        guard komponenter.count == profil.antallKomponenter,
+              let rom = profil.fargerom,
+              let cg = CGColor(colorSpace: rom, components: komponenter.map { CGFloat($0) } + [alfa])
+        else { return nil }
+        self.init(cgFarge: cg)
+    }
+}
+#endif
