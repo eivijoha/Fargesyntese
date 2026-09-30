@@ -99,6 +99,36 @@ struct NyEksportTests {
         #expect(d[(v2 + 14)...(v2 + 17)] == [0, 0, 0, 9])
     }
 
+    @Test func lagretFormatIEksport() throws {
+        let blå = Farge(hex: "#2F7FD8")!
+        let cmyk = [0.78, 0.41, 0.0, 0.15]
+        let p = Palett(navn: "Trykk", farger: [
+            PalettFarge(navn: "Trykkblå", farge: blå, representasjon: .init(rom: .icc(id: "icc:x", navn: "FOGRA39"), verdier: cmyk, tekst: "")),
+            PalettFarge(navn: "Lab", farge: blå, representasjon: .init(modell: .cieLab, farge: blå)),
+            PalettFarge(navn: "Web", farge: blå, representasjon: .init(modell: .displayP3, farge: blå)),
+        ])
+        // ASE: første farge som CMYK med de lagrede verdiene, andre som LAB
+        let ase = Eksportformat.ase.data(for: p)
+        #expect(ase.range(of: Data("CMYK".utf8)) != nil)
+        #expect(ase.range(of: Data("LAB ".utf8)) != nil)
+        // ACO: fargerom 2 (CMYK) for første farge, invertert: 78 % C → 65535 × 0,22
+        let aco = [UInt8](Eksportformat.aco.data(for: p))
+        #expect(aco[4...5] == [0, 2])
+        let c = Int(aco[6]) << 8 | Int(aco[7])
+        #expect(abs(c - Int((0.22 * 65535).rounded())) <= 1)
+        // CSS: display-p3 for «Web»
+        let css = String(decoding: Eksportformat.css.data(for: p), as: UTF8.self)
+        #expect(css.contains("--web: color(display-p3"))
+        // DTCG: CMYK i utvidelsen med profilnavn, lab for «Lab»
+        let json = try JSONSerialization.jsonObject(with: Eksportformat.designTokens.data(for: p)) as? [String: Any]
+        let g = try #require(json?["trykk"] as? [String: Any])
+        let trykk = try #require(g["trykkbla"] as? [String: Any])
+        let ext = try #require((trykk["$extensions"] as? [String: Any])?["no.engenett.fargesyntese"] as? [String: Any])
+        #expect(ext["iccProfil"] as? String == "FOGRA39")
+        let lab = try #require((g["lab"] as? [String: Any])?["$value"] as? [String: Any])
+        #expect(lab["colorSpace"] as? String == "lab")
+    }
+
     @Test func figmaVariabler() throws {
         let json = try JSONSerialization.jsonObject(with: Eksportformat.figmaVariabler.data(for: palett)) as? [String: Any]
         let samling = try #require(json?["fjord"] as? [String: Any])

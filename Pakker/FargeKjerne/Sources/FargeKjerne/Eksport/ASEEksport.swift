@@ -2,15 +2,18 @@ import Foundation
 
 /// Adobe Swatch Exchange (versjon 1.0), big-endian binærformat.
 ///
-/// Fargene skrives som `LAB ` (D50) når de ligger utenfor sRGB, ellers som `RGB `,
-/// slik at Adobe-programmer tolker dem mest mulig riktig.
+/// Farger lagret i CMYK (modell eller CMYK-profil) skrives som `CMYK` med de lagrede verdiene,
+/// farger lagret i CIELab/LCH og farger utenfor sRGB som `LAB ` (D50), ellers `RGB `.
 enum ASEEksport {
     static func data(for palett: Palett) -> Data {
         var blokker: [Data] = []
         blokker.append(blokk(type: 0xC001, innhold: tekst(palett.navn)))  // gruppestart
         for f in palett.farger {
             var innhold = tekst(f.visningsnavn)
-            if f.farge.erISRGB {
+            if let cmyk = f.lagretCMYK {
+                innhold.append(Data("CMYK".utf8))
+                for v in cmyk { innhold.append(float32(v)) }
+            } else if f.lagretLab == nil && f.farge.erISRGB {
                 let s = f.farge.sRGB
                 innhold.append(Data("RGB ".utf8))
                 for v in [s.r, s.g, s.b] { innhold.append(float32(v.klampet(0, 1))) }

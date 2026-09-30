@@ -8,7 +8,8 @@ enum TekstEksport {
     static func css(_ p: Palett) -> String {
         let n = navn(p)
         let sRGB = zip(n, p.farger).map { "  --\($0): \($1.farge.hex(medAlfa: $1.farge.alfa < 1));" }
-        let oklch = zip(n, p.farger).map { "    --\($0): \(Fargemodell.okLCH.tekst(for: $1.farge));" }
+        // Moderne verdi i lagret modell når CSS har syntaks for den, ellers OKLCH.
+        let oklch = zip(n, p.farger).map { "    --\($0): \(($1.lagretCSSModell ?? .okLCH).tekst(for: $1.farge));" }
         return """
         /* \(p.navn) – eksportert fra Fargesyntese */
         :root {
@@ -28,18 +29,39 @@ enum TekstEksport {
     static func designTokens(_ p: Palett) -> Data {
         var gruppe: [String: Any] = ["$type": "color", "$description": p.navn]
         for (n, f) in zip(navn(p), p.farger) {
-            let lch = f.farge.okLCH
-            gruppe[n] = [
+            let (rom, komp) = dtcgVerdi(f)
+            var token: [String: Any] = [
                 "$value": [
-                    "colorSpace": "oklch",
-                    "components": [lch.l, lch.c, lch.h].map { ($0 * 10000).rounded() / 10000 },
+                    "colorSpace": rom,
+                    "components": komp.map { ($0 * 10000).rounded() / 10000 },
                     "alpha": f.farge.alfa,
                     "hex": f.farge.hex(),
                 ] as [String: Any],
             ]
+            // CMYK og ICC-profiler har ikke DTCG-fargerom; de lagrede verdiene følger med som utvidelse.
+            if let cmyk = f.lagretCMYK {
+                var ext: [String: Any] = ["cmyk": cmyk.map { ($0 * 10000).rounded() / 10000 }]
+                if let profil = f.lagretProfilnavn { ext["iccProfil"] = profil }
+                token["$extensions"] = ["no.engenett.fargesyntese": ext]
+            }
+            gruppe[n] = token
         }
         let rot = [Identifikator.kebab(p.navn, reserve: "palett"): gruppe]
         return (try? JSONSerialization.data(withJSONObject: rot, options: [.prettyPrinted, .sortedKeys])) ?? Data()
+    }
+
+    /// DTCG-fargerom og komponenter etter lagret modell (OKLCH når modellen ikke finnes i DTCG).
+    private static func dtcgVerdi(_ f: PalettFarge) -> (String, [Double]) {
+        let farge = f.farge
+        switch f.lagretCSSModell {
+        case .okLab?: let v = farge.okLab; return ("oklab", [v.l, v.a, v.b])
+        case .cieLab?: let v = farge.cieLab; return ("lab", [v.l, v.a, v.b])
+        case .cieLCH?: let v = farge.cieLCH; return ("lch", [v.l, v.c, v.h])
+        case .hsl?: let v = farge.hsl; return ("hsl", [v.h, v.s * 100, v.l * 100])
+        case .rgb?: let v = farge.gamutKartlagt(til: .sRGB).sRGB; return ("srgb", [v.r, v.g, v.b])
+        case .displayP3?: let v = farge.gamutKartlagt(til: .displayP3).displayP3; return ("display-p3", [v.r, v.g, v.b])
+        default: let v = farge.okLCH; return ("oklch", [v.l, v.c, v.h])
+        }
     }
 
     static func gpl(_ p: Palett) -> String {
