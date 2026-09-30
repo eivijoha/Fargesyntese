@@ -1,4 +1,5 @@
 import FargeKjerne
+import SwiftData
 import SwiftUI
 
 struct KameraVisning: View {
@@ -6,6 +7,8 @@ struct KameraVisning: View {
     @State private var plukker = KameraFargeplukker()
     @State private var fanget: [Farge] = []
     @State private var lagre: [PalettFarge]?
+    @State private var lagret = false
+    @Environment(\.modelContext) private var kontekst
     /// Slukk lykt/lysfelt når en farge er fanget (lyset trengs bare under målingen).
     @AppStorage("slukkLysEtterFangst") private var slukkEtterFangst = true
 
@@ -34,16 +37,26 @@ struct KameraVisning: View {
             .clipped()
 
             HStack(spacing: 12) {
-                FargeRute(farge: plukker.gjeldende ?? Farge(hex: "#808080")!, hjørne: 10,
-                          leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .kamera)] })
+                // Egen visning: bare denne oppdateres ~10 ganger i sekundet, ikke hele Utplukk
+                // (ellers avbrytes trykk i knapper og ark).
+                LevendeKamerafarge(plukker: plukker) { lagre = [PalettFarge(farge: $0, opphav: .kamera)] }
                     .frame(width: 88, height: 64)
-                Button("Legg i palett", systemImage: "plus.square.on.square") {
-                    if let f = fanget.last ?? plukker.gjeldende { lagre = [PalettFarge(farge: f, opphav: .kamera)] }
+                VStack(spacing: 10) {
+                    Button("Lagre som enkeltfarge", systemImage: lagret ? "bookmark.fill" : "bookmark") {
+                        guard let f = fanget.last ?? plukker.gjeldende else { return }
+                        lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .kamera)], i: kontekst)
+                        lagret = true
+                        Task { try? await Task.sleep(for: .seconds(1.5)); lagret = false }
+                    }
+                    .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
+                    .help("Lagre sist fangede farge som enkeltfarge")
+                    Button("Legg i palett", systemImage: "plus.square.on.square") {
+                        if let f = fanget.last ?? plukker.gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .kamera)] }
+                    }
+                    .help("Legg sist fangede farge i en palett")
                 }
                 .labelStyle(.iconOnly)
-                .font(.title2)
-                .disabled(fanget.isEmpty && plukker.gjeldende == nil)
-                .help("Legg sist fangede farge i en palett")
+                .font(.title3)
                 ScrollView(.horizontal) {
                     HStack(spacing: 6) {
                         ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in
@@ -78,6 +91,10 @@ struct KameraVisning: View {
         }
         .sheet(isPresented: Binding(get: { lagre != nil }, set: { if !$0 { lagre = nil } })) {
             VelgPalettArk(farger: lagre ?? [], foreslåttNavn: "Kamera")
+        }
+        // Pause kameraet mens arket er åpent, så det ikke konkurrerer med trykk i arket.
+        .onChange(of: lagre != nil) { _, åpent in
+            if åpent { plukker.stopp() } else { Task { await plukker.start() } }
         }
         .task {
             plukker.vedFangst = { målt in
@@ -133,5 +150,15 @@ private struct LyskildeKnapper: View {
         }
         .help("Hvitt, flyttbart lysfelt på skjermen som lyskilde for kameraet")
         #endif
+    }
+}
+
+/// Levende fargeprøve fra kameraet – isolert, så hyppige oppdateringer ikke tegner hele visningen på nytt.
+private struct LevendeKamerafarge: View {
+    let plukker: KameraFargeplukker
+    var leggIPalett: (Farge) -> Void
+
+    var body: some View {
+        FargeRute(farge: plukker.gjeldende ?? Farge(hex: "#808080")!, hjørne: 10, leggIPalett: leggIPalett)
     }
 }
