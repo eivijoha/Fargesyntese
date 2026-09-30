@@ -24,6 +24,21 @@ enum Utklippstavle {
         #endif
     }
 
+    /// Kopierer paletten som SVG-fargeprøver. Figma, Illustrator og Sketch lager
+    /// fylte former med riktige farger når dette limes inn.
+    static func kopierSVG(_ palett: Palett) {
+        let data = Eksportformat.svg.data(for: palett)
+        let tekst = String(decoding: data, as: UTF8.self)
+        #if canImport(UIKit)
+        UIPasteboard.general.items = [["public.svg-image": data, "public.utf8-plain-text": tekst]]
+        #elseif canImport(AppKit)
+        let tavle = NSPasteboard.general
+        tavle.clearContents()
+        tavle.setData(data, forType: NSPasteboard.PasteboardType("public.svg-image"))
+        tavle.setString(tekst, forType: .string)
+        #endif
+    }
+
     static func kopierTekst(_ tekst: String) {
         #if canImport(UIKit)
         UIPasteboard.general.string = tekst

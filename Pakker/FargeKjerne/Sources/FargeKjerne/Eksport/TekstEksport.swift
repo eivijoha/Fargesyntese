@@ -71,4 +71,59 @@ enum TekstEksport {
 
         """
     }
+
+    /// Figma «Import variables» (DTCG): én variabelsamling med en fargevariabel per farge.
+    /// Figma forventer sRGB-komponenter 0…1; P3-farger gamut-kartlegges.
+    static func figmaVariabler(_ p: Palett) -> Data {
+        var samling: [String: Any] = [:]
+        for (n, f) in zip(navn(p), p.farger) {
+            let s = f.farge.gamutKartlagt(til: .sRGB).sRGB
+            samling[n] = [
+                "$type": "color",
+                "$value": [
+                    "colorSpace": "srgb",
+                    "components": [s.r, s.g, s.b].map { ($0.klampet(0, 1) * 10000).rounded() / 10000 },
+                    "alpha": f.farge.alfa,
+                    "hex": f.farge.hex(),
+                ] as [String: Any],
+                "$description": Fargemodell.okLCH.tekst(for: f.farge),
+            ] as [String: Any]
+        }
+        let rot = [Identifikator.kebab(p.navn, reserve: "palett"): samling]
+        return (try? JSONSerialization.data(withJSONObject: rot, options: [.prettyPrinted, .sortedKeys])) ?? Data()
+    }
+
+    /// Tokens Studio-format: `{ gruppe: { navn: { value, type } } }`.
+    static func tokensStudio(_ p: Palett) -> Data {
+        var gruppe: [String: Any] = [:]
+        for (n, f) in zip(navn(p), p.farger) {
+            gruppe[n] = ["value": f.farge.hex(medAlfa: f.farge.alfa < 1), "type": "color",
+                         "description": Fargemodell.okLCH.tekst(for: f.farge)]
+        }
+        let rot = [Identifikator.kebab(p.navn, reserve: "palett"): gruppe]
+        return (try? JSONSerialization.data(withJSONObject: rot, options: [.prettyPrinted, .sortedKeys])) ?? Data()
+    }
+
+    /// Fargeprøver som SVG. Rutene får fargenavnet som id, så de heter riktig etter innliming.
+    static func svg(_ p: Palett, rute: Int = 96, mellomrom: Int = 8) -> String {
+        let bredde = max(p.farger.count, 1) * (rute + mellomrom) - mellomrom
+        let ruter = zip(navn(p), p.farger).enumerated().map { i, par in
+            let (n, f) = par
+            let x = i * (rute + mellomrom)
+            let opasitet = f.farge.alfa < 1 ? " fill-opacity=\"\(String(format: "%.3f", f.farge.alfa))\"" : ""
+            return "  <rect id=\"\(n)\" x=\"\(x)\" y=\"0\" width=\"\(rute)\" height=\"\(rute)\" rx=\"8\" fill=\"\(f.farge.hex())\"\(opasitet)><title>\(xml(f.visningsnavn))</title></rect>"
+        }
+        return """
+        <svg xmlns="http://www.w3.org/2000/svg" width="\(bredde)" height="\(rute)" viewBox="0 0 \(bredde) \(rute)">
+          <title>\(xml(p.navn))</title>
+        \(ruter.joined(separator: "\n"))
+        </svg>
+
+        """
+    }
+
+    private static func xml(_ s: String) -> String {
+        s.replacingOccurrences(of: "&", with: "&amp;").replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;").replacingOccurrences(of: "\"", with: "&quot;")
+    }
 }

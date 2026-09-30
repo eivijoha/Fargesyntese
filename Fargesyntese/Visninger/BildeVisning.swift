@@ -134,6 +134,7 @@ struct BildeVisning: View {
                         drar = false
                         if let f = gjeldende {
                             arbeidsbenk.aktivFarge = f
+                            arbeidsbenk.registrerMåling(f)
                             fanget.append(f)
                         }
                     }
@@ -165,7 +166,10 @@ struct BildeVisning: View {
                     }
                 }
                 Button("Fang", systemImage: "plus.circle.fill") {
-                    if let f = gjeldende { fanget.append(f) }
+                    if let f = gjeldende {
+                        fanget.append(f)
+                        arbeidsbenk.registrerMåling(f)
+                    }
                 }
                 .labelStyle(.iconOnly)
                 .font(.system(size: 36))
@@ -199,6 +203,7 @@ struct BildeVisning: View {
         }
         .padding()
         .background(.bar)
+        .overlay(alignment: .top) { DeltaEMerke(fanget: fanget).offset(y: -44) }
     }
 
     // MARK: - Lasting

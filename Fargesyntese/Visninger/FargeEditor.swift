@@ -6,6 +6,7 @@ struct FargeEditor: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var hexTekst = ""
     @State private var lagreFarger: [PalettFarge]?
+    @State private var lagreNavn = ""
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
@@ -23,7 +24,10 @@ struct FargeEditor: View {
                         .onSubmit {
                             if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
                         }
-                    PipetteKnapp { arbeidsbenk.aktivFarge = $0 }
+                    PipetteKnapp {
+                        arbeidsbenk.aktivFarge = $0
+                        arbeidsbenk.registrerMåling($0)
+                    }
                         .labelStyle(.iconOnly)
                 }
             }
@@ -70,12 +74,18 @@ struct FargeEditor: View {
                 }
                 LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
                 Button("Legg raden i palett", systemImage: "plus.square.on.square") {
+                    lagreNavn = "Lysere og mørkere \(farge.hex())"
                     lagreFarger = varianter.map { PalettFarge(farge: $0, opphav: .toneskala) }
                 }
             } header: {
                 Text("Lysere og mørkere")
             } footer: {
                 Text("Tallene under hver prøve er OKLCH-lyshet i prosent.")
+            }
+
+            HarmoniSeksjon(grunnfarge: farge, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
+                lagreFarger = farger
+                lagreNavn = navn
             }
         }
         .formStyle(.grouped)
@@ -85,11 +95,15 @@ struct FargeEditor: View {
                 Button("Lim inn", systemImage: "doc.on.clipboard") {
                     if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
                 }
-                Button("Legg i palett", systemImage: "plus.square.on.square") { lagreFarger = [PalettFarge(farge: farge)] }
+                Button("Sammenlign (ΔE2000)", systemImage: "square.split.2x1") { arbeidsbenk.sammenlign(farge, nil) }
+                Button("Legg i palett", systemImage: "plus.square.on.square") {
+                    lagreNavn = ""
+                    lagreFarger = [PalettFarge(farge: farge)]
+                }
             }
         }
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
-            VelgPalettArk(farger: lagreFarger ?? [])
+            VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
         }
         .onAppear { hexTekst = farge.hex() }
         .onChange(of: farge) { _, ny in hexTekst = ny.hex() }

@@ -51,6 +51,7 @@ struct KameraVisning: View {
             }
             .padding()
             .background(.bar)
+            .overlay(alignment: .top) { DeltaEMerke(fanget: fanget).offset(y: -44) }
         }
         .toolbar {
             Button("Lagre", systemImage: "square.and.arrow.down") { visLagre = true }
@@ -63,6 +64,7 @@ struct KameraVisning: View {
             plukker.vedFangst = { farge in
                 fanget.append(farge)
                 arbeidsbenk.aktivFarge = farge
+                arbeidsbenk.registrerMåling(farge)
             }
             await plukker.start()
         }

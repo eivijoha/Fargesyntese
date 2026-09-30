@@ -116,6 +116,7 @@ struct PalettDetalj: View {
                     Divider()
                     Button("Kopier alle som hex") { Utklippstavle.kopier(dokument.palett) }
                     Button("Kopier alle som OKLCH") { Utklippstavle.kopier(dokument.palett, som: .okLCH) }
+                    Button("Kopier som SVG (lim inn i Figma/Illustrator)") { Utklippstavle.kopierSVG(dokument.palett) }
                 }
             }
         }

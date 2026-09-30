@@ -3,7 +3,16 @@ import Foundation
 /// Filformater for palett-eksport. Hver sak gir filendelse, UTI og innhold.
 public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable {
     /// Adobe Swatch Exchange – Photoshop, Illustrator, InDesign, Affinity, Procreate (import).
+    /// Ingen grense på antall farger (det er Adobe Color-temaer som har fem).
     case ase
+    /// Photoshop-fargeprøver (.aco), med navn.
+    case aco
+    /// Figma-variabler: DTCG-JSON som Figmas «Import variables» leser.
+    case figmaVariabler
+    /// Tokens Studio for Figma (JSON).
+    case tokensStudio
+    /// SVG med én rute per farge – limes rett inn i Figma, Illustrator, Sketch og Keynote.
+    case svg
     /// CSS custom properties med `oklch()` og sRGB-reserve.
     case css
     /// W3C Design Tokens (DTCG) JSON – Figma Tokens/Tokens Studio, Style Dictionary.
@@ -20,6 +29,10 @@ public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable
     public var navn: String {
         switch self {
         case .ase: "Adobe Swatch Exchange (.ase)"
+        case .aco: "Photoshop-fargeprøver (.aco)"
+        case .figmaVariabler: "Figma-variabler (.json)"
+        case .tokensStudio: "Tokens Studio for Figma (.json)"
+        case .svg: "SVG-fargeprøver (.svg)"
         case .css: "CSS-variabler (.css)"
         case .designTokens: "Design Tokens (.tokens.json)"
         case .gpl: "GIMP-palett (.gpl)"
@@ -31,6 +44,10 @@ public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable
     public var filendelse: String {
         switch self {
         case .ase: "ase"
+        case .aco: "aco"
+        case .figmaVariabler: "figma.json"
+        case .tokensStudio: "tokens-studio.json"
+        case .svg: "svg"
         case .css: "css"
         case .designTokens: "tokens.json"
         case .gpl: "gpl"
@@ -41,7 +58,9 @@ public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable
 
     public var mimeType: String {
         switch self {
-        case .ase: "application/octet-stream"
+        case .ase, .aco: "application/octet-stream"
+        case .figmaVariabler, .tokensStudio: "application/json"
+        case .svg: "image/svg+xml"
         case .css: "text/css"
         case .designTokens: "application/json"
         case .gpl, .hexListe: "text/plain"
@@ -52,6 +71,10 @@ public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable
     public func data(for palett: Palett) -> Data {
         switch self {
         case .ase: ASEEksport.data(for: palett)
+        case .aco: ACOEksport.data(for: palett)
+        case .figmaVariabler: TekstEksport.figmaVariabler(palett)
+        case .tokensStudio: TekstEksport.tokensStudio(palett)
+        case .svg: Data(TekstEksport.svg(palett).utf8)
         case .css: Data(TekstEksport.css(palett).utf8)
         case .designTokens: TekstEksport.designTokens(palett)
         case .gpl: Data(TekstEksport.gpl(palett).utf8)

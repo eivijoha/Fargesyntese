@@ -85,16 +85,19 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
 Kjent: i iOS-simulatoren feiler Foundation Models med `promptTemplateNotFound` (simulator/modell-misforhold);
 appen faller da tilbake til leksikonet. Samme kode fungerer mot modellen på macOS.
 
-## Kø (bestilt, ikke påbegynt)
+## Status (fase 1c – køen)
 
-1. **Fargeharmonier**: komplementær, split-komplementær, analog og jevn fordeling rundt fargesirkelen
-   med valgfritt antall (3, 4, 5 …) – beregnet i OKLCH
-2. **ΔE2000** mellom to målte farger (kamera, skjermpipette på macOS, bilde, utklippstavle) – A/B-sammenligning,
-   CIEDE2000 testet mot Sharma-datasettet
-3. **Adobe**: ASE (finnes, uten 5-fargersgrense), ACO (Photoshop), Adobe Color-temaer (5 farger), CC-biblioteker
-4. **Figma**: variabler (JSON/REST-API), Tokens Studio, eventuelt egen plugin
-5. **Overgang → CSS-gradient**: `linear-gradient(in oklab, …)` (og `radial-`/`conic-`) med fargestopp fra overgangen,
-   pluss reserve for eldre nettlesere med tette sRGB-stopp som etterligner OKLab-interpolasjonen; kopier/eksporter
+- [x] **Fargeharmonier** i Studio: komplementær, split-komplementær, analog, dobbelt komplementær og jevn fordeling
+      (2–12 farger); vinkel og fargesirkel (OKLCH perseptuell eller HSL tradisjonell) kan velges; fargesirkel-visning
+- [x] **ΔE2000** (CIEDE2000, verifisert mot Sharma-datasettet) med ΔE76 og ΔE_OK: A/B-sammenligning fra kamera, bilde,
+      skjermpipette (macOS), aktiv farge, utklippstavle eller siste målinger; ΔE-merke mellom de to siste fangede fargene
+- [x] **Adobe**: ASE (ingen fargegrense) og ACO (Photoshop, v1+v2 med navn, Lab for farger utenfor sRGB)
+- [x] **Figma**: variabler (DTCG-JSON for «Import variables»), Tokens Studio, SVG-fargeprøver (fil og utklippstavle –
+      limes inn som fylte former)
+- [x] **CSS-gradient** fra Overgang: lineær/radiell/konisk, retning, trinnvis, `in oklab` + sRGB-reserve, forhåndsvisning
+
+Gjenstår i disse sporene: Adobe Color-tema direkte (krever Adobe-konto/API), Figma REST-API for variabler
+(krever Enterprise-plan) eller egen Figma-plugin, RYB-«kunstnersirkel» for harmonier.
 
 ## Veikart
 

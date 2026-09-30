@@ -49,6 +49,30 @@ final class Arbeidsbenk {
     }
 
     enum Fane: Hashable { case studio, paletter, overgang, utplukk, verdiord }
+
+    /// Siste målte farger (kamera, bilde, pipette), nyeste sist – brukes i sammenligning.
+    private(set) var målinger: [Farge] = []
+    /// Åpent sammenligningsark (A/B med ΔE2000), hvis noe.
+    var sammenligning: Sammenligningspar?
+
+    struct Sammenligningspar: Identifiable {
+        let id = UUID()
+        var a: Farge
+        var b: Farge
+    }
+
+    func registrerMåling(_ farge: Farge) {
+        målinger.append(farge)
+        if målinger.count > 20 { målinger.removeFirst(målinger.count - 20) }
+    }
+
+    /// Åpner sammenligning; uten argumenter brukes de to siste målingene (eller aktiv farge).
+    func sammenlign(_ a: Farge? = nil, _ b: Farge? = nil) {
+        let siste = målinger.suffix(2)
+        let fa = a ?? (siste.count == 2 ? siste.first! : aktivFarge)
+        let fb = b ?? siste.last ?? Farge(hex: "#FFFFFF")!
+        sammenligning = Sammenligningspar(a: fa, b: fb)
+    }
 }
 
 struct InnholdsVisning: View {
@@ -74,5 +98,8 @@ struct InnholdsVisning: View {
             }
         }
         .tabViewStyle(.sidebarAdaptable)
+        .sheet(item: $arbeidsbenk.sammenligning) { par in
+            SammenligningVisning(a: par.a, b: par.b)
+        }
     }
 }
