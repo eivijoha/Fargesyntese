@@ -39,7 +39,7 @@ struct FargeEditor: View {
         Form {
             Section {
                 Fargeflate(farge: farge)
-                    .frame(height: 160)
+                    .frame(height: 140)
                     .listRowInsets(EdgeInsets())
                 HStack {
                     TextField("Hex eller CSS-farge", text: $hexTekst)
@@ -82,6 +82,10 @@ struct FargeEditor: View {
             }
         }
         .formStyle(.grouped)
+        #if os(iOS)
+        .listSectionSpacing(.compact)
+        #endif
+        .environment(\.defaultMinListRowHeight, 36)
         .navigationTitle("Studio")
         .toolbar {
             ToolbarItemGroup {
@@ -189,15 +193,14 @@ struct KomponentGlidere: View {
     var body: some View {
         ForEach(Array(modell.komponenter.enumerated()), id: \.offset) { i, k in
             // Vern: ved bytte av modell (f.eks. CMYK → RGB) kan en rad bli tegnet før listen er oppdatert.
+            // Kompakt: navn, glider og verdi på én linje, så gliderne og fargeflaten får plass samtidig.
             if i < gjeldende.count {
-            VStack(alignment: .leading, spacing: 2) {
-                HStack {
-                    Text(k.navn)
-                    Spacer()
-                    Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
-                }
+            HStack(spacing: 10) {
+                Text(k.navn)
+                    .font(.callout)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: 78, alignment: .leading)
                 Slider(value: Binding(
                     get: { gjeldende[i] },
                     set: { ny in
@@ -208,7 +211,13 @@ struct KomponentGlidere: View {
                         farge = modell.farge(fra: v, alfa: farge.alfa)
                     }
                 ), in: k.område)
+                Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
+                    .font(.callout.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                    .frame(width: 52, alignment: .trailing)
             }
+            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
+            .accessibilityElement(children: .contain)
             }
         }
         .onChange(of: modell) { _, ny in verdier = ny.verdier(for: farge) }
