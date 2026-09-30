@@ -4,8 +4,22 @@ import SwiftUI
 /// Overgangstoner i like OKLab-steg mellom to farger, med lysere/mørkere rader.
 struct OvergangVisning: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
-    @State private var start = Farge(hex: "#1B3A6B")!
-    @State private var slutt = Farge(hex: "#F2B84B")!
+    // Lagres som CSS-tekst (hex, eller Display P3 utenfor sRGB), så endepunktene huskes.
+    @AppStorage("overgangFra") private var startTekst = "#1B3A6B"
+    @AppStorage("overgangTil") private var sluttTekst = "#F2B84B"
+
+    private var start: Farge {
+        get { Fargetolk.tolk(startTekst) ?? Farge(hex: "#1B3A6B")! }
+        nonmutating set { startTekst = Self.lagringstekst(newValue) }
+    }
+    private var slutt: Farge {
+        get { Fargetolk.tolk(sluttTekst) ?? Farge(hex: "#F2B84B")! }
+        nonmutating set { sluttTekst = Self.lagringstekst(newValue) }
+    }
+
+    private static func lagringstekst(_ f: Farge) -> String {
+        f.erISRGB ? f.hex() : Fargemodell.displayP3.tekst(for: f)
+    }
     @State private var antall = 7
     @State private var visLagre = false
 
@@ -21,9 +35,13 @@ struct OvergangVisning: View {
     var body: some View {
         Form {
             Section("Endepunkter") {
-                FargeVelgerRad(tittel: "Fra", farge: $start)
-                FargeVelgerRad(tittel: "Til", farge: $slutt)
-                Button("Bytt om", systemImage: "arrow.left.arrow.right") { swap(&start, &slutt) }
+                FargeValgRad(tittel: "Fra", farge: Binding(get: { start }, set: { start = $0 }))
+                FargeValgRad(tittel: "Til", farge: Binding(get: { slutt }, set: { slutt = $0 }))
+                Button("Bytt om", systemImage: "arrow.left.arrow.right") {
+                    let a = start
+                    start = slutt
+                    slutt = a
+                }
             }
             Section("Overgang") {
                 Stepper("Toner: \(antall)", value: $antall, in: 2...24)
@@ -60,24 +78,6 @@ struct OvergangVisning: View {
         .sheet(isPresented: $visLagre) {
             VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) },
                           foreslåttNavn: "Overgang \(start.hex()) → \(slutt.hex())")
-        }
-    }
-}
-
-struct FargeVelgerRad: View {
-    let tittel: String
-    @Binding var farge: Farge
-    @Environment(Arbeidsbenk.self) private var arbeidsbenk
-
-    var body: some View {
-        HStack {
-            ColorPicker(tittel, selection: Binding(get: { farge.swiftUI }, set: { farge = Farge($0) }))
-            Text(farge.hex()).font(.callout.monospaced()).foregroundStyle(.secondary)
-            Menu("Mer", systemImage: "ellipsis.circle") {
-                Button("Bruk aktiv farge") { farge = arbeidsbenk.aktivFarge }
-                Button("Lim inn") { if let f = Utklippstavle.limInn() { farge = f } }
-            }
-            .labelStyle(.iconOnly)
         }
     }
 }

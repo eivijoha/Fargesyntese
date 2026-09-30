@@ -80,7 +80,7 @@ struct LagretFargeArk: View {
                 }
                 .padding()
             }
-            .navigationTitle("Velg \(tittel.lowercased())")
+            .navigationTitle("Velg farge – \(tittel)")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -101,9 +101,14 @@ struct LagretFargeArk: View {
                         valgt(pf.farge)
                         lukk()
                     } label: {
-                        FargeRute(farge: pf.farge, visTekst: false, hjørne: 8)
-                            .frame(height: 52)
-                            .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(.secondary.opacity(0.3), lineWidth: 1))
+                        VStack(spacing: 3) {
+                            FargeRute(farge: pf.farge, visTekst: false, hjørne: 8)
+                                .frame(height: 52)
+                                .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(.secondary.opacity(0.3), lineWidth: 1))
+                            if !pf.navn.isEmpty {
+                                Text(pf.navn).font(.caption2).lineLimit(1).foregroundStyle(.secondary)
+                            }
+                        }
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("\(pf.visningsnavn), \(pf.farge.hex())")
