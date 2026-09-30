@@ -17,7 +17,7 @@ struct FargeEditor: View {
 
         Form {
             Section {
-                FargeRute(farge: farge, visTekst: false, hjørne: 20, retteBunnhjørner: true, ekstraMerkeInnrykk: 8)
+                Fargeflate(farge: farge)
                     .frame(height: 160)
                     .listRowInsets(EdgeInsets())
                 HStack {
@@ -36,6 +36,16 @@ struct FargeEditor: View {
                     .labelStyle(.iconOnly)
                     #endif
                 }
+            }
+
+            Section {
+                Toggle(isOn: $arbeidsbenk.kunSRGB) {
+                    Label("Begrens til sRGB", systemImage: "square.dashed.inset.filled")
+                }
+            } footer: {
+                Text(arbeidsbenk.kunSRGB
+                     ? "Alle nye farger holdes innenfor sRGB – trygt for web, e-post, Office og skjermer uten bred gamut."
+                     : "Farger kan gå ut i Display P3 (bred gamut). Slå på for å holde alt innenfor sRGB.")
             }
 
             Section {
@@ -60,7 +70,7 @@ struct FargeEditor: View {
             ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
 
             Section {
-                let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge)
+                let varianter = arbeidsbenk.lyshetstrinn.toner(for: farge, gamut: arbeidsbenk.gamut)
                 HStack(spacing: 4) {
                     ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
                         VStack(spacing: 2) {
@@ -89,7 +99,7 @@ struct FargeEditor: View {
                 Text("Tallene under hver prøve er OKLCH-lyshet i prosent.")
             }
 
-            HarmoniSeksjon(grunnfarge: farge, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
+            HarmoniSeksjon(grunnfarge: farge, gamut: arbeidsbenk.gamut, velg: { arbeidsbenk.aktivFarge = $0 }) { farger, navn in
                 lagreFarger = farger
                 lagreNavn = navn
             }
@@ -248,4 +258,35 @@ struct LyshetstrinnKontroller: View {
 
 private extension Double {
     func clamped(to r: ClosedRange<Double>) -> Double { Swift.min(Swift.max(self, r.lowerBound), r.upperBound) }
+}
+
+/// Stor fargeflate øverst i Studio. Farger utenfor sRGB vises delt: sRGB-versjonen til venstre
+/// (slik de fleste skjermer, web og Office viser den) og den faktiske P3-fargen til høyre.
+struct Fargeflate: View {
+    let farge: Farge
+
+    var body: some View {
+        if farge.erISRGB {
+            FargeRute(farge: farge, visTekst: false, hjørne: 20, retteBunnhjørner: true, ekstraMerkeInnrykk: 8)
+        } else {
+            let sRGB = farge.gamutKartlagt(til: .sRGB)
+            HStack(spacing: 0) {
+                halvdel(sRGB, tittel: "sRGB", hex: sRGB.hex())
+                halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", hex: farge.p3Hex())
+            }
+            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
+        }
+    }
+
+    private func halvdel(_ f: Farge, tittel: String, hex: String) -> some View {
+        FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
+            .overlay(alignment: .bottomLeading) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(tittel).font(.caption.weight(.semibold))
+                    Text(hex).font(.caption2.monospaced())
+                }
+                .foregroundStyle(f.lesbarTekstfarge.swiftUI)
+                .padding(12)
+            }
+    }
 }

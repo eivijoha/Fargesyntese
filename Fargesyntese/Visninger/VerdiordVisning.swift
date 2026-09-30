@@ -67,7 +67,11 @@ struct VerdiordVisning: View {
                 VelgPalettArk(farger: f.palett.farger, foreslåttNavn: f.tittel)
             }
         }
-        .onAppear { samtale.forvarm() }
+        .onAppear {
+            samtale.gamut = arbeidsbenk.gamut
+            samtale.forvarm()
+        }
+        .onChange(of: arbeidsbenk.gamut) { _, ny in samtale.gamut = ny }
     }
 
     private func foreslå() {

@@ -22,6 +22,10 @@ public final class PalettSamtale {
     /// Brukerens instrukser så langt, i rekkefølge (vises som samtalelogg).
     public private(set) var logg: [String] = []
     public private(set) var status: KIStatus = .gjeldende
+    /// Gamut fargene holdes innenfor (sRGB når appen er begrenset til det).
+    public var gamut: Gamut = .displayP3 {
+        didSet { if let f = forslag { forslag = f.begrenset(til: gamut) } }
+    }
 
     #if canImport(FoundationModels)
     @ObservationIgnored private var økt: LanguageModelSession?
@@ -54,13 +58,13 @@ public final class PalettSamtale {
                 } catch let feil where !(feil is CancellationError) && !KIFeil.fra(feil).erBrukerrettet {
                     // Uventet modellfeil (f.eks. manglende modellressurser): vis leksikonforslag
                     // i stedet for bare en feilmelding, og si ifra.
-                    self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall)
+                    self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut).begrenset(til: self.gamut)
                     self.feil = .reserveBrukt(KIFeil.fra(feil).localizedDescription)
                     return
                 }
             }
             #endif
-            self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall)
+            self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut)
         }
     }
 
@@ -88,9 +92,9 @@ public final class PalettSamtale {
     /// Presis justering i OKLCH, uten språkmodell.
     public func bruk(_ justering: Justering) {
         guard var f = forslag else { return }
-        let nye = justering.bruk(på: f.farger.map(\.farge))
+        let nye = justering.bruk(på: f.farger.map(\.farge), gamut: gamut)
         for i in f.farger.indices { f.farger[i].farge = nye[i] }
-        forslag = f.medRolleregler()
+        forslag = f.medRolleregler().begrenset(til: gamut)
         logg.append(justering.navn)
     }
 
@@ -128,12 +132,12 @@ public final class PalettSamtale {
         for try await øyeblikk in strøm {
             try Task.checkCancellation()
             siste = øyeblikk.content
-            let delvis = øyeblikk.content.forslag
+            let delvis = øyeblikk.content.forslag.begrenset(til: gamut)
             // Behold forrige forslag på skjermen til de første nye fargene er klare.
             if !delvis.farger.isEmpty || forslag == nil { forslag = delvis }
         }
         // Siste øyeblikksbilde er det komplette svaret; rollereglene brukes først nå.
-        if let siste { forslag = siste.forslag.medRolleregler() }
+        if let siste { forslag = siste.forslag.medRolleregler().begrenset(til: gamut) }
     }
     #endif
 }

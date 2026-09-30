@@ -59,6 +59,13 @@ public extension Farge {
         self.init(sRGB: SRGB(r: kanal(24), g: kanal(16), b: kanal(8)), alfa: kanal(0))
     }
 
+    /// Hex-streng med Display P3-verdier (slik Figma og Sketch viser farger i P3-dokumenter).
+    /// Farger utenfor P3 gamut-kartlegges først.
+    func p3Hex() -> String {
+        let p = gamutKartlagt(til: .displayP3).displayP3
+        return "#" + [p.r, p.g, p.b].map { String(format: "%02X", Int(($0.klampet(0, 1) * 255).rounded())) }.joined()
+    }
+
     /// Hex-streng i sRGB. Farger utenfor gamut blir først gamut-kartlagt (CSS Color 4).
     func hex(medAlfa: Bool = false) -> String {
         let s = gamutKartlagt(til: .sRGB).sRGB

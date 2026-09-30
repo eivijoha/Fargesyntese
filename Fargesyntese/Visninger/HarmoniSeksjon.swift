@@ -4,6 +4,7 @@ import SwiftUI
 /// Fargeharmonier rundt aktiv farge, med en liten fargesirkel som viser vinklene.
 struct HarmoniSeksjon: View {
     let grunnfarge: Farge
+    var gamut: Gamut = .displayP3
     var velg: (Farge) -> Void
     var lagre: ([PalettFarge], String) -> Void
 
@@ -13,7 +14,8 @@ struct HarmoniSeksjon: View {
     @AppStorage("harmoniSirkel") private var sirkel: Fargesirkel = .okLCH
 
     private var farger: [Farge] {
-        harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel)
+        harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel, gamut: gamut)
+            .map { $0.gamutKartlagt(til: gamut) }
     }
 
     var body: some View {

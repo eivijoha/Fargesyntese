@@ -79,6 +79,17 @@ struct BeskrivelseTests {
         #expect(Justering.varmere.bruk(på: [grå])[0].avstandOK(til: grå) < 1e-6)
     }
 
+    @Test func begrensTilSRGB() {
+        let p3Grønn = Farge(displayP3: DisplayP3(r: 0, g: 1, b: 0))
+        let forslag = PalettForslag(tittel: "T", forklaring: "", farger: [
+            Fargeforslag(navn: "G", rolle: "aksent", begrunnelse: "", farge: p3Grønn),
+        ], kilde: .leksikon).begrenset(til: .sRGB)
+        #expect(forslag.farger[0].farge.erISRGB)
+        #expect(abs(forslag.farger[0].farge.okLCH.l - p3Grønn.okLCH.l) < 0.03)
+        // Lyshetstrinn respekterer gamut.
+        #expect(Lyshetstrinn().toner(for: Farge(hex: "#2F7FD8")!, gamut: .sRGB).dropFirst(0).allSatisfy { $0.erISRGB })
+    }
+
     @Test func rolleregler() {
         let forslag = PalettForslag(tittel: "T", forklaring: "", farger: [
             Fargeforslag(navn: "B", rolle: "bakgrunn", begrunnelse: "", farge: Farge(okLCH: OKLCH(l: 0.6, c: 0.1, h: 60))),

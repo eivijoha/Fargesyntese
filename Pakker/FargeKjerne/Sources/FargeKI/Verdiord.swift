@@ -37,6 +37,13 @@ public struct PalettForslag: Sendable, Hashable {
         Palett(navn: tittel, farger: farger.map { PalettFarge(navn: $0.navn, farge: $0.farge, opphav: .ki) })
     }
 
+    /// Alle fargene gamut-kartlagt til `gamut` (f.eks. sRGB når brukeren har begrenset til det).
+    public func begrenset(til gamut: Gamut) -> PalettForslag {
+        var kopi = self
+        for i in kopi.farger.indices { kopi.farger[i].farge = kopi.farger[i].farge.gamutKartlagt(til: gamut) }
+        return kopi
+    }
+
     /// Håndhever rollene: bakgrunn blir tydelig lys eller mørk (samme kulør, lite kroma),
     /// og tekst oppfyller WCAG AA mot bakgrunnen. Små modeller bommer ofte her.
     public func medRolleregler() -> PalettForslag {

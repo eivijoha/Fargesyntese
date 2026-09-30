@@ -75,6 +75,11 @@ public enum Bildepalett {
         public var farge: Farge
         /// Andel av pikslene, 0…1.
         public var andel: Double
+
+        public init(farge: Farge, andel: Double) {
+            self.farge = farge
+            self.andel = andel
+        }
     }
 
     public static func dominerende(_ farger: [Farge], antall: Int, iterasjoner: Int = 15) -> [Klynge] {

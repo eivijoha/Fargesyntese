@@ -299,6 +299,14 @@ struct PalettDetalj: View {
                 Button("Lim inn farger", systemImage: "doc.on.clipboard") {
                     dokument.farger += Utklippstavle.limInnListe()
                 }
+                if dokument.farger.contains(where: { !$0.farge.erISRGB }) {
+                    Button("Tilpass til sRGB", systemImage: "square.dashed.inset.filled") {
+                        var f = dokument.farger
+                        for i in f.indices { f[i].farge = f[i].farge.gamutKartlagt(til: .sRGB) }
+                        dokument.farger = f
+                    }
+                    .help("Gamut-kartlegg farger utenfor sRGB (bevarer lyshet og kulør)")
+                }
                 Button("Kontrast", systemImage: "circle.lefthalf.filled") { visKontrast = true }
                     .disabled(dokument.farger.count < 2)
                 Menu {
@@ -493,6 +501,7 @@ struct VelgPalettArk: View {
 /// Lys–mørk-skala (50…950) rundt en farge.
 struct ToneskalaArk: View {
     let grunnfarge: PalettFarge
+    @Environment(Arbeidsbenk.self) private var arbeidsbenk
     var leggTil: ([PalettFarge]) -> Void
     @Environment(\.dismiss) private var lukk
     @State private var antall = 11
@@ -500,7 +509,7 @@ struct ToneskalaArk: View {
 
     private var toner: [Farge] {
         let lysheter = antall == 11 ? Toneskala.standardLysheter : Toneskala.jevn(antall: antall)
-        return Toneskala(lysheter: lysheter, kromaDemping: demping).toner(for: grunnfarge.farge)
+        return Toneskala(lysheter: lysheter, kromaDemping: demping, gamut: arbeidsbenk.gamut).toner(for: grunnfarge.farge)
     }
 
     var body: some View {

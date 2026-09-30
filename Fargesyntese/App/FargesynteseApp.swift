@@ -35,7 +35,21 @@ struct FargesynteseApp: App {
 /// Delt arbeidstilstand på tvers av faner: fargen man jobber med nå og foretrukket modell.
 @Observable
 final class Arbeidsbenk {
-    var aktivFarge = Farge(hex: "#2F7FD8")!
+    var aktivFarge = Farge(hex: "#2F7FD8")! {
+        didSet { if kunSRGB && !aktivFarge.erISRGB { aktivFarge = aktivFarge.gamutKartlagt(til: .sRGB) } }
+    }
+
+    /// «Begrens til sRGB»: alle nye og redigerte farger holdes innenfor sRGB (gamut-kartlagt).
+    var kunSRGB = UserDefaults.standard.bool(forKey: "kunSRGB") {
+        didSet {
+            UserDefaults.standard.set(kunSRGB, forKey: "kunSRGB")
+            if kunSRGB { aktivFarge = begrens(aktivFarge) }
+        }
+    }
+
+    var gamut: Gamut { kunSRGB ? .sRGB : .displayP3 }
+
+    func begrens(_ farge: Farge) -> Farge { farge.gamutKartlagt(til: gamut) }
     var modell: Fargemodell = .okLCH
     var valgtFane: Fane = .studio
     /// Lysere/mørkere-innstillinger, delt mellom Studio og Overgang og husket mellom oppstarter.

@@ -80,7 +80,8 @@ struct KameraVisning: View {
             VelgPalettArk(farger: lagre ?? [], foreslåttNavn: "Kamera")
         }
         .task {
-            plukker.vedFangst = { farge in
+            plukker.vedFangst = { målt in
+                let farge = arbeidsbenk.begrens(målt)
                 fanget.append(farge)
                 arbeidsbenk.aktivFarge = farge
                 arbeidsbenk.registrerMåling(farge)

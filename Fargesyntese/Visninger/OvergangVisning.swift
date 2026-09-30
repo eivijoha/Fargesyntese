@@ -9,12 +9,12 @@ struct OvergangVisning: View {
     @State private var antall = 7
     @State private var visLagre = false
 
-    private var toner: [Farge] { Overgang.toner(fra: start, til: slutt, antall: antall) }
+    private var toner: [Farge] { Overgang.toner(fra: start, til: slutt, antall: antall).map(arbeidsbenk.begrens) }
 
     /// Rader fra lysest til mørkest; midtraden er selve overgangen.
     private var rader: [[Farge]] {
         let trinn = arbeidsbenk.lyshetstrinn
-        let variasjoner = toner.map { trinn.toner(for: $0) }
+        let variasjoner = toner.map { trinn.toner(for: $0, gamut: arbeidsbenk.gamut) }
         return (0..<(trinn.antallLysere + trinn.antallMørkere + 1)).map { rad in variasjoner.map { $0[rad] } }
     }
 

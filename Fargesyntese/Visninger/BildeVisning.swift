@@ -90,6 +90,7 @@ struct BildeVisning: View {
             }
         }
         .onChange(of: antallKlynger) { beregnKlynger() }
+        .onChange(of: arbeidsbenk.gamut) { beregnKlynger() }
         .sheet(isPresented: Binding(get: { lagre != nil }, set: { if !$0 { lagre = nil } })) {
             VelgPalettArk(farger: lagre ?? [])
         }
@@ -132,7 +133,8 @@ struct BildeVisning: View {
                     .onEnded { _ in
                         // Trykk/klikk (eller slipp etter dra) fanger fargen – samme oppførsel som kameraet.
                         drar = false
-                        if let f = gjeldende {
+                        if let målt = gjeldende {
+                            let f = arbeidsbenk.begrens(målt)
                             arbeidsbenk.aktivFarge = f
                             arbeidsbenk.registrerMåling(f)
                             fanget.append(f)
@@ -177,7 +179,8 @@ struct BildeVisning: View {
                     }
                 }
                 Button("Fang", systemImage: "plus.circle.fill") {
-                    if let f = gjeldende {
+                    if let målt = gjeldende {
+                        let f = arbeidsbenk.begrens(målt)
                         fanget.append(f)
                         arbeidsbenk.registrerMåling(f)
                     }
@@ -246,6 +249,7 @@ struct BildeVisning: View {
     private func beregnKlynger() {
         guard let prøve else { klynger = []; return }
         klynger = Bildepalett.dominerende(prøve.utvalg(maks: 4000), antall: antallKlynger)
+            .map { Bildepalett.Klynge(farge: arbeidsbenk.begrens($0.farge), andel: $0.andel) }
     }
 }
 

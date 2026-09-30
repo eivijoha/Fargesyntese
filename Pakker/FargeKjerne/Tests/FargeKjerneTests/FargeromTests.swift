@@ -9,6 +9,12 @@ private func nær(_ a: Double, _ b: Double, _ tol: Double = 1e-3) -> Bool { abs(
 struct FargeromTests {
     let rød = Farge(hex: "#FF0000")!
 
+    @Test func p3Hex() {
+        #expect(Farge(hex: "#FFFFFF")!.p3Hex() == "#FFFFFF")
+        #expect(Farge(displayP3: DisplayP3(r: 1, g: 0, b: 0)).p3Hex() == "#FF0000")
+        #expect(Farge(hex: "#FF0000")!.p3Hex() == "#EA3323")  // sRGB-rød uttrykt i P3
+    }
+
     @Test func hexRundtur() {
         #expect(rød.hex() == "#FF0000")
         #expect(Farge(hex: "0af")!.hex() == "#00AAFF")

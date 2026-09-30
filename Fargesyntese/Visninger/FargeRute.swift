@@ -11,6 +11,8 @@ struct FargeRute: View {
     var retteBunnhjørner = false
     /// Ekstra innrykk for P3-merket (store flater, som i Studio).
     var ekstraMerkeInnrykk: CGFloat = 0
+    /// Vis «P3»-merket for farger utenfor sRGB.
+    var visMerke = true
     /// Valgfrie handlinger i kontekstmenyen (trykk og hold / høyreklikk).
     var leggIPalett: ((Farge) -> Void)? = nil
     var fjern: (() -> Void)? = nil
@@ -47,7 +49,7 @@ struct FargeRute: View {
                 }
             }
             .overlay(alignment: .topTrailing) {
-                if !farge.erISRGB {
+                if visMerke && !farge.erISRGB {
                     Text("P3")
                         .font(.caption2.weight(.bold))
                         // Innrykket følger hjørneradiusen, så merket ikke klippes av det avrundede hjørnet.
