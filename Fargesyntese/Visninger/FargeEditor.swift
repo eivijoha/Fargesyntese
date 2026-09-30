@@ -260,33 +260,35 @@ private extension Double {
     func clamped(to r: ClosedRange<Double>) -> Double { Swift.min(Swift.max(self, r.lowerBound), r.upperBound) }
 }
 
-/// Stor fargeflate øverst i Studio. Farger utenfor sRGB vises delt: sRGB-versjonen til venstre
-/// (slik de fleste skjermer, web og Office viser den) og den faktiske P3-fargen til høyre.
+/// Stor fargeflate øverst i Studio, alltid delt: sRGB til venstre (slik de fleste skjermer, web
+/// og Office viser fargen) og Display P3 til høyre, hver med sin hex. For farger innenfor sRGB er
+/// halvdelene like, men hex-verdiene er forskjellige; utenfor sRGB er P3-halvdelen mer mettet.
 struct Fargeflate: View {
     let farge: Farge
 
     var body: some View {
-        if farge.erISRGB {
-            FargeRute(farge: farge, visTekst: false, hjørne: 20, retteBunnhjørner: true, ekstraMerkeInnrykk: 8)
-        } else {
-            let sRGB = farge.gamutKartlagt(til: .sRGB)
-            HStack(spacing: 0) {
-                halvdel(sRGB, tittel: "sRGB", hex: sRGB.hex())
-                halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", hex: farge.p3Hex())
-            }
-            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
+        let sRGB = farge.gamutKartlagt(til: .sRGB)
+        HStack(spacing: 0) {
+            halvdel(sRGB, tittel: "sRGB", hex: sRGB.hex())
+            halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", hex: farge.p3Hex(),
+                    merknad: farge.erISRGB ? nil : "mer mettet enn sRGB")
         }
+        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
     }
 
-    private func halvdel(_ f: Farge, tittel: String, hex: String) -> some View {
+    private func halvdel(_ f: Farge, tittel: String, hex: String, merknad: String? = nil) -> some View {
         FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(tittel).font(.caption.weight(.semibold))
                     Text(hex).font(.caption2.monospaced())
+                    if let merknad { Text(merknad).font(.caption2) }
                 }
                 .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                 .padding(12)
+            }
+            .contextMenu {
+                Button("Kopier \(tittel)-hex", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(hex) }
             }
     }
 }
