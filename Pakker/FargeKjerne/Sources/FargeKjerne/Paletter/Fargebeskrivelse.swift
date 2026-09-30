@@ -7,9 +7,9 @@ import Foundation
 public enum Fargebeskrivelse {
     /// Kulørnavn etter OKLCH-kulør (grader). Hver post gjelder fra og med gradtallet.
     static let kulører: [(Double, String)] = [
-        (0, "rosa"), (15, "rød"), (42, "oransje"), (80, "gul"), (112, "gulgrønn"), (130, "grønn"),
-        (165, "blågrønn"), (195, "turkis"), (225, "blå"), (268, "indigo"), (285, "fiolett"),
-        (318, "magenta"), (345, "rosa"),
+        (0, String(localized: "rosa", bundle: .module)), (15, String(localized: "rød", bundle: .module)), (42, String(localized: "oransje", bundle: .module)), (80, String(localized: "gul", bundle: .module)), (112, String(localized: "gulgrønn", bundle: .module)), (130, String(localized: "grønn", bundle: .module)),
+        (165, String(localized: "blågrønn", bundle: .module)), (195, String(localized: "turkis", bundle: .module)), (225, String(localized: "blå", bundle: .module)), (268, String(localized: "indigo", bundle: .module)), (285, String(localized: "fiolett", bundle: .module)),
+        (318, String(localized: "magenta", bundle: .module)), (345, String(localized: "rosa", bundle: .module)),
     ]
 
     public static func kulørnavn(_ h: Double) -> String {
@@ -22,20 +22,20 @@ public enum Fargebeskrivelse {
         let (l, c, h) = (f.l, f.c, f.h)
 
         if c < 0.02 {
-            if l > 0.96 { return "hvit" }
-            if l < 0.18 { return "sort" }
-            let tone = c < 0.008 ? "grå" : (40...110).contains(h) ? "varmgrå" : (200...290).contains(h) ? "kaldgrå" : "grå"
-            return (l > 0.7 ? "lys " : l < 0.4 ? "mørk " : "") + tone
+            if l > 0.96 { return String(localized: "hvit", bundle: .module) }
+            if l < 0.18 { return String(localized: "sort", bundle: .module) }
+            let tone = c < 0.008 ? String(localized: "grå", bundle: .module) : (40...110).contains(h) ? String(localized: "varmgrå", bundle: .module) : (200...290).contains(h) ? String(localized: "kaldgrå", bundle: .module) : String(localized: "grå", bundle: .module)
+            return (l > 0.7 ? String(localized: "lys", bundle: .module) + " " : l < 0.4 ? String(localized: "mørk", bundle: .module) + " " : "") + tone
         }
 
         let navn = kulørnavn(h)
         // Egne navn der kulør alene villeder.
-        if (30...100).contains(h), l < 0.55, c < 0.14 { return (l < 0.35 ? "mørk " : "") + "brun" }
-        if (40...110).contains(h), l > 0.82, c < 0.07 { return "beige" }
-        if (345...360).contains(h) || h < 15, l < 0.45 { return "vinrød" }
+        if (30...100).contains(h), l < 0.55, c < 0.14 { return (l < 0.35 ? String(localized: "mørk", bundle: .module) + " " : "") + String(localized: "brun", bundle: .module) }
+        if (40...110).contains(h), l > 0.82, c < 0.07 { return String(localized: "beige", bundle: .module) }
+        if (345...360).contains(h) || h < 15, l < 0.45 { return String(localized: "vinrød", bundle: .module) }
 
-        let lyshet = l < 0.35 ? "mørk" : l < 0.55 ? "dyp" : l < 0.78 ? "" : l < 0.9 ? "lys" : "blek"
-        let metning = c < 0.06 ? "dempet" : c < 0.15 ? "" : c < 0.22 ? "klar" : "sterk"
+        let lyshet = l < 0.35 ? String(localized: "mørk", bundle: .module) : l < 0.55 ? String(localized: "dyp", bundle: .module) : l < 0.78 ? "" : l < 0.9 ? String(localized: "lys", bundle: .module) : String(localized: "blek", bundle: .module)
+        let metning = c < 0.06 ? String(localized: "dempet", bundle: .module) : c < 0.15 ? "" : c < 0.22 ? String(localized: "klar", bundle: .module) : String(localized: "sterk", bundle: .module)
         return [lyshet, metning, navn].filter { !$0.isEmpty }.joined(separator: " ")
     }
 }

@@ -31,19 +31,19 @@ public enum Palettvurderer {
             }
         }
         let godkjente = par.filter { $0.1.består(.aaTekst) }
-        ut.append("Fargepar som består WCAG AA for tekst (4,5:1): \(godkjente.count) av \(par.count)")
+        ut.append(String(localized: "Fargepar som består WCAG AA for tekst (4,5:1): \(godkjente.count) av \(par.count)", bundle: .module))
         ut += par.sorted { $0.1.forhold > $1.1.forhold }.prefix(8).map { "\($0.0): \($0.1.formatert) (\($0.1.sammendrag))" }
 
         let lysheter = f.map(\.farge.okLCH.l)
         if let min = lysheter.min(), let maks = lysheter.max() {
-            ut.append(String(format: "Lyshetsspenn (OKLCH): %.2f–%.2f", min, maks))
+            ut.append(String(localized: "Lyshetsspenn (OKLCH): \(String(format: "%.2f", min))–\(String(format: "%.2f", maks))", bundle: .module))
         }
         let kromatiske = f.filter { $0.farge.okLCH.c >= 0.03 }
-        ut.append("Kulører: " + (kromatiske.isEmpty ? "ingen (kun nøytrale)" :
+        ut.append(String(localized: "Kulører:", bundle: .module) + " " + (kromatiske.isEmpty ? String(localized: "ingen (kun nøytrale)", bundle: .module) :
             Set(kromatiske.map { Fargebeskrivelse.kulørnavn($0.farge.okLCH.h) }).sorted().joined(separator: ", ")))
         let utenforSRGB = f.filter { !$0.farge.erISRGB }
         if !utenforSRGB.isEmpty {
-            ut.append("Utenfor sRGB (bare P3-skjermer viser riktig): " + utenforSRGB.map(\.visningsnavn).joined(separator: ", "))
+            ut.append(String(localized: "Utenfor sRGB (bare P3-skjermer viser riktig):", bundle: .module) + " " + utenforSRGB.map(\.visningsnavn).joined(separator: ", "))
         }
         return ut
     }
@@ -57,7 +57,7 @@ public enum Palettvurderer {
             ærlig og konkret: harmoni, stemning, hierarki, og lesbarhet etter WCAG 2.2 \
             (4,5:1 for vanlig tekst, 3:1 for stor tekst og grafikk, 7:1 for AAA). \
             Bruk faktaene du får – ikke regn ut kontrast selv. Trenger du kontrasten for et par \
-            som ikke er oppgitt, bruk verktøyet «kontrast». Svar på norsk bokmål, kort og presist.
+            som ikke er oppgitt, bruk verktøyet «kontrast». Svar kort og presist. \(Språk.svarinstruks)
             """)
             do {
                 let svar = try await økt.respond(
@@ -83,13 +83,13 @@ public enum Palettvurderer {
         var styrker: [String] = [], svakheter: [String] = [], forslag: [String] = []
         let lys = f.map(\.okLCH.l)
         let spenn = (lys.max() ?? 0) - (lys.min() ?? 0)
-        if spenn >= 0.5 { styrker.append("God spredning i lyshet gir tydelig hierarki.") }
-        else { svakheter.append("Lite spenn i lyshet gjør det vanskelig å skape kontrast."); forslag.append("Legg til en tydelig lys og en tydelig mørk farge.") }
+        if spenn >= 0.5 { styrker.append(String(localized: "God spredning i lyshet gir tydelig hierarki.", bundle: .module)) }
+        else { svakheter.append(String(localized: "Lite spenn i lyshet gjør det vanskelig å skape kontrast.", bundle: .module)); forslag.append(String(localized: "Legg til en tydelig lys og en tydelig mørk farge.", bundle: .module)) }
         let bestePar = f.indices.flatMap { i in f.indices.filter { $0 > i }.map { Kontrasttest(forgrunn: f[i], bakgrunn: f[$0]) } }
-        if bestePar.contains(where: { $0.består(.aaTekst) }) { styrker.append("Minst ett fargepar kan brukes til brødtekst (WCAG AA).") }
-        else { svakheter.append("Ingen fargepar når 4,5:1 – paletten egner seg ikke til tekst alene."); forslag.append("Bruk «Mer kontrast» eller legg til sort/hvit tekstfarge.") }
-        if f.contains(where: { !$0.erISRGB }) { forslag.append("Noen farger er utenfor sRGB; kontroller dem på en vanlig skjerm og i trykk.") }
-        return PalettVurdering(oppsummering: "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig).",
+        if bestePar.contains(where: { $0.består(.aaTekst) }) { styrker.append(String(localized: "Minst ett fargepar kan brukes til brødtekst (WCAG AA).", bundle: .module)) }
+        else { svakheter.append(String(localized: "Ingen fargepar når 4,5:1 – paletten egner seg ikke til tekst alene.", bundle: .module)); forslag.append(String(localized: "Bruk «Mer kontrast» eller legg til sort/hvit tekstfarge.", bundle: .module)) }
+        if f.contains(where: { !$0.erISRGB }) { forslag.append(String(localized: "Noen farger er utenfor sRGB; kontroller dem på en vanlig skjerm og i trykk.", bundle: .module)) }
+        return PalettVurdering(oppsummering: String(localized: "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig).", bundle: .module),
                                styrker: styrker, svakheter: svakheter, forslag: forslag, fakta: fakta, kilde: .leksikon)
     }
 }

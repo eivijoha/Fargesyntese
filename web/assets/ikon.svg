@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fargesyntese">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff0000"/>
+      <stop offset="0.12" stop-color="#ff5e00"/>
+      <stop offset="0.24" stop-color="#ffb100"/>
+      <stop offset="0.35" stop-color="#ffe700"/>
+      <stop offset="0.46" stop-color="#6fe40f"/>
+      <stop offset="0.57" stop-color="#00df4d"/>
+      <stop offset="0.68" stop-color="#00e4e1"/>
+      <stop offset="0.79" stop-color="#0070ff"/>
+      <stop offset="0.9" stop-color="#1703f8"/>
+      <stop offset="1" stop-color="#6e01db"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0088ff"/>
+  <rect x="6" y="6" width="52" height="52" rx="10" fill="url(#g)"/>
+</svg>

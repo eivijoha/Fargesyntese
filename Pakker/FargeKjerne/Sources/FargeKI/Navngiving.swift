@@ -19,10 +19,10 @@ public enum Fargenavngiver {
             "\(i + 1). \(Fargebeskrivelse.beskriv(f)) (\(f.hex()), \(Fargemodell.okLCH.tekst(for: f)))"
         }.joined(separator: "\n")
         let økt = LanguageModelSession(instructions: """
-        Du navngir farger for designere. Navnene skal være korte (ett eller to ord), norske, \
+        Du navngir farger for designere. Navnene skal være korte (ett eller to ord), \
         stemningsfulle og treffende for fargen, gjerne med natur- eller stedsassosiasjoner \
         (f.eks. «Fjordblå», «Lyng», «Havre», «Nordlys»). Hvert navn skal være unikt i paletten. \
-        Svar på norsk bokmål.
+        \(Språk.svarinstruks)
         """)
         do {
             let svar = try await økt.respond(

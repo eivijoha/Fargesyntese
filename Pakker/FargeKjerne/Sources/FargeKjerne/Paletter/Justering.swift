@@ -9,13 +9,13 @@ public enum Justering: String, CaseIterable, Sendable, Identifiable {
 
     public var navn: String {
         switch self {
-        case .varmere: "Varmere"
-        case .kaldere: "Kaldere"
-        case .lysere: "Lysere"
-        case .mørkere: "Mørkere"
-        case .merMettet: "Mer mettet"
-        case .dempet: "Dempet"
-        case .merKontrast: "Mer kontrast"
+        case .varmere: String(localized: "Varmere", bundle: .module)
+        case .kaldere: String(localized: "Kaldere", bundle: .module)
+        case .lysere: String(localized: "Lysere", bundle: .module)
+        case .mørkere: String(localized: "Mørkere", bundle: .module)
+        case .merMettet: String(localized: "Mer mettet", bundle: .module)
+        case .dempet: String(localized: "Dempet", bundle: .module)
+        case .merKontrast: String(localized: "Mer kontrast", bundle: .module)
         }
     }
 

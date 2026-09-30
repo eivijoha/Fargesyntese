@@ -1,0 +1,100 @@
+{
+  "sourceLanguage": "nb",
+  "strings": {
+    "Konverter en farge med ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Convert a color with ${applicationName}",
+              "Convert color in ${applicationName}"
+            ]
+          }
+        },
+        "nb": {
+          "stringSet": {
+            "state": "new",
+            "values": [
+              "Konverter en farge med ${applicationName}",
+              "Regn om farge i ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Lag en palett i ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Create a palette in ${applicationName}",
+              "Suggest colors with ${applicationName}",
+              "Make a color palette from value words in ${applicationName}"
+            ]
+          }
+        },
+        "nb": {
+          "stringSet": {
+            "state": "new",
+            "values": [
+              "Lag en palett i ${applicationName}",
+              "Foreslå farger med ${applicationName}",
+              "Lag fargepalett fra verdiord i ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Lag overgangstoner i ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Make gradient tones in ${applicationName}",
+              "Make a color gradient with ${applicationName}"
+            ]
+          }
+        },
+        "nb": {
+          "stringSet": {
+            "state": "new",
+            "values": [
+              "Lag overgangstoner i ${applicationName}",
+              "Lag en fargeovergang med ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Sjekk kontrast i ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Check contrast in ${applicationName}",
+              "Test color contrast with ${applicationName}"
+            ]
+          }
+        },
+        "nb": {
+          "stringSet": {
+            "state": "new",
+            "values": [
+              "Sjekk kontrast i ${applicationName}",
+              "Test fargekontrast med ${applicationName}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fargesyntese – color palettes for designers</title>
+  <meta name="description" content="Fargesyntese is a color tool for designers on iPhone, iPad and Mac: OKLCH, OKLab, CIELab, CMYK and ICC profiles, perceptually even gradients, WCAG contrast, camera color picking and export to Adobe and Figma.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <!-- TODO: app-id – add the App Store ID to show the Smart App Banner in Safari on iPhone/iPad:
+  <meta name="apple-itunes-app" content="app-id=0000000000">
+  -->
+  <link rel="icon" href="../assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/stil.css">
+  <link rel="alternate" hreflang="nb" href="../index.html">
+  <link rel="alternate" hreflang="en" href="index.html">
+  <link rel="alternate" hreflang="x-default" href="../index.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Skip to main content</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="../assets/ikon.svg" alt="" width="32" height="32">
+        Fargesyntese
+      </a>
+      <nav class="hovednav" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html" aria-current="page">About</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Language">
+        <a href="../index.html" hreflang="nb" lang="nb">Norsk</a>
+        <span aria-current="true" lang="en">English</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold" tabindex="-1">
+    <section class="helt" aria-labelledby="tittel">
+      <div>
+        <img class="helt-ikon" src="../assets/ikon.svg" alt="" width="88" height="88">
+        <h1 id="tittel">Fargesyntese</h1>
+        <p class="ingress">Build color palettes across color spaces – with perceptually even gradients, contrast checking, ICC profiles and export to the tools you already use.</p>
+
+        <div class="handlinger">
+          <!-- TODO: app-store-link – replace href="#" with the app's App Store link,
+               and consider using Apple's official "Download on the App Store" badge
+               (Apple Marketing Tools) instead of this button. -->
+          <a class="knapp" href="#">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            <span>Download on the App Store <small>[app-store-link]</small></span>
+          </a>
+          <a class="knapp knapp-sekundaer" href="support.html">Support and questions</a>
+        </div>
+
+        <ul class="plattformer" aria-label="Platforms">
+          <li>iPhone</li>
+          <li>iPad</li>
+          <li>Mac</li>
+        </ul>
+        <p class="dempet">Requires iOS 26, iPadOS 26 or macOS 26.</p>
+      </div>
+
+      <figure class="helt-kunst">
+        <ul class="proverad" aria-hidden="true">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+        <div class="overgang" aria-hidden="true"></div>
+        <figcaption>Seven equal perceptual steps in OKLab – from deep blue to light sand.</figcaption>
+      </figure>
+    </section>
+
+    <section class="seksjon" aria-labelledby="funksjoner">
+      <h2 id="funksjoner">Features</h2>
+      <p class="lesetekst">Fargesyntese is designed for iPhone first. On iPad and Mac you get more room – and on the Mac an eyedropper that picks colors from anywhere on screen.</p>
+
+      <ul class="kort-rutenett">
+        <li>
+          <article class="kort">
+            <h3>Every color space</h3>
+            <p>Edit colors in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK – with Display P3 as the wide gamut.</p>
+            <ul>
+              <li>Display P3 side by side with sRGB, Adobe RGB, CMYK or any installed ICC profile</li>
+              <li>Warnings when a color is out of gamut</li>
+              <li>Optionally limit new colors to a chosen profile</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>ICC profiles</h3>
+            <p>Import your own profiles (.icc and .icm). They live in the app’s iCloud Drive folder and follow you to your other devices.</p>
+            <ul>
+              <li>Convert between profiles with a chosen rendering intent</li>
+              <li>Compare rendering intents with ΔE2000</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Gradients</h3>
+            <p>Create transitions between two colors in equal perceptual steps in OKLab, with lighter and darker rows.</p>
+            <ul>
+              <li>Export as a CSS gradient in <code>oklab</code> with an sRGB fallback</li>
+              <li>Linear, radial or conic</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Tones and harmonies</h3>
+            <p>Lighter and darker steps, tone scales from 50 to 950, and color harmonies:</p>
+            <ul>
+              <li>Complementary, split complementary, analogous and even distribution with a chosen count</li>
+              <li>On an OKLCH, CIE LCH, HSL or RYB color wheel</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Pick colors</h3>
+            <ul>
+              <li>Camera: tap to pick, pinch to zoom, macro focus and torch – a light panel on the Mac screen</li>
+              <li>Photos and images: zoom and dominant colors</li>
+              <li>Screen eyedropper on Mac</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Apple Intelligence on device</h3>
+            <ul>
+              <li>From value words to a palette</li>
+              <li>Adjust with free text – “warmer”, “more exclusive”</li>
+              <li>Name colors and get a critique of your palette</li>
+            </ul>
+            <p>Everything runs on device. Nothing leaves it.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Accessibility</h3>
+            <ul>
+              <li>WCAG 2.2 contrast: AA and AAA, large text and graphics</li>
+              <li>Auto-fix that adjusts the color until it passes</li>
+              <li>Contrast matrix for the whole palette</li>
+              <li>Compare colors with ΔE2000</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Palettes and iCloud</h3>
+            <p>Collect colors in palettes or save single colors. Name them, and drag colors between palettes.</p>
+            <p>Everything syncs through your own private iCloud.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Export</h3>
+            <p>Adobe ASE, Photoshop ACO, Figma variables (DTCG JSON), Tokens Studio, SVG swatches, CSS, Design Tokens, GIMP GPL, SwiftUI and hex list.</p>
+            <p>Copy and paste the way you’re used to on each platform.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Siri and Shortcuts</h3>
+            <ul>
+              <li>Create a palette from value words</li>
+              <li>Create a gradient</li>
+              <li>Convert a color</li>
+              <li>Check contrast</li>
+            </ul>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon" aria-labelledby="skjermbilder">
+      <h2 id="skjermbilder">Screenshots</h2>
+      <!-- TODO: screenshots – replace each <div class="ramme"> with an image, e.g.
+           <img src="../assets/skjermbilde-studio.png" alt="Studio showing a color in OKLCH with P3 side by side with CMYK" width="1206" height="2622">
+           Remember descriptive alt text. -->
+      <ul class="skjermbilder" tabindex="0" aria-label="Screenshots – scroll sideways">
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Screenshot coming soon</div>
+            <figcaption>Studio</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Screenshot coming soon</div>
+            <figcaption>Gradient</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Screenshot coming soon</div>
+            <figcaption>Camera</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Screenshot coming soon</div>
+            <figcaption>Palettes and contrast</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon lesetekst" aria-labelledby="personvern">
+      <h2 id="personvern">Privacy</h2>
+      <div class="boks">
+        <p><strong>No account, no analytics, no ads and no tracking.</strong> The developer collects no data. Your palettes live on your device and in your private iCloud, and Apple Intelligence runs on device.</p>
+        <p><a href="privacy.html">Read the privacy policy</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Footer menu">
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="../index.html" hreflang="nb" lang="nb">Norsk</a></li>
+        </ul>
+      </nav>
+      <p>© 2026 Engenett. Apple, iPhone, iPad, Mac, iCloud, Siri and Apple Intelligence are trademarks of Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

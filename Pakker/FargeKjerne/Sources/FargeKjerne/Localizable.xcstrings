@@ -1,0 +1,872 @@
+{
+  "sourceLanguage": "nb",
+  "strings": {
+    "%@%lld %%-poeng": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%lld %%-points"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@%2$lld %%-poeng"
+          }
+        }
+      }
+    },
+    "%lld %% mot hvitt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %% toward white"
+          }
+        }
+      }
+    },
+    "%lld %% mot sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %% toward black"
+          }
+        }
+      }
+    },
+    "AA stor tekst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AA large text"
+          }
+        }
+      }
+    },
+    "Analog": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analogous"
+          }
+        }
+      }
+    },
+    "Består ikke": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fails"
+          }
+        }
+      }
+    },
+    "Blå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blue"
+          }
+        }
+      }
+    },
+    "Blå–gul": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blue–yellow"
+          }
+        }
+      }
+    },
+    "CIE LCH (Lab)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CIE LCH (Lab)"
+          }
+        }
+      }
+    },
+    "CSS-variabler (.css)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSS variables (.css)"
+          }
+        }
+      }
+    },
+    "Dempet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muted"
+          }
+        }
+      }
+    },
+    "Den tradisjonelle RGB-sirkelen fra skjermverden. Blå er komplementær til gul.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The traditional RGB wheel from the screen world. Blue is complementary to yellow."
+          }
+        }
+      }
+    },
+    "Dobbelt komplementær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double complementary"
+          }
+        }
+      }
+    },
+    "Figma-variabler (.json)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Figma variables (.json)"
+          }
+        }
+      }
+    },
+    "GIMP-palett (.gpl)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GIMP palette (.gpl)"
+          }
+        }
+      }
+    },
+    "Generisk CMYK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generic CMYK"
+          }
+        }
+      }
+    },
+    "Grafikk og UI AA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graphics and UI AA"
+          }
+        }
+      }
+    },
+    "Grå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gray"
+          }
+        }
+      }
+    },
+    "Grønn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Green"
+          }
+        }
+      }
+    },
+    "Grønn–rød": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Green–red"
+          }
+        }
+      }
+    },
+    "Gul": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow"
+          }
+        }
+      }
+    },
+    "HSL (RGB-skjerm)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HSL (RGB screen)"
+          }
+        }
+      }
+    },
+    "Hex-liste (.txt)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex list (.txt)"
+          }
+        }
+      }
+    },
+    "ICC-profil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ICC profile"
+          }
+        }
+      }
+    },
+    "Ikke merkbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not noticeable"
+          }
+        }
+      }
+    },
+    "Jevn fordeling": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Even distribution"
+          }
+        }
+      }
+    },
+    "Kaldere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooler"
+          }
+        }
+      }
+    },
+    "Komplementær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complementary"
+          }
+        }
+      }
+    },
+    "Konisk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conic"
+          }
+        }
+      }
+    },
+    "Kroma": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chroma"
+          }
+        }
+      }
+    },
+    "Kulør": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hue"
+          }
+        }
+      }
+    },
+    "Kunstnersirkelen med rød, gul og blå som primærfarger. Blå er komplementær til oransje.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The artist's wheel with red, yellow and blue as primaries. Blue is complementary to orange."
+          }
+        }
+      }
+    },
+    "Lab-basert sirkel, som i Photoshop og fargemåling. Lyshet og kroma holdes fast.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lab-based wheel, as in Photoshop and color measurement. Lightness and chroma are kept fixed."
+          }
+        }
+      }
+    },
+    "Lineær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Linear"
+          }
+        }
+      }
+    },
+    "Lysere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighter"
+          }
+        }
+      }
+    },
+    "Lyshet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightness"
+          }
+        }
+      }
+    },
+    "Lysstyrke": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brightness"
+          }
+        }
+      }
+    },
+    "Mer kontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More contrast"
+          }
+        }
+      }
+    },
+    "Mer mettet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More saturated"
+          }
+        }
+      }
+    },
+    "Merkbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noticeable"
+          }
+        }
+      }
+    },
+    "Merkbar ved nøye sammenligning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noticeable on close comparison"
+          }
+        }
+      }
+    },
+    "Metning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saturation"
+          }
+        }
+      }
+    },
+    "Mørkere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Darker"
+          }
+        }
+      }
+    },
+    "OKLCH (perseptuell)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OKLCH (perceptual)"
+          }
+        }
+      }
+    },
+    "Perseptuelt like vinkler, og lyshet og metning holdes fast, så fargene veier likt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perceptually even angles, with lightness and saturation kept fixed so the colors carry equal weight."
+          }
+        }
+      }
+    },
+    "Photoshop-fargeprøver (.aco)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photoshop swatches (.aco)"
+          }
+        }
+      }
+    },
+    "RYB (kunstnersirkel)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RYB (artist's wheel)"
+          }
+        }
+      }
+    },
+    "Radiell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radial"
+          }
+        }
+      }
+    },
+    "Rød": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red"
+          }
+        }
+      }
+    },
+    "SVG-fargeprøver (.svg)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SVG swatches (.svg)"
+          }
+        }
+      }
+    },
+    "Sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black"
+          }
+        }
+      }
+    },
+    "Split-komplementær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Split complementary"
+          }
+        }
+      }
+    },
+    "Stor tekst AA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large text AA"
+          }
+        }
+      }
+    },
+    "Stor tekst AAA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large text AAA"
+          }
+        }
+      }
+    },
+    "Tekst AA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text AA"
+          }
+        }
+      }
+    },
+    "Tekst AAA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text AAA"
+          }
+        }
+      }
+    },
+    "Tydelig forskjell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear difference"
+          }
+        }
+      }
+    },
+    "Ulike farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Different colors"
+          }
+        }
+      }
+    },
+    "Varmere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warmer"
+          }
+        }
+      }
+    },
+    "beige": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "beige"
+          }
+        }
+      }
+    },
+    "blek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "pale"
+          }
+        }
+      }
+    },
+    "blå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "blue"
+          }
+        }
+      }
+    },
+    "blågrønn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "teal"
+          }
+        }
+      }
+    },
+    "brun": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "brown"
+          }
+        }
+      }
+    },
+    "dempet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "muted"
+          }
+        }
+      }
+    },
+    "dyp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "deep"
+          }
+        }
+      }
+    },
+    "fiolett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "violet"
+          }
+        }
+      }
+    },
+    "grå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gray"
+          }
+        }
+      }
+    },
+    "grønn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "green"
+          }
+        }
+      }
+    },
+    "gul": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "yellow"
+          }
+        }
+      }
+    },
+    "gulgrønn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "yellow-green"
+          }
+        }
+      }
+    },
+    "hvit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "white"
+          }
+        }
+      }
+    },
+    "indigo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "indigo"
+          }
+        }
+      }
+    },
+    "kaldgrå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cool gray"
+          }
+        }
+      }
+    },
+    "klar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "clear"
+          }
+        }
+      }
+    },
+    "lys": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "light"
+          }
+        }
+      }
+    },
+    "magenta": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "magenta"
+          }
+        }
+      }
+    },
+    "mørk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dark"
+          }
+        }
+      }
+    },
+    "oransje": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "orange"
+          }
+        }
+      }
+    },
+    "rosa": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "pink"
+          }
+        }
+      }
+    },
+    "rød": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "red"
+          }
+        }
+      }
+    },
+    "sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "black"
+          }
+        }
+      }
+    },
+    "sterk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "vivid"
+          }
+        }
+      }
+    },
+    "turkis": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "turquoise"
+          }
+        }
+      }
+    },
+    "varmgrå": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "warm gray"
+          }
+        }
+      }
+    },
+    "vinrød": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "wine red"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

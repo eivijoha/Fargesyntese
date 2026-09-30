@@ -89,7 +89,7 @@ struct VerdiordVisning: View {
                     FargeRute(farge: f.farge, visTekst: false, hjørne: 8).frame(width: 44, height: 44)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(f.navn.isEmpty ? "…" : f.navn).font(.headline)
-                        Text("\(f.rolle.capitalized) · \(f.farge.hex())")
+                        Text("\(f.rollenavn) · \(f.farge.hex())")
                             .font(.caption.monospaced())
                             .foregroundStyle(.secondary)
                         if !f.begrunnelse.isEmpty { Text(f.begrunnelse).font(.caption) }

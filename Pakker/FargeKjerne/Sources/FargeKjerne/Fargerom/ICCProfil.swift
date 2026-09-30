@@ -29,7 +29,7 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
         self.navngittRom = nil
         self.modell = rom.model
         self.antallKomponenter = rom.numberOfComponents
-        self.navn = ICCBeskrivelse.les(data) ?? navn ?? (rom.name as String?) ?? "ICC-profil"
+        self.navn = ICCBeskrivelse.les(data) ?? navn ?? (rom.name as String?) ?? String(localized: "ICC-profil", bundle: .module)
         // Stabil id på tvers av oppstarter, slik at valgt profil kan huskes.
         self.id = "icc:" + SHA256.hash(data: data).prefix(12).map { String(format: "%02x", $0) }.joined()
     }
@@ -47,7 +47,7 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
     public static let sRGB = ICCProfil(navngitt: CGColorSpace.sRGB, visningsnavn: "sRGB IEC61966-2.1")
     public static let displayP3 = ICCProfil(navngitt: CGColorSpace.displayP3, visningsnavn: "Display P3")
     public static let adobeRGB = ICCProfil(navngitt: CGColorSpace.adobeRGB1998, visningsnavn: "Adobe RGB (1998)")
-    public static let genericCMYK = ICCProfil(navngitt: CGColorSpace.genericCMYK, visningsnavn: "Generisk CMYK")
+    public static let genericCMYK = ICCProfil(navngitt: CGColorSpace.genericCMYK, visningsnavn: String(localized: "Generisk CMYK", bundle: .module))
 
     public static let innebygde: [ICCProfil] = [.sRGB, .displayP3, .adobeRGB, .genericCMYK]
 
@@ -57,7 +57,7 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
         case .cmyk: ["C", "M", "Y", "K"]
         case .rgb: ["R", "G", "B"]
         case .lab: ["L", "a", "b"]
-        case .monochrome: ["Grå"]
+        case .monochrome: [String(localized: "Grå", bundle: .module)]
         default: (1...antallKomponenter).map { "K\($0)" }
         }
     }

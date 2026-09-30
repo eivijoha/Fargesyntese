@@ -17,11 +17,11 @@ public enum Harmoni: String, CaseIterable, Codable, Sendable, Identifiable {
 
     public var navn: String {
         switch self {
-        case .komplementær: "Komplementær"
-        case .splittKomplementær: "Split-komplementær"
-        case .analog: "Analog"
-        case .jevn: "Jevn fordeling"
-        case .dobbeltKomplementær: "Dobbelt komplementær"
+        case .komplementær: String(localized: "Komplementær", bundle: .module)
+        case .splittKomplementær: String(localized: "Split-komplementær", bundle: .module)
+        case .analog: String(localized: "Analog", bundle: .module)
+        case .jevn: String(localized: "Jevn fordeling", bundle: .module)
+        case .dobbeltKomplementær: String(localized: "Dobbelt komplementær", bundle: .module)
         }
     }
 
@@ -72,19 +72,19 @@ public enum Fargesirkel: String, CaseIterable, Codable, Sendable, Identifiable {
 
     public var navn: String {
         switch self {
-        case .okLCH: "OKLCH (perseptuell)"
-        case .cieLCH: "CIE LCH (Lab)"
-        case .hsl: "HSL (RGB-skjerm)"
-        case .ryb: "RYB (kunstnersirkel)"
+        case .okLCH: String(localized: "OKLCH (perseptuell)", bundle: .module)
+        case .cieLCH: String(localized: "CIE LCH (Lab)", bundle: .module)
+        case .hsl: String(localized: "HSL (RGB-skjerm)", bundle: .module)
+        case .ryb: String(localized: "RYB (kunstnersirkel)", bundle: .module)
         }
     }
 
     public var forklaring: String {
         switch self {
-        case .okLCH: "Perseptuelt like vinkler, og lyshet og metning holdes fast, så fargene veier likt."
-        case .cieLCH: "Lab-basert sirkel, som i Photoshop og fargemåling. Lyshet og kroma holdes fast."
-        case .hsl: "Den tradisjonelle RGB-sirkelen fra skjermverden. Blå er komplementær til gul."
-        case .ryb: "Kunstnersirkelen med rød, gul og blå som primærfarger. Blå er komplementær til oransje."
+        case .okLCH: String(localized: "Perseptuelt like vinkler, og lyshet og metning holdes fast, så fargene veier likt.", bundle: .module)
+        case .cieLCH: String(localized: "Lab-basert sirkel, som i Photoshop og fargemåling. Lyshet og kroma holdes fast.", bundle: .module)
+        case .hsl: String(localized: "Den tradisjonelle RGB-sirkelen fra skjermverden. Blå er komplementær til gul.", bundle: .module)
+        case .ryb: String(localized: "Kunstnersirkelen med rød, gul og blå som primærfarger. Blå er komplementær til oransje.", bundle: .module)
         }
     }
 

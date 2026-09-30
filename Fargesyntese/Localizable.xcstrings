@@ -1,0 +1,3166 @@
+{
+  "sourceLanguage": "nb",
+  "strings": {
+    "": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ""
+          }
+        }
+      }
+    },
+    "%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@"
+          }
+        }
+      }
+    },
+    "%@ fargesirkel med %lld markerte kulører": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ color wheel with %lld marked hues"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ fargesirkel med %2$lld markerte kulører"
+          }
+        }
+      }
+    },
+    "%@ på %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ on %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ på %2$@"
+          }
+        }
+      }
+    },
+    "%@ på %@, %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ on %@, %@, %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ på %2$@, %3$@, %4$@"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · minst %@:1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · at least %@:1"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · minst %2$@:1"
+          }
+        }
+      }
+    },
+    "%@ – utenfor gamut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ – out of gamut"
+          }
+        }
+      }
+    },
+    "%@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@. Velg fra lagrede farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@. Choose from saved colors"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$@. Velg fra lagrede farger"
+          }
+        }
+      }
+    },
+    "%@×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@×"
+          }
+        }
+      }
+    },
+    "%@× · 1×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@× · 1×"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld %%": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %%"
+          }
+        }
+      }
+    },
+    "%lld %% mot hvitt/sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %% toward white/black"
+          }
+        }
+      }
+    },
+    "%lld farger": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld color"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld colors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld paletter": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld palette"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld palettes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld°": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld°"
+          }
+        }
+      }
+    },
+    "A": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A"
+          }
+        }
+      }
+    },
+    "Aa": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aa"
+          }
+        }
+      }
+    },
+    "Absolutt kolorimetrisk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Absolute colorimetric"
+          }
+        }
+      }
+    },
+    "Aktiv farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active color"
+          }
+        }
+      }
+    },
+    "Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The active color is tested as text/graphics against the background. “Fix” changes only the lightness, keeping hue and saturation."
+          }
+        }
+      }
+    },
+    "Alle gjengivelseshensikter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All rendering intents"
+          }
+        }
+      }
+    },
+    "Antall farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of colors"
+          }
+        }
+      }
+    },
+    "Antall farger: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of colors: %lld"
+          }
+        }
+      }
+    },
+    "Antall toner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of tones"
+          }
+        }
+      }
+    },
+    "Antall: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count: %lld"
+          }
+        }
+      }
+    },
+    "Av": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "Avbryt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "B"
+          }
+        }
+      }
+    },
+    "Bakgrunn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background"
+          }
+        }
+      }
+    },
+    "Begrens nye farger til %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limit new colors to %@"
+          }
+        }
+      }
+    },
+    "Beregnet i CIELab D50. Tolkning: under 1 er ikke merkbart, 1–2 merkbart ved nøye sammenligning, 2–3,5 merkbart, over 5 regnes som ulike farger. Kameramålinger påvirkes av lys og hvitbalanse.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calculated in CIELab D50. Interpretation: below 1 is not noticeable, 1–2 noticeable on close comparison, 2–3.5 noticeable, above 5 counts as different colors. Camera measurements are affected by lighting and white balance."
+          }
+        }
+      }
+    },
+    "Bestått": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passed"
+          }
+        }
+      }
+    },
+    "Bilde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image"
+          }
+        }
+      }
+    },
+    "Bilde. Trykk eller dra for å plukke farge, knip for å zoome.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image. Tap or drag to pick a color, pinch to zoom."
+          }
+        }
+      }
+    },
+    "Bruk (valgfritt), f.eks. «nettside for en barnehage»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use (optional), e.g. “website for a kindergarten”"
+          }
+        }
+      }
+    },
+    "Bruk navnene": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the names"
+          }
+        }
+      }
+    },
+    "Bruk som aktiv farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use as active color"
+          }
+        }
+      }
+    },
+    "Bruk som palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use as palette"
+          }
+        }
+      }
+    },
+    "Bruke foreslåtte navn?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use suggested names?"
+          }
+        }
+      }
+    },
+    "Brødtekst i vanlig størrelse, slik den leses i appen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Body text at regular size, as it reads in the app."
+          }
+        }
+      }
+    },
+    "Bytt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap"
+          }
+        }
+      }
+    },
+    "Bytt A og B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap A and B"
+          }
+        }
+      }
+    },
+    "Bytt om": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap"
+          }
+        }
+      }
+    },
+    "Bytt tekstfarge og bakgrunn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap text color and background"
+          }
+        }
+      }
+    },
+    "CIELab": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CIELab"
+          }
+        }
+      }
+    },
+    "CMYK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CMYK"
+          }
+        }
+      }
+    },
+    "CSS-gradient": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSS gradient"
+          }
+        }
+      }
+    },
+    "Detaljer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        }
+      }
+    },
+    "Display P3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display P3"
+          }
+        }
+      }
+    },
+    "Dominerende": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dominant"
+          }
+        }
+      }
+    },
+    "Eksisterende paletter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Existing palettes"
+          }
+        }
+      }
+    },
+    "Eksporter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        }
+      }
+    },
+    "Endepunkter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoints"
+          }
+        }
+      }
+    },
+    "Enkeltfarger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single colors"
+          }
+        }
+      }
+    },
+    "F.eks. trygg, varm, nordisk, nyskapende": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E.g. safe, warm, Nordic, innovative"
+          }
+        }
+      }
+    },
+    "Fakta vurderingen bygger på": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Facts the critique is based on"
+          }
+        }
+      }
+    },
+    "Fang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture"
+          }
+        }
+      }
+    },
+    "Fang farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture color"
+          }
+        }
+      }
+    },
+    "Farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color"
+          }
+        }
+      }
+    },
+    "Farge A": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color A"
+          }
+        }
+      }
+    },
+    "Farge B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color B"
+          }
+        }
+      }
+    },
+    "Fargeharmonier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color harmonies"
+          }
+        }
+      }
+    },
+    "Fargemodell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color model"
+          }
+        }
+      }
+    },
+    "Fargene i paletten slettes også. Dette kan ikke angres.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The palette's colors are deleted too. This can't be undone."
+          }
+        }
+      }
+    },
+    "Farger (hex)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colors (hex)"
+          }
+        }
+      }
+    },
+    "Farger lagret uten palett havner her": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colors saved without a palette end up here"
+          }
+        }
+      }
+    },
+    "Fargesirkel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color wheel"
+          }
+        }
+      }
+    },
+    "Fargestyring (ICC)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color management (ICC)"
+          }
+        }
+      }
+    },
+    "Fargevelger med pipette": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color picker with eyedropper"
+          }
+        }
+      }
+    },
+    "Faste steg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed steps"
+          }
+        }
+      }
+    },
+    "Ferdig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Fjern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        }
+      }
+    },
+    "Flytt til": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to"
+          }
+        }
+      }
+    },
+    "Foreslå navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggest name"
+          }
+        }
+      }
+    },
+    "Foreslå palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggest palette"
+          }
+        }
+      }
+    },
+    "Foreslår en fargepalett ut fra verdiord eller en stemning, og lagrer den.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggests a color palette from value words or a mood, and saves it."
+          }
+        }
+      }
+    },
+    "Form": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shape"
+          }
+        }
+      }
+    },
+    "Forskjell mellom de to siste fargene: Delta E 2000 %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difference between the last two colors: Delta E 2000 %@, %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Forskjell mellom de to siste fargene: Delta E 2000 %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Forslag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions"
+          }
+        }
+      }
+    },
+    "Forslaget lages med Apple Intelligence på enheten når det er tilgjengelig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The suggestion is made with Apple Intelligence on device when available."
+          }
+        }
+      }
+    },
+    "Fra": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From"
+          }
+        }
+      }
+    },
+    "Fra farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From color"
+          }
+        }
+      }
+    },
+    "Gamut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gamut"
+          }
+        }
+      }
+    },
+    "Gamut-kartlegg farger utenfor sRGB (bevarer lyshet og kulør)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gamut-map colors outside sRGB (keeps lightness and hue)"
+          }
+        }
+      }
+    },
+    "Gi fargene navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name the colors"
+          }
+        }
+      }
+    },
+    "Gi navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Gi navn …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name …"
+          }
+        }
+      }
+    },
+    "Gi nytt navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        }
+      }
+    },
+    "Gi nytt navn …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename …"
+          }
+        }
+      }
+    },
+    "Gi paletten navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name the palette"
+          }
+        }
+      }
+    },
+    "Gi tilgang i Innstillinger for å plukke farger fra omgivelsene.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow access in Settings to pick colors from your surroundings."
+          }
+        }
+      }
+    },
+    "Gjengivelse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rendering"
+          }
+        }
+      }
+    },
+    "Gjengivelseshensikt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rendering intent"
+          }
+        }
+      }
+    },
+    "Grunnfarge %lld grader": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base color %lld degrees"
+          }
+        }
+      }
+    },
+    "HSB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HSB"
+          }
+        }
+      }
+    },
+    "HSL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HSL"
+          }
+        }
+      }
+    },
+    "Harmoni": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harmony"
+          }
+        }
+      }
+    },
+    "Hent fra aktiv farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get from active color"
+          }
+        }
+      }
+    },
+    "Hex eller CSS-farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex or CSS color"
+          }
+        }
+      }
+    },
+    "Hex eller CSS-farge, f.eks. #767676": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex or CSS color, e.g. #767676"
+          }
+        }
+      }
+    },
+    "Hex, f.eks. #1B3A6B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex, e.g. #1B3A6B"
+          }
+        }
+      }
+    },
+    "Hex, f.eks. #2F7FD8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex, e.g. #2F7FD8"
+          }
+        }
+      }
+    },
+    "Hex, f.eks. #F2B84B": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex, e.g. #F2B84B"
+          }
+        }
+      }
+    },
+    "Hurtigknappene endrer fargene presist i OKLCH. Fritekst tolkes av språkmodellen, som husker samtalen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The quick buttons change the colors precisely in OKLCH. Free text is interpreted by the language model, which remembers the conversation."
+          }
+        }
+      }
+    },
+    "Hvilke verdiord skal paletten uttrykke?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which value words should the palette express?"
+          }
+        }
+      }
+    },
+    "Hvit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "White"
+          }
+        }
+      }
+    },
+    "Ikke bestått": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed"
+          }
+        }
+      }
+    },
+    "Importer profil …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import profile …"
+          }
+        }
+      }
+    },
+    "Importerte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported"
+          }
+        }
+      }
+    },
+    "Importerte profiler lagres på denne enheten (iCloud Drive er ikke tilgjengelig).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported profiles are stored on this device (iCloud Drive is not available)."
+          }
+        }
+      }
+    },
+    "Importerte profiler ligger i iCloud Drive › Fargesyntese › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported profiles live in iCloud Drive › Fargesyntese › Profiler and sync between your devices. You can also add .icc files there from Files or Finder."
+          }
+        }
+      }
+    },
+    "Ingen enkeltfarger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No single colors"
+          }
+        }
+      }
+    },
+    "Ingen kameratilgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No camera access"
+          }
+        }
+      }
+    },
+    "Ingen lagrede farger ennå. Lagre farger fra Studio eller Utplukk, eller lag en palett.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No saved colors yet. Save colors from Studio or Pick, or create a palette."
+          }
+        }
+      }
+    },
+    "Ingen paletter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No palettes"
+          }
+        }
+      }
+    },
+    "Ingen paletter ennå. Trykk + for en tom palett eller en palett fra verdiord, eller lag en fra Studio, Overgang eller Utplukk.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No palettes yet. Tap + for an empty palette or one from value words, or create one from Studio, Gradient or Pick."
+          }
+        }
+      }
+    },
+    "Innebygde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built-in"
+          }
+        }
+      }
+    },
+    "Innenfor": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inside"
+          }
+        }
+      }
+    },
+    "Innenfor alle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inside all"
+          }
+        }
+      }
+    },
+    "Installerte ICC-profiler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed ICC profiles"
+          }
+        }
+      }
+    },
+    "Juster": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust"
+          }
+        }
+      }
+    },
+    "Juster i profilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust in profile"
+          }
+        }
+      }
+    },
+    "Juster med KI, f.eks. «mer som en skandinavisk kafé»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust with AI, e.g. “more like a Scandinavian café”"
+          }
+        }
+      }
+    },
+    "KI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI"
+          }
+        }
+      }
+    },
+    "Kamera": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera"
+          }
+        }
+      }
+    },
+    "Kilde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        }
+      }
+    },
+    "Kontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrast"
+          }
+        }
+      }
+    },
+    "Kontrast %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrast %@, %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Kontrast %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Kontrast (WCAG 2.2)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrast (WCAG 2.2)"
+          }
+        }
+      }
+    },
+    "Kontrasten er %@ (%@). %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The contrast is %@ (%@). %@."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Kontrasten er %1$@ (%2$@). %3$@."
+          }
+        }
+      }
+    },
+    "Kontrastmatrise": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrast matrix"
+          }
+        }
+      }
+    },
+    "Konverter ${farge} til ${modell}": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Convert ${farge} to ${modell}"
+          }
+        }
+      }
+    },
+    "Konverter farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Convert color"
+          }
+        }
+      }
+    },
+    "Konverter mellom profiler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Convert between profiles"
+          }
+        }
+      }
+    },
+    "Konverter mellom profiler …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Convert between profiles …"
+          }
+        }
+      }
+    },
+    "Kopier %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy %@"
+          }
+        }
+      }
+    },
+    "Kopier CSS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy CSS"
+          }
+        }
+      }
+    },
+    "Kopier alle som OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy all as OKLCH"
+          }
+        }
+      }
+    },
+    "Kopier alle som hex": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy all as hex"
+          }
+        }
+      }
+    },
+    "Kopier bare moderne verdi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy modern value only"
+          }
+        }
+      }
+    },
+    "Kopier bare reserve (sRGB)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy fallback only (sRGB)"
+          }
+        }
+      }
+    },
+    "Kopier hex": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy hex"
+          }
+        }
+      }
+    },
+    "Kopier som": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy as"
+          }
+        }
+      }
+    },
+    "Kopier som SVG (lim inn i Figma/Illustrator)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy as SVG (paste into Figma/Illustrator)"
+          }
+        }
+      }
+    },
+    "Kopier til": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy to"
+          }
+        }
+      }
+    },
+    "Kopier verdier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy values"
+          }
+        }
+      }
+    },
+    "Kopiert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied"
+          }
+        }
+      }
+    },
+    "Krav": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requirement"
+          }
+        }
+      }
+    },
+    "Kromademping mot ytterpunktene": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chroma damping toward the extremes"
+          }
+        }
+      }
+    },
+    "Kunne ikke importere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't import"
+          }
+        }
+      }
+    },
+    "LCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LCH"
+          }
+        }
+      }
+    },
+    "Lag ${antall} toner fra ${fra} til ${til}": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make ${antall} tones from ${fra} to ${til}"
+          }
+        }
+      }
+    },
+    "Lag en palett først, så kan den vurderes her.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a palette first, then it can be critiqued here."
+          }
+        }
+      }
+    },
+    "Lag overgangstoner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make gradient tones"
+          }
+        }
+      }
+    },
+    "Lag palett fra verdiord": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create palette from value words"
+          }
+        }
+      }
+    },
+    "Lag palett med ${antall} farger fra ${verdiord}": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create palette with ${antall} colors from ${verdiord}"
+          }
+        }
+      }
+    },
+    "Lag toneskala": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create tone scale"
+          }
+        }
+      }
+    },
+    "Lager toner i like perseptuelle steg (OKLab) mellom to farger.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makes tones in equal perceptual steps (OKLab) between two colors."
+          }
+        }
+      }
+    },
+    "Laget med Apple Intelligence på enheten. Kontrasttallene er beregnet eksakt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made with Apple Intelligence on device. The contrast figures are calculated exactly."
+          }
+        }
+      }
+    },
+    "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made with Apple Intelligence on device. The text color is adjusted to at least WCAG AA against the background."
+          }
+        }
+      }
+    },
+    "Laget med innebygd leksikon.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made with the built-in lexicon."
+          }
+        }
+      }
+    },
+    "Laget «%@» med %lld farger.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Created “%@” with %lld color."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Created “%@” with %lld colors."
+                }
+              }
+            }
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Laget «%1$@» med %2$lld farger."
+          }
+        }
+      }
+    },
+    "Lagre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "Lagre %lld farger": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Save %lld color"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Save %lld colors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Lagre aktiv farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save active color"
+          }
+        }
+      }
+    },
+    "Lagre en farge uten palett fra Studio, Utplukk eller «Legg i palett».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save a color without a palette from Studio, Pick or “Add to palette”."
+          }
+        }
+      }
+    },
+    "Lagre farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save color"
+          }
+        }
+      }
+    },
+    "Lagre sist fangede farge som enkeltfarge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save the last captured color as a single color"
+          }
+        }
+      }
+    },
+    "Lagre som %lld enkeltfarger": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Save as %lld single color"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Save as %lld single colors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Lagre som enkeltfarge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save as single color"
+          }
+        }
+      }
+    },
+    "Lagre som enkeltfarge (uten palett)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save as single color (no palette)"
+          }
+        }
+      }
+    },
+    "Lagre som palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save as palette"
+          }
+        }
+      }
+    },
+    "Lagres uten palett, under «Enkeltfarger» i Paletter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved without a palette, under “Single colors” in Palettes."
+          }
+        }
+      }
+    },
+    "Laster bilde …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading image …"
+          }
+        }
+      }
+    },
+    "Legg alle i palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add all to palette"
+          }
+        }
+      }
+    },
+    "Legg harmonien i palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the harmony to a palette"
+          }
+        }
+      }
+    },
+    "Legg i palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to palette"
+          }
+        }
+      }
+    },
+    "Legg i palett …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to palette …"
+          }
+        }
+      }
+    },
+    "Legg raden i palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the row to a palette"
+          }
+        }
+      }
+    },
+    "Legg sist fangede farge i en palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the last captured color to a palette"
+          }
+        }
+      }
+    },
+    "Legg til": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        }
+      }
+    },
+    "Legg til aktiv farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add active color"
+          }
+        }
+      }
+    },
+    "Lim inn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste"
+          }
+        }
+      }
+    },
+    "Lim inn farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste colors"
+          }
+        }
+      }
+    },
+    "Lukk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "Lykt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torch"
+          }
+        }
+      }
+    },
+    "Lysere og mørkere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighter and darker"
+          }
+        }
+      }
+    },
+    "Lysere og mørkere %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighter and darker %@"
+          }
+        }
+      }
+    },
+    "Lysere og mørkere rader": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighter and darker rows"
+          }
+        }
+      }
+    },
+    "Lysere: %lld steg": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Lighter: %lld step"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Lighter: %lld steps"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Med lysere og mørkere rader": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With lighter and darker rows"
+          }
+        }
+      }
+    },
+    "Mer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        }
+      }
+    },
+    "Metning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saturation"
+          }
+        }
+      }
+    },
+    "Moderne nettlesere bruker `in oklab` og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modern browsers use `in oklab` and show exactly the same gradient as here. Older browsers get dense sRGB stops that mimic it."
+          }
+        }
+      }
+    },
+    "Modus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode"
+          }
+        }
+      }
+    },
+    "Mot hvitt/sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toward white/black"
+          }
+        }
+      }
+    },
+    "Mørkere: %lld steg": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Darker: %lld step"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Darker: %lld steps"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Navn på paletten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palette name"
+          }
+        }
+      }
+    },
+    "Navn, f.eks. «Fjordblå»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name, e.g. “Fjord Blue”"
+          }
+        }
+      }
+    },
+    "Ny palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New palette"
+          }
+        }
+      }
+    },
+    "Ny palett fra verdiord (KI)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New palette from value words (AI)"
+          }
+        }
+      }
+    },
+    "Ny tom palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New empty palette"
+          }
+        }
+      }
+    },
+    "Nytt bilde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New image"
+          }
+        }
+      }
+    },
+    "Nytt forslag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New suggestion"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OKLCH"
+          }
+        }
+      }
+    },
+    "OKLab": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OKLab"
+          }
+        }
+      }
+    },
+    "Opprett og legg til": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create and add"
+          }
+        }
+      }
+    },
+    "Oppsummering": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Summary"
+          }
+        }
+      }
+    },
+    "Overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gradient"
+          }
+        }
+      }
+    },
+    "Overgang %@ → %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gradient %@ → %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Overgang %1$@ → %2$@"
+          }
+        }
+      }
+    },
+    "Overgang i OKLab – %lld toner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gradient in OKLab – %lld tones"
+          }
+        }
+      }
+    },
+    "Overgangstoner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gradient tones"
+          }
+        }
+      }
+    },
+    "P3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "P3"
+          }
+        }
+      }
+    },
+    "Palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palette"
+          }
+        }
+      }
+    },
+    "Palett fra verdiord": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palette from value words"
+          }
+        }
+      }
+    },
+    "Paletter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palettes"
+          }
+        }
+      }
+    },
+    "Paletter og enkeltfarger lagres bare på denne enheten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palettes and single colors are stored only on this device."
+          }
+        }
+      }
+    },
+    "Paletter og enkeltfarger synkroniseres via iCloud.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palettes and single colors sync via iCloud."
+          }
+        }
+      }
+    },
+    "Perseptuell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perceptual"
+          }
+        }
+      }
+    },
+    "Plukk farger fra et bilde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick colors from an image"
+          }
+        }
+      }
+    },
+    "Profil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
+          }
+        }
+      }
+    },
+    "På, %lld prosent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On, %lld percent"
+          }
+        }
+      }
+    },
+    "RGB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RGB"
+          }
+        }
+      }
+    },
+    "Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The framed row is the gradient itself. Rows above are lighter, rows below darker."
+          }
+        }
+      }
+    },
+    "Regelbasert vurdering.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rule-based critique."
+          }
+        }
+      }
+    },
+    "Regner om en farge til en annen fargemodell, f.eks. fra hex til OKLCH eller CMYK.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Converts a color to another color model, e.g. from hex to OKLCH or CMYK."
+          }
+        }
+      }
+    },
+    "Relativ kolorimetrisk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relative colorimetric"
+          }
+        }
+      }
+    },
+    "Retning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direction"
+          }
+        }
+      }
+    },
+    "Rett opp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fix"
+          }
+        }
+      }
+    },
+    "Sammenlign": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compare"
+          }
+        }
+      }
+    },
+    "Send": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send"
+          }
+        }
+      }
+    },
+    "Siste målinger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent measurements"
+          }
+        }
+      }
+    },
+    "Sjekk kontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check contrast"
+          }
+        }
+      }
+    },
+    "Sjekk kontrasten til ${forgrunn} på ${bakgrunn}": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check the contrast of ${forgrunn} on ${bakgrunn}"
+          }
+        }
+      }
+    },
+    "Slett palett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete palette"
+          }
+        }
+      }
+    },
+    "Slette «%@»?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete “%@”?"
+          }
+        }
+      }
+    },
+    "Slipp farger her": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop colors here"
+          }
+        }
+      }
+    },
+    "Slukk etter fangst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off after capture"
+          }
+        }
+      }
+    },
+    "Slå av": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off"
+          }
+        }
+      }
+    },
+    "Sort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard"
+          }
+        }
+      }
+    },
+    "Start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "Steg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step"
+          }
+        }
+      }
+    },
+    "Stegtype": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step type"
+          }
+        }
+      }
+    },
+    "Stopp": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        }
+      }
+    },
+    "Stor tekst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large text"
+          }
+        }
+      }
+    },
+    "Studio": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Studio"
+          }
+        }
+      }
+    },
+    "Styrker": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strengths"
+          }
+        }
+      }
+    },
+    "Svakheter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weaknesses"
+          }
+        }
+      }
+    },
+    "Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The numbers under each swatch are OKLCH lightness in percent. Tap a tone to make it the active color."
+          }
+        }
+      }
+    },
+    "Tekst og grafikk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text and graphics"
+          }
+        }
+      }
+    },
+    "Tekst ↓ / bakgrunn →": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text ↓ / background →"
+          }
+        }
+      }
+    },
+    "Tekstfarge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text color"
+          }
+        }
+      }
+    },
+    "Tenker på farger …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thinking about colors …"
+          }
+        }
+      }
+    },
+    "Tester to farger mot WCAG 2.2-kravene til kontrast for tekst og grafikk.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tests two colors against the WCAG 2.2 contrast requirements for text and graphics."
+          }
+        }
+      }
+    },
+    "Til": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To"
+          }
+        }
+      }
+    },
+    "Til farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To color"
+          }
+        }
+      }
+    },
+    "Til modell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To model"
+          }
+        }
+      }
+    },
+    "Tilbakestill zoom": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset zoom"
+          }
+        }
+      }
+    },
+    "Tilpass til sRGB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fit to sRGB"
+          }
+        }
+      }
+    },
+    "Toner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tones"
+          }
+        }
+      }
+    },
+    "Toner: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tones: %lld"
+          }
+        }
+      }
+    },
+    "Toneskala": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tone scale"
+          }
+        }
+      }
+    },
+    "Trinn: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steps: %lld"
+          }
+        }
+      }
+    },
+    "Trinnvis (harde overganger, %lld bånd)": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Stepped (hard edges, %lld band)"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Stepped (hard edges, %lld bands)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Uten navn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Untitled"
+          }
+        }
+      }
+    },
+    "Utenfor": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside"
+          }
+        }
+      }
+    },
+    "Utenfor %lld av %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside %lld of %lld"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Utenfor %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Utenfor P3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside P3"
+          }
+        }
+      }
+    },
+    "Utenfor profilens gamut (ΔE OK %@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside the profile's gamut (ΔE OK %@)"
+          }
+        }
+      }
+    },
+    "Utenfor sRGB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside sRGB"
+          }
+        }
+      }
+    },
+    "Utplukk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick"
+          }
+        }
+      }
+    },
+    "Velg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose"
+          }
+        }
+      }
+    },
+    "Velg et foto eller skjermbilde. Fargene leses med bildets egen fargeprofil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a photo or screenshot. Colors are read using the image's own color profile."
+          }
+        }
+      }
+    },
+    "Velg farge – %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose color – %@"
+          }
+        }
+      }
+    },
+    "Velg fargerommet som vises ved siden av Display P3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the color space shown next to Display P3"
+          }
+        }
+      }
+    },
+    "Velg fil …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose file …"
+          }
+        }
+      }
+    },
+    "Velg fra Bilder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose from Photos"
+          }
+        }
+      }
+    },
+    "Verdier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Values"
+          }
+        }
+      }
+    },
+    "Verdier for denne profiltypen hentes fra aktiv farge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Values for this profile type are taken from the active color."
+          }
+        }
+      }
+    },
+    "Verdiord": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value words"
+          }
+        }
+      }
+    },
+    "Vinkel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Angle"
+          }
+        }
+      }
+    },
+    "Vis også:": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also show:"
+          }
+        }
+      }
+    },
+    "Vurder paletten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Critique the palette"
+          }
+        }
+      }
+    },
+    "Vurdering": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assess"
+          }
+        }
+      }
+    },
+    "Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Kontrasttallene er beregnet eksakt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. The contrast figures are calculated exactly."
+          }
+        }
+      }
+    },
+    "«%@» er ikke en gyldig ICC-profil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is not a valid ICC profile."
+          }
+        }
+      }
+    },
+    "«%@» er ikke en gyldig farge. Bruk hex eller CSS, f.eks. #2F7FD8 eller oklch(0.6 0.15 250).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is not a valid color. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
+          }
+        }
+      }
+    },
+    "±%lld %%-poeng": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "±%lld %%-points"
+          }
+        }
+      }
+    },
+    "ΔE00 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE00 %@"
+          }
+        }
+      }
+    },
+    "ΔE00 %@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE00 %@ · %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "ΔE00 %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "ΔE00 måler avviket fra kildefargen. Hensiktene skiller seg bare når profilene har egne tabeller for dem, typisk CMYK-profiler fra trykkerier; rene matriseprofiler som sRGB og Display P3 gir samme svar for alle.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE00 measures the deviation from the source color. The intents only differ when the profiles have their own tables for them, typically CMYK profiles from print shops; pure matrix profiles like sRGB and Display P3 give the same result for all."
+          }
+        }
+      }
+    },
+    "⚠︎ Utenfor gamut · ΔE00 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚠︎ Out of gamut · ΔE00 %@"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

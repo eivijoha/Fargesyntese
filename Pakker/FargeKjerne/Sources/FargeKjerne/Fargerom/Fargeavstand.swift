@@ -65,11 +65,11 @@ public enum Fargeavstand {
     /// Vanlig tolkning av ΔE00 for et menneskelig øye under gode forhold.
     public static func tolkning(_ deltaE: Double) -> String {
         switch deltaE {
-        case ..<1: "Ikke merkbar"
-        case ..<2: "Merkbar ved nøye sammenligning"
-        case ..<3.5: "Merkbar"
-        case ..<5: "Tydelig forskjell"
-        default: "Ulike farger"
+        case ..<1: String(localized: "Ikke merkbar", bundle: .module)
+        case ..<2: String(localized: "Merkbar ved nøye sammenligning", bundle: .module)
+        case ..<3.5: String(localized: "Merkbar", bundle: .module)
+        case ..<5: String(localized: "Tydelig forskjell", bundle: .module)
+        default: String(localized: "Ulike farger", bundle: .module)
         }
     }
 }

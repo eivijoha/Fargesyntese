@@ -59,17 +59,17 @@ struct LagretFargeArk: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    gruppe("Aktiv farge", [PalettFarge(farge: arbeidsbenk.aktivFarge)])
+                    gruppe(String(localized: "Aktiv farge"), [PalettFarge(farge: arbeidsbenk.aktivFarge)])
                     if !enkeltfarger.isEmpty {
-                        gruppe("Enkeltfarger", enkeltfarger.map(\.palettFarge), symbol: "bookmark.fill")
+                        gruppe(String(localized: "Enkeltfarger"), enkeltfarger.map(\.palettFarge), symbol: "bookmark.fill")
                     }
                     ForEach(paletter) { p in
                         if !p.farger.isEmpty {
-                            gruppe(p.navn.isEmpty ? "Uten navn" : p.navn, p.farger, symbol: "swatchpalette")
+                            gruppe(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn, p.farger, symbol: "swatchpalette")
                         }
                     }
                     if !arbeidsbenk.målinger.isEmpty {
-                        gruppe("Siste målinger", arbeidsbenk.målinger.reversed().map { PalettFarge(farge: $0) },
+                        gruppe(String(localized: "Siste målinger"), arbeidsbenk.målinger.reversed().map { PalettFarge(farge: $0) },
                                symbol: "eyedropper")
                     }
                     if enkeltfarger.isEmpty && paletter.allSatisfy({ $0.farger.isEmpty }) {
@@ -80,7 +80,7 @@ struct LagretFargeArk: View {
                 }
                 .padding()
             }
-            .navigationTitle("Velg farge – \(tittel)")
+            .navigationTitle(String(localized: "Velg farge – \(tittel)"))
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif

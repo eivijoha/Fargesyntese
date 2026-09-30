@@ -29,15 +29,15 @@ public enum Eksportformat: String, CaseIterable, Codable, Sendable, Identifiable
     public var navn: String {
         switch self {
         case .ase: "Adobe Swatch Exchange (.ase)"
-        case .aco: "Photoshop-fargeprøver (.aco)"
-        case .figmaVariabler: "Figma-variabler (.json)"
+        case .aco: String(localized: "Photoshop-fargeprøver (.aco)", bundle: .module)
+        case .figmaVariabler: String(localized: "Figma-variabler (.json)", bundle: .module)
         case .tokensStudio: "Tokens Studio for Figma (.json)"
-        case .svg: "SVG-fargeprøver (.svg)"
-        case .css: "CSS-variabler (.css)"
+        case .svg: String(localized: "SVG-fargeprøver (.svg)", bundle: .module)
+        case .css: String(localized: "CSS-variabler (.css)", bundle: .module)
         case .designTokens: "Design Tokens (.tokens.json)"
-        case .gpl: "GIMP-palett (.gpl)"
+        case .gpl: String(localized: "GIMP-palett (.gpl)", bundle: .module)
         case .swiftUI: "SwiftUI (.swift)"
-        case .hexListe: "Hex-liste (.txt)"
+        case .hexListe: String(localized: "Hex-liste (.txt)", bundle: .module)
         }
     }
 

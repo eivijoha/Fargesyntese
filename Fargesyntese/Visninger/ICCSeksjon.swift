@@ -157,10 +157,10 @@ private struct ProfilGlidere: View {
 extension Gjengivelseshensikt {
     var visningsnavn: String {
         switch self {
-        case .perseptuell: "Perseptuell"
-        case .relativKolorimetrisk: "Relativ kolorimetrisk"
-        case .metning: "Metning"
-        case .absoluttKolorimetrisk: "Absolutt kolorimetrisk"
+        case .perseptuell: String(localized: "Perseptuell")
+        case .relativKolorimetrisk: String(localized: "Relativ kolorimetrisk")
+        case .metning: String(localized: "Metning")
+        case .absoluttKolorimetrisk: String(localized: "Absolutt kolorimetrisk")
         }
     }
 }

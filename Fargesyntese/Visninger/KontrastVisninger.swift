@@ -12,7 +12,7 @@ struct KontrastSeksjon: View {
         let test = Kontrasttest(forgrunn: forgrunn, bakgrunn: bakgrunn)
         Section {
             // Lagres som CSS-tekst i Display P3, så P3-bakgrunner ikke rundes av til sRGB-hex.
-            FargeValgRad(tittel: "Bakgrunn", farge: Binding(
+            FargeValgRad(tittel: String(localized: "Bakgrunn"), farge: Binding(
                 get: { bakgrunn },
                 set: { bakgrunnHex = $0.erISRGB ? $0.hex() : Fargemodell.displayP3.tekst(for: $0) }
             ))

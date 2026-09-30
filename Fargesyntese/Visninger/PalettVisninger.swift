@@ -68,7 +68,7 @@ struct PalettListe: View {
             .toolbar {
                 Menu("Ny palett", systemImage: "plus") {
                     Button("Ny tom palett", systemImage: "square.dashed") {
-                        let p = PalettDokument(navn: "Ny palett")
+                        let p = PalettDokument(navn: String(localized: "Ny palett"))
                         kontekst.insert(p)
                         velg(.palett(p))
                     }
@@ -287,7 +287,7 @@ struct PalettRad: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(dokument.navn.isEmpty ? "Uten navn" : dokument.navn).font(.headline)
+                Text(dokument.navn.isEmpty ? String(localized: "Uten navn") : dokument.navn).font(.headline)
                 Spacer()
                 Text("\(dokument.farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
@@ -457,9 +457,9 @@ struct VurderingArk: View {
         NavigationStack {
             List {
                 Section { Text(vurdering.oppsummering) }
-                punktliste("Styrker", vurdering.styrker, symbol: "plus.circle.fill", farge: .green)
-                punktliste("Svakheter", vurdering.svakheter, symbol: "exclamationmark.triangle.fill", farge: .orange)
-                punktliste("Forslag", vurdering.forslag, symbol: "arrow.right.circle.fill", farge: .blue)
+                punktliste(String(localized: "Styrker"), vurdering.styrker, symbol: "plus.circle.fill", farge: .green)
+                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "exclamationmark.triangle.fill", farge: .orange)
+                punktliste(String(localized: "Forslag"), vurdering.forslag, symbol: "arrow.right.circle.fill", farge: .blue)
                 Section {
                     DisclosureGroup("Fakta vurderingen bygger på") {
                         ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
@@ -544,7 +544,7 @@ struct VelgPalettArk: View {
                                 lukk()
                             } label: {
                                 HStack {
-                                    Text(p.navn.isEmpty ? "Uten navn" : p.navn).foregroundStyle(.primary)
+                                    Text(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn).foregroundStyle(.primary)
                                     Spacer()
                                     Text("\(p.farger.count)").foregroundStyle(.secondary).monospacedDigit()
                                     PalettStripe(farger: p.farger.map(\.farge)).frame(width: 90, height: 20)
@@ -628,12 +628,12 @@ struct FlyttMeny: View {
         let andre = paletter.filter { $0.id != fra?.id }
         if !andre.isEmpty {
             Menu(fra == nil ? "Legg i palett" : "Kopier til", systemImage: fra == nil ? "plus.square.on.square" : "doc.on.doc") {
-                ForEach(andre) { p in Button(p.navn.isEmpty ? "Uten navn" : p.navn) { leggTil([farge], i: p) } }
+                ForEach(andre) { p in Button(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn) { leggTil([farge], i: p) } }
             }
             if let fra {
                 Menu("Flytt til", systemImage: "arrow.right.square") {
                     ForEach(andre) { p in
-                        Button(p.navn.isEmpty ? "Uten navn" : p.navn) {
+                        Button(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn) {
                             if leggTil([farge], i: p) { fra.farger.removeAll { $0.id == farge.id } }
                         }
                     }

@@ -23,9 +23,9 @@ struct FargeEditor: View {
         var id: String { rawValue }
         var navn: String {
             switch self {
-            case .farge: "Farge"
-            case .toner: "Toner"
-            case .harmoni: "Harmoni"
+            case .farge: String(localized: "Farge")
+            case .toner: String(localized: "Toner")
+            case .harmoni: String(localized: "Harmoni")
             }
         }
         var symbol: String {
@@ -171,7 +171,7 @@ extension FargeEditor {
             }
             LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
             Button("Legg raden i palett", systemImage: "plus.square.on.square") {
-                lagreNavn = "Lysere og mørkere \(farge.hex())"
+                lagreNavn = String(localized: "Lysere og mørkere \(farge.hex())")
                 lagreFarger = varianter.map { PalettFarge(farge: $0, opphav: .toneskala) }
             }
         } header: {
@@ -291,7 +291,7 @@ struct LyshetstrinnKontroller: View {
 
     private var stegtekst: String {
         let v = Int((trinn.lysereSteg * 100).rounded())
-        return trinn.modus == .fast ? "±\(v) %-poeng" : "\(v) % mot hvitt/sort"
+        return trinn.modus == .fast ? String(localized: "±\(v) %-poeng") : String(localized: "\(v) % mot hvitt/sort")
     }
 
     var body: some View {
@@ -350,10 +350,10 @@ struct Fargeflate: View {
     var body: some View {
         let høyre = motpart
         HStack(spacing: 0) {
-            halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : "Utenfor P3", tekst: farge.p3Hex())
+            halvdel(farge, tittel: farge.erIDisplayP3 ? "Display P3" : String(localized: "Utenfor P3"), tekst: farge.p3Hex())
             halvdel(høyre.farge, tittel: profil.navn, tekst: høyre.tekst,
                     merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
-                        : "⚠︎ Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))")
+                        : String(localized: "⚠︎ Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
     }
@@ -390,7 +390,7 @@ struct VisOgsåMeny: View {
         if farge.erInnenfor(p) {
             Text(p.navn).tag(p.id)
         } else {
-            Label("\(p.navn) – utenfor gamut", systemImage: "exclamationmark.triangle").tag(p.id)
+            Label(String(localized: "\(p.navn) – utenfor gamut"), systemImage: "exclamationmark.triangle").tag(p.id)
         }
     }
 

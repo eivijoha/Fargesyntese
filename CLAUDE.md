@@ -24,6 +24,18 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
 - Matriser følger CSS Color 4; inverser utledes med `Matrise3.invertert` i stedet for å hardkodes.
 - App-target bruker `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`; bakgrunnskode merkes `nonisolated`.
 
+## Lokalisering (nb = kildespråk, en)
+
+- Strengkataloger: `Fargesyntese/Localizable.xcstrings`, `AppShortcuts.xcstrings` (Siri-fraser), `InfoPlist.xcstrings`,
+  og `Localizable.xcstrings` i hvert pakkemål (`FargeKjerne`, `FargeKI`, deklarert som `resources`).
+- `Text("…")`-literaler lokaliseres automatisk. Tekst som går via `String` må pakkes i `String(localized:)`
+  (i pakken: `String(localized: "…", bundle: .module)`).
+- Nye strenger: bygg, og kjør `xcrun xcstringstool sync <katalog> --stringsdata …` med `.stringsdata` fra byggets
+  `Objects-normal` (Xcode-IDE-et gjør dette automatisk ved bygg). Legg så inn engelsk.
+- KI svarer på appens språk (`Språk.svarinstruks` i FargeKI).
+- Mappen ligger i Jottacloud: raske skrivinger kan gi «conflicted copy»-filer som blir med i bygget. Se etter dem
+  (`find . -iname "*conflicted*"`) før commit.
+
 ## Bygg og test
 
 ```bash

@@ -39,7 +39,7 @@ struct LyshetstrinnTests {
 struct WCAGTests {
     @Test func krav() {
         let grå = Kontrasttest(forgrunn: Farge(hex: "#767676")!, bakgrunn: Farge(hex: "#FFFFFF")!)
-        #expect(grå.formatert == "4,54:1")
+        #expect(grå.formatert(locale: Locale(identifier: "nb_NO")) == "4,54:1")
         #expect(grå.består(.aaTekst) && !grå.består(.aaaTekst) && grå.består(.aaGrafikk))
         #expect(grå.sammendrag == "AA")
         // #777777 er det klassiske eksempelet som akkurat ikke består (4,48:1).

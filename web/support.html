@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Støtte – Fargesyntese</title>
+  <meta name="description" content="Hjelp og ofte stilte spørsmål om Fargesyntese: fargerom, Display P3 og sRGB, ICC-profiler, iCloud-synkronisering, Apple Intelligence, kamera og eksport.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/stil.css">
+  <link rel="alternate" hreflang="nb" href="support.html">
+  <link rel="alternate" hreflang="en" href="en/support.html">
+  <link rel="alternate" hreflang="x-default" href="support.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Hopp til hovedinnhold</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="assets/ikon.svg" alt="" width="32" height="32">
+        Fargesyntese
+      </a>
+      <nav class="hovednav" aria-label="Hovedmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html" aria-current="page">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Språk">
+        <span aria-current="true" lang="nb">Norsk</span>
+        <a href="en/support.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold lesetekst" tabindex="-1">
+    <h1>Støtte</h1>
+    <p class="ingress">Svar på vanlige spørsmål om Fargesyntese – og hvordan du tar kontakt hvis du ikke finner det du leter etter.</p>
+
+    <section class="boks" aria-labelledby="kontakt">
+      <h2 id="kontakt">Kontakt</h2>
+      <p>Send e-post til
+        <!-- TODO: kontakt-e-post – erstatt plassholderen med en mailto-lenke, f.eks.
+             <a href="mailto:navn@example.com">navn@example.com</a> -->
+        <span class="plassholder">[kontakt-e-post]</span>.
+        Vi svarer så snart vi kan.
+      </p>
+      <p>Det hjelper om du tar med:</p>
+      <ul>
+        <li>enhet (iPhone, iPad eller Mac) og versjon av iOS, iPadOS eller macOS</li>
+        <li>versjonen av Fargesyntese</li>
+        <li>hva du gjorde, hva du forventet og hva som skjedde</li>
+        <li>gjerne et skjermbilde eller fargeverdiene det gjelder</li>
+      </ul>
+      <p class="dempet">Fargesyntese er laget av Engenett.</p>
+    </section>
+
+    <section class="faq" aria-labelledby="faq">
+      <h2 id="faq">Ofte stilte spørsmål</h2>
+
+      <details>
+        <summary>Hvilke fargerom og fargemodeller støtter appen?</summary>
+        <div class="svar">
+          <p>Du kan redigere farger i OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB og CMYK. RGB-farger kan ligge i Display P3, altså utenfor sRGB. I tillegg kan du vise og redigere verdiene i en hvilken som helst ICC-profil – innebygd eller importert.</p>
+          <p>CIELab og CIE LCH bruker hvitpunkt D50, slik som ICC-profiler, Photoshop og CSS <code>lab()</code>, så verdiene stemmer med designverktøyene dine.</p>
+          <p>Feltet for fargeverdi forstår også CSS-tekst: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> og CSS-fargenavn.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hva er forskjellen på Display P3 og sRGB?</summary>
+        <div class="svar">
+          <p>Display P3 er et bredere fargeområde enn sRGB. Skjermene på nyere iPhone, iPad og Mac kan vise P3, og spesielt mettede røde, oransje og grønne farger kan ligge utenfor det sRGB rommer. Mye på nettet, i eldre programvare og i en del arbeidsflyter er fortsatt sRGB.</p>
+          <p>Fargesyntese viser fargen i Display P3 side om side med et annet fargerom – sRGB, Adobe RGB, CMYK eller en installert ICC-profil – og varsler når fargen er utenfor det fargerommet. Når en farge må inn i et mindre fargerom, reduseres metningen (kroma) mens lysheten og kuløren bevares, i stedet for at verdiene klippes. Du kan også velge å begrense nye farger til en bestemt profil.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan importerer jeg en ICC-profil?</summary>
+        <div class="svar">
+          <p>Bruk <strong>Importer profil …</strong> i profildelen av appen og velg en <code>.icc</code>- eller <code>.icm</code>-fil. Navnet på profilen leses fra selve filen.</p>
+          <p>Er du logget på iCloud med iCloud Drive slått på, lagres importerte profiler i <code>iCloud Drive › Fargesyntese › Profiler</code>. Mappen er synlig i Filer (iPhone og iPad) og Finder (Mac), og profilene blir tilgjengelige på de andre enhetene dine. Du kan også legge <code>.icc</code>-filer direkte i den mappen. Uten iCloud Drive lagres profilene bare på enheten.</p>
+          <p>Når du konverterer mellom profiler, velger du gjengivelseshensikt (perseptuell, relativ kolorimetrisk, metning eller absolutt kolorimetrisk), og du kan sammenligne resultatet av alle fire.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan fungerer synkronisering med iCloud?</summary>
+        <div class="svar">
+          <p>Paletter og lagrede farger synkroniseres via din private iCloud-database når du er logget på iCloud med samme Apple-konto på alle enhetene. Bare du har tilgang til disse dataene – de ligger ikke hos utvikleren.</p>
+          <p>Hvis noe ikke dukker opp på en annen enhet:</p>
+          <ul>
+            <li>Sjekk at du er logget på iCloud med samme Apple-konto på begge enhetene.</li>
+            <li>Sjekk at iCloud er slått på for Fargesyntese i iCloud-innstillingene, og at iCloud Drive er på (for ICC-profiler).</li>
+            <li>Gi det litt tid og en nettforbindelse – synkronisering skjer i bakgrunnen og kan ta noen minutter.</li>
+          </ul>
+          <p>Uten iCloud fungerer appen som vanlig, men dataene lagres bare på enheten.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvorfor er KI-funksjonene utilgjengelige eller enklere enn forventet?</summary>
+        <div class="svar">
+          <p>KI-funksjonene bruker Apple Intelligence og språkmodellen som kjøres på enheten. De krever</p>
+          <ul>
+            <li>en iPhone, iPad eller Mac som støtter Apple Intelligence,</li>
+            <li>at Apple Intelligence er slått på i Innstillinger (Systeminnstillinger på Mac),</li>
+            <li>at modellen er ferdig lastet ned, og</li>
+            <li>at Apple Intelligence er tilgjengelig for språket og regionen du bruker.</li>
+          </ul>
+          <p>Når Apple Intelligence ikke er tilgjengelig, faller appen automatisk tilbake til et innebygd leksikon som oversetter verdiord (som «rolig», «varm» eller «eksklusiv») til paletter. Det fungerer uten nett, men er mindre fleksibelt enn språkmodellen – for eksempel kan fritekstjusteringer, navngiving og vurdering av paletter være begrenset eller utilgjengelig.</p>
+          <p>I begge tilfeller skjer alt på enheten. Teksten du skriver, sendes ikke til utvikleren.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Appen får ikke bruke kameraet. Hva gjør jeg?</summary>
+        <div class="svar">
+          <p>Første gang du åpner kameraet, spør systemet om tillatelse. Har du sagt nei, kan du endre det slik:</p>
+          <ul>
+            <li><strong>iPhone og iPad:</strong> Innstillinger › Personvern og sikkerhet › Kamera › slå på Fargesyntese.</li>
+            <li><strong>Mac:</strong> Systeminnstillinger › Personvern og sikkerhet › Kamera › slå på Fargesyntese.</li>
+          </ul>
+          <p>Kameraet brukes bare direkte på enheten for å plukke farger. Ingen bilder lagres eller sendes.</p>
+          <p>Du kan også plukke farger fra bilder du velger selv, uten kameratilgang.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Kan jeg plukke farger fra andre apper?</summary>
+        <div class="svar">
+          <p><strong>På Mac:</strong> Ja, skjermpipetten plukker farger fra hele skjermen.</p>
+          <p><strong>På iPhone og iPad:</strong> Systemet tillater ikke at apper leser skjermen utenfor seg selv. Ta et skjermbilde og plukk fargen fra bildet i Fargesyntese i stedet.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan får jeg fargene inn i Adobe-programmer?</summary>
+        <div class="svar">
+          <ul>
+            <li><strong>Adobe ASE</strong> (Adobe Swatch Exchange) kan importeres som fargeprøver i blant annet Photoshop, Illustrator og InDesign.</li>
+            <li><strong>Photoshop ACO</strong> er Photoshops eget format for fargeprøver, med fargenavn. Farger utenfor sRGB lagres som Lab, slik at de ikke klippes.</li>
+          </ul>
+          <p>Eksporter fra paletten, lagre filen i Filer eller Finder, og åpne den fra fargeprøve-panelet (Swatches) i Adobe-programmet.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan får jeg fargene inn i Figma?</summary>
+        <div class="svar">
+          <ul>
+            <li><strong>Figma-variabler:</strong> Eksporter som DTCG-JSON og bruk importfunksjonen for variabler i Figma.</li>
+            <li><strong>Tokens Studio:</strong> Eksporter i Tokens Studio-formatet og last det inn i utvidelsen.</li>
+            <li><strong>SVG-fargeprøver:</strong> Kopier og lim inn i Figma – fargene blir fylte former.</li>
+          </ul>
+          <p>Andre formater: CSS, W3C Design Tokens, GIMP GPL, SwiftUI og hex-liste.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan bruker jeg Siri og Snarveier?</summary>
+        <div class="svar">
+          <p>Fargesyntese har handlinger i Snarveier-appen: <em>lag palett fra verdiord</em>, <em>lag overgang</em>, <em>konverter farge</em> og <em>sjekk kontrast</em>. Du kan bruke dem i egne snarveier eller be Siri om dem, for eksempel «Lag en palett i Fargesyntese».</p>
+        </div>
+      </details>
+    </section>
+
+    <p>Se også <a href="privacy.html">personvernerklæringen</a> og <a href="terms.html">vilkårene for bruk</a>.</p>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Bunnmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+          <li><a href="en/support.html" hreflang="en" lang="en">English</a></li>
+        </ul>
+      </nav>
+      <p>© 2026 Engenett. Apple, iPhone, iPad, Mac, iCloud, Siri og Apple Intelligence er varemerker for Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

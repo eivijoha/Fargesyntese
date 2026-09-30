@@ -10,9 +10,9 @@ struct VurderingVisning: View {
         var id: String { rawValue }
         var navn: String {
             switch self {
-            case .kontrast: "Kontrast"
-            case .sammenlign: "Sammenlign"
-            case .palett: "Palett"
+            case .kontrast: String(localized: "Kontrast")
+            case .sammenlign: String(localized: "Sammenlign")
+            case .palett: String(localized: "Palett")
             }
         }
     }
@@ -55,7 +55,7 @@ private struct KontrastVurdering: View {
         @Bindable var arbeidsbenk = arbeidsbenk
         Form {
             Section {
-                FargeValgRad(tittel: "Tekst og grafikk", farge: $arbeidsbenk.aktivFarge)
+                FargeValgRad(tittel: String(localized: "Tekst og grafikk"), farge: $arbeidsbenk.aktivFarge)
             }
             KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
         }
@@ -109,9 +109,9 @@ private struct PalettVurderingDel: View {
                 }
                 if let vurdering {
                     Section("Oppsummering") { Text(vurdering.oppsummering) }
-                    punkter("Styrker", vurdering.styrker, "plus.circle.fill", .green)
-                    punkter("Svakheter", vurdering.svakheter, "exclamationmark.triangle.fill", .orange)
-                    punkter("Forslag", vurdering.forslag, "arrow.right.circle.fill", .blue)
+                    punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", .green)
+                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "exclamationmark.triangle.fill", .orange)
+                    punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", .blue)
                     Section {
                         DisclosureGroup("Fakta vurderingen bygger på") {
                             ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }

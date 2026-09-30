@@ -54,8 +54,8 @@ struct SammenligningVisning: View {
                 .accessibilityElement(children: .combine)
             }
 
-            Section { FargeValgRad(tittel: "Farge A", farge: $a) }
-            Section { FargeValgRad(tittel: "Farge B", farge: $b) }
+            Section { FargeValgRad(tittel: String(localized: "Farge A"), farge: $a) }
+            Section { FargeValgRad(tittel: String(localized: "Farge B"), farge: $b) }
 
             Section {
                 let la = a.cieLab, lb = b.cieLab, ca = a.cieLCH, cb = b.cieLCH

@@ -8,7 +8,13 @@ public struct CSSGradient: Hashable, Sendable {
     public enum Form: String, CaseIterable, Sendable, Identifiable {
         case lineær, radiell, konisk
         public var id: String { rawValue }
-        public var navn: String { rawValue.capitalized }
+        public var navn: String {
+            switch self {
+            case .lineær: String(localized: "Lineær", bundle: .module)
+            case .radiell: String(localized: "Radiell", bundle: .module)
+            case .konisk: String(localized: "Konisk", bundle: .module)
+            }
+        }
     }
 
     public var farger: [Farge]

@@ -39,14 +39,14 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
             Komponent(navn: n, kortnavn: kn, område: o, desimaler: d, erKulør: kulør)
         }
         switch self {
-        case .okLCH: return [k("Lyshet", "L", 0...1, 3), k("Kroma", "C", 0...0.4, 3), k("Kulør", "H", 0...360, 1, kulør: true)]
-        case .okLab: return [k("Lyshet", "L", 0...1, 3), k("Grønn–rød", "a", -0.4...0.4, 3), k("Blå–gul", "b", -0.4...0.4, 3)]
-        case .cieLCH: return [k("Lyshet", "L", 0...100, 1), k("Kroma", "C", 0...150, 1), k("Kulør", "H", 0...360, 1, kulør: true)]
-        case .cieLab: return [k("Lyshet", "L", 0...100, 1), k("Grønn–rød", "a", -128...127, 1), k("Blå–gul", "b", -128...127, 1)]
-        case .hsb: return [k("Kulør", "H", 0...360, 0, kulør: true), k("Metning", "S", 0...1, 3), k("Lysstyrke", "B", 0...1, 3)]
-        case .hsl: return [k("Kulør", "H", 0...360, 0, kulør: true), k("Metning", "S", 0...1, 3), k("Lyshet", "L", 0...1, 3)]
-        case .rgb, .displayP3: return [k("Rød", "R", 0...1, 3), k("Grønn", "G", 0...1, 3), k("Blå", "B", 0...1, 3)]
-        case .cmyk: return [k("Cyan", "C", 0...1, 3), k("Magenta", "M", 0...1, 3), k("Gul", "Y", 0...1, 3), k("Sort", "K", 0...1, 3)]
+        case .okLCH: return [k(String(localized: "Lyshet", bundle: .module), "L", 0...1, 3), k(String(localized: "Kroma", bundle: .module), "C", 0...0.4, 3), k(String(localized: "Kulør", bundle: .module), "H", 0...360, 1, kulør: true)]
+        case .okLab: return [k(String(localized: "Lyshet", bundle: .module), "L", 0...1, 3), k(String(localized: "Grønn–rød", bundle: .module), "a", -0.4...0.4, 3), k(String(localized: "Blå–gul", bundle: .module), "b", -0.4...0.4, 3)]
+        case .cieLCH: return [k(String(localized: "Lyshet", bundle: .module), "L", 0...100, 1), k(String(localized: "Kroma", bundle: .module), "C", 0...150, 1), k(String(localized: "Kulør", bundle: .module), "H", 0...360, 1, kulør: true)]
+        case .cieLab: return [k(String(localized: "Lyshet", bundle: .module), "L", 0...100, 1), k(String(localized: "Grønn–rød", bundle: .module), "a", -128...127, 1), k(String(localized: "Blå–gul", bundle: .module), "b", -128...127, 1)]
+        case .hsb: return [k(String(localized: "Kulør", bundle: .module), "H", 0...360, 0, kulør: true), k(String(localized: "Metning", bundle: .module), "S", 0...1, 3), k(String(localized: "Lysstyrke", bundle: .module), "B", 0...1, 3)]
+        case .hsl: return [k(String(localized: "Kulør", bundle: .module), "H", 0...360, 0, kulør: true), k(String(localized: "Metning", bundle: .module), "S", 0...1, 3), k(String(localized: "Lyshet", bundle: .module), "L", 0...1, 3)]
+        case .rgb, .displayP3: return [k(String(localized: "Rød", bundle: .module), "R", 0...1, 3), k(String(localized: "Grønn", bundle: .module), "G", 0...1, 3), k(String(localized: "Blå", bundle: .module), "B", 0...1, 3)]
+        case .cmyk: return [k("Cyan", "C", 0...1, 3), k("Magenta", "M", 0...1, 3), k(String(localized: "Gul", bundle: .module), "Y", 0...1, 3), k(String(localized: "Sort", bundle: .module), "K", 0...1, 3)]
         }
     }
 

@@ -42,8 +42,8 @@ struct OvergangVisning: View {
     var body: some View {
         Form {
             Section("Endepunkter") {
-                FargeValgRad(tittel: "Fra", farge: Binding(get: { start }, set: { start = $0 }))
-                FargeValgRad(tittel: "Til", farge: Binding(get: { slutt }, set: { slutt = $0 }))
+                FargeValgRad(tittel: String(localized: "Fra"), farge: Binding(get: { start }, set: { start = $0 }))
+                FargeValgRad(tittel: String(localized: "Til"), farge: Binding(get: { slutt }, set: { slutt = $0 }))
                 Button("Bytt om", systemImage: "arrow.left.arrow.right") {
                     let a = start
                     start = slutt
@@ -67,9 +67,9 @@ struct OvergangVisning: View {
                     }
                 }
                 HStack(alignment: .top) {
-                    endepunkt("Fra", start)
+                    endepunkt(String(localized: "Fra"), start)
                     Spacer()
-                    endepunkt("Til", slutt, trailing: true)
+                    endepunkt(String(localized: "Til"), slutt, trailing: true)
                 }
             } header: {
                 Text("Overgang i OKLab – \(antall) toner")
@@ -112,7 +112,7 @@ struct OvergangVisning: View {
         }
         .sheet(isPresented: $visLagre) {
             VelgPalettArk(farger: rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) },
-                          foreslåttNavn: "Overgang \(start.hex()) → \(slutt.hex())")
+                          foreslåttNavn: String(localized: "Overgang \(start.hex()) → \(slutt.hex())"))
         }
     }
 }

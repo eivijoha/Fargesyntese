@@ -37,7 +37,7 @@ final class ProfilBibliotek {
     enum Feil: LocalizedError {
         case ugyldig(String)
         var errorDescription: String? {
-            switch self { case .ugyldig(let navn): "«\(navn)» er ikke en gyldig ICC-profil." }
+            switch self { case .ugyldig(let navn): String(localized: "«\(navn)» er ikke en gyldig ICC-profil.") }
         }
     }
 

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fargesyntese – fargepaletter for designere</title>
+  <meta name="description" content="Fargesyntese er et fargeverktøy for designere på iPhone, iPad og Mac: OKLCH, OKLab, CIELab, CMYK og ICC-profiler, perseptuelt jevne overganger, WCAG-kontrast, kamerautplukk og eksport til Adobe og Figma.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <!-- TODO: app-id – legg inn App Store-ID-en for å vise Smart App Banner i Safari på iPhone/iPad:
+  <meta name="apple-itunes-app" content="app-id=0000000000">
+  -->
+  <link rel="icon" href="assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/stil.css">
+  <link rel="alternate" hreflang="nb" href="index.html">
+  <link rel="alternate" hreflang="en" href="en/index.html">
+  <link rel="alternate" hreflang="x-default" href="index.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Hopp til hovedinnhold</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="assets/ikon.svg" alt="" width="32" height="32">
+        Fargesyntese
+      </a>
+      <nav class="hovednav" aria-label="Hovedmeny">
+        <ul>
+          <li><a href="index.html" aria-current="page">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Språk">
+        <span aria-current="true" lang="nb">Norsk</span>
+        <a href="en/index.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold" tabindex="-1">
+    <section class="helt" aria-labelledby="tittel">
+      <div>
+        <img class="helt-ikon" src="assets/ikon.svg" alt="" width="88" height="88">
+        <h1 id="tittel">Fargesyntese</h1>
+        <p class="ingress">Bygg fargepaletter på tvers av fargerom – med perseptuelt jevne overganger, kontrastsjekk, ICC-profiler og eksport til verktøyene du allerede bruker.</p>
+
+        <div class="handlinger">
+          <!-- TODO: app-store-lenke – bytt ut href="#" med lenken til appen i App Store,
+               og vurder å bruke Apples offisielle «Download on the App Store»-merke
+               (Apple Marketing Tools) i stedet for denne knappen. -->
+          <a class="knapp" href="#">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            <span>Last ned i App Store <small>[app-store-lenke]</small></span>
+          </a>
+          <a class="knapp knapp-sekundaer" href="support.html">Støtte og spørsmål</a>
+        </div>
+
+        <ul class="plattformer" aria-label="Plattformer">
+          <li>iPhone</li>
+          <li>iPad</li>
+          <li>Mac</li>
+        </ul>
+        <p class="dempet">Krever iOS 26, iPadOS 26 eller macOS 26.</p>
+      </div>
+
+      <figure class="helt-kunst">
+        <ul class="proverad" aria-hidden="true">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+        <div class="overgang" aria-hidden="true"></div>
+        <figcaption>Sju like perseptuelle steg i OKLab – fra dyp blå til lys sand.</figcaption>
+      </figure>
+    </section>
+
+    <section class="seksjon" aria-labelledby="funksjoner">
+      <h2 id="funksjoner">Funksjoner</h2>
+      <p class="lesetekst">Fargesyntese er laget for iPhone først. På iPad og Mac får du mer plass – og på Mac en pipette som plukker farger fra hele skjermen.</p>
+
+      <ul class="kort-rutenett">
+        <li>
+          <article class="kort">
+            <h3>Alle fargerommene</h3>
+            <p>Rediger farger i OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB og CMYK – med Display P3 som bredt fargeområde.</p>
+            <ul>
+              <li>Display P3 side om side med sRGB, Adobe RGB, CMYK eller en hvilken som helst installert ICC-profil</li>
+              <li>Varsel når fargen er utenfor fargeområdet</li>
+              <li>Begrens nye farger til en valgt profil om du vil</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>ICC-profiler</h3>
+            <p>Importer egne profiler (.icc og .icm). De ligger i appens mappe i iCloud Drive og følger med til de andre enhetene dine.</p>
+            <ul>
+              <li>Konverter mellom profiler med valgt gjengivelseshensikt</li>
+              <li>Sammenlign gjengivelseshensiktene med ΔE2000</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Overganger</h3>
+            <p>Lag overgangstoner mellom to farger i like perseptuelle steg i OKLab, med lysere og mørkere rader.</p>
+            <ul>
+              <li>Eksporter som CSS-gradient i <code>oklab</code> med sRGB-reserve</li>
+              <li>Lineær, radiell eller konisk</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Toner og harmonier</h3>
+            <p>Lysere og mørkere trinn, toneskalaer fra 50 til 950 og fargeharmonier:</p>
+            <ul>
+              <li>Komplementær, split-komplementær, analog og jevn fordeling med valgfritt antall</li>
+              <li>På fargesirkel i OKLCH, CIE LCH, HSL eller RYB</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Plukk farger</h3>
+            <ul>
+              <li>Kamera: trykk for å plukke, knip for å zoome, makrofokus og lykt – lysfelt på skjermen på Mac</li>
+              <li>Bilder: zoom og dominerende farger</li>
+              <li>Skjermpipette på Mac</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Apple Intelligence på enheten</h3>
+            <ul>
+              <li>Fra verdiord til palett</li>
+              <li>Juster med fritekst – «varmere», «mer eksklusiv»</li>
+              <li>Navngi farger og få en vurdering av paletten</li>
+            </ul>
+            <p>Alt kjøres på enheten. Ingenting sendes ut.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Tilgjengelighet</h3>
+            <ul>
+              <li>WCAG 2.2-kontrast: AA og AAA, stor tekst og grafikk</li>
+              <li>«Rett opp» som justerer fargen til den består</li>
+              <li>Kontrastmatrise for hele paletten</li>
+              <li>Sammenlign farger med ΔE2000</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Paletter og iCloud</h3>
+            <p>Samle farger i paletter eller lagre enkeltfarger. Gi dem navn, og dra farger mellom paletter.</p>
+            <p>Alt synkroniseres via din egen, private iCloud.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Eksport</h3>
+            <p>Adobe ASE, Photoshop ACO, Figma-variabler (DTCG-JSON), Tokens Studio, SVG-fargeprøver, CSS, Design Tokens, GIMP GPL, SwiftUI og hex-liste.</p>
+            <p>Kopier og lim inn slik du er vant til på hver plattform.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Siri og Snarveier</h3>
+            <ul>
+              <li>Lag palett fra verdiord</li>
+              <li>Lag overgang</li>
+              <li>Konverter farge</li>
+              <li>Sjekk kontrast</li>
+            </ul>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon" aria-labelledby="skjermbilder">
+      <h2 id="skjermbilder">Skjermbilder</h2>
+      <!-- TODO: skjermbilder – bytt ut hver <div class="ramme"> med et bilde, f.eks.
+           <img src="assets/skjermbilde-studio.png" alt="Studio med en farge i OKLCH og P3 side om side med CMYK" width="1206" height="2622">
+           Husk beskrivende alt-tekst. -->
+      <ul class="skjermbilder" tabindex="0" aria-label="Skjermbilder – rull sidelengs">
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Skjermbilde kommer</div>
+            <figcaption>Studio</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Skjermbilde kommer</div>
+            <figcaption>Overgang</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Skjermbilde kommer</div>
+            <figcaption>Kamera</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <div class="ramme">Skjermbilde kommer</div>
+            <figcaption>Paletter og kontrast</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon lesetekst" aria-labelledby="personvern">
+      <h2 id="personvern">Personvern</h2>
+      <div class="boks">
+        <p><strong>Ingen konto, ingen analyse, ingen reklame og ingen sporing.</strong> Utvikleren samler ikke inn noen data. Palettene dine ligger på enheten og i din private iCloud, og Apple Intelligence kjøres på enheten.</p>
+        <p><a href="privacy.html">Les personvernerklæringen</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Bunnmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+          <li><a href="en/index.html" hreflang="en" lang="en">English</a></li>
+        </ul>
+      </nav>
+      <p>© 2026 Engenett. Apple, iPhone, iPad, Mac, iCloud, Siri og Apple Intelligence er varemerker for Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

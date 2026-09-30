@@ -9,6 +9,19 @@ public struct Fargeforslag: Sendable, Hashable, Identifiable {
     public var begrunnelse: String
     public var farge: Farge
 
+    /// Rollen som visningsnavn på appens språk (rollene er norske internt).
+    public var rollenavn: String {
+        switch rolle.lowercased() {
+        case "primær": String(localized: "Primær", bundle: .module)
+        case "sekundær": String(localized: "Sekundær", bundle: .module)
+        case "aksent": String(localized: "Aksent", bundle: .module)
+        case "bakgrunn": String(localized: "Bakgrunn", bundle: .module)
+        case "tekst": String(localized: "Tekst", bundle: .module)
+        case "støtte": String(localized: "Støtte", bundle: .module)
+        default: rolle.capitalized
+        }
+    }
+
     public init(navn: String, rolle: String, begrunnelse: String, farge: Farge) {
         self.navn = navn
         self.rolle = rolle

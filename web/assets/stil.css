@@ -1,0 +1,771 @@
+/* Fargesyntese – felles stilark for nettsidene.
+   Ingen eksterne ressurser. Lys og mørk modus via prefers-color-scheme.
+   Farger i OKLCH der nettleseren støtter det, med sRGB-hex som reserve
+   (hex-verdien står alltid først, oklch()-linjen overstyrer der den forstås). */
+
+:root {
+  color-scheme: light dark;
+
+  --bakgrunn: #faf9f7;
+  --flate: #ffffff;
+  --flate-2: #f2f0ec;
+  --tekst: #1c1b1f;
+  --tekst-dempet: #55525c;
+  --kant: #dedad3;
+  --lenke: #4636b3;
+  --lenke-hover: #2f2185;
+  --fokus: #4636b3;
+  --knapp-bg: #1c1b1f;
+  --knapp-tekst: #ffffff;
+  --merke-bg: #ece8fb;
+  --merke-tekst: #3a2c99;
+  --advarsel-bg: #fff4d6;
+  --advarsel-kant: #d9a400;
+
+  --regnbue: linear-gradient(90deg, #e0474c, #f08a24, #e8c21a, #3fae6a, #2b8fd6, #6a4fd8, #c04bb0);
+
+  --radius: 14px;
+  --radius-liten: 8px;
+  --maks: 68rem;
+  --tekstbredde: 42rem;
+  --skygge: 0 1px 2px rgb(0 0 0 / 0.05), 0 4px 16px rgb(0 0 0 / 0.06);
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-rund: ui-rounded, -apple-system, BlinkMacSystemFont, "SF Pro Rounded", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@supports (color: oklch(50% 0.1 280)) {
+  :root {
+    --bakgrunn: oklch(98.5% 0.004 80);
+    --flate-2: oklch(95.5% 0.006 80);
+    --kant: oklch(89% 0.01 80);
+    --lenke: oklch(42% 0.19 280);
+    --lenke-hover: oklch(33% 0.17 280);
+    --fokus: oklch(42% 0.19 280);
+    --merke-bg: oklch(94% 0.03 285);
+    --merke-tekst: oklch(38% 0.17 283);
+  }
+}
+
+@supports (background: linear-gradient(90deg in oklch longer hue, red, red)) {
+  :root {
+    --regnbue: linear-gradient(90deg in oklch longer hue, oklch(63% 0.2 25), oklch(63% 0.2 24.9));
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bakgrunn: #141317;
+    --flate: #1d1c21;
+    --flate-2: #26242b;
+    --tekst: #f2f0f5;
+    --tekst-dempet: #b4b0bc;
+    --kant: #37343d;
+    --lenke: #b9aeff;
+    --lenke-hover: #d6cfff;
+    --fokus: #b9aeff;
+    --knapp-bg: #f2f0f5;
+    --knapp-tekst: #141317;
+    --merke-bg: #2e2850;
+    --merke-tekst: #d6cfff;
+    --advarsel-bg: #3a2f10;
+    --advarsel-kant: #c99a1a;
+    --skygge: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px rgb(0 0 0 / 0.3);
+  }
+
+  @supports (color: oklch(50% 0.1 280)) {
+    :root {
+      --bakgrunn: oklch(17% 0.008 290);
+      --flate: oklch(21% 0.009 290);
+      --flate-2: oklch(25% 0.011 290);
+      --kant: oklch(33% 0.012 290);
+      --lenke: oklch(80% 0.11 285);
+      --lenke-hover: oklch(88% 0.07 285);
+      --fokus: oklch(80% 0.11 285);
+      --merke-bg: oklch(29% 0.07 285);
+      --merke-tekst: oklch(88% 0.07 285);
+    }
+  }
+}
+
+/* ---------- Grunnlag ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bakgrunn);
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--lenke);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--lenke-hover);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--fokus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-rund);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 4.2vw, 1.9rem);
+  margin: 2.5rem 0 0.75rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.4rem;
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0 0 1rem;
+}
+
+ul,
+ol {
+  padding-left: 1.3rem;
+}
+
+li + li {
+  margin-top: 0.3rem;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--flate-2);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+}
+
+.visuelt-skjult {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Hopp til innhold ---------- */
+
+.hopp {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--knapp-bg);
+  color: var(--knapp-tekst);
+  border-radius: var(--radius-liten);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hopp:focus {
+  top: 0.75rem;
+  color: var(--knapp-tekst);
+}
+
+/* ---------- Topp ---------- */
+
+.regnbuestripe {
+  height: 6px;
+  background: var(--regnbue);
+}
+
+.topp {
+  border-bottom: 1px solid var(--kant);
+  background: var(--bakgrunn);
+}
+
+.topp-innhold {
+  max-width: var(--maks);
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.merkenavn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-rund);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--tekst);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.merkenavn:hover {
+  color: var(--tekst);
+}
+
+.merkenavn img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.hovednav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.hovednav li + li {
+  margin-top: 0;
+}
+
+.hovednav a {
+  display: inline-block;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  color: var(--tekst);
+  text-decoration: none;
+  font-size: 0.95rem;
+  min-height: 44px;
+  line-height: 1.9;
+}
+
+.hovednav a:hover {
+  background: var(--flate-2);
+}
+
+.hovednav a[aria-current="page"] {
+  background: var(--merke-bg);
+  color: var(--merke-tekst);
+  font-weight: 600;
+}
+
+.sprakvalg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--tekst-dempet);
+}
+
+.sprakvalg a,
+.sprakvalg span[aria-current] {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--kant);
+  border-radius: 999px;
+  text-decoration: none;
+  min-height: 44px;
+  line-height: 2;
+}
+
+.sprakvalg span[aria-current] {
+  background: var(--flate-2);
+  color: var(--tekst);
+  font-weight: 600;
+}
+
+/* ---------- Hoveddel ---------- */
+
+main {
+  display: block;
+}
+
+.innhold {
+  max-width: var(--maks);
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.lesetekst {
+  max-width: var(--tekstbredde);
+}
+
+.ingress {
+  font-size: 1.2rem;
+  color: var(--tekst-dempet);
+  max-width: 38rem;
+}
+
+.dempet {
+  color: var(--tekst-dempet);
+}
+
+/* ---------- Helt (forsiden) ---------- */
+
+.helt {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  padding: 1rem 0 1.5rem;
+}
+
+.helt-ikon {
+  width: 88px;
+  height: 88px;
+  border-radius: 20px;
+  box-shadow: var(--skygge);
+  margin-bottom: 1.25rem;
+}
+
+.handlinger {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.knapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.65rem 1.2rem;
+  border-radius: 12px;
+  background: var(--knapp-bg);
+  color: var(--knapp-tekst);
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.knapp:hover {
+  color: var(--knapp-tekst);
+  opacity: 0.9;
+}
+
+.knapp svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.knapp small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.knapp-sekundaer {
+  background: transparent;
+  color: var(--lenke);
+  border: 1px solid var(--kant);
+}
+
+.knapp-sekundaer:hover {
+  color: var(--lenke-hover);
+  background: var(--flate-2);
+  opacity: 1;
+}
+
+.plattformer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.plattformer li {
+  margin: 0;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--merke-bg);
+  color: var(--merke-tekst);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Fargeprøve-dekor i helten: en overgang i like OKLab-steg */
+.proverad {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proverad li {
+  margin: 0;
+  aspect-ratio: 1 / 1.35;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+
+.proverad li:nth-child(1) { background: #1d3557; background: oklab(32% -0.02 -0.08); }
+.proverad li:nth-child(2) { background: #2d5577; background: oklab(41% -0.03 -0.07); }
+.proverad li:nth-child(3) { background: #3c7a8c; background: oklab(51% -0.05 -0.04); }
+.proverad li:nth-child(4) { background: #5c9f8e; background: oklab(62% -0.06 0); }
+.proverad li:nth-child(5) { background: #9dbd84; background: oklab(73% -0.05 0.05); }
+.proverad li:nth-child(6) { background: #dccf86; background: oklab(84% -0.02 0.09); }
+.proverad li:nth-child(7) { background: #fbe3a8; background: oklab(92% 0 0.08); }
+
+.helt-kunst {
+  background: var(--flate);
+  border: 1px solid var(--kant);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--skygge);
+}
+
+.helt-kunst .overgang {
+  height: 56px;
+  border-radius: 10px;
+  margin-top: 0.75rem;
+  background: linear-gradient(90deg, #1d3557, #5c9f8e, #fbe3a8);
+  background: linear-gradient(90deg in oklab, oklab(32% -0.02 -0.08), oklab(92% 0 0.08));
+}
+
+.helt-kunst figcaption {
+  font-size: 0.85rem;
+  color: var(--tekst-dempet);
+  margin-top: 0.6rem;
+}
+
+/* ---------- Funksjonskort ---------- */
+
+.kort-rutenett {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.kort-rutenett > li {
+  margin: 0;
+}
+
+.kort {
+  height: 100%;
+  background: var(--flate);
+  border: 1px solid var(--kant);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kort::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--kortfarge, var(--regnbue));
+}
+
+.kort h3 {
+  margin-top: 0.3rem;
+}
+
+.kort p,
+.kort ul {
+  font-size: 0.98rem;
+  margin-bottom: 0.5rem;
+}
+
+.kort ul {
+  padding-left: 1.1rem;
+}
+
+.kort-rutenett > li:nth-child(8n + 1) .kort { --kortfarge: #d8434b; }
+.kort-rutenett > li:nth-child(8n + 2) .kort { --kortfarge: #ea8a1f; }
+.kort-rutenett > li:nth-child(8n + 3) .kort { --kortfarge: #d5b312; }
+.kort-rutenett > li:nth-child(8n + 4) .kort { --kortfarge: #3a9f62; }
+.kort-rutenett > li:nth-child(8n + 5) .kort { --kortfarge: #1f9bb0; }
+.kort-rutenett > li:nth-child(8n + 6) .kort { --kortfarge: #2b7fd0; }
+.kort-rutenett > li:nth-child(8n + 7) .kort { --kortfarge: #6a4fd8; }
+.kort-rutenett > li:nth-child(8n + 8) .kort { --kortfarge: #b9479f; }
+
+@supports (color: oklch(50% 0.1 280)) {
+  .kort-rutenett > li:nth-child(8n + 1) .kort { --kortfarge: oklch(62% 0.19 22); }
+  .kort-rutenett > li:nth-child(8n + 2) .kort { --kortfarge: oklch(72% 0.16 58); }
+  .kort-rutenett > li:nth-child(8n + 3) .kort { --kortfarge: oklch(80% 0.16 95); }
+  .kort-rutenett > li:nth-child(8n + 4) .kort { --kortfarge: oklch(64% 0.14 150); }
+  .kort-rutenett > li:nth-child(8n + 5) .kort { --kortfarge: oklch(64% 0.11 210); }
+  .kort-rutenett > li:nth-child(8n + 6) .kort { --kortfarge: oklch(58% 0.15 252); }
+  .kort-rutenett > li:nth-child(8n + 7) .kort { --kortfarge: oklch(52% 0.2 285); }
+  .kort-rutenett > li:nth-child(8n + 8) .kort { --kortfarge: oklch(56% 0.18 335); }
+}
+
+/* ---------- Skjermbilder ---------- */
+
+.skjermbilder {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(12rem, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.25rem 0.25rem 1rem;
+  margin: 1rem -0.25rem 0;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.skjermbilder li {
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.skjermbilde {
+  margin: 0;
+}
+
+.skjermbilde .ramme {
+  aspect-ratio: 9 / 19.5;
+  border-radius: 28px;
+  border: 1px dashed var(--kant);
+  background: var(--flate-2);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  color: var(--tekst-dempet);
+  font-size: 0.9rem;
+}
+
+.skjermbilde img {
+  display: block;
+  width: 100%;
+  border-radius: 28px;
+  box-shadow: var(--skygge);
+}
+
+.skjermbilde figcaption {
+  font-size: 0.9rem;
+  color: var(--tekst-dempet);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ---------- Seksjoner og bokser ---------- */
+
+.seksjon {
+  margin-top: 3rem;
+}
+
+.boks {
+  background: var(--flate);
+  border: 1px solid var(--kant);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.boks > :last-child {
+  margin-bottom: 0;
+}
+
+.boks h2:first-child,
+.boks h3:first-child {
+  margin-top: 0;
+}
+
+.plassholder {
+  background: var(--advarsel-bg);
+  border-bottom: 2px dotted var(--advarsel-kant);
+  padding: 0 0.2em;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+/* ---------- FAQ ---------- */
+
+.faq details {
+  background: var(--flate);
+  border: 1px solid var(--kant);
+  border-radius: var(--radius-liten);
+  margin: 0.6rem 0;
+}
+
+.faq summary {
+  cursor: pointer;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  list-style-position: outside;
+  margin-left: 1rem;
+  min-height: 44px;
+}
+
+.faq details[open] summary {
+  border-bottom: 1px solid var(--kant);
+}
+
+.faq .svar {
+  padding: 0.85rem 1rem 0.25rem;
+}
+
+/* ---------- Tabeller ---------- */
+
+.tabell-omslag {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--kant);
+}
+
+thead th {
+  background: var(--flate-2);
+}
+
+/* ---------- Bunn ---------- */
+
+.bunn {
+  border-top: 1px solid var(--kant);
+  background: var(--flate-2);
+  font-size: 0.92rem;
+  color: var(--tekst-dempet);
+}
+
+.bunn-innhold {
+  max-width: var(--maks);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bunn ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+.bunn li + li {
+  margin-top: 0;
+}
+
+.bunn p {
+  margin: 0;
+}
+
+/* ---------- Større skjermer ---------- */
+
+@media (min-width: 40rem) {
+  .kort-rutenett {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .innhold {
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .topp-innhold,
+  .bunn-innhold {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 60rem) {
+  .helt {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3rem;
+    padding-top: 2rem;
+  }
+
+  .kort-rutenett {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .skjermbilder {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media print {
+  .regnbuestripe,
+  .hovednav,
+  .sprakvalg,
+  .hopp {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

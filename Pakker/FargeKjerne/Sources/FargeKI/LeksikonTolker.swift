@@ -80,15 +80,17 @@ public struct LeksikonTolker: VerdiordTolker {
         let valgt = (0..<max(antall, 1)).map { roller[$0 % roller.count] }
 
         return PalettForslag(
-            tittel: treff.isEmpty ? "Nøytral start" : treff.map { $0.key.capitalized }.joined(separator: " · "),
+            tittel: treff.isEmpty ? String(localized: "Nøytral start", bundle: .module) : treff.map { $0.key.capitalized }.joined(separator: " · "),
             forklaring: treff.isEmpty
-                ? "Fant ingen kjente verdiord – her er et nøytralt utgangspunkt."
-                : "Bygget fra leksikonet: kulør rundt \(Int(kulør))°, med analog sekundærfarge og komplementær aksent.",
+                ? String(localized: "Fant ingen kjente verdiord – her er et nøytralt utgangspunkt.", bundle: .module)
+                : String(localized: "Bygget fra leksikonet: kulør rundt \(Int(kulør))°, med analog sekundærfarge og komplementær aksent.", bundle: .module),
             farger: valgt.map { rolle, lch in
                 var l = lch
                 l.h = (l.h + 360).truncatingRemainder(dividingBy: 360)
-                return Fargeforslag(navn: rolle, rolle: rolle.lowercased(), begrunnelse: "",
-                                    farge: Farge(okLCH: l).gamutKartlagt(til: .displayP3))
+                var forslag = Fargeforslag(navn: rolle, rolle: rolle.lowercased(), begrunnelse: "",
+                                           farge: Farge(okLCH: l).gamutKartlagt(til: .displayP3))
+                forslag.navn = forslag.rollenavn
+                return forslag
             },
             kilde: .leksikon
         ).medRolleregler()

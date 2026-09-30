@@ -1,0 +1,348 @@
+{
+  "sourceLanguage": "nb",
+  "strings": {
+    "Aksent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accent"
+          }
+        }
+      }
+    },
+    "Apple Intelligence er ikke tilgjengelig (%@). Leksikonet brukes i stedet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence is not available (%@). The built-in lexicon is used instead."
+          }
+        }
+      }
+    },
+    "Apple Intelligence er klar. Alt skjer på enheten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence is ready. Everything happens on device."
+          }
+        }
+      }
+    },
+    "Apple Intelligence støtter ikke språket ditt på denne enheten ennå. Leksikonet brukes i stedet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence doesn't support your language on this device yet. The built-in lexicon is used instead."
+          }
+        }
+      }
+    },
+    "Apple Intelligence svarte ikke (%@). Forslaget under er fra det innebygde leksikonet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence didn't respond (%@). The suggestion below is from the built-in lexicon."
+          }
+        }
+      }
+    },
+    "Bakgrunn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background"
+          }
+        }
+      }
+    },
+    "Bruk «Mer kontrast» eller legg til sort/hvit tekstfarge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use “More contrast” or add a black/white text color."
+          }
+        }
+      }
+    },
+    "Bygget fra leksikonet: kulør rundt %lld°, med analog sekundærfarge og komplementær aksent.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built from the lexicon: hue around %lld°, with an analogous secondary color and a complementary accent."
+          }
+        }
+      }
+    },
+    "Denne enheten støtter ikke Apple Intelligence. Fargesyntese bruker det innebygde leksikonet i stedet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This device doesn't support Apple Intelligence. Fargesyntese uses the built-in lexicon instead."
+          }
+        }
+      }
+    },
+    "Fant ingen kjente verdiord – her er et nøytralt utgangspunkt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No known value words found – here is a neutral starting point."
+          }
+        }
+      }
+    },
+    "Fargepar som består WCAG AA for tekst (4,5:1): %lld av %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color pairs passing WCAG AA for text (4.5:1): %lld of %lld"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Fargepar som består WCAG AA for tekst (4,5:1): %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "God spredning i lyshet gir tydelig hierarki.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good spread in lightness gives a clear hierarchy."
+          }
+        }
+      }
+    },
+    "Ingen fargepar når 4,5:1 – paletten egner seg ikke til tekst alene.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No color pair reaches 4.5:1 – the palette is not suitable for text on its own."
+          }
+        }
+      }
+    },
+    "Kulører:": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hues:"
+          }
+        }
+      }
+    },
+    "Legg til en tydelig lys og en tydelig mørk farge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a clearly light and a clearly dark color."
+          }
+        }
+      }
+    },
+    "Lite spenn i lyshet gjør det vanskelig å skape kontrast.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Little spread in lightness makes contrast hard to achieve."
+          }
+        }
+      }
+    },
+    "Lyshetsspenn (OKLCH): %@–%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightness range (OKLCH): %@–%@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Lyshetsspenn (OKLCH): %1$@–%2$@"
+          }
+        }
+      }
+    },
+    "Minst ett fargepar kan brukes til brødtekst (WCAG AA).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At least one color pair can be used for body text (WCAG AA)."
+          }
+        }
+      }
+    },
+    "Modellen er opptatt med en annen forespørsel. Prøv igjen om et øyeblikk.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The model is busy with another request. Try again in a moment."
+          }
+        }
+      }
+    },
+    "Modellen ville ikke svare på denne forespørselen. Prøv å formulere den annerledes.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The model wouldn't answer this request. Try phrasing it differently."
+          }
+        }
+      }
+    },
+    "Noen farger er utenfor sRGB; kontroller dem på en vanlig skjerm og i trykk.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Some colors are outside sRGB; check them on a regular display and in print."
+          }
+        }
+      }
+    },
+    "Nøytral start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neutral start"
+          }
+        }
+      }
+    },
+    "Primær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primary"
+          }
+        }
+      }
+    },
+    "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rule-based critique (Apple Intelligence is not available)."
+          }
+        }
+      }
+    },
+    "Samtalen ble for lang for modellen. Start et nytt forslag.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The conversation got too long for the model. Start a new suggestion."
+          }
+        }
+      }
+    },
+    "Sekundær": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Secondary"
+          }
+        }
+      }
+    },
+    "Slå på Apple Intelligence i Innstillinger for å få KI-forslag. Inntil da brukes det innebygde leksikonet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Apple Intelligence in Settings to get AI suggestions. Until then, the built-in lexicon is used."
+          }
+        }
+      }
+    },
+    "Språkmodellen feilet: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The language model failed: %@"
+          }
+        }
+      }
+    },
+    "Språkmodellen lastes ned eller gjøres klar. Prøv igjen om litt – leksikonet brukes så lenge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The language model is downloading or getting ready. Try again shortly – the lexicon is used meanwhile."
+          }
+        }
+      }
+    },
+    "Støtte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Support"
+          }
+        }
+      }
+    },
+    "Tekst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text"
+          }
+        }
+      }
+    },
+    "Utenfor sRGB (bare P3-skjermer viser riktig):": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside sRGB (only P3 displays show it correctly):"
+          }
+        }
+      }
+    },
+    "ingen (kun nøytrale)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "none (neutrals only)"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

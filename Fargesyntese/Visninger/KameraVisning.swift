@@ -104,7 +104,7 @@ struct KameraVisning: View {
             }
         }
         .sheet(isPresented: Binding(get: { lagre != nil }, set: { if !$0 { lagre = nil } })) {
-            VelgPalettArk(farger: lagre ?? [], foreslåttNavn: "Kamera")
+            VelgPalettArk(farger: lagre ?? [], foreslåttNavn: String(localized: "Kamera"))
         }
         // Pause kameraet mens arket er åpent, så det ikke konkurrerer med trykk i arket.
         .onChange(of: lagre != nil) { _, åpent in

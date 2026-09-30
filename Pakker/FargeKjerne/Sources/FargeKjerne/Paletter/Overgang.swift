@@ -132,9 +132,12 @@ public struct Lyshetstrinn: Hashable, Codable, Sendable {
     /// Menneskelig beskrivelse av ett steg, f.eks. «+8 %-poeng» eller «20 % mot hvitt».
     public func stegtekst(lysere: Bool) -> String {
         let v = Int(((lysere ? lysereSteg : mørkereSteg) * 100).rounded())
+        let fortegn = lysere ? "+" : "−"
         switch modus {
-        case .fast: return "\(lysere ? "+" : "−")\(v) %-poeng"
-        case .relativ: return "\(v) % mot \(lysere ? "hvitt" : "sort")"
+        case .fast: return String(localized: "\(fortegn)\(v) %-poeng", bundle: .module)
+        case .relativ:
+            return lysere ? String(localized: "\(v) % mot hvitt", bundle: .module)
+                          : String(localized: "\(v) % mot sort", bundle: .module)
         }
     }
 }

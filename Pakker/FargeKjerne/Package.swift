@@ -11,9 +11,9 @@ let package = Package(
     ],
     targets: [
         // Ren fargematematikk, paletter og eksport. Ingen UI-avhengigheter.
-        .target(name: "FargeKjerne"),
+        .target(name: "FargeKjerne", resources: [.process("Localizable.xcstrings")]),
         // Verdiord → fargeforslag (Foundation Models på enheten + leksikon-reserve).
-        .target(name: "FargeKI", dependencies: ["FargeKjerne"]),
+        .target(name: "FargeKI", dependencies: ["FargeKjerne"], resources: [.process("Localizable.xcstrings")]),
         // Utviklerverktøy for å prøve KI-promptene mot modellen på Macen: `swift run kiprove`.
         .executableTarget(name: "kiprove", dependencies: ["FargeKjerne", "FargeKI"], path: "Sources/KIProve"),
         .testTarget(name: "FargeKjerneTests", dependencies: ["FargeKjerne", "FargeKI"]),

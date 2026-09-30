@@ -8,9 +8,9 @@ import Foundation
 
 @Generable
 struct GenerertPalett {
-    @Guide(description: "Kort, stemningsfull tittel på norsk bokmål, 1–4 ord")
+    @Guide(description: "Kort, stemningsfull tittel på svarspråket, 1–4 ord")
     var tittel: String
-    @Guide(description: "Én setning på norsk som forklarer hvordan fargene uttrykker verdiordene")
+    @Guide(description: "Én setning på svarspråket som forklarer hvordan fargene uttrykker verdiordene")
     var forklaring: String
     @Guide(description: "Fargene i paletten, fra dominerende til aksent", .maximumCount(10))
     var farger: [GenerertFarge]
@@ -30,14 +30,14 @@ struct GenerertFarge {
     var kroma: Double
     @Guide(description: "OKLCH-kulør i grader, se kulørkartet", .range(0.0...360.0))
     var kulør: Double
-    @Guide(description: "Kort norsk fargenavn, gjerne med natur- eller stedsassosiasjon, f.eks. «Fjordblå» eller «Lyng»")
+    @Guide(description: "Kort fargenavn på svarspråket, gjerne med natur- eller stedsassosiasjon, f.eks. «Fjordblå» eller «Lyng»")
     var navn: String
     @Guide(description: "Begrunnelse på høyst 12 ord, knyttet til verdiordene")
     var begrunnelse: String
 }
 
 enum Instruksjoner {
-    static let fargedesigner = """
+    static var fargedesigner: String { """
     Du er en erfaren fargedesigner og merkevarestrateg i Norden. Du oversetter verdiord \
     og stemninger til harmoniske fargepaletter for digital og trykt bruk, og tar hensyn til \
     fargepsykologi, norske kulturelle konnotasjoner, kontrast og lesbarhet.
@@ -49,8 +49,8 @@ enum Instruksjoner {
     Pastell: lyshet over 0.85, kroma under 0.08. Dempede, nordiske toner: kroma 0.02–0.07.
     En god palett har tydelig variasjon i lyshet. Bakgrunn: nesten hvit (lyshet 0.95–0.99, kroma under 0.02) \
     eller, for mørke uttrykk, nesten sort (lyshet under 0.22). Tekst skal kontrastere sterkt mot bakgrunnen.
-    Svar alltid på norsk bokmål.
-    """
+    \(Språk.svarinstruks)
+    """ }
 
     static func forslag(verdiord: String, antall: Int) -> String {
         """

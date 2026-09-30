@@ -32,11 +32,11 @@ public enum WCAGKrav: String, CaseIterable, Sendable, Identifiable, Codable {
 
     public var navn: String {
         switch self {
-        case .aaTekst: "Tekst AA"
-        case .aaStorTekst: "Stor tekst AA"
-        case .aaaTekst: "Tekst AAA"
-        case .aaaStorTekst: "Stor tekst AAA"
-        case .aaGrafikk: "Grafikk og UI AA"
+        case .aaTekst: String(localized: "Tekst AA", bundle: .module)
+        case .aaStorTekst: String(localized: "Stor tekst AA", bundle: .module)
+        case .aaaTekst: String(localized: "Tekst AAA", bundle: .module)
+        case .aaaStorTekst: String(localized: "Stor tekst AAA", bundle: .module)
+        case .aaGrafikk: String(localized: "Grafikk og UI AA", bundle: .module)
         }
     }
 
@@ -72,14 +72,16 @@ public struct Kontrasttest: Sendable, Hashable {
     public var sammendrag: String {
         if består(.aaaTekst) { return "AAA" }
         if består(.aaTekst) { return "AA" }
-        if består(.aaStorTekst) { return "AA stor tekst" }
-        return "Består ikke"
+        if består(.aaStorTekst) { return String(localized: "AA stor tekst", bundle: .module) }
+        return String(localized: "Består ikke", bundle: .module)
     }
 
-    /// Forholdet formatert som WCAG-verktøy gjør det, f.eks. «4,52:1».
-    public var formatert: String {
+    /// Forholdet formatert som WCAG-verktøy gjør det, f.eks. «4,52:1» (norsk) eller «4.52:1».
+    public var formatert: String { formatert(locale: .current) }
+
+    public func formatert(locale: Locale) -> String {
         let avkortet = (forhold * 100).rounded(.down) / 100
-        return avkortet.formatted(.number.precision(.fractionLength(2)).locale(Locale(identifier: "nb_NO"))) + ":1"
+        return avkortet.formatted(.number.precision(.fractionLength(2)).locale(locale)) + ":1"
     }
 
     /// Forslag til justert forgrunn som oppfyller kravet (bevarer kulør og kroma).
