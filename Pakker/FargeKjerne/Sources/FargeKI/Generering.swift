@@ -3,8 +3,9 @@ import FargeKjerne
 import FoundationModels
 import Foundation
 
-// Strukturert utdata for språkmodellen. Modellen svarer i OKLCH fordi det er det
-// mest forutsigbare rommet å resonnere i (lyshet, metning og kulør er uavhengige).
+// Strukturert utdata for språkmodellen. Modellen velger i et kategorisk fargespråk
+// (kulørfamilie, lyshetsnivå, metningsnivå) i stedet for å skrive OKLCH-tall: små modeller
+// treffer dårlig på tall, og en «dyp grønn» ble ofte brun. Fargen regnes ut deterministisk.
 
 @Generable
 struct GenerertPalett {
@@ -16,95 +17,120 @@ struct GenerertPalett {
     var farger: [GenerertFarge]
 }
 
-/// Feltrekkefølgen er bevisst: modellen genererer i denne rekkefølgen, og treffer bedre
-/// på tallene når den først har bestemt rolle og beskrevet fargen med ord.
+/// Feltrekkefølgen er bevisst: modellen bestemmer rolle og beskriver fargen med ord før den
+/// velger kategoriene, og kategoriene følger da beskrivelsen.
 @Generable
 struct GenerertFarge {
     @Guide(description: "Rolle i paletten", .anyOf(["primær", "sekundær", "aksent", "bakgrunn", "tekst", "støtte"]))
     var rolle: String
-    @Guide(description: "Fargen beskrevet med ord: lyshet, metning og kulør, f.eks. «mørk dempet skogsgrønn» eller «nesten hvit, varm»")
+    @Guide(description: "Fargen beskrevet med ord, f.eks. «klar løvgrønn» eller «dyp havblå»")
     var beskrivelse: String
-    @Guide(description: "OKLCH-lyshet, 0 er sort og 1 er hvit", .range(0.0...1.0))
-    var lyshet: Double
-    @Guide(description: "OKLCH-kroma: 0 er grå, 0.05 dempet, 0.12 klar, 0.2 svært mettet", .range(0.0...0.25))
-    var kroma: Double
-    @Guide(description: "OKLCH-kulør i grader, se kulørkartet", .range(0.0...360.0))
-    var kulør: Double
+    @Guide(description: "Kulørfamilie", .anyOf(Kulørfamilie.allCases.map(\.rawValue)))
+    var familie: String
+    @Guide(description: "Lyshet", .anyOf(Lyshetsnivå.allCases.map(\.rawValue)))
+    var lyshet: String
+    @Guide(description: "Metning, relativt til hva fargen kan få", .anyOf(Metningsnivå.allCases.map(\.rawValue)))
+    var metning: String
+    @Guide(description: "Finjustering av kuløren i grader innen familien; 0 hvis familien treffer", .range(-15...15))
+    var justering: Int
     @Guide(description: "Kort fargenavn på svarspråket, gjerne med natur- eller stedsassosiasjon, f.eks. «Fjordblå» eller «Lyng»")
     var navn: String
-    @Guide(description: "Begrunnelse på høyst 12 ord, knyttet til verdiordene")
+    @Guide(description: "Begrunnelse på høyst 12 ord, knyttet til verdiordene eller begrepsgrunnlaget")
     var begrunnelse: String
 }
 
 enum Instruksjoner {
     static var fargedesigner: String { """
-    Du er en erfaren fargedesigner og merkevarestrateg i Norden. Du oversetter verdiord \
-    og stemninger til harmoniske fargepaletter for digital og trykt bruk, og tar hensyn til \
-    fargepsykologi, norske kulturelle konnotasjoner, kontrast og lesbarhet.
+    Du er en erfaren fargedesigner. Du oversetter verdiord og stemninger til harmoniske fargepaletter \
+    som skal brukes i visuelle identiteter for digital og trykt bruk. Merkevaren er formålet, ikke \
+    grunnlaget: begrunn fargene i hva ordene betyr og i begrepsgrunnlaget du får, ikke i bransjeklisjeer.
 
-    Farger angis i OKLCH: lyshet 0–1, kroma 0–0.37, kulør i grader.
-    Kulørkart: 25 rød, 55 oransje, 90 gul, 130 lysegrønn, 150 grønn, 190 turkis, \
-    240 blå, 265 indigo, 300 fiolett, 340 rosa.
-    Jordfarger og brunt: kulør 40–80, lyshet 0.35–0.55, kroma 0.04–0.10. \
-    Pastell: lyshet over 0.85, kroma under 0.08. Dempede, nordiske toner: kroma 0.02–0.07.
-    En god palett har tydelig variasjon i lyshet. Bakgrunn: nesten hvit (lyshet 0.95–0.99, kroma under 0.02) \
-    eller, for mørke uttrykk, nesten sort (lyshet under 0.22). Tekst skal kontrastere sterkt mot bakgrunnen.
+    Du beskriver hver farge i et fargespråk:
+    - familie: rød, korall, oransje, rav, gul, lime, grønn, blågrønn, turkis, himmelblå, blå, indigo, \
+    fiolett, magenta, rosa eller nøytral.
+    - lyshet: nesten-sort, svært-mørk, mørk, middels-mørk, middels, lys, svært-lys, nesten-hvit.
+    - metning: grå, svak, dempet, moderat, klar, sterk, maksimal. Metning er relativ, så «klar» er like \
+    klar i alle familier.
+    Farger skal ha tydelig kulør: velg moderat, klar eller sterk med mindre begrepsgrunnlaget sier dempet. \
+    Brunt er oransje eller rav med mørk lyshet og moderat metning – bruk det bare når ordene handler om \
+    jord, tre, lær, kaffe e.l. Natur betyr levende, klare farger. Gul og lime er klare bare som lys eller \
+    svært lys; mørk gul blir oliven.
+    En god palett har tydelig variasjon i lyshet. Bakgrunn: nesten-hvit (eller nesten-sort for mørke \
+    uttrykk) med svak metning. Tekst: kontrasterer sterkt mot bakgrunnen.
+    Følg begrepsgrunnlaget når det finnes: hent primær- og sekundærfarge fra de tyngste kulørfamiliene.
     \(Språk.svarinstruks)
     """ }
 
-    static func forslag(verdiord: String, antall: Int) -> String {
+    static func forslag(verdiord: String, antall: Int, grunnlag: Begrepsgrunnlag) -> String {
         """
         Verdiord: \(verdiord)
+
+        \(grunnlag.fakta)
+
         Lag en palett med nøyaktig \(antall) farger. Bruk rollene primær, sekundær, aksent, \
         bakgrunn og tekst; ved flere enn fem farger kan du legge til støtte-farger.
         """
     }
 
-    static func justering(_ instruks: String, av palett: [Fargeforslag]) -> String {
+    static func justering(_ instruks: String, av palett: [Fargeforslag], grunnlag: Begrepsgrunnlag) -> String {
         """
         Nåværende palett:
         \(beskrivelse(palett))
 
+        \(grunnlag.erTomt ? "" : grunnlag.fakta + "\n")
         Juster paletten slik: \(instruks)
-        Behold antall farger og roller med mindre justeringen ber om noe annet. \
-        Oppdater tittel og forklaring hvis stemningen endrer seg.
+        Behold antall farger og roller med mindre justeringen ber om noe annet. «Mer dempet» betyr ett \
+        metningsnivå ned, «lysere» ett lyshetsnivå opp osv. Oppdater tittel og forklaring hvis stemningen endrer seg.
         """
     }
 
     static func beskrivelse(_ palett: [Fargeforslag]) -> String {
         palett.map { f in
-            "- \(f.navn) (\(f.rolle)): \(Fargemodell.okLCH.tekst(for: f.farge)), \(Fargebeskrivelse.beskriv(f.farge))"
+            // Alltid fra selve fargen: den kan være endret av rolleregler eller hurtigjusteringer.
+            let s = Fargespesifikasjon.nærmeste(f.farge)
+            let just = s.justering == 0 ? "" : ", justering \(Int(s.justering))"
+            return "- \(f.navn) (\(f.rolle)): \(s.familie.rawValue), \(s.lyshet.rawValue), \(s.metning.rawValue)\(just)"
         }.joined(separator: "\n")
     }
 }
 
-extension GenerertFarge {
-    var fargeforslag: Fargeforslag {
-        Fargeforslag(navn: navn, rolle: rolle, begrunnelse: begrunnelse,
-                     farge: Farge(okLCH: OKLCH(l: lyshet, c: kroma, h: kulør)).gamutKartlagt(til: .displayP3))
-    }
-}
-
-extension GenerertFarge.PartiallyGenerated {
-    /// Fargen så snart alle tre tallene er strømmet inn.
-    var fargeforslag: Fargeforslag? {
-        guard let lyshet, let kroma, let kulør else { return nil }
-        return Fargeforslag(navn: navn ?? "", rolle: rolle ?? "", begrunnelse: begrunnelse ?? "",
-                            farge: Farge(okLCH: OKLCH(l: lyshet, c: kroma, h: kulør)).gamutKartlagt(til: .displayP3))
-    }
+/// Bygger en farge fra modellens valg og håndhever begrepsgrunnlagets minste metning for rollen.
+func lagFargeforslag(rolle: String, familie: String?, lyshet: String?, metning: String?, justering: Int?,
+                     navn: String, begrunnelse: String, grunnlag: Begrepsgrunnlag, gamut: Gamut) -> Fargeforslag? {
+    guard let familie = familie.flatMap(Kulørfamilie.init(rawValue:)),
+          let lyshet = lyshet.flatMap(Lyshetsnivå.init(rawValue:)),
+          var metning = metning.flatMap(Metningsnivå.init(rawValue:))
+    else { return nil }
+    if familie != .nøytral, let minst = grunnlag.minsteMetning(for: rolle), metning < minst { metning = minst }
+    let spes = grunnlag.utenUønsketBrunt(
+        Fargespesifikasjon(familie: familie, lyshet: lyshet, metning: metning, justering: Double(justering ?? 0)),
+        rolle: rolle, gamut: gamut)
+    return Fargeforslag(navn: navn, rolle: rolle, begrunnelse: begrunnelse, farge: spes.farge(i: gamut), spesifikasjon: spes)
 }
 
 extension GenerertPalett {
-    var forslag: PalettForslag {
-        PalettForslag(tittel: tittel, forklaring: forklaring, farger: farger.map(\.fargeforslag), kilde: .appleIntelligence)
+    func forslag(grunnlag: Begrepsgrunnlag, gamut: Gamut) -> PalettForslag {
+        PalettForslag(tittel: tittel, forklaring: forklaring,
+                      farger: farger.compactMap {
+                          lagFargeforslag(rolle: $0.rolle, familie: $0.familie, lyshet: $0.lyshet, metning: $0.metning,
+                                          justering: $0.justering, navn: $0.navn, begrunnelse: $0.begrunnelse,
+                                          grunnlag: grunnlag, gamut: gamut)
+                      },
+                      kilde: .appleIntelligence, grunnlag: grunnlag.begreper.map(\.id))
             .medRolleregler()
     }
 }
 
 extension GenerertPalett.PartiallyGenerated {
-    var forslag: PalettForslag {
+    /// Fargene så snart familie, lyshet og metning er strømmet inn.
+    func forslag(grunnlag: Begrepsgrunnlag, gamut: Gamut) -> PalettForslag {
         PalettForslag(tittel: tittel ?? "", forklaring: forklaring ?? "",
-                      farger: (farger ?? []).compactMap(\.fargeforslag), kilde: .appleIntelligence)
+                      farger: (farger ?? []).compactMap {
+                          lagFargeforslag(rolle: $0.rolle ?? "", familie: $0.familie, lyshet: $0.lyshet, metning: $0.metning,
+                                          justering: $0.justering, navn: $0.navn ?? "", begrunnelse: $0.begrunnelse ?? "",
+                                          grunnlag: grunnlag, gamut: gamut)
+                      },
+                      kilde: .appleIntelligence, grunnlag: grunnlag.begreper.map(\.id))
     }
 }
 #endif

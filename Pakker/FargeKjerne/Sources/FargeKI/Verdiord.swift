@@ -8,6 +8,8 @@ public struct Fargeforslag: Sendable, Hashable, Identifiable {
     public var rolle: String
     public var begrunnelse: String
     public var farge: Farge
+    /// Fargen i fargespråket (familie · lyshet · metning), når den ble valgt slik.
+    public var spesifikasjon: Fargespesifikasjon?
 
     /// Rollen som visningsnavn på appens språk (rollene er norske internt).
     public var rollenavn: String {
@@ -22,11 +24,12 @@ public struct Fargeforslag: Sendable, Hashable, Identifiable {
         }
     }
 
-    public init(navn: String, rolle: String, begrunnelse: String, farge: Farge) {
+    public init(navn: String, rolle: String, begrunnelse: String, farge: Farge, spesifikasjon: Fargespesifikasjon? = nil) {
         self.navn = navn
         self.rolle = rolle
         self.begrunnelse = begrunnelse
         self.farge = farge
+        self.spesifikasjon = spesifikasjon
     }
 }
 
@@ -36,14 +39,17 @@ public struct PalettForslag: Sendable, Hashable {
     public var farger: [Fargeforslag]
     /// Hvilken motor som laget forslaget (vises for åpenhet overfor brukeren).
     public var kilde: Kilde
+    /// Begrepene fra kunnskapsbasen forslaget bygger på (vises for åpenhet).
+    public var grunnlag: [String]
 
     public enum Kilde: String, Sendable { case appleIntelligence, leksikon }
 
-    public init(tittel: String, forklaring: String, farger: [Fargeforslag], kilde: Kilde) {
+    public init(tittel: String, forklaring: String, farger: [Fargeforslag], kilde: Kilde, grunnlag: [String] = []) {
         self.tittel = tittel
         self.forklaring = forklaring
         self.farger = farger
         self.kilde = kilde
+        self.grunnlag = grunnlag
     }
 
     public var palett: Palett {
@@ -70,6 +76,7 @@ public struct PalettForslag: Sendable, Hashable {
             }
             lch.c = min(lch.c, 0.025)
             kopi.farger[i].farge = Farge(okLCH: lch).gamutKartlagt(til: .displayP3)
+            kopi.farger[i].spesifikasjon = nil
         }
         return kopi.medSikretLesbarhet()
     }
@@ -80,7 +87,9 @@ public struct PalettForslag: Sendable, Hashable {
         guard let bakgrunn = farger.first(where: { $0.rolle.lowercased().contains("bakgrunn") })?.farge else { return self }
         var kopi = self
         for i in kopi.farger.indices where kopi.farger[i].rolle.lowercased().contains("tekst") {
-            kopi.farger[i].farge = kopi.farger[i].farge.medKontrast(mot: bakgrunn, minst: WCAGKrav.aaTekst.minimum)
+            let justert = kopi.farger[i].farge.medKontrast(mot: bakgrunn, minst: WCAGKrav.aaTekst.minimum)
+            if justert != kopi.farger[i].farge { kopi.farger[i].spesifikasjon = nil }
+            kopi.farger[i].farge = justert
         }
         return kopi
     }

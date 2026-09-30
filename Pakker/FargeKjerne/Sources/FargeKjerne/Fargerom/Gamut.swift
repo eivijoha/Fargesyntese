@@ -12,6 +12,18 @@ public extension Farge {
         return (dl * dl + da * da + db * db).squareRoot()
     }
 
+    /// Høyeste OKLCH-kroma som gir en farge innenfor `gamut` ved gitt lyshet og kulør.
+    /// Grunnlaget for relativ metning («klar» = en andel av det rommet faktisk tillater).
+    static func maksKroma(lyshet: Double, kulør: Double, i gamut: Gamut) -> Double {
+        guard lyshet > 0, lyshet < 1 else { return 0 }
+        var lav = 0.0, høy = 0.4
+        for _ in 0..<24 {
+            let midt = (lav + høy) / 2
+            if Farge(okLCH: OKLCH(l: lyshet, c: midt, h: kulør)).erInnenfor(gamut) { lav = midt } else { høy = midt }
+        }
+        return lav
+    }
+
     func erInnenfor(_ gamut: Gamut) -> Bool {
         switch gamut {
         case .sRGB: erISRGB

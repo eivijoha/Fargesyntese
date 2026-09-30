@@ -1,3 +1,4 @@
+import FargeKI
 import FargeKjerne
 import SwiftData
 import SwiftUI
@@ -8,6 +9,7 @@ struct FargeEditor: View {
     @State private var hexTekst = ""
     @State private var lagreFarger: [PalettFarge]?
     @State private var lagreNavn = ""
+    @State private var beskriver = false
     @Environment(\.modelContext) private var kontekst
     @AppStorage("studioModus") private var modus: Modus = .farge
     @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
@@ -60,11 +62,24 @@ struct FargeEditor: View {
                     .frame(height: 140)
                     .listRowInsets(EdgeInsets())
                 HStack {
-                    TextField("Hex eller CSS-farge", text: $hexTekst)
+                    TextField("Hex, CSS eller beskrivelse", text: $hexTekst)
                         .font(.body.monospaced())
                         .autocorrectionDisabled()
                         .onSubmit {
-                            if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
+                            if let f = Fargetolk.tolk(hexTekst) {
+                                arbeidsbenk.aktivFarge = f
+                            } else {
+                                // Ikke hex/CSS: tolk teksten som en beskrivelse («dyp havblå»), regnet ut i OKLCH.
+                                let beskrivelse = hexTekst
+                                beskriver = true
+                                Task {
+                                    defer { beskriver = false }
+                                    arbeidsbenk.vis(await Fargebeskriver.farge(fra: beskrivelse))
+                                }
+                            }
+                        }
+                        .overlay(alignment: .trailing) {
+                            if beskriver { ProgressView().controlSize(.small) }
                         }
                     VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
                     #if os(macOS)

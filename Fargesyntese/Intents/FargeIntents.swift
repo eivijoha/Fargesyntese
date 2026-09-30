@@ -48,6 +48,28 @@ struct LagPalettFraVerdiordIntent: AppIntent {
     }
 }
 
+// MARK: - Beskriv en farge
+
+struct BeskrivFargeIntent: AppIntent {
+    static let title: LocalizedStringResource = "Beskriv en farge"
+    static let description = IntentDescription("Lager en farge fra en beskrivelse, f.eks. «dyp havblå» eller «støvete rosa». Fargen regnes ut i OKLCH og vises i Studio.")
+    static let openAppWhenRun = true
+
+    @Parameter(title: "Beskrivelse", requestValueDialog: "Hvordan ser fargen ut?")
+    var beskrivelse: String
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Vis fargen \(\.$beskrivelse)")
+    }
+
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let farge = await Fargebeskriver.farge(fra: beskrivelse)
+        Arbeidsbenk.delt.vis(farge)
+        return .result(dialog: "\(farge.navn): \(farge.farge.hex()), \(Fargemodell.okLCH.tekst(for: farge.farge))")
+    }
+}
+
 // MARK: - Overgang
 
 struct LagOvergangIntent: AppIntent {
@@ -147,6 +169,12 @@ struct FargesynteseSnarveier: AppShortcutsProvider {
             ],
             shortTitle: "Palett fra verdiord",
             systemImageName: "sparkles"
+        )
+        AppShortcut(
+            intent: BeskrivFargeIntent(),
+            phrases: ["Beskriv en farge i \(.applicationName)", "Vis en farge i \(.applicationName)"],
+            shortTitle: "Beskriv en farge",
+            systemImageName: "text.bubble"
         )
         AppShortcut(
             intent: LagOvergangIntent(),

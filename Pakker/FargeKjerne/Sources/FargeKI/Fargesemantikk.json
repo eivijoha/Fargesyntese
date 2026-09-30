@@ -1,0 +1,3958 @@
+{
+ "versjon": 1,
+ "begreper": [
+  {
+   "id": "rød",
+   "kategori": "fargeord",
+   "nb": [
+    "rød",
+    "rødt",
+    "røde",
+    "rødlig"
+   ],
+   "en": [
+    "red"
+   ],
+   "familier": {
+    "rød": 1
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Nevnt farge: bruk tydelig rød."
+  },
+  {
+   "id": "oransje",
+   "kategori": "fargeord",
+   "nb": [
+    "oransje"
+   ],
+   "en": [
+    "orange"
+   ],
+   "familier": {
+    "oransje": 1
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "gul",
+   "kategori": "fargeord",
+   "nb": [
+    "gul",
+    "gult",
+    "gule",
+    "gulaktig"
+   ],
+   "en": [
+    "yellow"
+   ],
+   "familier": {
+    "gul": 1
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Gul er klar bare som lys eller svært lys; mørk gul blir oliven."
+  },
+  {
+   "id": "grønn",
+   "kategori": "fargeord",
+   "nb": [
+    "grønn",
+    "grønt",
+    "grønne",
+    "grønnlig"
+   ],
+   "en": [
+    "green"
+   ],
+   "familier": {
+    "grønn": 1,
+    "lime": 0.3
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Nevnt farge: tydelig, levende grønn – ikke oliven eller brun."
+  },
+  {
+   "id": "blå",
+   "kategori": "fargeord",
+   "nb": [
+    "blå",
+    "blått",
+    "blålig"
+   ],
+   "en": [
+    "blue"
+   ],
+   "familier": {
+    "blå": 1,
+    "himmelblå": 0.4
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "turkis",
+   "kategori": "fargeord",
+   "nb": [
+    "turkis",
+    "cyan"
+   ],
+   "en": [
+    "turquoise",
+    "teal",
+    "cyan"
+   ],
+   "familier": {
+    "turkis": 1,
+    "blågrønn": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "lilla",
+   "kategori": "fargeord",
+   "nb": [
+    "lilla",
+    "fiolett",
+    "purpur"
+   ],
+   "en": [
+    "purple",
+    "violet",
+    "lilac"
+   ],
+   "familier": {
+    "fiolett": 1,
+    "magenta": 0.3
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "rosa",
+   "kategori": "fargeord",
+   "nb": [
+    "rosa",
+    "rosé"
+   ],
+   "en": [
+    "pink",
+    "rose"
+   ],
+   "familier": {
+    "rosa": 1
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "brun",
+   "kategori": "fargeord",
+   "nb": [
+    "brun",
+    "brunt",
+    "brune"
+   ],
+   "en": [
+    "brown"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rav": 0.6
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Nevnt eksplisitt: brun er mørk oransje/rav med moderat metning."
+  },
+  {
+   "id": "beige",
+   "kategori": "fargeord",
+   "nb": [
+    "beige",
+    "sand"
+   ],
+   "en": [
+    "beige",
+    "sand"
+   ],
+   "familier": {
+    "rav": 1,
+    "nøytral": 0.5
+   },
+   "lyshet": [
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "svak",
+    "dempet"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sennep",
+   "kategori": "fargeord",
+   "nb": [
+    "sennep",
+    "sennepsgul",
+    "oker",
+    "okergul"
+   ],
+   "en": [
+    "mustard",
+    "ochre",
+    "ocher"
+   ],
+   "familier": {
+    "rav": 1.0,
+    "gul": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Sennep og oker: gul-rav med moderat metning og middels lyshet – bevisst litt brunlig."
+  },
+  {
+   "id": "grå",
+   "kategori": "fargeord",
+   "nb": [
+    "grå",
+    "grått"
+   ],
+   "en": [
+    "grey",
+    "gray"
+   ],
+   "familier": {
+    "nøytral": 1
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "grå",
+    "svak"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sort",
+   "kategori": "fargeord",
+   "nb": [
+    "sort",
+    "svart"
+   ],
+   "en": [
+    "black"
+   ],
+   "familier": {
+    "nøytral": 1
+   },
+   "lyshet": [
+    "nesten-sort"
+   ],
+   "metning": [
+    "grå"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "hvit",
+   "kategori": "fargeord",
+   "nb": [
+    "hvit",
+    "hvitt"
+   ],
+   "en": [
+    "white"
+   ],
+   "familier": {
+    "nøytral": 1
+   },
+   "lyshet": [
+    "nesten-hvit"
+   ],
+   "metning": [
+    "grå",
+    "svak"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "gull",
+   "kategori": "fargeord",
+   "nb": [
+    "gull",
+    "gyllen",
+    "gylden"
+   ],
+   "en": [
+    "gold",
+    "golden"
+   ],
+   "familier": {
+    "rav": 1,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sølv",
+   "kategori": "fargeord",
+   "nb": [
+    "sølv"
+   ],
+   "en": [
+    "silver"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "himmelblå": 0.3
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "grå",
+    "svak"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "natur",
+   "kategori": "natur",
+   "nb": [
+    "natur",
+    "naturlig",
+    "naturen",
+    "friluft",
+    "utendørs"
+   ],
+   "en": [
+    "nature",
+    "natural",
+    "outdoor"
+   ],
+   "familier": {
+    "grønn": 1,
+    "blågrønn": 0.6,
+    "himmelblå": 0.5,
+    "lime": 0.4
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk",
+    "moderat"
+   ],
+   "aksent": [
+    "gul",
+    "himmelblå"
+   ],
+   "harmoni": "analog",
+   "unngå": [
+    "nøytral"
+   ],
+   "notat": "Natur betyr levende natur: løv, gress, himmel og vann i klare farger – ikke brunt og grått."
+  },
+  {
+   "id": "skog",
+   "kategori": "natur",
+   "nb": [
+    "skog",
+    "skogen",
+    "skogs"
+   ],
+   "en": [
+    "forest",
+    "woods"
+   ],
+   "familier": {
+    "grønn": 1,
+    "blågrønn": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [
+    "lime",
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Dyp, mettet grønn; lyset gjennom løvet gir lime-aksent."
+  },
+  {
+   "id": "gran",
+   "kategori": "natur",
+   "nb": [
+    "gran",
+    "furu",
+    "bartre",
+    "barskog"
+   ],
+   "en": [
+    "spruce",
+    "pine",
+    "fir"
+   ],
+   "familier": {
+    "grønn": 1,
+    "blågrønn": 0.8
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "løv",
+   "kategori": "natur",
+   "nb": [
+    "løv",
+    "blad",
+    "blader",
+    "løvskog",
+    "bjørk"
+   ],
+   "en": [
+    "leaf",
+    "leaves",
+    "foliage",
+    "birch"
+   ],
+   "familier": {
+    "grønn": 1,
+    "lime": 0.8
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "gress",
+   "kategori": "natur",
+   "nb": [
+    "gress",
+    "plen",
+    "eng",
+    "beite"
+   ],
+   "en": [
+    "grass",
+    "lawn",
+    "meadow"
+   ],
+   "familier": {
+    "grønn": 1,
+    "lime": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [
+    "gul",
+    "fiolett"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "blomst",
+   "kategori": "natur",
+   "nb": [
+    "blomst",
+    "blomster",
+    "blomstereng",
+    "hage",
+    "blomstring"
+   ],
+   "en": [
+    "flower",
+    "flowers",
+    "blossom",
+    "garden",
+    "bloom"
+   ],
+   "familier": {
+    "rosa": 1,
+    "fiolett": 0.7,
+    "gul": 0.7,
+    "grønn": 0.6,
+    "korall": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": "Mange klare kulører mot frisk grønn."
+  },
+  {
+   "id": "lyng",
+   "kategori": "natur",
+   "nb": [
+    "lyng",
+    "røsslyng"
+   ],
+   "en": [
+    "heather"
+   ],
+   "familier": {
+    "magenta": 1,
+    "fiolett": 0.7,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "mose",
+   "kategori": "natur",
+   "nb": [
+    "mose"
+   ],
+   "en": [
+    "moss",
+    "lichen"
+   ],
+   "familier": {
+    "lime": 1,
+    "grønn": 0.8
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "hav",
+   "kategori": "natur",
+   "nb": [
+    "hav",
+    "havet",
+    "sjø",
+    "sjøen",
+    "kyst",
+    "bølge",
+    "marin",
+    "maritim"
+   ],
+   "en": [
+    "ocean",
+    "sea",
+    "coast",
+    "wave",
+    "marine",
+    "maritime"
+   ],
+   "familier": {
+    "blå": 1,
+    "turkis": 0.7,
+    "himmelblå": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [
+    "korall",
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Klare blå og turkise toner; dybde gir mørk blå."
+  },
+  {
+   "id": "fjord",
+   "kategori": "natur",
+   "nb": [
+    "fjord",
+    "fjorden"
+   ],
+   "en": [
+    "fjord"
+   ],
+   "familier": {
+    "blå": 1,
+    "blågrønn": 0.7,
+    "turkis": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [
+    "grønn"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "innsjø",
+   "kategori": "natur",
+   "nb": [
+    "innsjø",
+    "vann",
+    "tjern",
+    "elv",
+    "bekk",
+    "foss"
+   ],
+   "en": [
+    "lake",
+    "river",
+    "stream",
+    "waterfall",
+    "water"
+   ],
+   "familier": {
+    "turkis": 1,
+    "blå": 0.8,
+    "blågrønn": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "fjell",
+   "kategori": "natur",
+   "nb": [
+    "fjell",
+    "fjellet",
+    "tind",
+    "vidde",
+    "høyfjell"
+   ],
+   "en": [
+    "mountain",
+    "mountains",
+    "peak",
+    "highland"
+   ],
+   "familier": {
+    "blå": 1,
+    "himmelblå": 0.8,
+    "nøytral": 0.4,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "himmelblå"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Klar luft og avstand: blåtoner, lyse himmelfarger."
+  },
+  {
+   "id": "snø",
+   "kategori": "natur",
+   "nb": [
+    "snø",
+    "snøen",
+    "snøhvit",
+    "skispor"
+   ],
+   "en": [
+    "snow",
+    "snowy"
+   ],
+   "familier": {
+    "himmelblå": 1,
+    "nøytral": 0.8,
+    "blå": 0.4
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "svak",
+    "moderat"
+   ],
+   "aksent": [
+    "blå"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Nesten hvitt med kjølig blått, ikke grått."
+  },
+  {
+   "id": "is",
+   "kategori": "natur",
+   "nb": [
+    "isbre",
+    "bre",
+    "frost",
+    "rim"
+   ],
+   "en": [
+    "ice",
+    "glacier",
+    "frost",
+    "icy"
+   ],
+   "familier": {
+    "turkis": 1,
+    "himmelblå": 1
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "himmel",
+   "kategori": "natur",
+   "nb": [
+    "himmel",
+    "himmelen",
+    "skyer",
+    "luft",
+    "klar luft",
+    "blå time"
+   ],
+   "en": [
+    "sky",
+    "clouds",
+    "air",
+    "blue hour"
+   ],
+   "familier": {
+    "himmelblå": 1,
+    "blå": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sol",
+   "kategori": "natur",
+   "nb": [
+    "sol",
+    "solen",
+    "sollys",
+    "solskinn"
+   ],
+   "en": [
+    "sun",
+    "sunlight",
+    "sunshine",
+    "sunny"
+   ],
+   "familier": {
+    "gul": 1,
+    "rav": 0.7,
+    "oransje": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [
+    "himmelblå"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "solnedgang",
+   "kategori": "natur",
+   "nb": [
+    "solnedgang",
+    "kveldssol",
+    "solefall",
+    "skumring"
+   ],
+   "en": [
+    "sunset",
+    "dusk",
+    "twilight"
+   ],
+   "familier": {
+    "oransje": 1,
+    "korall": 0.9,
+    "rosa": 0.7,
+    "fiolett": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "soloppgang",
+   "kategori": "natur",
+   "nb": [
+    "soloppgang",
+    "morgengry",
+    "daggry",
+    "morgen"
+   ],
+   "en": [
+    "sunrise",
+    "dawn",
+    "morning"
+   ],
+   "familier": {
+    "korall": 1,
+    "rosa": 0.8,
+    "gul": 0.6,
+    "himmelblå": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "natt",
+   "kategori": "natur",
+   "nb": [
+    "natt",
+    "natten",
+    "midnatt",
+    "mørke",
+    "stjerner",
+    "stjernehimmel"
+   ],
+   "en": [
+    "night",
+    "midnight",
+    "dark",
+    "stars",
+    "starry"
+   ],
+   "familier": {
+    "indigo": 1,
+    "blå": 0.8,
+    "fiolett": 0.4
+   },
+   "lyshet": [
+    "nesten-sort",
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Dyp blå/indigo, ikke sort-grått; stjernelys som gul aksent."
+  },
+  {
+   "id": "nordlys",
+   "kategori": "natur",
+   "nb": [
+    "nordlys",
+    "aurora"
+   ],
+   "en": [
+    "aurora",
+    "northern lights"
+   ],
+   "familier": {
+    "grønn": 1,
+    "turkis": 0.8,
+    "fiolett": 0.7,
+    "magenta": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [
+    "magenta"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Lysende grønt og fiolett mot mørk natt."
+  },
+  {
+   "id": "midnattssol",
+   "kategori": "natur",
+   "nb": [
+    "midnattssol",
+    "lyse netter",
+    "sommernatt"
+   ],
+   "en": [
+    "midnight sun",
+    "white nights"
+   ],
+   "familier": {
+    "rav": 1,
+    "rosa": 0.7,
+    "himmelblå": 0.6
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "strand",
+   "kategori": "natur",
+   "nb": [
+    "strand",
+    "sandstrand",
+    "dyner",
+    "sand"
+   ],
+   "en": [
+    "beach",
+    "shore",
+    "dunes"
+   ],
+   "familier": {
+    "rav": 1,
+    "turkis": 0.9,
+    "himmelblå": 0.6
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "korall"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "tropisk",
+   "kategori": "natur",
+   "nb": [
+    "tropisk",
+    "tropene",
+    "jungel",
+    "palme",
+    "eksotisk"
+   ],
+   "en": [
+    "tropical",
+    "tropics",
+    "jungle",
+    "palm",
+    "exotic"
+   ],
+   "familier": {
+    "grønn": 1,
+    "turkis": 0.8,
+    "magenta": 0.7,
+    "oransje": 0.6,
+    "gul": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "ørken",
+   "kategori": "natur",
+   "nb": [
+    "ørken",
+    "savanne",
+    "steppe"
+   ],
+   "en": [
+    "desert",
+    "savanna",
+    "steppe"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rav": 0.9,
+    "korall": 0.6,
+    "himmelblå": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "regn",
+   "kategori": "natur",
+   "nb": [
+    "regn",
+    "regnvær",
+    "tåke",
+    "dis",
+    "duskregn"
+   ],
+   "en": [
+    "rain",
+    "rainy",
+    "fog",
+    "mist",
+    "drizzle"
+   ],
+   "familier": {
+    "blå": 1,
+    "himmelblå": 0.8,
+    "blågrønn": 0.5,
+    "nøytral": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "storm",
+   "kategori": "natur",
+   "nb": [
+    "storm",
+    "uvær",
+    "torden",
+    "lyn"
+   ],
+   "en": [
+    "storm",
+    "thunder",
+    "lightning"
+   ],
+   "familier": {
+    "indigo": 1,
+    "blå": 0.8,
+    "gul": 0.4
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "ild",
+   "kategori": "natur",
+   "nb": [
+    "ild",
+    "bål",
+    "flamme",
+    "glød",
+    "peis"
+   ],
+   "en": [
+    "fire",
+    "flame",
+    "bonfire",
+    "ember",
+    "fireplace"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rød": 0.9,
+    "gul": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "jord",
+   "kategori": "natur",
+   "nb": [
+    "jord",
+    "jordnær",
+    "åker",
+    "leire",
+    "mold"
+   ],
+   "en": [
+    "earth",
+    "earthy",
+    "soil",
+    "clay",
+    "grounded"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rav": 0.8,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Her er brune toner riktige: mørk oransje/rav, moderat metning."
+  },
+  {
+   "id": "stein",
+   "kategori": "natur",
+   "nb": [
+    "stein",
+    "fjell og stein",
+    "granitt",
+    "svaberg",
+    "berg"
+   ],
+   "en": [
+    "stone",
+    "rock",
+    "granite"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "blå": 0.4,
+    "rav": 0.3
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "svak",
+    "dempet"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "bær",
+   "kategori": "natur",
+   "nb": [
+    "bær",
+    "blåbær",
+    "tyttebær",
+    "bringebær",
+    "jordbær",
+    "multe",
+    "moltebær"
+   ],
+   "en": [
+    "berry",
+    "berries",
+    "blueberry",
+    "lingonberry",
+    "raspberry",
+    "strawberry",
+    "cloudberry"
+   ],
+   "familier": {
+    "rød": 1,
+    "magenta": 0.8,
+    "indigo": 0.6,
+    "rav": 0.4
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [
+    "grønn"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "frukt",
+   "kategori": "natur",
+   "nb": [
+    "frukt",
+    "eple",
+    "fersken",
+    "plomme"
+   ],
+   "en": [
+    "fruit",
+    "apple",
+    "peach",
+    "plum"
+   ],
+   "familier": {
+    "rød": 1,
+    "oransje": 0.8,
+    "lime": 0.6,
+    "fiolett": 0.4
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sitrus",
+   "kategori": "natur",
+   "nb": [
+    "sitrus",
+    "sitron",
+    "lime",
+    "appelsin",
+    "grapefrukt"
+   ],
+   "en": [
+    "citrus",
+    "lemon",
+    "orange fruit",
+    "grapefruit"
+   ],
+   "familier": {
+    "gul": 1,
+    "lime": 0.9,
+    "oransje": 0.8
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "korallrev",
+   "kategori": "natur",
+   "nb": [
+    "korall",
+    "korallrev",
+    "undervann",
+    "rev"
+   ],
+   "en": [
+    "coral",
+    "reef",
+    "underwater"
+   ],
+   "familier": {
+    "korall": 1,
+    "turkis": 0.9,
+    "rosa": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "vår",
+   "kategori": "tid",
+   "nb": [
+    "vår",
+    "våren",
+    "spire",
+    "knopp"
+   ],
+   "en": [
+    "spring",
+    "springtime",
+    "bud",
+    "sprout"
+   ],
+   "familier": {
+    "lime": 1,
+    "grønn": 0.8,
+    "gul": 0.7,
+    "rosa": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Lyse, friske og klare toner."
+  },
+  {
+   "id": "sommer",
+   "kategori": "tid",
+   "nb": [
+    "sommer",
+    "sommeren",
+    "sommerlig",
+    "ferie"
+   ],
+   "en": [
+    "summer",
+    "summery",
+    "holiday",
+    "vacation"
+   ],
+   "familier": {
+    "gul": 1,
+    "himmelblå": 0.9,
+    "korall": 0.7,
+    "grønn": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "høst",
+   "kategori": "tid",
+   "nb": [
+    "høst",
+    "høsten",
+    "høstlig",
+    "innhøsting"
+   ],
+   "en": [
+    "autumn",
+    "fall",
+    "harvest"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rød": 0.8,
+    "rav": 0.8,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Høstløv er klart oransje, rødt og gult – brunt bare som støtte."
+  },
+  {
+   "id": "vinter",
+   "kategori": "tid",
+   "nb": [
+    "vinter",
+    "vinteren",
+    "vinterlig",
+    "jul"
+   ],
+   "en": [
+    "winter",
+    "wintry",
+    "christmas"
+   ],
+   "familier": {
+    "blå": 1,
+    "himmelblå": 0.9,
+    "nøytral": 0.6,
+    "rød": 0.3
+   },
+   "lyshet": [
+    "mørk",
+    "lys",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rød"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "kveld",
+   "kategori": "tid",
+   "nb": [
+    "kveld",
+    "kvelden",
+    "aften"
+   ],
+   "en": [
+    "evening"
+   ],
+   "familier": {
+    "indigo": 1,
+    "fiolett": 0.7,
+    "rav": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "tre",
+   "kategori": "materiale",
+   "nb": [
+    "treverk",
+    "eik",
+    "furutre",
+    "ask",
+    "valnøtt",
+    "teak"
+   ],
+   "en": [
+    "wood",
+    "wooden",
+    "oak",
+    "walnut",
+    "timber"
+   ],
+   "familier": {
+    "rav": 1,
+    "oransje": 0.8
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Treverk gir legitime brun- og honningtoner."
+  },
+  {
+   "id": "lin",
+   "kategori": "materiale",
+   "nb": [
+    "lin",
+    "bomull",
+    "tekstil",
+    "stoff"
+   ],
+   "en": [
+    "linen",
+    "cotton",
+    "textile",
+    "fabric"
+   ],
+   "familier": {
+    "rav": 1,
+    "nøytral": 0.8
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "svak",
+    "dempet"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "ull",
+   "kategori": "materiale",
+   "nb": [
+    "ull",
+    "strikk",
+    "tweed",
+    "filt"
+   ],
+   "en": [
+    "wool",
+    "knit",
+    "tweed",
+    "felt"
+   ],
+   "familier": {
+    "rød": 0.8,
+    "blå": 0.8,
+    "nøytral": 0.6,
+    "grønn": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "lær",
+   "kategori": "materiale",
+   "nb": [
+    "lær",
+    "skinn",
+    "sal"
+   ],
+   "en": [
+    "leather",
+    "saddle"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rød": 0.5,
+    "rav": 0.6
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "kobber",
+   "kategori": "materiale",
+   "nb": [
+    "kobber",
+    "bronse",
+    "rust"
+   ],
+   "en": [
+    "copper",
+    "bronze",
+    "rust"
+   ],
+   "familier": {
+    "oransje": 1,
+    "korall": 0.7,
+    "blågrønn": 0.4
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [
+    "blågrønn"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Kobber med irgrønn (blågrønn) som naturlig aksent."
+  },
+  {
+   "id": "messing",
+   "kategori": "materiale",
+   "nb": [
+    "messing"
+   ],
+   "en": [
+    "brass"
+   ],
+   "familier": {
+    "rav": 1,
+    "gul": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "stål",
+   "kategori": "materiale",
+   "nb": [
+    "stål",
+    "metall",
+    "aluminium",
+    "krom"
+   ],
+   "en": [
+    "steel",
+    "metal",
+    "aluminium",
+    "aluminum",
+    "chrome"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "blå": 0.6,
+    "himmelblå": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "svak",
+    "dempet"
+   ],
+   "aksent": [
+    "blå"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "betong",
+   "kategori": "materiale",
+   "nb": [
+    "betong",
+    "sement",
+    "asfalt"
+   ],
+   "en": [
+    "concrete",
+    "cement",
+    "asphalt"
+   ],
+   "familier": {
+    "nøytral": 1
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "grå",
+    "svak"
+   ],
+   "aksent": [
+    "oransje",
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "marmor",
+   "kategori": "materiale",
+   "nb": [
+    "marmor",
+    "porselen"
+   ],
+   "en": [
+    "marble",
+    "porcelain"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "himmelblå": 0.4,
+    "rosa": 0.3
+   },
+   "lyshet": [
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "svak"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "keramikk",
+   "kategori": "materiale",
+   "nb": [
+    "keramikk",
+    "terrakotta",
+    "tegl",
+    "teglstein"
+   ],
+   "en": [
+    "ceramic",
+    "ceramics",
+    "terracotta",
+    "brick"
+   ],
+   "familier": {
+    "korall": 1,
+    "oransje": 0.8,
+    "rød": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "blågrønn"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "glass",
+   "kategori": "materiale",
+   "nb": [
+    "glass",
+    "krystall",
+    "transparent",
+    "gjennomsiktig"
+   ],
+   "en": [
+    "glass",
+    "crystal",
+    "transparent"
+   ],
+   "familier": {
+    "turkis": 1,
+    "himmelblå": 1,
+    "nøytral": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "papir",
+   "kategori": "materiale",
+   "nb": [
+    "papir",
+    "kartong",
+    "bok"
+   ],
+   "en": [
+    "paper",
+    "cardboard",
+    "book"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "rav": 0.5
+   },
+   "lyshet": [
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "svak",
+    "dempet"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "trygg",
+   "kategori": "verdi",
+   "nb": [
+    "trygg",
+    "trygghet",
+    "sikker",
+    "sikkerhet",
+    "stabil",
+    "stabilitet",
+    "beskyttet"
+   ],
+   "en": [
+    "safe",
+    "safety",
+    "secure",
+    "security",
+    "stable",
+    "stability"
+   ],
+   "familier": {
+    "blå": 1,
+    "blågrønn": 0.6,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Trygghet: rolige, mettede kjølige toner og god kontrast – ikke grått."
+  },
+  {
+   "id": "tillit",
+   "kategori": "verdi",
+   "nb": [
+    "tillit",
+    "pålitelig",
+    "troverdig",
+    "ærlig",
+    "ærlighet",
+    "ekte",
+    "åpenhet",
+    "åpen"
+   ],
+   "en": [
+    "trust",
+    "reliable",
+    "credible",
+    "honest",
+    "honesty",
+    "authentic",
+    "transparency",
+    "open"
+   ],
+   "familier": {
+    "blå": 1,
+    "turkis": 0.5,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "varm",
+   "kategori": "verdi",
+   "nb": [
+    "varm",
+    "varme",
+    "lun",
+    "hjertelig",
+    "hjertevarm",
+    "koselig",
+    "hygge"
+   ],
+   "en": [
+    "warm",
+    "warmth",
+    "cozy",
+    "cosy",
+    "hearty",
+    "hygge"
+   ],
+   "familier": {
+    "oransje": 1,
+    "korall": 0.9,
+    "rav": 0.7,
+    "rød": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Varme kulører med klarhet – korall, oransje, rav – ikke bare brunt."
+  },
+  {
+   "id": "kjølig",
+   "kategori": "verdi",
+   "nb": [
+    "kjølig",
+    "kald",
+    "kul",
+    "sval"
+   ],
+   "en": [
+    "cool",
+    "cold",
+    "chill"
+   ],
+   "familier": {
+    "himmelblå": 1,
+    "turkis": 0.8,
+    "blå": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "rolig",
+   "kategori": "verdi",
+   "nb": [
+    "rolig",
+    "ro",
+    "harmoni",
+    "balanse",
+    "stillhet",
+    "fred",
+    "avslappet"
+   ],
+   "en": [
+    "calm",
+    "peace",
+    "harmony",
+    "balance",
+    "quiet",
+    "serene",
+    "relaxed"
+   ],
+   "familier": {
+    "blågrønn": 1,
+    "himmelblå": 0.8,
+    "grønn": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "dempet"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Rolig: myke overganger og nære kulører, men fortsatt tydelig farge."
+  },
+  {
+   "id": "energi",
+   "kategori": "verdi",
+   "nb": [
+    "energi",
+    "energisk",
+    "kraft",
+    "dynamisk",
+    "fart",
+    "puls",
+    "aktiv",
+    "aktivitet"
+   ],
+   "en": [
+    "energy",
+    "energetic",
+    "power",
+    "dynamic",
+    "speed",
+    "active",
+    "activity"
+   ],
+   "familier": {
+    "rød": 1,
+    "oransje": 0.9,
+    "gul": 0.6,
+    "magenta": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "sport",
+   "kategori": "verdi",
+   "nb": [
+    "sport",
+    "idrett",
+    "trening",
+    "konkurranse"
+   ],
+   "en": [
+    "sport",
+    "sports",
+    "training",
+    "fitness",
+    "competition"
+   ],
+   "familier": {
+    "rød": 1,
+    "oransje": 0.7,
+    "blå": 0.7,
+    "lime": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "leken",
+   "kategori": "verdi",
+   "nb": [
+    "leken",
+    "lek",
+    "lekende",
+    "morsom",
+    "gøy",
+    "humor"
+   ],
+   "en": [
+    "playful",
+    "play",
+    "fun",
+    "funny",
+    "humor",
+    "humour"
+   ],
+   "familier": {
+    "magenta": 1,
+    "gul": 0.9,
+    "turkis": 0.8,
+    "oransje": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "glede",
+   "kategori": "verdi",
+   "nb": [
+    "glede",
+    "glad",
+    "lykke",
+    "optimisme",
+    "optimistisk",
+    "positiv"
+   ],
+   "en": [
+    "joy",
+    "happy",
+    "happiness",
+    "optimism",
+    "optimistic",
+    "positive"
+   ],
+   "familier": {
+    "gul": 1,
+    "oransje": 0.8,
+    "korall": 0.6,
+    "himmelblå": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "modig",
+   "kategori": "verdi",
+   "nb": [
+    "modig",
+    "dristig",
+    "tøff",
+    "frimodig"
+   ],
+   "en": [
+    "brave",
+    "courage",
+    "bold",
+    "daring",
+    "fearless"
+   ],
+   "familier": {
+    "rød": 1,
+    "oransje": 0.7,
+    "indigo": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "kreativ",
+   "kategori": "verdi",
+   "nb": [
+    "kreativ",
+    "kreativitet",
+    "kunst",
+    "kunstnerisk",
+    "fantasi",
+    "skapende"
+   ],
+   "en": [
+    "creative",
+    "creativity",
+    "art",
+    "artistic",
+    "imagination"
+   ],
+   "familier": {
+    "magenta": 1,
+    "fiolett": 0.9,
+    "turkis": 0.6,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "nysgjerrig",
+   "kategori": "verdi",
+   "nb": [
+    "nysgjerrig",
+    "utforskende",
+    "oppdagelse",
+    "eventyr",
+    "eventyrlyst"
+   ],
+   "en": [
+    "curious",
+    "curiosity",
+    "explore",
+    "exploration",
+    "discovery",
+    "adventure"
+   ],
+   "familier": {
+    "turkis": 1,
+    "oransje": 0.8,
+    "lime": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "innovativ",
+   "kategori": "verdi",
+   "nb": [
+    "innovativ",
+    "innovasjon",
+    "nyskapende",
+    "fremtid",
+    "fremtidsrettet"
+   ],
+   "en": [
+    "innovative",
+    "innovation",
+    "future",
+    "futuristic"
+   ],
+   "familier": {
+    "indigo": 1,
+    "magenta": 0.6,
+    "turkis": 0.7
+   },
+   "lyshet": [
+    "mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "teknologi",
+   "kategori": "verdi",
+   "nb": [
+    "teknologi",
+    "teknologisk",
+    "digital",
+    "data",
+    "tech"
+   ],
+   "en": [
+    "technology",
+    "tech",
+    "digital",
+    "data"
+   ],
+   "familier": {
+    "blå": 1,
+    "indigo": 0.8,
+    "turkis": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [
+    "lime",
+    "magenta"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "presisjon",
+   "kategori": "verdi",
+   "nb": [
+    "presisjon",
+    "presis",
+    "nøyaktig",
+    "skarp",
+    "ingeniør"
+   ],
+   "en": [
+    "precision",
+    "precise",
+    "accurate",
+    "sharp",
+    "engineering"
+   ],
+   "familier": {
+    "blå": 1,
+    "nøytral": 0.6
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [
+    "oransje"
+   ],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "kunnskap",
+   "kategori": "verdi",
+   "nb": [
+    "kunnskap",
+    "læring",
+    "utdanning",
+    "akademisk",
+    "forskning",
+    "visdom",
+    "klok"
+   ],
+   "en": [
+    "knowledge",
+    "learning",
+    "education",
+    "academic",
+    "research",
+    "wisdom",
+    "wise"
+   ],
+   "familier": {
+    "indigo": 1,
+    "blå": 0.9,
+    "blågrønn": 0.4
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "profesjonell",
+   "kategori": "verdi",
+   "nb": [
+    "profesjonell",
+    "seriøs",
+    "saklig",
+    "formell",
+    "solid"
+   ],
+   "en": [
+    "professional",
+    "serious",
+    "formal",
+    "solid"
+   ],
+   "familier": {
+    "blå": 1,
+    "indigo": 0.7,
+    "nøytral": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "turkis",
+    "korall"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "vennlig",
+   "kategori": "verdi",
+   "nb": [
+    "vennlig",
+    "imøtekommende",
+    "inkluderende",
+    "sosial",
+    "fellesskap",
+    "sammen"
+   ],
+   "en": [
+    "friendly",
+    "welcoming",
+    "inclusive",
+    "social",
+    "community",
+    "together"
+   ],
+   "familier": {
+    "korall": 1,
+    "gul": 0.7,
+    "turkis": 0.6,
+    "grønn": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "omsorg",
+   "kategori": "verdi",
+   "nb": [
+    "omsorg",
+    "omtanke",
+    "empati",
+    "trøst",
+    "helse",
+    "pleie"
+   ],
+   "en": [
+    "care",
+    "caring",
+    "empathy",
+    "comfort",
+    "health",
+    "nursing"
+   ],
+   "familier": {
+    "rosa": 1,
+    "korall": 0.7,
+    "blågrønn": 0.7
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "velvære",
+   "kategori": "verdi",
+   "nb": [
+    "velvære",
+    "wellness",
+    "spa",
+    "balansert",
+    "sunn",
+    "sunnhet"
+   ],
+   "en": [
+    "wellbeing",
+    "well-being",
+    "wellness",
+    "spa",
+    "healthy"
+   ],
+   "familier": {
+    "blågrønn": 1,
+    "grønn": 0.8,
+    "himmelblå": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "kjærlighet",
+   "kategori": "verdi",
+   "nb": [
+    "kjærlighet",
+    "romantisk",
+    "romantikk",
+    "lidenskap",
+    "hjerte"
+   ],
+   "en": [
+    "love",
+    "romantic",
+    "romance",
+    "passion",
+    "heart"
+   ],
+   "familier": {
+    "rød": 1,
+    "rosa": 0.9,
+    "magenta": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "frihet",
+   "kategori": "verdi",
+   "nb": [
+    "frihet",
+    "fri",
+    "uavhengig",
+    "åpne vidder"
+   ],
+   "en": [
+    "freedom",
+    "free",
+    "independent",
+    "independence"
+   ],
+   "familier": {
+    "himmelblå": 1,
+    "turkis": 0.8,
+    "gul": 0.4
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "frisk",
+   "kategori": "verdi",
+   "nb": [
+    "frisk",
+    "friskhet",
+    "fersk",
+    "ren",
+    "renhet",
+    "klar"
+   ],
+   "en": [
+    "fresh",
+    "freshness",
+    "clean",
+    "pure",
+    "clear",
+    "crisp"
+   ],
+   "familier": {
+    "lime": 1,
+    "turkis": 0.8,
+    "grønn": 0.7,
+    "himmelblå": 0.6
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Friskt = lyst og klart, aldri dempet."
+  },
+  {
+   "id": "bærekraft",
+   "kategori": "verdi",
+   "nb": [
+    "bærekraft",
+    "bærekraftig",
+    "miljø",
+    "grønn omstilling",
+    "klima",
+    "fornybar",
+    "resirkulert"
+   ],
+   "en": [
+    "sustainable",
+    "sustainability",
+    "environment",
+    "eco",
+    "green",
+    "climate",
+    "renewable",
+    "recycled"
+   ],
+   "familier": {
+    "grønn": 1,
+    "blågrønn": 0.8,
+    "lime": 0.5,
+    "himmelblå": 0.4
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Levende grønt og blågrønt – bærekraft trenger ikke være brunt eller grått."
+  },
+  {
+   "id": "luksus",
+   "kategori": "verdi",
+   "nb": [
+    "luksus",
+    "luksuriøs",
+    "eksklusiv",
+    "premium",
+    "eleganse",
+    "elegant",
+    "raffinert",
+    "sofistikert"
+   ],
+   "en": [
+    "luxury",
+    "luxurious",
+    "exclusive",
+    "premium",
+    "elegance",
+    "elegant",
+    "refined",
+    "sophisticated"
+   ],
+   "familier": {
+    "indigo": 1,
+    "fiolett": 0.7,
+    "blågrønn": 0.6,
+    "rav": 0.6
+   },
+   "lyshet": [
+    "nesten-sort",
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Dype, mettede toner (smaragd, safir, aubergine) med gyllen aksent – ikke grått."
+  },
+  {
+   "id": "tidløs",
+   "kategori": "verdi",
+   "nb": [
+    "tidløs",
+    "klassisk",
+    "tradisjon",
+    "tradisjonell",
+    "arv",
+    "historisk"
+   ],
+   "en": [
+    "timeless",
+    "classic",
+    "tradition",
+    "traditional",
+    "heritage",
+    "historic"
+   ],
+   "familier": {
+    "indigo": 1,
+    "rød": 0.6,
+    "grønn": 0.5,
+    "rav": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "moderne",
+   "kategori": "verdi",
+   "nb": [
+    "moderne",
+    "samtid",
+    "nåtid",
+    "urban",
+    "byliv"
+   ],
+   "en": [
+    "modern",
+    "contemporary",
+    "urban",
+    "city"
+   ],
+   "familier": {
+    "blå": 0.8,
+    "korall": 0.8,
+    "nøytral": 0.7,
+    "lime": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "enkel",
+   "kategori": "verdi",
+   "nb": [
+    "enkel",
+    "enkelhet",
+    "minimal",
+    "minimalistisk",
+    "ren linje",
+    "stram"
+   ],
+   "en": [
+    "simple",
+    "simplicity",
+    "minimal",
+    "minimalist",
+    "clean lines"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "blå": 0.4
+   },
+   "lyshet": [
+    "mørk",
+    "lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "grå",
+    "svak",
+    "moderat"
+   ],
+   "aksent": [
+    "blå",
+    "korall"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Få farger og mye luft, men én tydelig aksent i klar farge."
+  },
+  {
+   "id": "myk",
+   "kategori": "verdi",
+   "nb": [
+    "myk",
+    "mildt",
+    "mild",
+    "skånsom",
+    "delikat",
+    "sart",
+    "pastell"
+   ],
+   "en": [
+    "soft",
+    "gentle",
+    "mild",
+    "delicate",
+    "pastel"
+   ],
+   "familier": {
+    "rosa": 1,
+    "himmelblå": 0.8,
+    "lime": 0.5,
+    "fiolett": 0.5
+   },
+   "lyshet": [
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Pastell: svært lyst, men med tydelig kulør."
+  },
+  {
+   "id": "sterk",
+   "kategori": "verdi",
+   "nb": [
+    "sterk",
+    "styrke",
+    "kraftfull",
+    "robust",
+    "tydelig"
+   ],
+   "en": [
+    "strong",
+    "strength",
+    "powerful",
+    "robust"
+   ],
+   "familier": {
+    "rød": 1,
+    "indigo": 0.8,
+    "blå": 0.6
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "ung",
+   "kategori": "verdi",
+   "nb": [
+    "ung",
+    "ungdom",
+    "ungdommelig",
+    "barn",
+    "barnslig",
+    "familie"
+   ],
+   "en": [
+    "young",
+    "youth",
+    "youthful",
+    "kids",
+    "children",
+    "family"
+   ],
+   "familier": {
+    "turkis": 1,
+    "gul": 0.9,
+    "magenta": 0.7,
+    "lime": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "lokal",
+   "kategori": "verdi",
+   "nb": [
+    "lokal",
+    "lokalt",
+    "håndverk",
+    "håndlaget",
+    "kortreist"
+   ],
+   "en": [
+    "local",
+    "craft",
+    "handmade",
+    "artisan"
+   ],
+   "familier": {
+    "rød": 0.8,
+    "blå": 0.8,
+    "grønn": 0.8,
+    "rav": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "mat",
+   "kategori": "verdi",
+   "nb": [
+    "mat",
+    "smak",
+    "kafé",
+    "kafe",
+    "bakeri",
+    "kjøkken",
+    "restaurant"
+   ],
+   "en": [
+    "food",
+    "taste",
+    "cafe",
+    "café",
+    "bakery",
+    "kitchen",
+    "restaurant"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rød": 0.8,
+    "gul": 0.6,
+    "grønn": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Appetittvekkende, varme og klare toner."
+  },
+  {
+   "id": "søt",
+   "kategori": "verdi",
+   "nb": [
+    "søt",
+    "søtt",
+    "godteri",
+    "sukker",
+    "dessert"
+   ],
+   "en": [
+    "sweet",
+    "candy",
+    "sugar",
+    "dessert"
+   ],
+   "familier": {
+    "rosa": 1,
+    "magenta": 0.6,
+    "turkis": 0.5,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "krydret",
+   "kategori": "verdi",
+   "nb": [
+    "krydret",
+    "krydder",
+    "sterk smak",
+    "chili"
+   ],
+   "en": [
+    "spicy",
+    "spice",
+    "chili"
+   ],
+   "familier": {
+    "rød": 1,
+    "oransje": 0.9,
+    "rav": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "fest",
+   "kategori": "verdi",
+   "nb": [
+    "fest",
+    "feiring",
+    "jubileum",
+    "karneval"
+   ],
+   "en": [
+    "party",
+    "celebration",
+    "festive",
+    "carnival"
+   ],
+   "familier": {
+    "magenta": 1,
+    "gul": 0.8,
+    "turkis": 0.7,
+    "fiolett": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "mystisk",
+   "kategori": "verdi",
+   "nb": [
+    "mystisk",
+    "magisk",
+    "drømmende",
+    "drøm"
+   ],
+   "en": [
+    "mysterious",
+    "magic",
+    "magical",
+    "dreamy",
+    "dream"
+   ],
+   "familier": {
+    "fiolett": 1,
+    "indigo": 0.9,
+    "magenta": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "nordisk",
+   "kategori": "stil",
+   "nb": [
+    "nordisk",
+    "skandinavisk",
+    "norsk",
+    "norden"
+   ],
+   "en": [
+    "nordic",
+    "scandinavian",
+    "norwegian"
+   ],
+   "familier": {
+    "blå": 1,
+    "himmelblå": 0.8,
+    "grønn": 0.6,
+    "nøytral": 0.6,
+    "rød": 0.3
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rød",
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Lys og luftig: hvite og lyse flater, kjølige klare blå og grønne toner, gjerne én varm aksent. Ikke brunt og grått som hovedfarge."
+  },
+  {
+   "id": "japansk",
+   "kategori": "stil",
+   "nb": [
+    "japansk",
+    "japandi",
+    "zen",
+    "wabi-sabi"
+   ],
+   "en": [
+    "japanese",
+    "japandi",
+    "zen",
+    "wabi-sabi"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "rød": 0.6,
+    "blågrønn": 0.5,
+    "indigo": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "middels",
+    "svært-lys",
+    "nesten-hvit"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [
+    "rød"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "middelhav",
+   "kategori": "stil",
+   "nb": [
+    "middelhav",
+    "middelhavet",
+    "italiensk",
+    "gresk",
+    "spansk",
+    "provence"
+   ],
+   "en": [
+    "mediterranean",
+    "italian",
+    "greek",
+    "spanish",
+    "provence"
+   ],
+   "familier": {
+    "blå": 1,
+    "turkis": 0.8,
+    "korall": 0.7,
+    "gul": 0.6,
+    "lime": 0.4
+   },
+   "lyshet": [
+    "middels",
+    "lys",
+    "svært-lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "retro",
+   "kategori": "stil",
+   "nb": [
+    "retro",
+    "vintage",
+    "nostalgi",
+    "nostalgisk",
+    "70-tall",
+    "sytti"
+   ],
+   "en": [
+    "retro",
+    "vintage",
+    "nostalgia",
+    "nostalgic",
+    "70s",
+    "seventies"
+   ],
+   "familier": {
+    "oransje": 1,
+    "rav": 0.9,
+    "blågrønn": 0.6,
+    "korall": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Retro/70-tall: sennep, oransje og petrol – varmt, men med kulør."
+  },
+  {
+   "id": "åttitall",
+   "kategori": "stil",
+   "nb": [
+    "80-tall",
+    "åttitall",
+    "neon",
+    "synthwave"
+   ],
+   "en": [
+    "80s",
+    "eighties",
+    "neon",
+    "synthwave"
+   ],
+   "familier": {
+    "magenta": 1,
+    "turkis": 0.9,
+    "fiolett": 0.8,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "art deco",
+   "kategori": "stil",
+   "nb": [
+    "art deco",
+    "deco",
+    "tjuetall",
+    "20-tall"
+   ],
+   "en": [
+    "art deco",
+    "deco",
+    "twenties",
+    "1920s"
+   ],
+   "familier": {
+    "blågrønn": 1,
+    "rav": 0.9,
+    "indigo": 0.6
+   },
+   "lyshet": [
+    "nesten-sort",
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [
+    "rav"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "bauhaus",
+   "kategori": "stil",
+   "nb": [
+    "bauhaus",
+    "modernisme",
+    "funksjonalisme",
+    "funkis",
+    "konstruktivisme"
+   ],
+   "en": [
+    "bauhaus",
+    "modernism",
+    "functionalism",
+    "constructivism"
+   ],
+   "familier": {
+    "rød": 1,
+    "blå": 0.9,
+    "gul": 0.9,
+    "nøytral": 0.7
+   },
+   "lyshet": [
+    "mørk",
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": "Primærfarger mot sort og hvitt."
+  },
+  {
+   "id": "industriell",
+   "kategori": "stil",
+   "nb": [
+    "industriell",
+    "industri",
+    "fabrikk",
+    "verksted",
+    "loft"
+   ],
+   "en": [
+    "industrial",
+    "factory",
+    "workshop",
+    "loft"
+   ],
+   "familier": {
+    "nøytral": 1,
+    "blå": 0.6,
+    "oransje": 0.6
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels"
+   ],
+   "metning": [
+    "svak",
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [
+    "oransje",
+    "gul"
+   ],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "rustikk",
+   "kategori": "stil",
+   "nb": [
+    "rustikk",
+    "landlig",
+    "gård",
+    "bygd",
+    "hytte"
+   ],
+   "en": [
+    "rustic",
+    "rural",
+    "farm",
+    "countryside",
+    "cabin"
+   ],
+   "familier": {
+    "rød": 1,
+    "grønn": 0.7,
+    "rav": 0.7
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Låverødt, grantrær og honningtoner."
+  },
+  {
+   "id": "akademisk",
+   "kategori": "stil",
+   "nb": [
+    "akademisk",
+    "universitet",
+    "campus",
+    "bibliotek"
+   ],
+   "en": [
+    "academic",
+    "university",
+    "campus",
+    "library"
+   ],
+   "familier": {
+    "indigo": 1,
+    "rød": 0.6,
+    "grønn": 0.5,
+    "rav": 0.5
+   },
+   "lyshet": [
+    "svært-mørk",
+    "mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": ""
+  },
+  {
+   "id": "lekeplass",
+   "kategori": "stil",
+   "nb": [
+    "lekeplass",
+    "barnehage",
+    "skole"
+   ],
+   "en": [
+    "playground",
+    "kindergarten",
+    "school"
+   ],
+   "familier": {
+    "gul": 1,
+    "turkis": 0.8,
+    "rød": 0.7,
+    "grønn": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "sterk",
+    "maksimal"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": ""
+  }
+ ]
+}

@@ -8,7 +8,10 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
 - `Pakker/FargeKjerne/` – Swift-pakke, ingen UI:
   - `FargeKjerne`: `Farge` (kanonisk lineær utvidet sRGB), fargerom, gamut-kartlegging,
     `Overgang` (OKLab), `Toneskala`, ICC via CoreGraphics, eksport (ASE, CSS, DTCG, GPL, SwiftUI).
-  - `FargeKI`: verdiord → palett. Foundation Models på enheten, `LeksikonTolker` som reserve.
+  - `FargeKI`: verdiord → palett og beskrivelse → farge. Kunnskapsbasen `Fargesemantikk.json` (fargebegreper
+    med kulørfamilier, lyshet og metning) gir grunnlaget; modellen velger i et kategorisk fargespråk
+    (`Fargespraak.swift`), og fargene regnes ut i OKLCH. `LeksikonTolker` bygger på samme base uten KI.
+    Mål endringer med `swift run kiprove eval` (treff på kulør, andel brune og grå toner).
 - `Fargesyntese/` – appen (filsystem-synkronisert gruppe; nye filer plukkes opp automatisk).
   `App/`, `Modell/` (SwiftData), `Visninger/`, `Plattform/` (kamera, pipette, utklippstavle), `Intents/`.
 - `Konfigurasjon/Info.plist` – kun det som ikke kan settes med `INFOPLIST_KEY_*` (eksporterte UTType-er,

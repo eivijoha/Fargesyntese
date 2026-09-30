@@ -36,7 +36,7 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
 | Overganger **lineært i OKLab** | Jevne perseptuelle steg, korteste vei. Merk: komplementærfarger går via grått (se veikart). |
 | Toneskala med **kromademping** mot ytterpunktene | Lyse og mørke toner blir naturlige og havner mindre utenfor gamut. |
 | Naiv CMYK *og* ICC-CMYK | Naiv for rask visning; ICC (ColorSync) for trykk, med valgbar gjengivelseshensikt. |
-| KI **på enheten** (Foundation Models) med strukturert utdata i OKLCH | Personvern, ingen nøkler, fungerer offline. Leksikon når Apple Intelligence mangler. |
+| KI **på enheten** (Foundation Models) med strukturert utdata i et kategorisk fargespråk (familie, lyshet, metning), forankret i en kunnskapsbase | Personvern, ingen nøkler, fungerer offline. Små modeller treffer dårlig på OKLCH-tall; kategorier + deterministisk utregning gir riktige kulører. Kunnskapsbasen alene når Apple Intelligence mangler. |
 | SwiftData med fargene som JSON i ett felt | Robust mot modellendringer og klar for CloudKit-synk. |
 
 ## Plattformforskjeller
@@ -121,6 +121,19 @@ Gjenstår i disse sporene: Adobe Color-tema direkte (krever Adobe-konto/API), Fi
 - Flere eksportformater: Procreate `.swatches`, Apple `.clr` (Mac), Figma-variabler, Tailwind, Android XML
 - iCloud-synk (CloudKit) og deling av paletter
 - Widget og Kontrollsenter-kontroll (siste palett, rask pipette/kamera)
+
+### Semantisk grunnlag for KI (2026-09-30)
+
+- `Fargesemantikk.json`: ~115 begreper (fargeord, natur, tid, materialer, verdier, stiler) med norske og engelske
+  synonymer, kulørfamilier med vekt, lyshets- og metningsnivåer, aksent, harmoni og notat. Merkevarer er formålet,
+  ikke grunnlaget – ingen bransjeklisjeer. Natur = levende, klare farger.
+- Oppslag med bøyning og sammensetninger («skogsgrønn» → skog + grønn). Fakta sendes med i prompten.
+- Modellen velger familie/lyshet/metning (relativ til gamut); minste metning per rolle og en «brunvakt» hindrer
+  grå og brune toner når begrepene ikke ber om dem.
+- `kiprove eval`: 15 faste verdiord × 2. Før: primær i forventet kulør 5/18, brune 15 %, lite kulør 26 %,
+  snittkroma 0,084. Etter: 17/17, 7 %, 6 %, 0,134 (før brunvakt).
+- «Beskriv en farge» (App Intent, Siri og Studio-feltet): beskrivelse → farge i OKLCH, vist i Studio.
+  Eksplisitte ord (pastell, dyp, neon …) overstyrer modellen.
 
 **Fase 3 – Siri og KI**
 - Siri med skjermbevissthet: knytt `NSUserActivity`/`appEntityIdentifier` til åpen palett

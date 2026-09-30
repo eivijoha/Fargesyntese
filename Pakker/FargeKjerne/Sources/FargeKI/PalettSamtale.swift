@@ -31,6 +31,8 @@ public final class PalettSamtale {
     @ObservationIgnored private var økt: LanguageModelSession?
     #endif
     @ObservationIgnored private var oppgave: Task<Void, Never>?
+    /// Begrepsgrunnlaget for gjeldende samtale (verdiordene pluss ord fra justeringene).
+    @ObservationIgnored private var grunnlag = Begrepsgrunnlag(treff: [])
 
     public init() {}
 
@@ -48,17 +50,18 @@ public final class PalettSamtale {
 
     public func foreslå(verdiord: String, antall: Int) {
         logg = [verdiord]
+        grunnlag = Fargesemantikk.oppslag(verdiord)
         kjør {
             #if canImport(FoundationModels)
             if self.status.erKlar {
                 self.økt = Self.nyØkt()
                 do {
-                    try await self.strøm(Instruksjoner.forslag(verdiord: verdiord, antall: antall))
+                    try await self.strøm(Instruksjoner.forslag(verdiord: verdiord, antall: antall, grunnlag: self.grunnlag))
                     return
                 } catch let feil where !(feil is CancellationError) && !KIFeil.fra(feil).erBrukerrettet {
                     // Uventet modellfeil (f.eks. manglende modellressurser): vis leksikonforslag
                     // i stedet for bare en feilmelding, og si ifra.
-                    self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut).begrenset(til: self.gamut)
+                    self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut)
                     self.feil = .reserveBrukt(KIFeil.fra(feil).localizedDescription)
                     return
                 }
@@ -75,7 +78,10 @@ public final class PalettSamtale {
         kjør {
             #if canImport(FoundationModels)
             guard self.status.erKlar else { throw KIFeil.ikkeTilgjengelig(self.status) }
-            let prompt = Instruksjoner.justering(instruks, av: nå.farger)
+            // Nye begreper i justeringen («mer som høstløv») legges til grunnlaget.
+            let nye = Fargesemantikk.oppslag(instruks).treff.filter { t in !self.grunnlag.begreper.contains { $0.id == t.begrep.id } }
+            self.grunnlag.treff = nye + self.grunnlag.treff
+            let prompt = Instruksjoner.justering(instruks, av: nå.farger, grunnlag: Begrepsgrunnlag(treff: nye))
             do {
                 try await self.strøm(prompt)
             } catch let feil where KIFeil.fra(feil).erForLang {
@@ -93,7 +99,7 @@ public final class PalettSamtale {
     public func bruk(_ justering: Justering) {
         guard var f = forslag else { return }
         let nye = justering.bruk(på: f.farger.map(\.farge), gamut: gamut)
-        for i in f.farger.indices { f.farger[i].farge = nye[i] }
+        for i in f.farger.indices { f.farger[i].farge = nye[i]; f.farger[i].spesifikasjon = nil }
         forslag = f.medRolleregler().begrenset(til: gamut)
         logg.append(justering.navn)
     }
@@ -127,17 +133,17 @@ public final class PalettSamtale {
 
     private func strøm(_ prompt: String) async throws {
         guard let økt else { return }
-        let strøm = økt.streamResponse(to: prompt, generating: GenerertPalett.self, options: GenerationOptions(temperature: 0.8))
+        let strøm = økt.streamResponse(to: prompt, generating: GenerertPalett.self, options: GenerationOptions(temperature: 0.7))
         var siste: GenerertPalett.PartiallyGenerated?
         for try await øyeblikk in strøm {
             try Task.checkCancellation()
             siste = øyeblikk.content
-            let delvis = øyeblikk.content.forslag.begrenset(til: gamut)
+            let delvis = øyeblikk.content.forslag(grunnlag: grunnlag, gamut: gamut)
             // Behold forrige forslag på skjermen til de første nye fargene er klare.
             if !delvis.farger.isEmpty || forslag == nil { forslag = delvis }
         }
         // Siste øyeblikksbilde er det komplette svaret; rollereglene brukes først nå.
-        if let siste { forslag = siste.forslag.medRolleregler().begrenset(til: gamut) }
+        if let siste { forslag = siste.forslag(grunnlag: grunnlag, gamut: gamut).medRolleregler().begrenset(til: gamut) }
     }
     #endif
 }

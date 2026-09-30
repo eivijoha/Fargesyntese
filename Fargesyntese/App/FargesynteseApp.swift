@@ -1,11 +1,12 @@
 import AppIntents
+import FargeKI
 import FargeKjerne
 import SwiftData
 import SwiftUI
 
 @main
 struct FargesynteseApp: App {
-    @State private var arbeidsbenk = Arbeidsbenk()
+    @State private var arbeidsbenk = Arbeidsbenk.delt
     @State private var profiler = ProfilBibliotek()
 
     init() {
@@ -96,6 +97,18 @@ final class Arbeidsbenk {
     }
 
     enum Fane: Hashable { case studio, paletter, overgang, utplukk, vurdering }
+
+    /// Én arbeidsbenk for hele appen, så App Intents («Beskriv en farge») kan vise resultatet.
+    static let delt = Arbeidsbenk()
+
+    /// Viser en beskrevet farge i Studio, i OKLCH (fargen er regnet ut der).
+    func vis(_ beskrevet: BeskrevetFarge) {
+        profilverdier = nil
+        aktivFarge = beskrevet.farge
+        modell = .okLCH
+        UserDefaults.standard.set("farge", forKey: "studioModus")
+        valgtFane = .studio
+    }
 
     /// Åpner en lagret gradient i Overgang (endepunktene huskes via `@AppStorage` der).
     func åpne(_ gradient: Gradientoppsett) {

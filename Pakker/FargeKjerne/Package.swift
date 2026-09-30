@@ -13,7 +13,8 @@ let package = Package(
         // Ren fargematematikk, paletter og eksport. Ingen UI-avhengigheter.
         .target(name: "FargeKjerne", resources: [.process("Localizable.xcstrings")]),
         // Verdiord → fargeforslag (Foundation Models på enheten + leksikon-reserve).
-        .target(name: "FargeKI", dependencies: ["FargeKjerne"], resources: [.process("Localizable.xcstrings")]),
+        .target(name: "FargeKI", dependencies: ["FargeKjerne"],
+                resources: [.process("Localizable.xcstrings"), .process("Fargesemantikk.json")]),
         // Utviklerverktøy for å prøve KI-promptene mot modellen på Macen: `swift run kiprove`.
         .executableTarget(name: "kiprove", dependencies: ["FargeKjerne", "FargeKI"], path: "Sources/KIProve"),
         .testTarget(name: "FargeKjerneTests", dependencies: ["FargeKjerne", "FargeKI"]),

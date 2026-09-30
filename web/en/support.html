@@ -68,7 +68,8 @@
         <div class="svar">
           <p>You can edit colors in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK. RGB colors can be in Display P3, beyond sRGB. You can also view and edit the values in any ICC profile – built in or imported.</p>
           <p>CIELab and CIE LCH use the D50 white point, like ICC profiles, Photoshop and CSS <code>lab()</code>, so the values match your design tools.</p>
-          <p>The color value field also understands CSS text: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> and CSS color names.</p>
+          <p>The color value field also understands CSS text: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> and CSS color names. If you type a description, such as “deep ocean blue” or “dusty pink”, the color is made in OKLCH and shown in Studio.</p>
+          <p>When the color model is CMYK and you show a CMYK profile (or RGB and an RGB profile), the values are entered directly in the profile. The color is then rendered as it will be in that color space, without a gamut warning.</p>
         </div>
       </details>
 
@@ -113,7 +114,8 @@
             <li>the model to have finished downloading, and</li>
             <li>Apple Intelligence to be available for the language and region you use.</li>
           </ul>
-          <p>When Apple Intelligence isn’t available, the app automatically falls back to a built-in lexicon that turns value words (such as “calm”, “warm” or “exclusive”) into palettes. It works offline, but is less flexible than the language model – for example, free-text adjustments, naming and palette critique may be limited or unavailable.</p>
+          <p>Palettes from value words are grounded in a knowledge base of more than a hundred color concepts – nature, materials, styles and values – in Norwegian and English. The language model is given the relevant concepts and chooses hue family, lightness and saturation; the colors themselves are computed in OKLCH. The app shows which concepts a suggestion is based on.</p>
+          <p>When Apple Intelligence isn’t available, the app builds the palette directly from the knowledge base. It works offline, but is less flexible than the language model – for example, free-text adjustments, naming and palette critique may be limited or unavailable.</p>
           <p>Either way, everything happens on device. What you type is not sent to the developer.</p>
         </div>
       </details>
@@ -165,7 +167,7 @@
       <details>
         <summary>How do I use Siri and Shortcuts?</summary>
         <div class="svar">
-          <p>Fargesyntese provides actions in the Shortcuts app: <em>create a palette from value words</em>, <em>create a gradient</em>, <em>convert a color</em> and <em>check contrast</em>. Use them in your own shortcuts or ask Siri.</p>
+          <p>Fargesyntese provides actions in the Shortcuts app: <em>create a palette from value words</em>, <em>create a gradient</em>, <em>convert a color</em>, <em>check contrast</em> and <em>describe a color</em>. Use them in your own shortcuts or ask Siri.</p>
         </div>
       </details>
     </section>

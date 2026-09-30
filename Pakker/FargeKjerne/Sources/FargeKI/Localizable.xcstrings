@@ -71,7 +71,24 @@
         }
       }
     },
+    "Bygget fra kunnskapsbasen: %@ og %@ med %@ som aksent.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built from the knowledge base: %1$@ and %2$@ with %3$@ as accent."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Bygget fra kunnskapsbasen: %1$@ og %2$@ med %3$@ som aksent."
+          }
+        }
+      }
+    },
     "Bygget fra leksikonet: kulør rundt %lld°, med analog sekundærfarge og komplementær aksent.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {

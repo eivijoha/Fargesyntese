@@ -85,6 +85,22 @@
         }
       }
     },
+    "%@ · %@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@ · %3$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@ · %3$@"
+          }
+        }
+      }
+    },
     "%@ · minst %@:1": {
       "localizations": {
         "en": {
@@ -171,6 +187,22 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$@, %3$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$@, %3$@"
           }
         }
       }
@@ -465,6 +497,26 @@
         }
       }
     },
+    "Beskriv en farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Describe a color"
+          }
+        }
+      }
+    },
+    "Beskrivelse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Description"
+          }
+        }
+      }
+    },
     "Bestått": {
       "localizations": {
         "en": {
@@ -551,6 +603,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Body text at regular size, as it reads in the app."
+          }
+        }
+      }
+    },
+    "Bygger på: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Based on: %@"
           }
         }
       }
@@ -1181,22 +1243,22 @@
         }
       }
     },
-    "Hex eller CSS-farge": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hex or CSS color"
-          }
-        }
-      }
-    },
     "Hex eller CSS-farge, f.eks. #767676": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Hex or CSS color, e.g. #767676"
+          }
+        }
+      }
+    },
+    "Hex, CSS eller beskrivelse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex, CSS or description"
           }
         }
       }
@@ -1267,6 +1329,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "White, movable light panel on the screen as a light source for the camera"
+          }
+        }
+      }
+    },
+    "Hvordan ser fargen ut?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What does the color look like?"
           }
         }
       }
@@ -1813,6 +1885,16 @@
         }
       }
     },
+    "Lager en farge fra en beskrivelse, f.eks. «dyp havblå» eller «støvete rosa». Fargen regnes ut i OKLCH og vises i Studio.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makes a color from a description, e.g. “deep ocean blue” or “dusty pink”. The color is computed in OKLCH and shown in Studio."
+          }
+        }
+      }
+    },
     "Lager toner i like perseptuelle steg (OKLab) mellom to farger.": {
       "localizations": {
         "en": {
@@ -1843,12 +1925,12 @@
         }
       }
     },
-    "Laget med innebygd leksikon.": {
+    "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Made with the built-in lexicon."
+            "value": "Made with the built-in knowledge base (without Apple Intelligence)."
           }
         }
       }
@@ -3289,6 +3371,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Angle"
+          }
+        }
+      }
+    },
+    "Vis fargen ${beskrivelse}": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the color ${beskrivelse}"
           }
         }
       }

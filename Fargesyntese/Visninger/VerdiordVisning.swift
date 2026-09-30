@@ -84,12 +84,18 @@ struct VerdiordVisning: View {
         Section {
             PalettStripe(farger: forslag.farger.map(\.farge)).frame(height: 56)
             if !forslag.forklaring.isEmpty { Text(forslag.forklaring).font(.callout) }
+            if !forslag.grunnlag.isEmpty {
+                // Åpenhet: hvilke begreper i kunnskapsbasen forslaget bygger på.
+                Label("Bygger på: \(Fargesemantikk.visningsnavn(forslag.grunnlag).joined(separator: " · "))", systemImage: "books.vertical")
+                    .font(.caption)
+                    .foregroundStyle(Color.sekundærTekst)
+            }
             ForEach(forslag.farger) { f in
                 HStack(alignment: .top, spacing: 12) {
                     FargeRute(farge: f.farge, visTekst: false, hjørne: 8).frame(width: 44, height: 44)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(f.navn.isEmpty ? "…" : f.navn).font(.headline)
-                        Text("\(f.rollenavn) · \(f.farge.hex())")
+                        Text(f.spesifikasjon.map { "\(f.rollenavn) · \($0.familie.navn) · \(f.farge.hex())" } ?? "\(f.rollenavn) · \(f.farge.hex())")
                             .font(.caption.monospaced())
                             .foregroundStyle(Color.sekundærTekst)
                         if !f.begrunnelse.isEmpty { Text(f.begrunnelse).font(.caption) }
@@ -108,7 +114,7 @@ struct VerdiordVisning: View {
         }.foregroundStyle(Color.sekundærTekst) } footer: {
             Text(forslag.kilde == .appleIntelligence
                  ? "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen."
-                 : "Laget med innebygd leksikon.")
+                 : "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).")
         }
     }
 

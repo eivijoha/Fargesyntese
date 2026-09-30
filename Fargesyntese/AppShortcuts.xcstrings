@@ -1,6 +1,29 @@
 {
   "sourceLanguage": "nb",
   "strings": {
+    "Beskriv en farge i ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Describe a color in ${applicationName}",
+              "Show a color in ${applicationName}"
+            ]
+          }
+        },
+        "nb": {
+          "stringSet": {
+            "state": "new",
+            "values": [
+              "Beskriv en farge i ${applicationName}",
+              "Vis en farge i ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Konverter en farge med ${applicationName}": {
       "extractionState": "extracted_with_value",
       "localizations": {

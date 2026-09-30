@@ -68,7 +68,8 @@
         <div class="svar">
           <p>Du kan redigere farger i OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB og CMYK. RGB-farger kan ligge i Display P3, altså utenfor sRGB. I tillegg kan du vise og redigere verdiene i en hvilken som helst ICC-profil – innebygd eller importert.</p>
           <p>CIELab og CIE LCH bruker hvitpunkt D50, slik som ICC-profiler, Photoshop og CSS <code>lab()</code>, så verdiene stemmer med designverktøyene dine.</p>
-          <p>Feltet for fargeverdi forstår også CSS-tekst: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> og CSS-fargenavn.</p>
+          <p>Feltet for fargeverdi forstår også CSS-tekst: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> og CSS-fargenavn. Skriver du en beskrivelse, som «dyp havblå» eller «støvete rosa», lages fargen i OKLCH og vises i Studio.</p>
+          <p>Når fargemodellen er CMYK og du viser en CMYK-profil (eller RGB og en RGB-profil), angis verdiene direkte i profilen. Fargen gjengis da slik den blir i det fargerommet, uten gamutvarsel.</p>
         </div>
       </details>
 
@@ -113,7 +114,8 @@
             <li>at modellen er ferdig lastet ned, og</li>
             <li>at Apple Intelligence er tilgjengelig for språket og regionen du bruker.</li>
           </ul>
-          <p>Når Apple Intelligence ikke er tilgjengelig, faller appen automatisk tilbake til et innebygd leksikon som oversetter verdiord (som «rolig», «varm» eller «eksklusiv») til paletter. Det fungerer uten nett, men er mindre fleksibelt enn språkmodellen – for eksempel kan fritekstjusteringer, navngiving og vurdering av paletter være begrenset eller utilgjengelig.</p>
+          <p>Paletter fra verdiord bygger på en kunnskapsbase med over hundre fargebegreper – natur, materialer, stiler og verdier – på norsk og engelsk. Språkmodellen får de relevante begrepene som grunnlag og velger kulørfamilie, lyshet og metning; selve fargene regnes ut i OKLCH. Appen viser hvilke begreper forslaget bygger på.</p>
+          <p>Når Apple Intelligence ikke er tilgjengelig, lager appen paletten direkte fra kunnskapsbasen. Det fungerer uten nett, men er mindre fleksibelt enn språkmodellen – for eksempel kan fritekstjusteringer, navngiving og vurdering av paletter være begrenset eller utilgjengelig.</p>
           <p>I begge tilfeller skjer alt på enheten. Teksten du skriver, sendes ikke til utvikleren.</p>
         </div>
       </details>
@@ -165,7 +167,7 @@
       <details>
         <summary>Hvordan bruker jeg Siri og Snarveier?</summary>
         <div class="svar">
-          <p>Fargesyntese har handlinger i Snarveier-appen: <em>lag palett fra verdiord</em>, <em>lag overgang</em>, <em>konverter farge</em> og <em>sjekk kontrast</em>. Du kan bruke dem i egne snarveier eller be Siri om dem, for eksempel «Lag en palett i Fargesyntese».</p>
+          <p>Fargesyntese har handlinger i Snarveier-appen: <em>lag palett fra verdiord</em>, <em>lag overgang</em>, <em>konverter farge</em>, <em>sjekk kontrast</em> og <em>beskriv en farge</em>. Du kan bruke dem i egne snarveier eller be Siri om dem, for eksempel «Lag en palett i Fargesyntese» eller «Beskriv en farge i Fargesyntese».</p>
         </div>
       </details>
     </section>
