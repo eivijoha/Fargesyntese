@@ -93,6 +93,8 @@ appen faller da tilbake til leksikonet. Samme kode fungerer mot modellen på mac
    CIEDE2000 testet mot Sharma-datasettet
 3. **Adobe**: ASE (finnes, uten 5-fargersgrense), ACO (Photoshop), Adobe Color-temaer (5 farger), CC-biblioteker
 4. **Figma**: variabler (JSON/REST-API), Tokens Studio, eventuelt egen plugin
+5. **Overgang → CSS-gradient**: `linear-gradient(in oklab, …)` (og `radial-`/`conic-`) med fargestopp fra overgangen,
+   pluss reserve for eldre nettlesere med tette sRGB-stopp som etterligner OKLab-interpolasjonen; kopier/eksporter
 
 ## Veikart
 
