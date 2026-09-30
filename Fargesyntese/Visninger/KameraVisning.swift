@@ -74,7 +74,7 @@ struct KameraVisning: View {
                     Image(systemName: "circle.inset.filled").font(.system(size: 44))
                 }
                 .accessibilityLabel("Fang farge")
-                .sensoryFeedback(.impact, trigger: fanget.count)
+                .sensoryFeedback(.impact, trigger: fanget)
             }
             .padding()
             .background(.bar)
@@ -99,7 +99,7 @@ struct KameraVisning: View {
         .task {
             plukker.vedFangst = { målt in
                 let farge = arbeidsbenk.begrens(målt)
-                fanget.append(farge)
+                fanget.fang(farge)
                 arbeidsbenk.aktivFarge = farge
                 arbeidsbenk.registrerMåling(farge)
                 if slukkEtterFangst {
@@ -160,5 +160,15 @@ private struct LevendeKamerafarge: View {
 
     var body: some View {
         FargeRute(farge: plukker.gjeldende ?? Farge(hex: "#808080")!, hjørne: 10, leggIPalett: leggIPalett)
+    }
+}
+
+extension Array where Element == Farge {
+    /// Utplukk holder bare de siste fangede fargene (rullerende), nyeste sist.
+    static let maksFanget = 3
+
+    mutating func fang(_ farge: Farge) {
+        append(farge)
+        if count > Self.maksFanget { removeFirst(count - Self.maksFanget) }
     }
 }

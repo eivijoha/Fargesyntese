@@ -140,7 +140,7 @@ struct BildeVisning: View {
                             let f = arbeidsbenk.begrens(målt)
                             arbeidsbenk.aktivFarge = f
                             arbeidsbenk.registrerMåling(f)
-                            fanget.append(f)
+                            fanget.fang(f)
                         }
                     }
             )
@@ -194,13 +194,13 @@ struct BildeVisning: View {
                 Button("Fang", systemImage: "plus.circle.fill") {
                     if let målt = gjeldende {
                         let f = arbeidsbenk.begrens(målt)
-                        fanget.append(f)
+                        fanget.fang(f)
                         arbeidsbenk.registrerMåling(f)
                     }
                 }
                 .labelStyle(.iconOnly)
                 .font(.system(size: 36))
-                .sensoryFeedback(.impact, trigger: fanget.count)
+                .sensoryFeedback(.impact, trigger: fanget)
                 Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
                     lagre = fanget.map { PalettFarge(farge: $0, opphav: .bilde) }
                 }
