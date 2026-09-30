@@ -1,4 +1,5 @@
 import FargeKjerne
+import SwiftData
 import SwiftUI
 
 /// Fargeharmonier rundt aktiv farge, med en liten fargesirkel som viser vinklene.
@@ -9,6 +10,7 @@ struct HarmoniSeksjon: View {
     var velg: (Farge) -> Void
     var lagre: ([PalettFarge], String) -> Void
 
+    @Environment(\.modelContext) private var kontekst
     @AppStorage("harmoni") private var harmoni: Harmoni = .splittKomplementær
     @AppStorage("harmoniAntall") private var antall = 3
     @AppStorage("harmoniVinkel") private var vinkel = 30.0
@@ -46,7 +48,10 @@ struct HarmoniSeksjon: View {
                 .padding(.vertical, 4)
             HStack(spacing: 4) {
                 ForEach(Array(farger.enumerated()), id: \.offset) { _, farge in
-                    FargeRute(farge: farge, visTekst: false, hjørne: 6)
+                    FargeRute(farge: farge, visTekst: false, hjørne: 6,
+                              lagre: { lagreEnkeltfarger([PalettFarge(farge: $0)], i: kontekst) },
+                              leggIPalett: { lagre([PalettFarge(farge: $0)], "") },
+                              valgBoble: true)
                         .frame(height: 44)
                         .overlay {
                             if farge == grunnfarge { RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2) }

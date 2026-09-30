@@ -145,7 +145,10 @@ extension FargeEditor {
             HStack(spacing: 4) {
                 ForEach(Array(varianter.enumerated()), id: \.offset) { i, variant in
                     VStack(spacing: 2) {
-                        FargeRute(farge: variant, visTekst: false, hjørne: 6)
+                        FargeRute(farge: variant, visTekst: false, hjørne: 6,
+                                  lagre: { lagreEnkeltfarger([PalettFarge(farge: $0, opphav: .toneskala)], i: kontekst) },
+                                  leggIPalett: { lagreNavn = ""; lagreFarger = [PalettFarge(farge: $0, opphav: .toneskala)] },
+                                  valgBoble: true)
                             .frame(height: 44)
                             .overlay {
                                 if i == arbeidsbenk.lyshetstrinn.antallLysere {
@@ -167,7 +170,7 @@ extension FargeEditor {
         } header: { Group {
             Text("Lysere og mørkere")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge.")
+            Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge, eller trykk og hold for å lagre den.")
         }
     }
 }

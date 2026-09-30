@@ -2899,12 +2899,12 @@
         }
       }
     },
-    "Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge.": {
+    "Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge, eller trykk og hold for å lagre den.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The numbers under each swatch are OKLCH lightness in percent. Tap a tone to make it the active color."
+            "value": "The numbers under each swatch are OKLCH lightness in percent. Tap a tone to make it the active color, or touch and hold to save it."
           }
         }
       }
@@ -3163,6 +3163,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pick"
+          }
+        }
+      }
+    },
+    "Valg for fargen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color options"
           }
         }
       }

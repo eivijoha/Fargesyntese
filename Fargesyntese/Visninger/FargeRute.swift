@@ -23,12 +23,47 @@ struct FargeRute: View {
     /// Ekstra menypunkter (f.eks. «Flytt til …»).
     var ekstraMeny: AnyView? = nil
 
+    /// Valgene vises i en boble ved prøven (trykk og hold) i stedet for som kontekstmeny.
+    /// Brukes i lister/skjemaer: der gjelder iOS' kontekstmeny hele raden, så menyen og
+    /// forhåndsvisningen kan høre til feil prøve når flere står på samme rad.
+    var valgBoble = false
+    @State private var visValg = false
+
     var body: some View {
-        if let palettFarge {
-            rute.draggable(palettFarge) { FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56) }
+        if valgBoble {
+            rute
+                .onLongPressGesture(minimumDuration: 0.35) { visValg = true }
+                .sensoryFeedback(.impact(weight: .medium), trigger: visValg) { _, ny in ny }
+                .popover(isPresented: $visValg, arrowEdge: .bottom) {
+                    FargeValgBoble(farge: farge, lagre: lagre, leggIPalett: leggIPalett) { visValg = false }
+                        .presentationCompactAdaptation(.popover)
+                }
+                .accessibilityAction(named: "Valg for fargen") { visValg = true }
+        } else if let palettFarge {
+            medMeny.draggable(palettFarge) { FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56) }
         } else {
-            rute.draggable(farge)
+            medMeny.draggable(farge)
         }
+    }
+
+    private var medMeny: some View {
+        rute
+            .contextMenu {
+                if let navngi {
+                    Button("Gi navn …", systemImage: "character.cursor.ibeam", action: navngi)
+                }
+                if let lagre {
+                    Button("Lagre som enkeltfarge", systemImage: "plus.square") { lagre(farge) }
+                }
+                if let leggIPalett {
+                    Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
+                }
+                KopierMeny(farge: farge)
+                if let ekstraMeny { ekstraMeny }
+                if let fjern {
+                    Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)
+                }
+            }
     }
 
     private var form: UnevenRoundedRectangle {
@@ -70,27 +105,6 @@ struct FargeRute: View {
                         .accessibilityLabel("Utenfor sRGB")
                 }
             }
-            .contextMenu {
-                if let navngi {
-                    Button("Gi navn …", systemImage: "character.cursor.ibeam", action: navngi)
-                }
-                if let lagre {
-                    Button("Lagre som enkeltfarge", systemImage: "plus.square") { lagre(farge) }
-                }
-                if let leggIPalett {
-                    Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
-                }
-                KopierMeny(farge: farge)
-                if let ekstraMeny { ekstraMeny }
-                if let fjern {
-                    Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)
-                }
-            } preview: {
-                // Egen forhåndsvisning: i lister løfter iOS ellers hele raden, så det er uklart
-                // hvilken farge menyen gjelder.
-                FargeRute(farge: farge, navn: navn, hjørne: 16, palettFarge: palettFarge)
-                    .frame(width: 220, height: 160)
-            }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(navn ?? farge.hex())
             .accessibilityValue(Fargemodell.okLCH.tekst(for: farge))
@@ -109,5 +123,66 @@ struct KopierMeny: View {
             }
         }
         ShareLink(item: farge, preview: SharePreview(farge.hex()))
+    }
+}
+
+/// Valg for én fargeprøve, vist i en boble ved prøven: stor forhåndsvisning av nøyaktig
+/// den trykkede fargen, og lagring/kopiering.
+struct FargeValgBoble: View {
+    let farge: Farge
+    var lagre: ((Farge) -> Void)?
+    var leggIPalett: ((Farge) -> Void)?
+    var lukk: () -> Void
+    @State private var lagret = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(farge.swiftUI)
+                .frame(width: 220, height: 96)
+                .overlay(alignment: .bottomLeading) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(farge.hex()).font(.callout.monospaced().weight(.semibold))
+                        Text(Fargemodell.okLCH.tekst(for: farge)).font(.caption2.monospaced())
+                    }
+                    .foregroundStyle(farge.lesbarTekstfarge.swiftUI)
+                    .padding(10)
+                }
+            VStack(alignment: .leading, spacing: 4) {
+                if let lagre {
+                    Button(lagret ? "Lagret" : "Lagre som enkeltfarge", systemImage: lagret ? "checkmark.square.fill" : "plus.square") {
+                        lagre(farge)
+                        lagret = true
+                        Task { try? await Task.sleep(for: .seconds(0.8)); lukk() }
+                    }
+                    .disabled(lagret)
+                    .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }
+                }
+                if let leggIPalett {
+                    Button("Legg i palett …", systemImage: "plus.square.on.square") {
+                        lukk()
+                        leggIPalett(farge)
+                    }
+                }
+                Button("Kopier hex", systemImage: "doc.on.doc") {
+                    Utklippstavle.kopier(farge)
+                    lukk()
+                }
+            }
+            .buttonStyle(.borderless)
+            .labelStyle(JustertEtikett())
+        }
+        .padding(16)
+    }
+}
+
+/// Etikett med fast ikonbredde, så teksten i en knappeliste står på linje.
+private struct JustertEtikett: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 10) {
+            configuration.icon.frame(width: 24)
+            configuration.title
+        }
+        .frame(minHeight: 36)
     }
 }
