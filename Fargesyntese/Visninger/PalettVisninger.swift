@@ -29,10 +29,7 @@ struct PalettListe: View {
                     kort(.enkeltfarger) {
                         EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge), paletter: paletter)
                     } slipp: { farger in
-                        let eksisterende = Set(enkeltfarger.map(\.id))
-                        let nye = farger.filter { !eksisterende.contains($0.id) }
-                        lagreEnkeltfarger(nye, i: kontekst)
-                        return !nye.isEmpty
+                        flyttTilEnkeltfarger(farger, i: kontekst)
                     }
 
                     Text("Paletter").font(.title3.weight(.semibold)).padding(.top, 8)
@@ -45,7 +42,7 @@ struct PalettListe: View {
                         kort(.palett(p)) {
                             PalettRad(dokument: p)
                         } slipp: { farger in
-                            leggTil(farger, i: p)
+                            flytt(farger, til: p, i: kontekst)
                         }
                         .contextMenu {
                             Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
@@ -126,6 +123,43 @@ struct PalettListe: View {
     }
 }
 
+/// Dra og slipp flytter: fargen legges i målet og fjernes der den kom fra (en annen palett eller
+/// Enkeltfarger). Farger uten kilde i appen (fra Studio, andre apper eller tekst) legges bare til.
+@discardableResult
+func flytt(_ farger: [PalettFarge], til mål: PalettDokument, i kontekst: ModelContext) -> Bool {
+    let eksisterende = Set(mål.farger.map(\.id))
+    let nye = farger.filter { !eksisterende.contains($0.id) }
+    guard leggTil(nye, i: mål) else { return false }
+    fjernFraKilder(nye, i: kontekst, unntattPalett: mål)
+    return true
+}
+
+@discardableResult
+func flyttTilEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) -> Bool {
+    let lagrede = Set(((try? kontekst.fetch(FetchDescriptor<LagretFarge>())) ?? []).map(\.id))
+    let nye = farger.filter { !lagrede.contains($0.id) }
+    guard !nye.isEmpty else { return false }
+    lagreEnkeltfarger(nye, i: kontekst)
+    fjernFraKilder(nye, i: kontekst, beholdEnkeltfarger: true)
+    return true
+}
+
+/// Fjerner fargene (etter id) fra paletter og enkeltfarger de ligger i.
+private func fjernFraKilder(_ farger: [PalettFarge], i kontekst: ModelContext,
+                            unntattPalett: PalettDokument? = nil, beholdEnkeltfarger: Bool = false) {
+    let ider = Set(farger.map(\.id))
+    for p in (try? kontekst.fetch(FetchDescriptor<PalettDokument>())) ?? [] where p.id != unntattPalett?.id {
+        if p.farger.contains(where: { ider.contains($0.id) }) {
+            p.farger.removeAll { ider.contains($0.id) }
+        }
+    }
+    if !beholdEnkeltfarger {
+        for lagret in (try? kontekst.fetch(FetchDescriptor<LagretFarge>())) ?? [] where ider.contains(lagret.id) {
+            kontekst.delete(lagret)
+        }
+    }
+}
+
 /// Lagrer farger som enkeltfarger (uten palett), med nye identiteter.
 func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) {
     for f in farger { kontekst.insert(LagretFarge(f.kopi)) }
@@ -194,9 +228,7 @@ struct EnkeltfargerVisning: View {
         }
         .navigationTitle("Enkeltfarger")
         .dropDestination(for: PalettFarge.self) { farger, _ in
-            let eksisterende = Set(lagrede.map(\.id))
-            lagreEnkeltfarger(farger.filter { !eksisterende.contains($0.id) }, i: kontekst)
-            return true
+            flyttTilEnkeltfarger(farger, i: kontekst)
         }
         .toolbar {
             ToolbarItemGroup {
@@ -275,6 +307,7 @@ struct PalettStripe: View {
 
 struct PalettDetalj: View {
     @Bindable var dokument: PalettDokument
+    @Environment(\.modelContext) private var kontekst
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var eksportformat: Eksportformat?
     @State private var visSkala: PalettFarge?
@@ -312,7 +345,7 @@ struct PalettDetalj: View {
         }
         .navigationTitle($dokument.navn)
         .dropDestination(for: PalettFarge.self) { farger, _ in
-            leggTil(farger, i: dokument)
+            flytt(farger, til: dokument, i: kontekst)
         }
         .toolbar {
             ToolbarItemGroup {
