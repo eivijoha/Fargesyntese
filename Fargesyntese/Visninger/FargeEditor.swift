@@ -268,8 +268,27 @@ struct VerdiRad: View {
 }
 
 /// Antall og størrelse på lysere/mørkere steg – hver retning for seg.
+/// Antall lysere/mørkere steg hver for seg, og én felles stegstørrelse for begge retninger.
 struct LyshetstrinnKontroller: View {
     @Binding var trinn: Lyshetstrinn
+
+    private var område: ClosedRange<Double> { trinn.modus == .fast ? 0.01...0.2 : 0.05...0.6 }
+
+    /// Felles steg: setter begge retningene likt.
+    private var steg: Binding<Double> {
+        Binding(
+            get: { trinn.lysereSteg },
+            set: { ny in
+                trinn.lysereSteg = ny
+                trinn.mørkereSteg = ny
+            }
+        )
+    }
+
+    private var stegtekst: String {
+        let v = Int((trinn.lysereSteg * 100).rounded())
+        return trinn.modus == .fast ? "±\(v) %-poeng" : "\(v) % mot hvitt/sort"
+    }
 
     var body: some View {
         Picker("Stegtype", selection: $trinn.modus) {
@@ -277,26 +296,24 @@ struct LyshetstrinnKontroller: View {
             Text("Mot hvitt/sort").tag(Lyshetstrinn.Modus.relativ)
         }
         .pickerStyle(.segmented)
-        stegRad(tittel: "Lysere", antall: $trinn.antallLysere, steg: $trinn.lysereSteg, lysere: true)
-        stegRad(tittel: "Mørkere", antall: $trinn.antallMørkere, steg: $trinn.mørkereSteg, lysere: false)
-    }
-
-    private func stegRad(tittel: String, antall: Binding<Int>, steg: Binding<Double>, lysere: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Stepper("\(tittel): \(antall.wrappedValue) steg", value: antall, in: 0...8)
-            HStack {
-                Slider(value: steg, in: trinn.modus == .fast ? 0.01...0.2 : 0.05...0.6, step: 0.01)
-                    .disabled(antall.wrappedValue == 0)
-                Text(trinn.stegtekst(lysere: lysere))
-                    .font(.callout.monospacedDigit())
-                    .foregroundStyle(.secondary)
-                    .frame(minWidth: 110, alignment: .trailing)
-            }
+        Stepper("Lysere: \(trinn.antallLysere) steg", value: $trinn.antallLysere, in: 0...8)
+        Stepper("Mørkere: \(trinn.antallMørkere) steg", value: $trinn.antallMørkere, in: 0...8)
+        HStack {
+            Text("Steg")
+            Slider(value: steg, in: område, step: 0.01)
+                .disabled(trinn.antallLysere == 0 && trinn.antallMørkere == 0)
+            Text(stegtekst)
+                .font(.callout.monospacedDigit())
+                .foregroundStyle(.secondary)
+                .frame(minWidth: 96, alignment: .trailing)
         }
-        .onChange(of: trinn.modus) { _, ny in
-            // Hold stegene innenfor det nye området.
-            let område = ny == .fast ? 0.01...0.2 : 0.05...0.6
-            steg.wrappedValue = steg.wrappedValue.clamped(to: område)
+        .onChange(of: trinn.modus) { _, _ in
+            // Hold steget innenfor det nye området, og likt i begge retninger.
+            steg.wrappedValue = trinn.lysereSteg.clamped(to: område)
+        }
+        .onAppear {
+            // Tidligere versjoner kunne ha ulike steg per retning; samkjør dem.
+            if trinn.mørkereSteg != trinn.lysereSteg { steg.wrappedValue = trinn.lysereSteg }
         }
     }
 }
