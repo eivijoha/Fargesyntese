@@ -373,9 +373,10 @@ private extension Double {
     func clamped(to r: ClosedRange<Double>) -> Double { Swift.min(Swift.max(self, r.lowerBound), r.upperBound) }
 }
 
-/// Stor fargeflate øverst i Studio, alltid delt: Display P3 til venstre (fargen slik den er) og
+/// Stor fargeflate øverst i Studio, delt: Display P3 til venstre (fargen slik den er) og
 /// nærmeste tilsvarende farge i valgt fargerom til høyre. Høyre side viser hex for sRGB,
-/// ellers fargeverdiene i rommet (RGB 0–255, CMYK i %).
+/// ellers fargeverdiene i rommet (RGB 0–255, CMYK i %). Når CMYK/RGB angis direkte i profilen,
+/// vises én udelt flate.
 struct Fargeflate: View {
     let farge: Farge
     /// Fargemodellen som er valgt i Studio – venstre halvdel viser verdiene i den.
@@ -408,17 +409,19 @@ struct Fargeflate: View {
         let høyre = motpart
         let høyreFarge = PalettFarge(farge: høyre.farge, representasjon: Fargerepresentasjon(
             rom: .icc(id: profil.id, navn: profil.navn), verdier: høyre.verdier, tekst: høyre.tekst))
-        // Koblet: venstre er verdiene slik de er angitt i profilen, og lagres i profilen.
-        let venstre = kobletVerdier == nil
-            ? PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
-            : høyreFarge
+        let venstre = PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
         HStack(spacing: 0) {
-            halvdel(venstre, tittel: kobletVerdier == nil ? modell.navn : "\(modell.navn) · \(profil.navn)",
-                    tekst: kobletVerdier == nil ? modell.tekst(for: farge) : høyre.tekst,
-                    merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
-            halvdel(høyreFarge, tittel: profil.navn, tekst: høyre.tekst,
-                    merknad: kobletVerdier != nil || farge.erInnenfor(profil, hensikt: hensikt) ? nil
-                        : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
+            if kobletVerdier != nil {
+                // Verdiene er angitt direkte i profilen: én flate, ingen sammenligning å vise.
+                halvdel(høyreFarge, tittel: "\(modell.navn) · \(profil.navn)", tekst: høyre.tekst,
+                        merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
+            } else {
+                halvdel(venstre, tittel: modell.navn, tekst: modell.tekst(for: farge),
+                        merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
+                halvdel(høyreFarge, tittel: profil.navn, tekst: høyre.tekst,
+                        merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
+                            : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
+            }
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
     }
