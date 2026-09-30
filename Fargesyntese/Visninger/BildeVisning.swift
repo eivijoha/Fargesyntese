@@ -156,12 +156,23 @@ struct BildeVisning: View {
     private var verktøylinje: some View {
         VStack(spacing: 10) {
             HStack(spacing: 12) {
-                FargeRute(farge: gjeldende ?? Farge(hex: "#808080")!, hjørne: 10)
+                FargeRute(farge: gjeldende ?? Farge(hex: "#808080")!, hjørne: 10,
+                          leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] })
                     .frame(width: 88, height: 56)
+                Button("Legg i palett", systemImage: "plus.square.on.square") {
+                    if let f = fanget.last ?? gjeldende { lagre = [PalettFarge(farge: f, opphav: .bilde)] }
+                }
+                .labelStyle(.iconOnly)
+                .font(.title2)
+                .help("Legg sist fangede farge i en palett")
                 ScrollView(.horizontal) {
                     HStack(spacing: 6) {
                         ForEach(fanget.indices, id: \.self) { i in
-                            FargeRute(farge: fanget[i], visTekst: false, hjørne: 6).frame(width: 36, height: 36)
+                            FargeRute(farge: fanget[i], visTekst: false, hjørne: 6,
+                                      leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] },
+                                      fjern: { fanget.remove(at: i) })
+                                .frame(width: 36, height: 36)
+                                .onTapGesture { arbeidsbenk.aktivFarge = fanget[i] }
                         }
                     }
                 }
@@ -174,7 +185,7 @@ struct BildeVisning: View {
                 .labelStyle(.iconOnly)
                 .font(.system(size: 36))
                 .sensoryFeedback(.impact, trigger: fanget.count)
-                Button("Lagre", systemImage: "square.and.arrow.down") {
+                Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
                     lagre = fanget.map { PalettFarge(farge: $0, opphav: .bilde) }
                 }
                 .labelStyle(.iconOnly)

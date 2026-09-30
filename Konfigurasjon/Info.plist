@@ -21,6 +21,16 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>no.engenett.fargesyntese.palettfarge</string>
+			<key>UTTypeDescription</key>
+			<string>Fargesyntese-palettfarge</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

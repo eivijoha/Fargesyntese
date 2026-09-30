@@ -8,18 +8,21 @@ struct PalettListe: View {
     @Environment(\.modelContext) private var kontekst
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
     @State private var valgt: PalettDokument?
+    @State private var målrettet: UUID?
 
     var body: some View {
         NavigationSplitView {
             List(selection: $valgt) {
                 ForEach(paletter) { p in
                     NavigationLink(value: p) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(p.navn.isEmpty ? "Uten navn" : p.navn).font(.headline)
-                            PalettStripe(farger: p.farger.map(\.farge)).frame(height: 24)
-                        }
-                        .padding(.vertical, 4)
+                        PalettRad(dokument: p)
                     }
+                    .dropDestination(for: PalettFarge.self) { farger, _ in
+                        leggTil(farger, i: p)
+                    } isTargeted: { over in
+                        målrettet = over ? p.id : (målrettet == p.id ? nil : målrettet)
+                    }
+                    .listRowBackground(målrettet == p.id ? Color.accentColor.opacity(0.15) : nil)
                 }
                 .onDelete { indekser in indekser.map { paletter[$0] }.forEach(kontekst.delete) }
             }
@@ -40,6 +43,45 @@ struct PalettListe: View {
         } detail: {
             if let valgt { PalettDetalj(dokument: valgt) } else { Text("Velg en palett").foregroundStyle(.secondary) }
         }
+    }
+}
+
+/// Legger slippede farger i en palett. Farger som allerede finnes i paletten (samme id) hoppes over,
+/// så et slipp tilbake på samme palett ikke lager duplikater.
+@discardableResult
+func leggTil(_ farger: [PalettFarge], i dokument: PalettDokument) -> Bool {
+    let eksisterende = Set(dokument.farger.map(\.id))
+    let nye = farger.filter { !eksisterende.contains($0.id) }.map(\.kopi)
+    guard !nye.isEmpty else { return false }
+    dokument.farger += nye
+    return true
+}
+
+/// Rad i palettlisten: navn og små fargeprøver som kan dras til andre paletter.
+struct PalettRad: View {
+    let dokument: PalettDokument
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(dokument.navn.isEmpty ? "Uten navn" : dokument.navn).font(.headline)
+                Spacer()
+                Text("\(dokument.farger.count)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 3) {
+                    ForEach(dokument.farger) { pf in
+                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 4, palettFarge: pf,
+                                  ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
+                            .frame(width: 26, height: 26)
+                    }
+                    if dokument.farger.isEmpty {
+                        Text("Slipp farger her").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 4)
     }
 }
 
@@ -70,7 +112,8 @@ struct PalettDetalj: View {
         ScrollView {
             LazyVGrid(columns: rutenett, spacing: 10) {
                 ForEach(dokument.farger) { pf in
-                    FargeRute(farge: pf.farge, navn: pf.navn)
+                    FargeRute(farge: pf.farge, navn: pf.navn, palettFarge: pf,
+                              ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
                             arbeidsbenk.aktivFarge = pf.farge
@@ -88,9 +131,8 @@ struct PalettDetalj: View {
             .padding()
         }
         .navigationTitle($dokument.navn)
-        .dropDestination(for: Farge.self) { farger, _ in
-            dokument.farger += farger.map { PalettFarge(farge: $0) }
-            return true
+        .dropDestination(for: PalettFarge.self) { farger, _ in
+            leggTil(farger, i: dokument)
         }
         .toolbar {
             ToolbarItemGroup {
@@ -312,6 +354,29 @@ struct ToneskalaArk: View {
                             PalettFarge(navn: "\(basis) \(i + 1)", farge: f, opphav: .toneskala)
                         })
                         lukk()
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// «Kopier til» / «Flytt til» en annen palett.
+struct FlyttMeny: View {
+    let farge: PalettFarge
+    let fra: PalettDokument
+    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+
+    var body: some View {
+        let andre = paletter.filter { $0.id != fra.id }
+        if !andre.isEmpty {
+            Menu("Kopier til", systemImage: "doc.on.doc") {
+                ForEach(andre) { p in Button(p.navn.isEmpty ? "Uten navn" : p.navn) { leggTil([farge], i: p) } }
+            }
+            Menu("Flytt til", systemImage: "arrow.right.square") {
+                ForEach(andre) { p in
+                    Button(p.navn.isEmpty ? "Uten navn" : p.navn) {
+                        if leggTil([farge], i: p) { fra.farger.removeAll { $0.id == farge.id } }
                     }
                 }
             }

@@ -57,33 +57,116 @@ public enum Harmoni: String, CaseIterable, Codable, Sendable, Identifiable {
     }
 }
 
-/// Hvilken fargesirkel kulørvinklene måles i.
+/// Hvilken fargesirkel kulørvinklene måles i. Valget avgjør hva som er «motsatt» farge.
 public enum Fargesirkel: String, CaseIterable, Codable, Sendable, Identifiable {
-    /// OKLCH: perseptuelt jevne vinkler, og lyshet/kroma holdes konstant – fargene «veier» likt.
+    /// OKLCH: perseptuelt jevne vinkler; lyshet og kroma holdes fast, så fargene veier likt.
     case okLCH
-    /// HSL-sirkelen fra RGB – den tradisjonelle sirkelen i de fleste designverktøy.
+    /// CIE LCH (D50): Lab-basert, som i Photoshop og fargemålingsverktøy.
+    case cieLCH
+    /// HSL-sirkelen fra RGB – skjermsirkelen i de fleste designverktøy (blå ↔ gul).
     case hsl
+    /// RYB – kunstnersirkelen (Itten): rød ↔ grønn, gul ↔ fiolett, blå ↔ oransje.
+    case ryb
 
     public var id: String { rawValue }
-    public var navn: String { self == .okLCH ? "OKLCH (perseptuell)" : "HSL (tradisjonell)" }
+
+    public var navn: String {
+        switch self {
+        case .okLCH: "OKLCH (perseptuell)"
+        case .cieLCH: "CIE LCH (Lab)"
+        case .hsl: "HSL (RGB-skjerm)"
+        case .ryb: "RYB (kunstnersirkel)"
+        }
+    }
+
+    public var forklaring: String {
+        switch self {
+        case .okLCH: "Perseptuelt like vinkler, og lyshet og metning holdes fast, så fargene veier likt."
+        case .cieLCH: "Lab-basert sirkel, som i Photoshop og fargemåling. Lyshet og kroma holdes fast."
+        case .hsl: "Den tradisjonelle RGB-sirkelen fra skjermverden. Blå er komplementær til gul."
+        case .ryb: "Kunstnersirkelen med rød, gul og blå som primærfarger. Blå er komplementær til oransje."
+        }
+    }
+
+    /// Fargens vinkel i denne sirkelen (grader).
+    public func vinkel(for farge: Farge) -> Double {
+        switch self {
+        case .okLCH: farge.okLCH.h
+        case .cieLCH: farge.cieLCH.h
+        case .hsl: farge.hsl.h
+        case .ryb: RYB.fraRGBKulør(farge.hsl.h)
+        }
+    }
+
+    /// Grunnfargen flyttet til en ny vinkel i denne sirkelen (lyshet/metning bevares i sirkelens rom).
+    public func farge(_ grunn: Farge, vinkel: Double, gamut: Gamut = .displayP3) -> Farge {
+        let v = Harmoni.normaliser(vinkel)
+        switch self {
+        case .okLCH:
+            var lch = grunn.okLCH
+            lch.h = v
+            return Farge(okLCH: lch, alfa: grunn.alfa).gamutKartlagt(til: gamut)
+        case .cieLCH:
+            var lch = grunn.cieLCH
+            lch.h = v
+            return Farge(cieLCH: lch, alfa: grunn.alfa).gamutKartlagt(til: gamut)
+        case .hsl:
+            var hsl = grunn.hsl
+            hsl.h = v
+            return Farge(hsl: hsl, alfa: grunn.alfa)
+        case .ryb:
+            var hsl = grunn.hsl
+            hsl.h = RYB.tilRGBKulør(v)
+            return Farge(hsl: hsl, alfa: grunn.alfa)
+        }
+    }
+
+    /// Farge for å tegne sirkelen ved en vinkel, med grunnfargens lyshet/metning der det gir mening.
+    public func ringfarge(vinkel: Double, grunn: Farge) -> Farge {
+        switch self {
+        case .okLCH:
+            let g = grunn.okLCH
+            return Farge(okLCH: OKLCH(l: g.l, c: max(g.c, 0.08), h: vinkel)).gamutKartlagt(til: .displayP3)
+        case .cieLCH:
+            let g = grunn.cieLCH
+            return Farge(cieLCH: CIELCH(l: g.l, c: max(g.c, 30), h: vinkel)).gamutKartlagt(til: .displayP3)
+        case .hsl: return Farge(hsl: HSL(h: vinkel, s: 0.85, l: 0.55))
+        case .ryb: return Farge(hsl: HSL(h: RYB.tilRGBKulør(vinkel), s: 0.85, l: 0.55))
+        }
+    }
+}
+
+/// Stykkevis lineær avbildning mellom RYB-kunstnersirkelen og RGB/HSL-kulør.
+/// Ankerpunkter (RYB → RGB): rød 0→0, oransje 60→35, gul 120→60, grønn 180→120,
+/// blå 240→225, fiolett 300→275.
+public enum RYB {
+    static let anker: [(ryb: Double, rgb: Double)] = [(0, 0), (60, 35), (120, 60), (180, 120), (240, 225), (300, 275), (360, 360)]
+
+    public static func tilRGBKulør(_ ryb: Double) -> Double {
+        interpoler(Harmoni.normaliser(ryb), fra: \.ryb, til: \.rgb)
+    }
+
+    public static func fraRGBKulør(_ rgb: Double) -> Double {
+        interpoler(Harmoni.normaliser(rgb), fra: \.rgb, til: \.ryb)
+    }
+
+    private static func interpoler(_ v: Double, fra: KeyPath<(ryb: Double, rgb: Double), Double>,
+                                   til: KeyPath<(ryb: Double, rgb: Double), Double>) -> Double {
+        for (a, b) in zip(anker, anker.dropFirst()) where v >= a[keyPath: fra] && v <= b[keyPath: fra] {
+            let t = (v - a[keyPath: fra]) / (b[keyPath: fra] - a[keyPath: fra])
+            return Harmoni.normaliser(a[keyPath: til] + t * (b[keyPath: til] - a[keyPath: til]))
+        }
+        return v
+    }
 }
 
 public extension Harmoni {
     /// Fargene i harmonien, med grunnfargen først (for analog: i midten).
     func farger(fra grunnfarge: Farge, antall: Int = 3, vinkel: Double? = nil,
                 sirkel: Fargesirkel = .okLCH, gamut: Gamut = .displayP3) -> [Farge] {
-        forskyvninger(antall: antall, vinkel: vinkel).map { d in
-            if d == 0 { return grunnfarge }
-            switch sirkel {
-            case .okLCH:
-                var lch = grunnfarge.okLCH
-                lch.h = Self.normaliser(lch.h + d)
-                return Farge(okLCH: lch, alfa: grunnfarge.alfa).gamutKartlagt(til: gamut)
-            case .hsl:
-                var hsl = grunnfarge.hsl
-                hsl.h = Self.normaliser(hsl.h + d)
-                return Farge(hsl: hsl, alfa: grunnfarge.alfa)
-            }
+        let basis = sirkel.vinkel(for: grunnfarge)
+        return forskyvninger(antall: antall, vinkel: vinkel).map { d in
+            d == 0 ? grunnfarge : sirkel.farge(grunnfarge, vinkel: basis + d, gamut: gamut)
         }
     }
 

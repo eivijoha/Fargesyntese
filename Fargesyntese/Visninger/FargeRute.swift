@@ -7,8 +7,23 @@ struct FargeRute: View {
     var navn: String? = nil
     var visTekst = true
     var hjørne: CGFloat = 12
+    /// Valgfrie handlinger i kontekstmenyen (trykk og hold / høyreklikk).
+    var leggIPalett: ((Farge) -> Void)? = nil
+    var fjern: (() -> Void)? = nil
+    /// Når satt, dras fargen med navn (mellom paletter); ellers som ren farge.
+    var palettFarge: PalettFarge? = nil
+    /// Ekstra menypunkter (f.eks. «Flytt til …»).
+    var ekstraMeny: AnyView? = nil
 
     var body: some View {
+        if let palettFarge {
+            rute.draggable(palettFarge) { FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56) }
+        } else {
+            rute.draggable(farge)
+        }
+    }
+
+    private var rute: some View {
         RoundedRectangle(cornerRadius: hjørne, style: .continuous)
             .fill(farge.swiftUI)
             .overlay(alignment: .bottomLeading) {
@@ -30,8 +45,16 @@ struct FargeRute: View {
                         .accessibilityLabel("Utenfor sRGB")
                 }
             }
-            .draggable(farge)
-            .contextMenu { KopierMeny(farge: farge) }
+            .contextMenu {
+                if let leggIPalett {
+                    Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
+                }
+                KopierMeny(farge: farge)
+                if let ekstraMeny { ekstraMeny }
+                if let fjern {
+                    Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)
+                }
+            }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(navn ?? farge.hex())
             .accessibilityValue(Fargemodell.okLCH.tekst(for: farge))

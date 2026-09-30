@@ -21,6 +21,13 @@ final class KameraFargeplukker {
     @ObservationIgnored private let leser = BufferLeser()
     @ObservationIgnored private let kø = DispatchQueue(label: "no.engenett.fargesyntese.kamera")
     @ObservationIgnored private var erKonfigurert = false
+    @ObservationIgnored private var enhet: AVCaptureDevice?
+
+    /// Om kameraet har en lyskilde (bakkamera på iPhone/iPad, Continuity-iPhone på Mac).
+    private(set) var harLykt = false
+    private(set) var lyktPå = false
+    /// Lysstyrke 0…1 (der enheten støtter trinnløs styrke).
+    private(set) var lyktNivå: Float = 1
 
     func start() async {
         guard await AVCaptureDevice.requestAccess(for: .video) else {
@@ -38,7 +45,30 @@ final class KameraFargeplukker {
         kø.async { økt.startRunning() }
     }
 
+    /// Slår lykten av/på med valgt styrke. Jevnt, kjent lys gir mer stabile målinger
+    /// i mørke omgivelser; merk at lyktens fargetemperatur også påvirker resultatet.
+    func settLykt(på: Bool, nivå: Float? = nil) {
+        guard let enhet, enhet.hasTorch else { return }
+        if let nivå { lyktNivå = min(max(nivå, 0.05), 1) }
+        let styrke = lyktNivå
+        kø.async {
+            guard (try? enhet.lockForConfiguration()) != nil else { return }
+            defer { enhet.unlockForConfiguration() }
+            if på {
+                #if os(iOS)
+                try? enhet.setTorchModeOn(level: min(styrke, AVCaptureDevice.maxAvailableTorchLevel))
+                #else
+                if enhet.isTorchModeSupported(.on) { enhet.torchMode = .on }
+                #endif
+            } else if enhet.isTorchModeSupported(.off) {
+                enhet.torchMode = .off
+            }
+        }
+        lyktPå = på
+    }
+
     func stopp() {
+        if lyktPå { settLykt(på: false) }
         let økt = self.økt
         kø.async { økt.stopRunning() }
     }
@@ -70,6 +100,8 @@ final class KameraFargeplukker {
               let inn = try? AVCaptureDeviceInput(device: enhet), økt.canAddInput(inn)
         else { return }
         økt.addInput(inn)
+        self.enhet = enhet
+        harLykt = enhet.hasTorch
         let ut = AVCaptureVideoDataOutput()
         ut.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
         ut.alwaysDiscardsLateVideoFrames = true

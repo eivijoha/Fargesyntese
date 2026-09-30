@@ -39,14 +39,23 @@ nonisolated extension Farge: @retroactive Transferable {
     }
 }
 
+/// En farge med navn. Kan også tas imot som ren farge eller som tekst (hex/CSS) fra andre apper.
 nonisolated extension PalettFarge: @retroactive Transferable {
     public static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation(contentType: .fargesynteseFarge)
-        ProxyRepresentation(exporting: { $0.farge.hex(medAlfa: $0.farge.alfa < 1) })
+        CodableRepresentation(contentType: .fargesyntesePalettfarge)
+        ProxyRepresentation(importing: { (farge: Farge) in PalettFarge(farge: farge) })
+        ProxyRepresentation(exporting: { $0.farge.hex(medAlfa: $0.farge.alfa < 1) }, importing: { (tekst: String) in
+            guard let f = Fargetolk.tolk(tekst) else { throw CocoaError(.coderReadCorrupt) }
+            return PalettFarge(farge: f)
+        })
     }
+
+    /// Kopi med ny identitet, for innsetting i en annen palett.
+    var kopi: PalettFarge { PalettFarge(navn: navn, farge: farge, opphav: opphav) }
 }
 
 nonisolated extension UTType {
     /// Deklarert som eksportert type i Info.plist.
     static let fargesynteseFarge = UTType(exportedAs: "no.engenett.fargesyntese.farge")
+    static let fargesyntesePalettfarge = UTType(exportedAs: "no.engenett.fargesyntese.palettfarge")
 }

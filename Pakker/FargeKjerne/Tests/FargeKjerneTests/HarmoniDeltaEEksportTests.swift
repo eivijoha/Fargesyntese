@@ -23,6 +23,28 @@ struct HarmoniTests {
         #expect(farger.allSatisfy { abs($0.okLCH.l - grunn.okLCH.l) < 0.03 })
     }
 
+    @Test func rybKunstnersirkel() {
+        // I RYB er blå komplementær til oransje, og rød til grønn.
+        let blå = Farge(hex: "#0000FF")!
+        let motBlå = Harmoni.komplementær.farger(fra: blå, sirkel: .ryb)[1]
+        #expect((25...45).contains(motBlå.hsl.h))
+        let rød = Farge(hex: "#FF0000")!
+        let motRød = Harmoni.komplementær.farger(fra: rød, sirkel: .ryb)[1]
+        #expect((110...130).contains(motRød.hsl.h))
+        // Avbildningen går begge veier.
+        for h in stride(from: 0.0, to: 360, by: 17) {
+            #expect(abs(RYB.fraRGBKulør(RYB.tilRGBKulør(h)) - h) < 1e-9)
+        }
+    }
+
+    @Test(arguments: Fargesirkel.allCases)
+    func sirkelVinkelRundtur(_ sirkel: Fargesirkel) {
+        let f = Farge(hex: "#7A2E8F")!
+        let flyttet = sirkel.farge(f, vinkel: sirkel.vinkel(for: f) + 90)
+        let tilbake = sirkel.farge(flyttet, vinkel: sirkel.vinkel(for: flyttet) - 90)
+        #expect(tilbake.deltaE2000(til: f) < 3, "\(sirkel)")
+    }
+
     @Test func komplementærIHSL() {
         let rød = Farge(hex: "#FF0000")!
         let k = Harmoni.komplementær.farger(fra: rød, sirkel: .hsl)
