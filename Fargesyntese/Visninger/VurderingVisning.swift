@@ -54,25 +54,8 @@ private struct KontrastVurdering: View {
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         Form {
-            Section("Tekst- og grafikkfarge") {
-                HStack {
-                    FargeRute(farge: arbeidsbenk.aktivFarge, visTekst: false, hjørne: 8).frame(width: 44, height: 32)
-                    Text(arbeidsbenk.aktivFarge.hex()).font(.callout.monospaced())
-                    Spacer()
-                    Menu("Kilde", systemImage: "ellipsis.circle") {
-                        Button("Lim inn", systemImage: "doc.on.clipboard") {
-                            if let f = Utklippstavle.limInn() { arbeidsbenk.aktivFarge = f }
-                        }
-                        if !arbeidsbenk.målinger.isEmpty {
-                            Section("Siste målinger") {
-                                ForEach(Array(arbeidsbenk.målinger.enumerated().reversed()), id: \.offset) { _, m in
-                                    Button(m.hex()) { arbeidsbenk.aktivFarge = m }
-                                }
-                            }
-                        }
-                    }
-                    .labelStyle(.iconOnly)
-                }
+            Section {
+                FargeValgRad(tittel: "Tekst og grafikk", farge: $arbeidsbenk.aktivFarge)
             }
             KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
         }

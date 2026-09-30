@@ -54,8 +54,8 @@ struct SammenligningVisning: View {
                 .accessibilityElement(children: .combine)
             }
 
-            Section("Farge A") { Fargekilde(farge: $a) }
-            Section("Farge B") { Fargekilde(farge: $b) }
+            Section { FargeValgRad(tittel: "Farge A", farge: $a) }
+            Section { FargeValgRad(tittel: "Farge B", farge: $b) }
 
             Section {
                 let la = a.cieLab, lb = b.cieLab, ca = a.cieLCH, cb = b.cieLCH
@@ -93,34 +93,6 @@ struct SammenligningVisning: View {
         var d = h2 - h1
         if d > 180 { d -= 360 } else if d < -180 { d += 360 }
         return d
-    }
-}
-
-/// Velg hvor en farge i sammenligningen skal komme fra.
-private struct Fargekilde: View {
-    @Binding var farge: Farge
-    @Environment(Arbeidsbenk.self) private var arbeidsbenk
-
-    var body: some View {
-        HStack {
-            FargeRute(farge: farge, visTekst: false, hjørne: 6).frame(width: 44, height: 32)
-            Text(farge.hex()).font(.callout.monospaced())
-            Spacer()
-            PipetteKnapp { farge = $0; arbeidsbenk.registrerMåling($0) }
-                .labelStyle(.iconOnly)
-            Menu("Kilde", systemImage: "ellipsis.circle") {
-                Button("Aktiv farge", systemImage: "slider.horizontal.3") { farge = arbeidsbenk.aktivFarge }
-                Button("Lim inn", systemImage: "doc.on.clipboard") { if let f = Utklippstavle.limInn() { farge = f } }
-                if !arbeidsbenk.målinger.isEmpty {
-                    Section("Siste målinger") {
-                        ForEach(Array(arbeidsbenk.målinger.enumerated().reversed()), id: \.offset) { _, m in
-                            Button(m.hex()) { farge = m }
-                        }
-                    }
-                }
-            }
-            .labelStyle(.iconOnly)
-        }
     }
 }
 

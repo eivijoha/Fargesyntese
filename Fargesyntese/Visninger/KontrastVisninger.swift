@@ -11,21 +11,24 @@ struct KontrastSeksjon: View {
     var body: some View {
         let test = Kontrasttest(forgrunn: forgrunn, bakgrunn: bakgrunn)
         Section {
-            HStack {
-                ColorPicker("Bakgrunn", selection: Binding(get: { bakgrunn.swiftUI }, set: { bakgrunnHex = Farge($0).hex() }))
-                Text(bakgrunn.hex()).font(.callout.monospaced()).foregroundStyle(.secondary)
-                Menu("Velg", systemImage: "ellipsis.circle") {
-                    Button("Hvit") { bakgrunnHex = "#FFFFFF" }
-                    Button("Sort") { bakgrunnHex = "#000000" }
-                    Button("Lim inn") { if let f = Utklippstavle.limInn() { bakgrunnHex = f.hex() } }
-                    Button("Bytt forgrunn og bakgrunn", systemImage: "arrow.up.arrow.down") {
-                        let gammel = bakgrunn
-                        bakgrunnHex = forgrunn.hex()
-                        forgrunn = gammel
-                    }
+            // Lagres som CSS-tekst i Display P3, så P3-bakgrunner ikke rundes av til sRGB-hex.
+            FargeValgRad(tittel: "Bakgrunn", farge: Binding(
+                get: { bakgrunn },
+                set: { bakgrunnHex = $0.erISRGB ? $0.hex() : Fargemodell.displayP3.tekst(for: $0) }
+            ))
+            HStack(spacing: 8) {
+                Button("Hvit") { bakgrunnHex = "#FFFFFF" }
+                Button("Sort") { bakgrunnHex = "#000000" }
+                Spacer()
+                Button("Bytt", systemImage: "arrow.up.arrow.down") {
+                    let gammel = bakgrunn
+                    bakgrunnHex = forgrunn.erISRGB ? forgrunn.hex() : Fargemodell.displayP3.tekst(for: forgrunn)
+                    forgrunn = gammel
                 }
-                .labelStyle(.iconOnly)
+                .help("Bytt tekstfarge og bakgrunn")
             }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
 
             KontrastForhåndsvisning(forgrunn: forgrunn, bakgrunn: bakgrunn, test: test)
 
