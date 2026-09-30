@@ -404,7 +404,7 @@ struct VisOgsåMeny: View {
         if farge.erInnenfor(p) {
             Text(p.navn).tag(p.id)
         } else {
-            Label(String(localized: "\(p.navn) – utenfor gamut"), systemImage: "exclamationmark.triangle").tag(p.id)
+            Text(String(localized: "\(p.navn) – utenfor gamut")).tag(p.id)
         }
     }
 
@@ -424,9 +424,6 @@ struct VisOgsåMeny: View {
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
         } label: {
             HStack(spacing: 4) {
-                if !farge.erInnenfor(bibliotek.profil(id: valgtID) ?? .sRGB) {
-                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(Color.advarsel)
-                }
                 // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av
                 // aksenten ga bare 1,9:1 kontrast.
                 Text("Vis også:").foregroundStyle(Color.sekundærTekst)
@@ -453,7 +450,7 @@ struct GamutOversikt: View {
                 HStack {
                     Text(p.navn).font(.callout)
                     Spacer()
-                    Label(innenfor ? "Innenfor" : "Utenfor", systemImage: innenfor ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                    Text(innenfor ? "Innenfor" : "Utenfor")
                         .font(.callout)
                         .foregroundStyle(innenfor ? Color.suksess : Color.advarsel)
                 }
@@ -462,9 +459,9 @@ struct GamutOversikt: View {
             let utenfor = bibliotek.alle.filter { !farge.erInnenfor($0) }
             LabeledContent("Gamut") {
                 if utenfor.isEmpty {
-                    Label("Innenfor alle", systemImage: "checkmark.circle.fill").foregroundStyle(Color.suksess)
+                    Text("Innenfor alle").foregroundStyle(Color.suksess)
                 } else {
-                    Label("Utenfor \(utenfor.count) av \(bibliotek.alle.count)", systemImage: "exclamationmark.triangle.fill")
+                    Text("Utenfor \(utenfor.count) av \(bibliotek.alle.count)")
                         .foregroundStyle(Color.advarsel)
                 }
             }

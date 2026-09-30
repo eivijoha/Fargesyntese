@@ -458,7 +458,7 @@ struct VurderingArk: View {
             List {
                 Section { Text(vurdering.oppsummering) }
                 punktliste(String(localized: "Styrker"), vurdering.styrker, symbol: "plus.circle.fill", farge: Color.suksess)
-                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "exclamationmark.triangle.fill", farge: Color.advarsel)
+                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "minus.circle.fill", farge: Color.advarsel)
                 punktliste(String(localized: "Forslag"), vurdering.forslag, symbol: "arrow.right.circle.fill", farge: Color.accentColor)
                 Section {
                     DisclosureGroup("Fakta vurderingen bygger på") {

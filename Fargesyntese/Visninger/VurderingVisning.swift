@@ -105,12 +105,12 @@ private struct PalettVurderingDel: View {
                     Text("Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Kontrasttallene er beregnet eksakt.")
                 }.foregroundStyle(Color.sekundærTekst) }
                 if let feil {
-                    Section { Label(feil, systemImage: "exclamationmark.triangle").foregroundStyle(Color.advarsel) }
+                    Section { Label(feil, systemImage: "xmark.circle").foregroundStyle(Color.advarsel) }
                 }
                 if let vurdering {
                     Seksjon("Oppsummering") { Text(vurdering.oppsummering) }
                     punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", Color.suksess)
-                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "exclamationmark.triangle.fill", Color.advarsel)
+                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "minus.circle.fill", Color.advarsel)
                     punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", Color.accentColor)
                     Section {
                         DisclosureGroup("Fakta vurderingen bygger på") {

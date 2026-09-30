@@ -40,8 +40,7 @@ struct ICCSeksjon: View {
                     Button("Kopier verdier") { Utklippstavle.kopierTekst(formatert(verdier)) }
                 }
                 if let avvik = farge.avvik(i: profil, hensikt: hensikt), avvik > 0.02 {
-                    Label("Utenfor profilens gamut (ΔE\u{2009}OK \(avvik, format: .number.precision(.fractionLength(3))))",
-                          systemImage: "exclamationmark.triangle.fill")
+                    Text("Utenfor profilens gamut (ΔE\u{2009}OK \(avvik, format: .number.precision(.fractionLength(3))))")
                         .foregroundStyle(Color.advarsel)
                         .font(.callout)
                 }

@@ -42,7 +42,7 @@ struct VerdiordVisning: View {
             }.foregroundStyle(Color.sekundærTekst) }
 
             if let feil = samtale.feil {
-                Section { Label(feil.localizedDescription, systemImage: "exclamationmark.triangle").foregroundStyle(Color.advarsel) }
+                Section { Label(feil.localizedDescription, systemImage: "xmark.circle").foregroundStyle(Color.advarsel) }
             }
 
             if let forslag = samtale.forslag {
