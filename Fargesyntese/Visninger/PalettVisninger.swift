@@ -15,6 +15,7 @@ struct PalettListe: View {
     @State private var kolonne: NavigationSplitViewColumn = .sidebar
     @State private var målrettet: Valg?
     @State private var slettes: PalettDokument?
+    @State private var omdøpes: PalettDokument?
     @State private var visVerdiord = false
 
     enum Valg: Hashable {
@@ -45,9 +46,16 @@ struct PalettListe: View {
                             flytt(farger, til: p, i: kontekst)
                         }
                         .contextMenu {
+                            Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
                             Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
                         }
                     }
+                    Label(Lagring.synkroniserer ? "Paletter og enkeltfarger synkroniseres via iCloud."
+                                                : "Paletter og enkeltfarger lagres bare på denne enheten.",
+                          systemImage: Lagring.synkroniserer ? "icloud" : "iphone")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 8)
                 }
                 .padding()
             }
@@ -71,6 +79,7 @@ struct PalettListe: View {
                         }
                 }
             }
+            .omdøpPalett($omdøpes)
             .confirmationDialog("Slette «\(slettes?.navn ?? "")»?", isPresented: Binding(get: { slettes != nil }, set: { if !$0 { slettes = nil } }),
                                 titleVisibility: .visible) {
                 Button("Slett palett", role: .destructive) {
@@ -317,6 +326,7 @@ struct PalettDetalj: View {
     @State private var kiArbeider = false
     @State private var kiFeil: String?
     @State private var navngisPalettfarge: PalettFarge?
+    @State private var omdøpes: PalettDokument?
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
@@ -372,6 +382,7 @@ struct PalettDetalj: View {
                     if kiArbeider { ProgressView() } else { Label("KI", systemImage: "sparkles") }
                 }
                 .disabled(dokument.farger.isEmpty || kiArbeider)
+                Button("Gi nytt navn", systemImage: "character.cursor.ibeam") { omdøpes = dokument }
                 Menu("Eksporter", systemImage: "square.and.arrow.up") {
                     ForEach(Eksportformat.allCases) { f in
                         Button(f.navn) { eksportformat = f }
@@ -393,6 +404,7 @@ struct PalettDetalj: View {
             ToneskalaArk(grunnfarge: pf) { nye in dokument.farger += nye }
         }
         .sheet(isPresented: $visKontrast) { KontrastmatriseArk(palett: dokument.palett) }
+        .omdøpPalett($omdøpes)
         .sheet(item: $navngisPalettfarge) { pf in
             NavngiArk(farge: pf) { navn in
                 var f = dokument.farger
@@ -693,4 +705,27 @@ struct NavngiArk: View {
         let reserve = beskrivelse.prefix(1).uppercased() + beskrivelse.dropFirst()
         navn = (try? await Fargenavngiver.navngi([farge.farge]).first) ?? reserve
     }
+}
+
+/// Omdøping av palett i en dialog med tekstfelt.
+private struct OmdøpPalett: ViewModifier {
+    @Binding var palett: PalettDokument?
+    @State private var navn = ""
+
+    func body(content: Content) -> some View {
+        content
+            .alert("Gi paletten navn", isPresented: Binding(get: { palett != nil }, set: { if !$0 { palett = nil } })) {
+                TextField("Navn", text: $navn)
+                Button("Avbryt", role: .cancel) {}
+                Button("Lagre") {
+                    let rent = navn.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if let palett, !rent.isEmpty { palett.navn = rent }
+                }
+            }
+            .onChange(of: palett) { _, ny in navn = ny?.navn ?? "" }
+    }
+}
+
+extension View {
+    func omdøpPalett(_ palett: Binding<PalettDokument?>) -> some View { modifier(OmdøpPalett(palett: palett)) }
 }

@@ -53,16 +53,41 @@ final class LagretFarge {
 }
 
 /// Felles lagring for app og App Intents (intents kjører i appens prosess).
+///
+/// Paletter og enkeltfarger synkroniseres via iCloud (CloudKit, privat database) når brukeren er
+/// logget inn i iCloud. Ellers lagres de lokalt. Modellene oppfyller CloudKit-kravene: alle felt
+/// har standardverdier, ingen unike begrensninger og ingen påkrevde relasjoner.
 enum Lagring {
+    static let containerID = "iCloud.no.engenett.Fargesyntese"
+    private static let skjema = Schema([PalettDokument.self, LagretFarge.self])
+
+    /// Om lageret synkroniseres via iCloud (for visning i appen).
+    private(set) static var synkroniserer = false
+
     static let container: ModelContainer = {
+        if kanBrukeICloud {
+            do {
+                let oppsett = ModelConfiguration(schema: skjema, cloudKitDatabase: .private(containerID))
+                let c = try ModelContainer(for: skjema, configurations: oppsett)
+                synkroniserer = true
+                return c
+            } catch {
+                print("iCloud-synk utilgjengelig, bruker lokal lagring: \(error)")
+            }
+        }
         do {
-            // CloudKit må slås av eksplisitt: appen har iCloud-rettighet (for profilmappen i
-            // iCloud Drive), og da forsøker SwiftData ellers å synke via CloudKit – som ikke er
-            // aktivert – og krasjer ved oppstart.
-            let oppsett = ModelConfiguration(cloudKitDatabase: .none)
-            return try ModelContainer(for: PalettDokument.self, LagretFarge.self, configurations: oppsett)
+            return try ModelContainer(for: skjema, configurations: ModelConfiguration(schema: skjema, cloudKitDatabase: .none))
         } catch {
             fatalError("Kunne ikke åpne palettlageret: \(error)")
         }
     }()
+
+    private static var kanBrukeICloud: Bool {
+        #if targetEnvironment(simulator)
+        // Simulatorbygg er ikke signert med CloudKit-rettighet, og CloudKit stopper appen da.
+        return false
+        #else
+        return FileManager.default.ubiquityIdentityToken != nil
+        #endif
+    }
 }
