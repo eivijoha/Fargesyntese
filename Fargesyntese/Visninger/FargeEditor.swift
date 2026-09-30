@@ -48,6 +48,10 @@ struct FargeEditor: View {
                         .onSubmit {
                             if let f = Fargetolk.tolk(hexTekst) { arbeidsbenk.aktivFarge = f } else { hexTekst = farge.hex() }
                         }
+                    Toggle("Kun sRGB", isOn: $arbeidsbenk.kunSRGB)
+                        .fixedSize()
+                        .font(.callout)
+                        .help("Hold alle nye farger innenfor sRGB – trygt for web, e-post, Office og vanlige skjermer")
                     #if os(macOS)
                     // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
                     PipetteKnapp {
@@ -115,16 +119,6 @@ extension FargeEditor {
     @ViewBuilder
     fileprivate func fargeModus(_ farge: Farge) -> some View {
         @Bindable var arbeidsbenk = arbeidsbenk
-        Section {
-            Toggle(isOn: $arbeidsbenk.kunSRGB) {
-                Label("Begrens til sRGB", systemImage: "square.dashed.inset.filled")
-            }
-        } footer: {
-            Text(arbeidsbenk.kunSRGB
-                 ? "Alle nye farger holdes innenfor sRGB – trygt for web, e-post, Office og skjermer uten bred gamut."
-                 : "Farger kan gå ut i Display P3 (bred gamut). Slå på for å holde alt innenfor sRGB.")
-        }
-
         Section {
             Picker("Fargemodell", selection: $arbeidsbenk.modell) {
                 ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
