@@ -32,6 +32,13 @@ struct OvergangVisning: View {
         return (0..<(trinn.antallLysere + trinn.antallMørkere + 1)).map { rad in variasjoner.map { $0[rad] } }
     }
 
+    private func endepunkt(_ tittel: String, _ farge: Farge, trailing: Bool = false) -> some View {
+        VStack(alignment: trailing ? .trailing : .leading, spacing: 0) {
+            Text(tittel).font(.caption.weight(.semibold))
+            Text(farge.hex()).font(.caption2.monospaced()).foregroundStyle(.secondary)
+        }
+    }
+
     var body: some View {
         Form {
             Section("Endepunkter") {
@@ -50,22 +57,50 @@ struct OvergangVisning: View {
                 @Bindable var arbeidsbenk = arbeidsbenk
                 LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn)
             }
+            // Selve overgangen: venstre ende er nøyaktig «Fra», høyre ende nøyaktig «Til».
             Section {
-                Grid(horizontalSpacing: 3, verticalSpacing: 3) {
-                    let midtrad = arbeidsbenk.lyshetstrinn.antallLysere
-                    ForEach(Array(rader.enumerated()), id: \.offset) { r, rad in
-                        GridRow {
-                            ForEach(Array(rad.enumerated()), id: \.offset) { _, farge in
-                                FargeRute(farge: farge, visTekst: false, hjørne: 4)
-                                    .frame(minHeight: r == midtrad ? 56 : 36)
-                                    .onTapGesture { arbeidsbenk.aktivFarge = farge }
+                HStack(spacing: 3) {
+                    ForEach(Array(toner.enumerated()), id: \.offset) { _, farge in
+                        FargeRute(farge: farge, visTekst: false, hjørne: 4)
+                            .frame(height: 56)
+                            .onTapGesture { arbeidsbenk.aktivFarge = farge }
+                    }
+                }
+                HStack(alignment: .top) {
+                    endepunkt("Fra", start)
+                    Spacer()
+                    endepunkt("Til", slutt, trailing: true)
+                }
+            } header: {
+                Text("Overgang i OKLab – \(antall) toner")
+            }
+
+            // Lysere og mørkere varianter av hver tone; overgangsraden er markert med ramme.
+            if rader.count > 1 {
+                Section {
+                    Grid(horizontalSpacing: 3, verticalSpacing: 3) {
+                        let midtrad = arbeidsbenk.lyshetstrinn.antallLysere
+                        ForEach(Array(rader.enumerated()), id: \.offset) { r, rad in
+                            GridRow {
+                                ForEach(Array(rad.enumerated()), id: \.offset) { _, farge in
+                                    FargeRute(farge: farge, visTekst: false, hjørne: 4)
+                                        .frame(minHeight: 36)
+                                        .overlay {
+                                            if r == midtrad {
+                                                RoundedRectangle(cornerRadius: 4).strokeBorder(.primary, lineWidth: 2)
+                                            }
+                                        }
+                                        .onTapGesture { arbeidsbenk.aktivFarge = farge }
+                                }
                             }
                         }
                     }
+                    .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                } header: {
+                    Text("Med lysere og mørkere rader")
+                } footer: {
+                    Text("Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.")
                 }
-                .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-            } header: {
-                Text("Interpolert i OKLab")
             }
 
             CSSGradientSeksjon(start: start, slutt: slutt, toner: toner)
