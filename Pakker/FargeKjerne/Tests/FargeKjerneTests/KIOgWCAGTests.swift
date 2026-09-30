@@ -3,6 +3,9 @@ import Testing
 @testable import FargeKI
 @testable import FargeKjerne
 
+/// Oppslag i pakkens strengkatalog, så testene virker uansett språk på maskinen.
+private func lok(_ nøkkel: String.LocalizationValue) -> String { String(localized: nøkkel, bundle: Ressurser.pakke) }
+
 private func nær(_ a: Double, _ b: Double, _ tol: Double = 1e-6) -> Bool { abs(a - b) <= tol }
 
 @Suite("Lyshetstrinn")
@@ -26,8 +29,8 @@ struct LyshetstrinnTests {
         #expect(toner[2] == f)
         // Gamut-kartlegging (CSS Color 4) tillater et lite kulørskift innenfor én merkbar forskjell.
         #expect(toner.allSatisfy { abs($0.okLCH.h - f.okLCH.h) < 3 })
-        #expect(Lyshetstrinn(lysereSteg: 0.08).stegtekst(lysere: true) == "+8 %-poeng")
-        #expect(Lyshetstrinn(mørkereSteg: 0.2, modus: .relativ).stegtekst(lysere: false) == "20 % mot sort")
+        #expect(Lyshetstrinn(lysereSteg: 0.08).stegtekst(lysere: true).hasPrefix("+8 %"))
+        #expect(Lyshetstrinn(mørkereSteg: 0.2, modus: .relativ).stegtekst(lysere: false) == String(localized: "\(20) % mot sort", bundle: Ressurser.pakke))
     }
 
     @Test func nullSteg() {
@@ -63,10 +66,10 @@ struct WCAGTests {
 @Suite("Beskrivelse og justering")
 struct BeskrivelseTests {
     @Test func beskrivelser() {
-        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#FFFFFF")!) == "hvit")
-        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#000000")!) == "sort")
-        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#1B3A6B")!).hasSuffix("blå"))
-        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#6B4226")!).contains("brun"))
+        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#FFFFFF")!) == lok("hvit"))
+        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#000000")!) == lok("sort"))
+        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#1B3A6B")!).hasSuffix(lok("blå")))
+        #expect(Fargebeskrivelse.beskriv(Farge(hex: "#6B4226")!).contains(lok("brun")))
     }
 
     @Test func varmereDreierMotOransje() {

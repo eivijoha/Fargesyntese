@@ -77,7 +77,7 @@ struct DeltaE2000Tests {
     @Test func likeFargerGirNull() {
         let f = Farge(hex: "#6B8F71")!
         #expect(f.deltaE2000(til: f) < 1e-9)
-        #expect(Fargeavstand.tolkning(0.5) == "Ikke merkbar")
+        #expect(Fargeavstand.tolkning(0.5) == String(localized: "Ikke merkbar", bundle: Ressurser.pakke))
     }
 }
 
