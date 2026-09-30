@@ -13,8 +13,11 @@ typealias PlattformFarge = NSColor
 
 extension Farge {
     /// SwiftUI-farge i utvidet lineær sRGB – bevarer P3-farger på skjermer som kan vise dem.
+    /// Farger utenfor P3 gamut-kartlegges først (OKLCH, kulør bevares); ellers klipper skjermen
+    /// hver kanal for seg, og f.eks. en brun utenfor gamut vises som rød.
     var swiftUI: Color {
-        Color(.sRGBLinear, red: r, green: g, blue: b, opacity: alfa)
+        let f = erIDisplayP3 ? self : gamutKartlagt(til: .displayP3)
+        return Color(.sRGBLinear, red: f.r, green: f.g, blue: f.b, opacity: alfa)
     }
 
     init(_ farge: Color) {
