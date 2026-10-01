@@ -94,7 +94,13 @@ struct HarmoniSeksjon: View {
         let gjeldende = verdi.wrappedValue ?? grunn
         return HStack(spacing: 10) {
             Text(tittel).lineLimit(1).minimumScaleFactor(0.8).frame(width: 96, alignment: .leading)
-            FargeGlider(verdi: Binding(get: { gjeldende }, set: { verdi.wrappedValue = $0 }), område: 0...1,
+            FargeGlider(verdi: Binding(get: { gjeldende }, set: { ny in
+                // Lås den andre verdien der den er: grunnfargen oppdateres underveis (og kan begrenses
+                // av valgt profil), og en verdi som «følger grunnfargen» ville da krype.
+                if metning == nil { metning = grunnMetning }
+                if lyshet == nil { lyshet = grunnLyshet }
+                verdi.wrappedValue = ny
+            }), område: 0...1,
                         spor: spor(metningsakse: metningsakse),
                         gjeldende: grunnfarge(metning: metning ?? grunnMetning, lyshet: lyshet ?? grunnLyshet).swiftUI,
                         tittel: Text(tittel),
@@ -169,6 +175,10 @@ struct HarmoniSeksjon: View {
         }
         // Gliderne betyr noe annet i HSL enn i OKLCH; start på nytt ved bytte av sirkel.
         .onChange(of: sirkel) { _, _ in metning = nil; lyshet = nil }
+        // Primærfargen (grunnfargen med gjeldende metning/lyshet) blir aktiv farge, så den vises i
+        // fargefeltet øverst. Justeringen er idempotent, så den nye grunnfargen gir samme harmoni.
+        .onChange(of: metning) { _, _ in velg(juster(grunnfarge).gamutKartlagt(til: gamut)) }
+        .onChange(of: lyshet) { _, _ in velg(juster(grunnfarge).gamutKartlagt(til: gamut)) }
     }
 }
 
