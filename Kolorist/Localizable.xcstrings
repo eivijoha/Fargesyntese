@@ -1291,6 +1291,16 @@
         }
       }
     },
+    "Gi tilgang i Innstillinger for å se omgivelsene med fargesynsfilter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow access in Settings to see your surroundings with a color vision filter."
+          }
+        }
+      }
+    },
     "Gjengivelse": {
       "localizations": {
         "en": {
@@ -1721,12 +1731,12 @@
         }
       }
     },
-    "Kamerabildet vises med %@": {
+    "Kamerabildet vist med valgt fargesynsavvik. Velg type og grad i kameravisningen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The camera image is shown with %@"
+            "value": "The camera image shown with the chosen color vision deficiency. Choose type and severity in the camera view."
           }
         }
       }
@@ -3085,6 +3095,26 @@
         }
       }
     },
+    "Se med kamera": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View with camera"
+          }
+        }
+      }
+    },
+    "Se omgivelsene med kamera": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View your surroundings with the camera"
+          }
+        }
+      }
+    },
     "Send": {
       "localizations": {
         "en": {
@@ -3497,12 +3527,32 @@
         }
       }
     },
+    "Trykk og hold på bildet for å sammenligne med normalt syn.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch and hold the image to compare with normal vision."
+          }
+        }
+      }
+    },
     "Trykk på en farge for å gjøre den aktiv, eller trykk og hold for å lagre den.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Tap a color to make it active, or touch and hold to save it."
+          }
+        }
+      }
+    },
+    "Type": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type"
           }
         }
       }
@@ -3729,16 +3779,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show the color ${beskrivelse}"
-          }
-        }
-      }
-    },
-    "Vis kamerabildet slik det ser ut med et fargesynsavvik": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Show the camera image as it looks with a color vision deficiency"
           }
         }
       }

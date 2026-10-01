@@ -18,15 +18,11 @@ struct KameraVisning: View {
             vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) },
             vedKnip: { skala, begynner in plukker.knip(skala, begynner: begynner) },
             vedDobbelttrykk: { plukker.settZoom(1) },
-            filterlag: plukker.filterlag,
-            vedOrientering: { plukker.settVisningsorientering(vinkel: $0, speilet: $1) }
         )
         #else
         KameraForhåndsvisning(
             økt: plukker.økt,
-            vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) },
-            filterlag: plukker.filterlag,
-            vedOrientering: { plukker.settVisningsorientering(vinkel: $0, speilet: $1) }
+            vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) }
         )
         #endif
     }
@@ -50,7 +46,6 @@ struct KameraVisning: View {
                     }
                 }
                 .overlay(alignment: .topTrailing) { ZoomMerke(plukker: plukker) }
-                .overlay(alignment: .topLeading) { FargesynMerke(plukker: plukker) }
                 .onChange(of: geo.size) { plukker.tilbakestillMarkør() }
             }
             .clipped()
@@ -94,7 +89,6 @@ struct KameraVisning: View {
         }
         .toolbar {
             ToolbarItemGroup {
-                FargesynVelger(plukker: plukker)
                 LyskildeKnapper(plukker: plukker, slukkEtterFangst: $slukkEtterFangst)
                 Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
                     lagre = fanget.map { PalettFarge(farge: $0, opphav: .kamera) }
@@ -185,44 +179,6 @@ extension Array where Element == Farge {
     mutating func fang(_ farge: Farge) {
         append(farge)
         if count > Self.maksFanget { removeFirst(count - Self.maksFanget) }
-    }
-}
-
-/// Velg fargesynsfilter for kamerabildet.
-private struct FargesynVelger: View {
-    @Bindable var plukker: KameraFargeplukker
-
-    var body: some View {
-        Menu {
-            Picker("Fargesyn", selection: $plukker.fargesyn) {
-                Text("Normalt syn").tag(Fargesynstype?.none)
-                ForEach(Fargesynstype.allCases) { type in
-                    Text(type.navn).tag(Fargesynstype?.some(type))
-                }
-            }
-            .pickerStyle(.inline)
-        } label: {
-            Label("Fargesyn", systemImage: plukker.fargesyn == nil ? "eye" : "eye.fill")
-        }
-        .help("Vis kamerabildet slik det ser ut med et fargesynsavvik")
-    }
-}
-
-/// Merke i hjørnet når kamerabildet er filtrert, så det ikke forveksles med det vanlige bildet.
-private struct FargesynMerke: View {
-    let plukker: KameraFargeplukker
-
-    var body: some View {
-        if let type = plukker.fargesyn {
-            Label(type.navn, systemImage: "eye.fill")
-                .font(.callout.weight(.semibold))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(.regularMaterial, in: Capsule())
-                .padding(10)
-                .allowsHitTesting(false)
-                .accessibilityLabel("Kamerabildet vises med \(type.navn)")
-        }
     }
 }
 

@@ -221,7 +221,7 @@
 				INFOPLIST_FILE = Konfigurasjon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kolorist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine og til å vise dem slik de ser ut med fargesynsavvik.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Eivind Arnstein Johansen";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -269,7 +269,7 @@
 				INFOPLIST_FILE = Konfigurasjon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kolorist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine og til å vise dem slik de ser ut med fargesynsavvik.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Eivind Arnstein Johansen";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

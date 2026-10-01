@@ -36,10 +36,16 @@ final class KameraFargeplukker {
     /// Kamerabildet vist slik det ser ut med et fargesynsavvik (nil = normalt). Bare visningen
     /// filtreres; fargene som plukkes er de faktiske.
     var fargesyn: Fargesynstype? {
-        didSet {
-            leser.settFilter(fargesyn.map { $0.lineærMatrise() })
-            if fargesyn == nil { filterlag.contents = nil }
-        }
+        didSet { oppdaterFilter() }
+    }
+    /// Alvorlighetsgrad 0…1 (1 = fullstendig avvik).
+    var fargesynGrad: Double = 1 {
+        didSet { oppdaterFilter() }
+    }
+
+    private func oppdaterFilter() {
+        leser.settFilter(fargesyn.map { $0.lineærMatrise(grad: fargesynGrad) })
+        if fargesyn == nil { filterlag.contents = nil }
     }
     /// Lag over forhåndsvisningen som viser det filtrerte bildet.
     @ObservationIgnored let filterlag: CALayer = {

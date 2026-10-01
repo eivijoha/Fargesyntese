@@ -9,6 +9,8 @@ struct FargesynVurdering: View {
     /// Delt med Vurdering › Palett, så samme palett er valgt i begge.
     @AppStorage("vurderingPalett") private var valgtIDTekst = ""
     @AppStorage("fargesynGrad") private var grad = 1.0
+    /// Åpent kamera med fargesynsfilter.
+    @State private var kameratype: Fargesynstype?
 
     private var valgt: PalettDokument? {
         paletter.first { $0.id.uuidString == valgtIDTekst } ?? paletter.first
@@ -16,6 +18,11 @@ struct FargesynVurdering: View {
 
     var body: some View {
         Form {
+            Section {
+                Button("Se omgivelsene med kamera", systemImage: "camera.viewfinder") { kameratype = .deutan }
+            } footer: { Group {
+                Text("Kamerabildet vist med valgt fargesynsavvik. Velg type og grad i kameravisningen.")
+            }.foregroundStyle(Color.sekundærTekst) }
             if paletter.isEmpty {
                 ContentUnavailableView("Ingen paletter", systemImage: "swatchpalette",
                                        description: Text("Lag en palett først, så kan den vurderes her."))
@@ -39,11 +46,12 @@ struct FargesynVurdering: View {
                 }.foregroundStyle(Color.sekundærTekst) }
 
                 Seksjon("Slik ser paletten ut") {
-                    stripe(String(localized: "Normalt syn"), undertekst: nil, farger: farger.map(\.farge), antall: nil)
+                    stripe(String(localized: "Normalt syn"), undertekst: nil, farger: farger.map(\.farge), antall: nil, kamera: nil)
                     ForEach(Fargesynstype.allCases) { type in
                         let forvekslinger = Fargesynsanalyse.forvekslinger(i: farger.map(\.farge), type: type, grad: grad)
                         stripe(grad >= 1 ? type.navn : type.delvisNavn, undertekst: type.beskrivelse,
-                               farger: farger.map { $0.farge.simulert(type, grad: grad) }, antall: forvekslinger.count)
+                               farger: farger.map { $0.farge.simulert(type, grad: grad) }, antall: forvekslinger.count,
+                               kamera: { kameratype = type })
                     }
                 }
 
@@ -52,9 +60,14 @@ struct FargesynVurdering: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Fargesyn")
+        #if os(iOS)
+        .fullScreenCover(item: $kameratype) { FargesynKamera(type: $0) }
+        #else
+        .sheet(item: $kameratype) { FargesynKamera(type: $0) }
+        #endif
     }
 
-    private func stripe(_ tittel: String, undertekst: String?, farger: [Farge], antall: Int?) -> some View {
+    private func stripe(_ tittel: String, undertekst: String?, farger: [Farge], antall: Int?, kamera: (() -> Void)?) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 Text(tittel).font(.subheadline.weight(.semibold))
@@ -72,12 +85,20 @@ struct FargesynVurdering: View {
                 }
             }
             PalettStripe(farger: farger).frame(height: 36)
-            if let undertekst {
-                Text(undertekst).font(.caption).foregroundStyle(Color.sekundærTekst)
+            HStack(alignment: .firstTextBaseline) {
+                if let undertekst {
+                    Text(undertekst).font(.caption).foregroundStyle(Color.sekundærTekst)
+                }
+                Spacer(minLength: 8)
+                if let kamera {
+                    Button("Se med kamera", systemImage: "camera.viewfinder", action: kamera)
+                        .font(.caption.weight(.semibold))
+                        .buttonStyle(.borderless)
+                }
             }
         }
         .padding(.vertical, 2)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
     }
 
     @ViewBuilder
