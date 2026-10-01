@@ -584,6 +584,15 @@ struct VisOgsåMeny: View {
 
     var body: some View {
         Menu {
+            // Innstillinger for valgt profil øverst, så profilvalg og «+ ICC-profil», så listene.
+            Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
+            if bibliotek.profil(id: valgtID)?.modell == .cmyk {
+                // UCR/GCR: færrest mulig trykkfarger, med det grå innslaget flyttet til sort, så lenge
+                // fargen holder seg innenfor 1 ΔE00 av profilens egen separasjon.
+                Toggle("Rene CMYK-farger (UCR/GCR)", isOn: $renCMYK)
+            }
+            Button("ICC-profil", systemImage: "plus") { importerer = true }
+            Divider()
             Picker("Standard", selection: $valgtID) {
                 ForEach(standard) { valg($0) }
             }
@@ -618,14 +627,6 @@ struct VisOgsåMeny: View {
                 }
             }
             #endif
-            Button("ICC-profil", systemImage: "plus") { importerer = true }
-            Divider()
-            Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
-            if bibliotek.profil(id: valgtID)?.modell == .cmyk {
-                // UCR/GCR: færrest mulig trykkfarger, med det grå innslaget flyttet til sort, så lenge
-                // fargen holder seg innenfor 1 ΔE00 av profilens egen separasjon.
-                Toggle("Rene CMYK-farger (UCR/GCR)", isOn: $renCMYK)
-            }
         } label: {
             HStack(spacing: 4) {
                 // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av
