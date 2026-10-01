@@ -22,6 +22,8 @@ struct HarmoniSeksjon: View {
     /// høyeste kroma innenfor gamut (100 % = så mettet som fargen kan bli).
     @State private var metning: Double?
     @State private var lyshet: Double?
+    /// Ark for å velge grunnfarge blant lagrede farger og paletter (trykk i midten av sirkelen).
+    @State private var velgerGrunnfarge = false
     #if SIRKELEKSPORT
     /// Midlertidig: eksport av fargesirkelen som vektor (SVG/PDF) til arbeidet med app-ikonet.
     @State private var sirkeleksport: (data: Data, type: UTType, navn: String)?
@@ -168,7 +170,16 @@ struct HarmoniSeksjon: View {
 
             // Ringen og midten tegnes med gjeldende metning og lyshet, så gliderne under virker direkte på sirkelen.
             Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg,
-                               ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut))
+                               ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut),
+                               vedMidttrykk: { velgerGrunnfarge = true })
+                .sheet(isPresented: $velgerGrunnfarge) {
+                    LagretFargeArk(tittel: String(localized: "Grunnfarge")) { f in
+                        // Start harmonien fra den valgte fargen som den er.
+                        metning = nil
+                        lyshet = nil
+                        velg(f)
+                    }
+                }
                 .frame(height: 220)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
@@ -192,7 +203,7 @@ struct HarmoniSeksjon: View {
         } header: {
             Text("Fargeharmonier")
         } footer: {
-            Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien."))
+            Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør, eller trykk i midten for å starte fra en lagret farge. Metning og lyshet gjelder hele harmonien."))
         }
         #if SIRKELEKSPORT
         .fileExporter(isPresented: Binding(get: { sirkeleksport != nil }, set: { if !$0 { sirkeleksport = nil } }),
@@ -219,6 +230,8 @@ struct Fargesirkelvisning: View {
     var ringfarge: ((Double) -> Farge)? = nil
     /// Fargen i midten; standard er grunnfargen.
     var midtfarge: Farge? = nil
+    /// Trykk på midten (f.eks. velg grunnfarge blant lagrede farger).
+    var vedMidttrykk: (() -> Void)? = nil
 
     var body: some View {
         GeometryReader { geo in
@@ -252,9 +265,23 @@ struct Fargesirkelvisning: View {
                          with: .color((midtfarge ?? grunnfarge).swiftUI))
             }
             .contentShape(Circle())
+            .overlay {
+                // Midten er en egen knapp: velg grunnfarge blant lagrede farger.
+                if let vedMidttrykk {
+                    Button(action: vedMidttrykk) {
+                        Circle().fill(.clear).contentShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .frame(width: side * 0.34, height: side * 0.34)
+                    .position(senter)
+                    .help("Velg grunnfarge fra lagrede farger")
+                }
+            }
             .gesture(
                 DragGesture(minimumDistance: 0).onChanged { g in
                     guard let velg else { return }
+                    // Dra som starter i midten, flytter ikke kuløren (midten er en knapp).
+                    guard hypot(g.startLocation.x - senter.x, g.startLocation.y - senter.y) > side * 0.17 else { return }
                     let dx = g.location.x - senter.x, dy = g.location.y - senter.y
                     guard hypot(dx, dy) > side * 0.15 else { return }
                     let vinkel = atan2(dy, dx) * 180 / .pi + 90
@@ -265,6 +292,7 @@ struct Fargesirkelvisning: View {
         .accessibilityElement()
         .accessibilityLabel("\(sirkel.navn) fargesirkel med \(farger.count) markerte kulører")
         .accessibilityValue("Grunnfarge \(Int(sirkel.vinkel(for: grunnfarge))) grader")
+        .accessibilityAction(named: "Velg grunnfarge fra lagrede farger") { vedMidttrykk?() }
         .accessibilityAdjustableAction { retning in
             let steg: Double = retning == .increment ? 15 : -15
             velg?(sirkel.farge(grunnfarge, vinkel: sirkel.vinkel(for: grunnfarge) + steg))

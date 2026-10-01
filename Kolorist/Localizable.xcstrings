@@ -655,6 +655,16 @@
         }
       }
     },
+    "Bruk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use"
+          }
+        }
+      }
+    },
     "Bruk (valgfritt), f.eks. «nettside for en barnehage»": {
       "localizations": {
         "en": {
@@ -855,12 +865,12 @@
         }
       }
     },
-    "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien.": {
+    "Dra i sirkelen for å endre grunnfargens kulør, eller trykk i midten for å starte fra en lagret farge. Metning og lyshet gjelder hele harmonien.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag in the wheel to change the base color’s hue. Saturation and lightness apply to the whole harmony."
+            "value": "Drag in the wheel to change the base color’s hue, or tap the center to start from a saved color. Saturation and lightness apply to the whole harmony."
           }
         }
       }
@@ -1361,6 +1371,16 @@
         }
       }
     },
+    "Grunnfarge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base color"
+          }
+        }
+      }
+    },
     "Grunnfarge %lld grader": {
       "localizations": {
         "en": {
@@ -1767,6 +1787,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Source"
+          }
+        }
+      }
+    },
+    "Kjent verdi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Known value"
           }
         }
       }
@@ -3743,6 +3773,16 @@
         }
       }
     },
+    "Velg grunnfarge fra lagrede farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose base color from saved colors"
+          }
+        }
+      }
+    },
     "Verdier": {
       "localizations": {
         "en": {
@@ -3859,6 +3899,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. It includes contrast (WCAG) and color vision."
+          }
+        }
+      }
+    },
+    "sRGB-hex som #2F7FD8 eller 2F7FD8; CSS-farger som oklch(…) og rgb(…) går også.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sRGB hex such as #2F7FD8 or 2F7FD8; CSS colors such as oklch(…) and rgb(…) also work."
           }
         }
       }

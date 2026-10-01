@@ -55,11 +55,48 @@ struct LagretFargeArk: View {
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
 
     private let rutenett = [GridItem(.adaptive(minimum: 52), spacing: 8)]
+    /// Kjent verdi skrevet inn: hex (sRGB), eller annen CSS-farge.
+    @State private var hexTekst = ""
+    private var tolket: Farge? { Fargetolk.tolk(hexTekst.trimmingCharacters(in: .whitespaces)) }
+
+    private func brukInnskrevet() {
+        guard let f = tolket else { return }
+        valgt(f)
+        lukk()
+    }
+
+    private var innskriving: some View {
+        HStack(spacing: 10) {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(tolket?.swiftUI ?? Color.clear)
+                .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(.secondary.opacity(0.4), lineWidth: 1))
+                .frame(width: 44, height: 36)
+            TextField("Hex, f.eks. #2F7FD8", text: $hexTekst)
+                .font(.body.monospaced())
+                .autocorrectionDisabled()
+                #if os(iOS)
+                .textInputAutocapitalization(.characters)
+                #endif
+                .submitLabel(.done)
+                .onSubmit(brukInnskrevet)
+                .textFieldStyle(.roundedBorder)
+            Button("Bruk", action: brukInnskrevet)
+                .buttonStyle(.borderedProminent)
+                .disabled(tolket == nil)
+        }
+    }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("Kjent verdi", systemImage: "number").font(.headline)
+                        innskriving
+                        Text("sRGB-hex som #2F7FD8 eller 2F7FD8; CSS-farger som oklch(…) og rgb(…) går også.")
+                            .font(.caption)
+                            .foregroundStyle(Color.sekundærTekst)
+                    }
                     gruppe(String(localized: "Aktiv farge"), [PalettFarge(farge: arbeidsbenk.aktivFarge)])
                     if !enkeltfarger.isEmpty {
                         gruppe(String(localized: "Enkeltfarger"), enkeltfarger.map(\.palettFarge), symbol: "square.fill")
