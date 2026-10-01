@@ -21,6 +21,16 @@
         }
       }
     },
+    "%@ er utviklet av Eivind Arnstein Johansen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is developed by Eivind Arnstein Johansen."
+          }
+        }
+      }
+    },
     "%@ fargesirkel med %lld markerte kulører": {
       "localizations": {
         "en": {
@@ -3371,6 +3381,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Value words"
+          }
+        }
+      }
+    },
+    "Versjon %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
           }
         }
       }

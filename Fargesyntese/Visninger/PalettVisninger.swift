@@ -62,6 +62,7 @@ struct PalettListe: View {
                         .font(.footnote)
                         .foregroundStyle(Color.sekundærTekst)
                         .padding(.top, 8)
+                    Utviklerlinje()
                 }
                 .padding()
             }
@@ -733,4 +734,26 @@ private struct OmdøpPalett: ViewModifier {
 
 extension View {
     func omdøpPalett(_ palett: Binding<PalettDokument?>) -> some View { modifier(OmdøpPalett(palett: palett)) }
+}
+
+/// «<appnavn> er utviklet av …» – appnavnet hentes fra bunten, så det følger med ved navnebytte.
+struct Utviklerlinje: View {
+    private var appnavn: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
+            ?? (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Fargesyntese"
+    }
+    private var versjon: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? ""
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("\(appnavn) er utviklet av Eivind Arnstein Johansen.")
+            if !versjon.isEmpty { Text("Versjon \(versjon)") }
+        }
+        .font(.footnote)
+        .foregroundStyle(Color.sekundærTekst)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 4)
+    }
 }
