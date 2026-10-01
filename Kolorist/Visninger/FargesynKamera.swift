@@ -8,6 +8,11 @@ struct FargesynKamera: View {
     @AppStorage("fargesynGrad") private var grad = 1.0
     @State private var plukker = KameraFargeplukker()
     @State private var normalt = false
+    /// Venter på at et trykk skal bli et hold (sammenlign med normalt syn).
+    @State private var holdOppgave: Task<Void, Never>?
+    @State private var holdAvbrutt = false
+    /// Sant mens fingeren/musa er nede; nullstilles også når gesten avbrytes (f.eks. av et knip).
+    @GestureState private var trykker = false
     @Environment(\.dismiss) private var lukk
 
     var body: some View {
@@ -49,6 +54,7 @@ struct FargesynKamera: View {
         .onChange(of: type) { _, ny in if !normalt { plukker.fargesyn = ny } }
         .onChange(of: grad) { _, ny in plukker.fargesynGrad = ny }
         .onChange(of: normalt) { _, ny in plukker.fargesyn = ny ? nil : type }
+        .onChange(of: trykker) { _, ny in if !ny { avsluttHold() } }
         #if os(macOS)
         .frame(minWidth: 640, minHeight: 520)
         #endif
@@ -70,15 +76,38 @@ struct FargesynKamera: View {
             filterlag: plukker.filterlag,
             vedOrientering: { plukker.settVisningsorientering(vinkel: $0, speilet: $1) }
         )
-        .simultaneousGesture(sammenligning)
+        // Forhåndsvisningen på Mac tar selv imot museklikk; et lag over bildet fanger holdet.
+        .overlay { Color.clear.contentShape(Rectangle()).gesture(sammenligning) }
         #endif
     }
 
-    /// Trykk og hold for normalt syn, slipp for å se avviket igjen.
+    /// Trykk og hold (uten å flytte fingeren) for normalt syn, slipp for å se avviket igjen.
+    /// Knip og dra avbryter, så zoom ikke viser normalt syn underveis.
     private var sammenligning: some Gesture {
         DragGesture(minimumDistance: 0)
-            .onChanged { _ in if !normalt { normalt = true } }
-            .onEnded { _ in normalt = false }
+            .updating($trykker) { _, tilstand, _ in tilstand = true }
+            .onChanged { g in
+                if hypot(g.translation.width, g.translation.height) > 12 {
+                    holdAvbrutt = true
+                    holdOppgave?.cancel()
+                    holdOppgave = nil
+                    normalt = false
+                    return
+                }
+                guard !holdAvbrutt, holdOppgave == nil, !normalt else { return }
+                holdOppgave = Task {
+                    try? await Task.sleep(for: .milliseconds(300))
+                    if !Task.isCancelled, trykker { normalt = true }
+                }
+            }
+            .onEnded { _ in avsluttHold() }
+    }
+
+    private func avsluttHold() {
+        holdOppgave?.cancel()
+        holdOppgave = nil
+        holdAvbrutt = false
+        normalt = false
     }
 
     private var kontroller: some View {

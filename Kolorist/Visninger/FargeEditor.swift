@@ -497,6 +497,15 @@ struct Fargeflate: View {
     var lagre: (PalettFarge) -> Void = { _ in }
     var leggIPalett: (PalettFarge) -> Void = { _ in }
 
+    /// Rene CMYK-verdier for gjeldende farge og profil. Søket er for tungt til å kjøre ved hver
+    /// tegning (glidere), så det gjøres i bakgrunnen etter en kort pause og vises når det er klart.
+    @State private var ren: (nøkkel: String, verdier: [Double])?
+
+    private var renNøkkel: String? {
+        guard renCMYK, kobletVerdier == nil, profil.modell == .cmyk else { return nil }
+        return "\(farge.r),\(farge.g),\(farge.b)|\(profil.id)|\(hensikt.rawValue)"
+    }
+
     /// Nærmeste farge i profilens rom og verdiene der. sRGB bruker perseptuell gamut-kartlegging
     /// (CSS Color 4), andre rom går via ICC-profilen med valgt gjengivelseshensikt.
     private var motpart: (farge: Farge, tekst: String, verdier: [Double]) {
@@ -506,7 +515,7 @@ struct Fargeflate: View {
             let v = s.sRGB
             return (s, s.hex(), [v.r, v.g, v.b])
         }
-        if renCMYK, profil.modell == .cmyk, let ren = RenCMYK.separer(farge, i: profil, hensikt: hensikt),
+        if let nøkkel = renNøkkel, let ren, ren.nøkkel == nøkkel,
            let f = Farge(komponenter: ren.verdier, i: profil, alfa: farge.alfa) {
             return (f, profil.formatert(ren.verdier), ren.verdier)
         }
@@ -540,6 +549,14 @@ struct Fargeflate: View {
             }
         }
         .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20, style: .continuous))
+        .task(id: renNøkkel) {
+            guard let nøkkel = renNøkkel else { return }
+            try? await Task.sleep(for: .milliseconds(120))
+            guard !Task.isCancelled else { return }
+            let (f, p, h) = (farge, profil, hensikt)
+            let resultat = await Task.detached(priority: .userInitiated) { RenCMYK.separer(f, i: p, hensikt: h) }.value
+            if !Task.isCancelled, let resultat { ren = (nøkkel, resultat.verdier) }
+        }
     }
 
     private func halvdel(_ pf: PalettFarge, tittel: String, tekst: String, merknad: String? = nil) -> some View {

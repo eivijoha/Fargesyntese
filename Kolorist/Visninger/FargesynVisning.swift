@@ -45,17 +45,20 @@ struct FargesynVurdering: View {
                                    : "Delvis avvik (anomal trikromasi). 100 % er fullstendig avvik.")
                 }.foregroundStyle(Color.sekundærTekst) }
 
+                // Analysen (O(n²) per type) regnes én gang per tegning og deles av begge seksjonene.
+                let analyse = Fargesynstype.allCases.map {
+                    ($0, Fargesynsanalyse.forvekslinger(i: farger.map(\.farge), type: $0, grad: grad))
+                }
                 Seksjon("Slik ser paletten ut") {
                     stripe(String(localized: "Normalt syn"), undertekst: nil, farger: farger.map(\.farge), antall: nil, kamera: nil)
-                    ForEach(Fargesynstype.allCases) { type in
-                        let forvekslinger = Fargesynsanalyse.forvekslinger(i: farger.map(\.farge), type: type, grad: grad)
+                    ForEach(analyse, id: \.0) { type, forvekslinger in
                         stripe(grad >= 1 ? type.navn : type.delvisNavn, undertekst: type.beskrivelse,
                                farger: farger.map { $0.farge.simulert(type, grad: grad) }, antall: forvekslinger.count,
                                kamera: { kameratype = type })
                     }
                 }
 
-                forvekslingsseksjon(farger)
+                forvekslingsseksjon(farger, alle: analyse.flatMap(\.1))
             }
         }
         .formStyle(.grouped)
@@ -102,10 +105,7 @@ struct FargesynVurdering: View {
     }
 
     @ViewBuilder
-    private func forvekslingsseksjon(_ farger: [PalettFarge]) -> some View {
-        let alle = Fargesynstype.allCases.flatMap {
-            Fargesynsanalyse.forvekslinger(i: farger.map(\.farge), type: $0, grad: grad)
-        }
+    private func forvekslingsseksjon(_ farger: [PalettFarge], alle: [Forveksling]) -> some View {
         Section {
             if farger.count < 2 {
                 Text("Paletten trenger minst to farger.").foregroundStyle(Color.sekundærTekst)

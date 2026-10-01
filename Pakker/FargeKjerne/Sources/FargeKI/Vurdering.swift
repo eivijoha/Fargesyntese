@@ -90,6 +90,9 @@ public enum Palettvurderer {
                 let v = svar.content
                 return PalettVurdering(oppsummering: v.oppsummering, styrker: v.styrker, svakheter: v.svakheter,
                                        forslag: v.forslag, fakta: fakta, kilde: .appleIntelligence)
+            } catch let feil where feil is CancellationError || Task.isCancelled {
+                // Avbrutt (f.eks. annen palett valgt): ikke lat som modellen feilet.
+                throw CancellationError()
             } catch let feil where KIFeil.fra(feil).erBrukerrettet {
                 throw KIFeil.fra(feil)
             } catch {

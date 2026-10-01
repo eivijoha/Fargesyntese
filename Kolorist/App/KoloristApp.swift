@@ -103,14 +103,40 @@ final class Arbeidsbenk {
 
     /// En nylig lagret enkeltfarge som skal få navn (ark i roten av appen).
     var nyEnkeltfarge: LagretFarge?
+    /// Farger som venter på navnearket (lagret mens et annet ark/en annen boble var oppe).
+    @ObservationIgnored private var navnekø: [LagretFarge] = []
+    @ObservationIgnored private var venterPåNavneark = false
 
-    /// Ber om navn på en nylagret enkeltfarge. Litt forsinket, så valgbobler og menyer rekker å lukkes
-    /// før arket vises.
+    /// Ber om navn på en nylagret enkeltfarge. Arket vises når ingen andre ark eller bobler er oppe;
+    /// lagres flere farger raskt, får de navn etter tur i stedet for å avbryte hverandre.
     func navngiNy(_ farge: LagretFarge) {
+        navnekø.append(farge)
+        visNesteNavneark()
+    }
+
+    /// Kalles også når navnearket lukkes, så neste i køen vises.
+    func visNesteNavneark() {
+        guard nyEnkeltfarge == nil, !venterPåNavneark, !navnekø.isEmpty else { return }
+        venterPåNavneark = true
         Task {
-            try? await Task.sleep(for: .milliseconds(650))
-            nyEnkeltfarge = farge
+            defer { venterPåNavneark = false }
+            // Minst en kort pause (bobler og menyer lukkes), så vent til ingen presentasjon er oppe.
+            try? await Task.sleep(for: .milliseconds(350))
+            for _ in 0..<50 where Self.noeErPresentert() {
+                try? await Task.sleep(for: .milliseconds(100))
+            }
+            guard nyEnkeltfarge == nil, !navnekø.isEmpty else { return }
+            nyEnkeltfarge = navnekø.removeFirst()
         }
+    }
+
+    private static func noeErPresentert() -> Bool {
+        #if canImport(UIKit)
+        let vinduer = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        return vinduer.contains { $0.isKeyWindow && $0.rootViewController?.presentedViewController != nil }
+        #else
+        return NSApp.windows.contains { $0.isVisible && ($0.attachedSheet != nil || $0.sheetParent != nil) }
+        #endif
     }
 
     /// Viser en beskrevet farge i Studio, i OKLCH (fargen er regnet ut der).
@@ -183,7 +209,7 @@ struct InnholdsVisning: View {
         .sheet(item: $arbeidsbenk.sammenligning) { par in
             SammenligningVisning(a: par.a, b: par.b)
         }
-        .sheet(item: $arbeidsbenk.nyEnkeltfarge) { lagret in
+        .sheet(item: $arbeidsbenk.nyEnkeltfarge, onDismiss: { arbeidsbenk.visNesteNavneark() }) { lagret in
             NavngiArk(farge: lagret.palettFarge, tittel: "Ny enkeltfarge", avbryt: "Hopp over") { navn in
                 var f = lagret.palettFarge
                 f.navn = navn

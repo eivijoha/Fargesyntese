@@ -105,7 +105,8 @@ public enum Fargesynsanalyse {
 
     /// Fargepar som er tydelig ulike med normalt syn, men blir vanskelige å skille med avviket.
     public static func forvekslinger(i farger: [Farge], type: Fargesynstype, grad: Double = 1) -> [Forveksling] {
-        let sim = farger.map { $0.simulert(type, grad: grad) }
+        // Sammenlign fargene slik de vises (gamut-kartlagt), ikke simulerte farger utenfor gamut.
+        let sim = farger.map { $0.simulert(type, grad: grad).gamutKartlagt(til: .displayP3) }
         var ut: [Forveksling] = []
         for i in farger.indices {
             for j in farger.indices where j > i {

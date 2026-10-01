@@ -76,6 +76,11 @@ final class KameraFargeplukker {
         leser.vedFiltrertBilde = { [weak self] bilde in
             Task { @MainActor in
                 guard let self, self.fargesyn != nil else { return }
+                // Filterlaget ligger i forhåndsvisningslaget. Dets forbindelse finnes først når økten
+                // kjører, og vinkelen endres ved rotasjon – les den her, så bildet alltid ligger likt.
+                if let lag = self.filterlag.superlayer as? AVCaptureVideoPreviewLayer, let k = lag.connection {
+                    self.leser.settOrientering(vinkel: k.videoRotationAngle, speilet: k.isVideoMirrored)
+                }
                 CATransaction.begin()
                 CATransaction.setDisableActions(true)
                 self.filterlag.contents = bilde
