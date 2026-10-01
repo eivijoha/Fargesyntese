@@ -917,12 +917,12 @@
         }
       }
     },
-    "Fargestyring (ICC)": {
+    "Fargestyring (ICC) – %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color management (ICC)"
+            "value": "Color management (ICC) – %@"
           }
         }
       }
@@ -1533,12 +1533,12 @@
         }
       }
     },
-    "Juster i profilen": {
+    "Juster innenfor %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adjust in profile"
+            "value": "Adjust within %@"
           }
         }
       }
@@ -2743,16 +2743,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pick from screen"
-          }
-        }
-      }
-    },
-    "Profil": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Profile"
           }
         }
       }

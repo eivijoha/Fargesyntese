@@ -49,50 +49,62 @@ struct FargeEditor: View {
         }
     }
 
+
+    /// Fargeflaten med feltet for verdi og «Vis også» – fast øverst mens resten ruller.
+    @ViewBuilder
+    private func fargepanel(_ farge: Farge) -> some View {
+        @Bindable var arbeidsbenk = arbeidsbenk
+        VStack(spacing: 0) {
+            Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
+                       kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
+                       lagre: { lagreEnkeltfarger([$0], i: kontekst) },
+                       leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
+                .frame(height: 140)
+            HStack {
+                TextField("Hex, CSS eller beskrivelse", text: $hexTekst)
+                    .font(.body.monospaced())
+                    .autocorrectionDisabled()
+                    .onSubmit {
+                        if let f = Fargetolk.tolk(hexTekst) {
+                            arbeidsbenk.aktivFarge = f
+                        } else {
+                            // Ikke hex/CSS: tolk teksten som en beskrivelse («dyp havblå»), regnet ut i OKLCH.
+                            let beskrivelse = hexTekst
+                            beskriver = true
+                            Task {
+                                defer { beskriver = false }
+                                arbeidsbenk.vis(await Fargebeskriver.farge(fra: beskrivelse))
+                            }
+                        }
+                    }
+                    .overlay(alignment: .trailing) {
+                        if beskriver { ProgressView().controlSize(.small) }
+                    }
+                VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
+                #if os(macOS)
+                // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
+                PipetteKnapp {
+                    arbeidsbenk.aktivFarge = $0
+                    arbeidsbenk.registrerMåling($0)
+                }
+                .labelStyle(.iconOnly)
+                #endif
+            }
+            .padding(.horizontal, 16)
+            .frame(minHeight: 48)
+        }
+        .background(Color.kortbakgrunn, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .padding(.horizontal, 16)
+        .padding(.top, 4)
+        .padding(.bottom, 8)
+        .background(Color.skjemabakgrunn)
+    }
+
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         let farge = arbeidsbenk.aktivFarge
 
         Form {
-            Section {
-                Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
-                           kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
-                           lagre: { lagreEnkeltfarger([$0], i: kontekst) },
-                           leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
-                    .frame(height: 140)
-                    .listRowInsets(EdgeInsets())
-                HStack {
-                    TextField("Hex, CSS eller beskrivelse", text: $hexTekst)
-                        .font(.body.monospaced())
-                        .autocorrectionDisabled()
-                        .onSubmit {
-                            if let f = Fargetolk.tolk(hexTekst) {
-                                arbeidsbenk.aktivFarge = f
-                            } else {
-                                // Ikke hex/CSS: tolk teksten som en beskrivelse («dyp havblå»), regnet ut i OKLCH.
-                                let beskrivelse = hexTekst
-                                beskriver = true
-                                Task {
-                                    defer { beskriver = false }
-                                    arbeidsbenk.vis(await Fargebeskriver.farge(fra: beskrivelse))
-                                }
-                            }
-                        }
-                        .overlay(alignment: .trailing) {
-                            if beskriver { ProgressView().controlSize(.small) }
-                        }
-                    VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
-                    #if os(macOS)
-                    // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
-                    PipetteKnapp {
-                        arbeidsbenk.aktivFarge = $0
-                        arbeidsbenk.registrerMåling($0)
-                    }
-                    .labelStyle(.iconOnly)
-                    #endif
-                }
-            }
-
             Section {
                 Picker("Modus", selection: $modus) {
                     ForEach(Modus.allCases) { Label($0.navn, systemImage: $0.symbol).tag($0) }
@@ -117,7 +129,13 @@ struct FargeEditor: View {
         .listSectionSpacing(.compact)
         #endif
         .environment(\.defaultMinListRowHeight, 44)
+        .contentMargins(.top, 0, for: .scrollContent)
+        .safeAreaInset(edge: .top, spacing: 0) { fargepanel(farge) }
         .navigationTitle("Studio")
+        #if os(iOS)
+        // Liten tittel: fargepanelet står fast øverst og trenger plassen.
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
             VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
         }
@@ -162,7 +180,7 @@ extension FargeEditor {
             GamutOversikt(farge: farge)
         }
 
-        ICCSeksjon(farge: $arbeidsbenk.aktivFarge)
+        ICCSeksjon(farge: $arbeidsbenk.aktivFarge, profilID: $visOgsåID)
     }
 
     @ViewBuilder
@@ -618,5 +636,24 @@ struct GamutOversikt: View {
                 }
             }
         }
+    }
+}
+
+extension Color {
+    /// Bakgrunnen i grupperte skjemaer, og kortene oppå den.
+    static var skjemabakgrunn: Color {
+        #if os(iOS)
+        Color(uiColor: .systemGroupedBackground)
+        #else
+        Color(nsColor: .windowBackgroundColor)
+        #endif
+    }
+
+    static var kortbakgrunn: Color {
+        #if os(iOS)
+        Color(uiColor: .secondarySystemGroupedBackground)
+        #else
+        Color(nsColor: .controlBackgroundColor)
+        #endif
     }
 }

@@ -2,30 +2,21 @@ import FargeKjerne
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// Fargestyring i Studio: vis og juster fargen i en valgt ICC-profil, varsle om
-/// farger utenfor profilens gamut, og importer egne profiler (FOGRA39, GRACoL …).
+/// Fargestyring i Studio for profilen valgt under «Vis også»: verdiene i profilen, gjengivelseshensikt,
+/// varsel utenfor gamut, justering innenfor profilen og import av egne profiler (FOGRA39, GRACoL …).
 struct ICCSeksjon: View {
     @Binding var farge: Farge
+    /// Profilen fra «Vis også» – én felles profil i Studio.
+    @Binding var profilID: String
     @Environment(ProfilBibliotek.self) private var bibliotek
-    @AppStorage("valgtProfil") private var valgtProfilID = ICCProfil.genericCMYK.id
     @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
     @State private var importerer = false
     @State private var feil: String?
 
-    private var profil: ICCProfil { bibliotek.profil(id: valgtProfilID) ?? .genericCMYK }
+    private var profil: ICCProfil { bibliotek.profil(id: profilID) ?? .sRGB }
 
     var body: some View {
         Section {
-            Picker("Profil", selection: $valgtProfilID) {
-                Section("Innebygde") {
-                    ForEach(ICCProfil.innebygde) { Text($0.navn).tag($0.id) }
-                }
-                if !bibliotek.importerte.isEmpty {
-                    Section("Importerte") {
-                        ForEach(bibliotek.importerte) { Text($0.navn).tag($0.id) }
-                    }
-                }
-            }
             Picker("Gjengivelse", selection: $hensikt) {
                 ForEach(Gjengivelseshensikt.allCases, id: \.self) { Text($0.visningsnavn).tag($0) }
             }
@@ -45,8 +36,12 @@ struct ICCSeksjon: View {
                         .font(.callout)
                 }
                 if profil.kanRedigeres {
-                    DisclosureGroup("Juster i profilen") {
+                    DisclosureGroup {
                         ProfilGlidere(profil: profil, farge: $farge)
+                    } label: {
+                        Text("Juster innenfor \(profil.navn)")
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
             }
@@ -56,7 +51,7 @@ struct ICCSeksjon: View {
                 Label("Konverter mellom profiler …", systemImage: "arrow.triangle.swap")
             }
         } header: {
-            Text("Fargestyring (ICC)")
+            Text("Fargestyring (ICC) – \(profil.navn)")
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
@@ -64,7 +59,7 @@ struct ICCSeksjon: View {
                     if bibliotek.importerte.contains(where: { $0.id == profil.id }) {
                         Button("Fjern", systemImage: "trash", role: .destructive) {
                             bibliotek.fjern(profil)
-                            valgtProfilID = ICCProfil.genericCMYK.id
+                            profilID = ICCProfil.sRGB.id
                         }
                     }
                 }
@@ -79,7 +74,7 @@ struct ICCSeksjon: View {
         .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
             do {
                 let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }
-                if let siste = profiler.last { valgtProfilID = siste.id }
+                if let siste = profiler.last { profilID = siste.id }
             } catch {
                 feil = error.localizedDescription
             }
