@@ -1771,16 +1771,6 @@
         }
       }
     },
-    "Kamerabildet vist med valgt fargesynsavvik. Velg type og grad i kameravisningen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The camera image shown with the chosen color vision deficiency. Choose type and severity in the camera view."
-          }
-        }
-      }
-    },
     "Kilde": {
       "localizations": {
         "en": {
@@ -3145,12 +3135,12 @@
         }
       }
     },
-    "Se med kamera": {
+    "Se med kamera: %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "View with camera"
+            "value": "View with camera: %@"
           }
         }
       }

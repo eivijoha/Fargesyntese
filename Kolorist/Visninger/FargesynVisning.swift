@@ -18,11 +18,6 @@ struct FargesynVurdering: View {
 
     var body: some View {
         Form {
-            Section {
-                Button("Se omgivelsene med kamera", systemImage: "camera.viewfinder") { kameratype = .deutan }
-            } footer: { Group {
-                Text("Kamerabildet vist med valgt fargesynsavvik. Velg type og grad i kameravisningen.")
-            }.foregroundStyle(Color.sekundærTekst) }
             if paletter.isEmpty {
                 ContentUnavailableView("Ingen paletter", systemImage: "swatchpalette",
                                        description: Text("Lag en palett først, så kan den vurderes her."))
@@ -74,6 +69,15 @@ struct FargesynVurdering: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 Text(tittel).font(.subheadline.weight(.semibold))
+                if let kamera {
+                    // Kamerabildet med dette avviket, rett ved tittelen.
+                    Button(action: kamera) {
+                        Image(systemName: "camera.viewfinder")
+                    }
+                    .buttonStyle(.borderless)
+                    .accessibilityLabel(String(localized: "Se med kamera: \(tittel)"))
+                    .help("Se omgivelsene med kamera")
+                }
                 Spacer()
                 if let antall {
                     if antall == 0 {
@@ -88,16 +92,8 @@ struct FargesynVurdering: View {
                 }
             }
             PalettStripe(farger: farger).frame(height: 36)
-            HStack(alignment: .firstTextBaseline) {
-                if let undertekst {
-                    Text(undertekst).font(.caption).foregroundStyle(Color.sekundærTekst)
-                }
-                Spacer(minLength: 8)
-                if let kamera {
-                    Button("Se med kamera", systemImage: "camera.viewfinder", action: kamera)
-                        .font(.caption.weight(.semibold))
-                        .buttonStyle(.borderless)
-                }
+            if let undertekst {
+                Text(undertekst).font(.caption).foregroundStyle(Color.sekundærTekst)
             }
         }
         .padding(.vertical, 2)
