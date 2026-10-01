@@ -53,15 +53,18 @@ struct FargeEditor: View {
 
     /// Fargeflaten med feltet for verdi og «Vis også» – fast øverst mens resten ruller.
     @ViewBuilder
-    private func fargepanel(_ farge: Farge) -> some View {
+    private func fargepanel(_ farge: Farge, bred: Bool) -> some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         VStack(spacing: 0) {
             Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
                        kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
                        renCMYK: renCMYK,
+                       stablet: bred,
                        lagre: { lagreEnkeltfarger([$0], i: kontekst) },
                        leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
-                .frame(height: 140)
+                // Smal visning: fast høyde øverst. Bred visning: fyller høyden til venstre.
+                .frame(height: bred ? nil : 140)
+                .frame(maxHeight: bred ? .infinity : nil)
             HStack {
                 TextField("Hex, CSS eller beskrivelse", text: $hexTekst)
                     .font(.body.monospaced())
@@ -100,16 +103,34 @@ struct FargeEditor: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color.kortbakgrunn, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .padding(.horizontal, 16)
+        .padding(.leading, 16)
+        .padding(.trailing, bred ? 0 : 16)
         .padding(.top, 4)
         .padding(.bottom, 8)
         .background(Color.skjemabakgrunn)
+    }
+
+    /// Bred visning (iPad i landskap, åpen foldetelefon i landskap): fargeflatene får venstre halvdel,
+    /// over/under hverandre, og kontrollene ligger til høyre.
+    private func erBred(_ størrelse: CGSize) -> Bool {
+        #if os(iOS)
+        størrelse.width > størrelse.height && størrelse.width >= 700
+        #else
+        false
+        #endif
     }
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         let farge = arbeidsbenk.aktivFarge
 
+        GeometryReader { geo in
+        let bred = erBred(geo.size)
+        // AnyLayout bevarer skjemaets tilstand (rulleposisjon, glidere) når enheten roteres.
+        let oppsett = bred ? AnyLayout(HStackLayout(spacing: 0)) : AnyLayout(VStackLayout(spacing: 0))
+        oppsett {
+        fargepanel(farge, bred: bred)
+            .frame(width: bred ? geo.size.width / 2 : nil)
         Form {
             Section {
                 Picker("Modus", selection: $modus) {
@@ -136,11 +157,15 @@ struct FargeEditor: View {
         #endif
         .environment(\.defaultMinListRowHeight, 44)
         .contentMargins(.top, 0, for: .scrollContent)
-        .safeAreaInset(edge: .top, spacing: 0) { fargepanel(farge) }
+        }
+        .background(Color.skjemabakgrunn)
+        }
         .navigationTitle("Studio")
         #if os(iOS)
         // Liten tittel: fargepanelet står fast øverst og trenger plassen.
         .navigationBarTitleDisplayMode(.inline)
+        // iPhone: ingen tittellinje – fanen sier allerede «Studio», og fargeflaten får plassen.
+        .toolbar(UIDevice.current.userInterfaceIdiom == .phone ? .hidden : .automatic, for: .navigationBar)
         #endif
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
             VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
@@ -466,6 +491,8 @@ struct Fargeflate: View {
     var kobletVerdier: [Double]? = nil
     /// CMYK-profil: vis «rene» verdier (færrest mulig trykkfarger, grått i sort) i stedet for profilens egen separasjon.
     var renCMYK = false
+    /// Halvdelene over/under hverandre i stedet for side ved side (bred visning, f.eks. iPad i landskap).
+    var stablet = false
     /// Lagre en halvdel som enkeltfarge, eller åpne «Legg i palett» for den.
     var lagre: (PalettFarge) -> Void = { _ in }
     var leggIPalett: (PalettFarge) -> Void = { _ in }
@@ -498,7 +525,8 @@ struct Fargeflate: View {
         let høyreFarge = PalettFarge(farge: høyre.farge, representasjon: Fargerepresentasjon(
             rom: .icc(id: profil.id, navn: profil.navn), verdier: høyre.verdier, tekst: høyre.tekst))
         let venstre = PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
-        HStack(spacing: 0) {
+        let oppsett = stablet ? AnyLayout(VStackLayout(spacing: 0)) : AnyLayout(HStackLayout(spacing: 0))
+        oppsett {
             if kobletVerdier != nil {
                 // Verdiene er angitt direkte i profilen: én flate, ingen sammenligning å vise.
                 halvdel(høyreFarge, tittel: "\(modell.navn) · \(profil.navn)", tekst: høyre.tekst,
