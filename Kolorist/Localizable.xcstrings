@@ -159,6 +159,16 @@
         }
       }
     },
+    "%@ · rene farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · clean colors"
+          }
+        }
+      }
+    },
     "%@ – utenfor gamut": {
       "localizations": {
         "en": {
@@ -3061,6 +3071,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Relative colorimetric"
+          }
+        }
+      }
+    },
+    "Rene CMYK-farger (UCR/GCR)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean CMYK colors (UCR/GCR)"
           }
         }
       }

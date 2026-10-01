@@ -16,10 +16,28 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
     public let data: Data?
     private let navngittRom: String?
 
+    /// Fargerommet, bygget én gang per profil. Å lage `CGColorSpace` fra ICC-data er dyrt, og
+    /// menyer med mange profiler (gamutsjekk per profil) ble ellers trege.
     public var fargerom: CGColorSpace? {
-        if let data { return CGColorSpace(iccData: data as CFData) }
-        if let navngittRom { return CGColorSpace(name: navngittRom as CFString) }
-        return nil
+        Self.romBuffer.hent(id) {
+            if let data { return CGColorSpace(iccData: data as CFData) }
+            if let navngittRom { return CGColorSpace(name: navngittRom as CFString) }
+            return nil
+        }
+    }
+
+    private static let romBuffer = Rombuffer()
+
+    private final class Rombuffer: @unchecked Sendable {
+        private var rom: [String: CGColorSpace] = [:]
+        private let lås = NSLock()
+
+        func hent(_ id: String, lag: () -> CGColorSpace?) -> CGColorSpace? {
+            if let r = lås.withLock({ rom[id] }) { return r }
+            guard let nytt = lag() else { return nil }
+            lås.withLock { rom[id] = nytt }
+            return nytt
+        }
     }
 
     /// Laster en .icc/.icm-fil.

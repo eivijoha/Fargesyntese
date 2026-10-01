@@ -14,6 +14,7 @@ struct FargeEditor: View {
     @AppStorage("studioModus") private var modus: Modus = .farge
     @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
     @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
+    @AppStorage("renCMYK") private var renCMYK = false
     @Environment(ProfilBibliotek.self) private var bibliotek
 
     private var visOgsåProfil: ICCProfil { bibliotek.profil(id: visOgsåID) ?? .sRGB }
@@ -57,6 +58,7 @@ struct FargeEditor: View {
         VStack(spacing: 0) {
             Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
                        kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
+                       renCMYK: renCMYK,
                        lagre: { lagreEnkeltfarger([$0], i: kontekst) },
                        leggIPalett: { lagreNavn = ""; lagreFarger = [$0] })
                 .frame(height: 140)
@@ -462,6 +464,8 @@ struct Fargeflate: View {
     /// Verdiene i profilen når modellen er koblet til den (CMYK/RGB angitt direkte i profilen).
     /// Da er fargen per definisjon innenfor rommet, og begge halvdeler viser profilverdiene.
     var kobletVerdier: [Double]? = nil
+    /// CMYK-profil: vis «rene» verdier (færrest mulig trykkfarger, grått i sort) i stedet for profilens egen separasjon.
+    var renCMYK = false
     /// Lagre en halvdel som enkeltfarge, eller åpne «Legg i palett» for den.
     var lagre: (PalettFarge) -> Void = { _ in }
     var leggIPalett: (PalettFarge) -> Void = { _ in }
@@ -475,10 +479,18 @@ struct Fargeflate: View {
             let v = s.sRGB
             return (s, s.hex(), [v.r, v.g, v.b])
         }
+        if renCMYK, profil.modell == .cmyk, let ren = RenCMYK.separer(farge, i: profil, hensikt: hensikt),
+           let f = Farge(komponenter: ren.verdier, i: profil, alfa: farge.alfa) {
+            return (f, profil.formatert(ren.verdier), ren.verdier)
+        }
         guard let k = farge.komponenter(i: profil, hensikt: hensikt),
               let f = Farge(komponenter: k, i: profil, alfa: farge.alfa)
         else { return (farge, "–", []) }
         return (f, profil.formatert(k), k)
+    }
+
+    private var profiltittel: String {
+        renCMYK && profil.modell == .cmyk ? String(localized: "\(profil.navn) · rene farger") : profil.navn
     }
 
     var body: some View {
@@ -494,7 +506,7 @@ struct Fargeflate: View {
             } else {
                 halvdel(venstre, tittel: modell.navn, tekst: modell.tekst(for: farge),
                         merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
-                halvdel(høyreFarge, tittel: profil.navn, tekst: høyre.tekst,
+                halvdel(høyreFarge, tittel: profiltittel, tekst: høyre.tekst,
                         merknad: farge.erInnenfor(profil, hensikt: hensikt) ? nil
                             : String(localized: "Utenfor gamut · ΔE00 \(String(format: "%.1f", høyre.farge.deltaE2000(til: farge)))"))
             }
@@ -538,6 +550,7 @@ struct VisOgsåMeny: View {
     @Binding var valgtID: String
     @Binding var begrens: Bool
     let farge: Farge
+    @AppStorage("renCMYK") private var renCMYK = false
     @Environment(ProfilBibliotek.self) private var bibliotek
     @State private var importerer = false
     @State private var importfeil: String?
@@ -592,7 +605,12 @@ struct VisOgsåMeny: View {
                             ForEach(typer, id: \.1.rawValue) { tittel, modell in
                                 let utvalg = gruppe.profiler.filter { $0.modell == modell }
                                 if !utvalg.isEmpty {
-                                    Picker(tittel, selection: $valgtID) { ForEach(utvalg) { valg($0) } }.pickerStyle(.inline)
+                                    // Uten gamutsjekk: det kan være hundrevis av installerte profiler, og menyen skal åpnes
+                                    // raskt. Varselet vises i fargeflaten når profilen er valgt.
+                                    Picker(tittel, selection: $valgtID) {
+                                        ForEach(utvalg) { Text(bibliotek.visningsnavn($0)).tag($0.id) }
+                                    }
+                                    .pickerStyle(.inline)
                                 }
                             }
                         }
@@ -603,6 +621,11 @@ struct VisOgsåMeny: View {
             Button("Legg til ICC-profil …", systemImage: "plus") { importerer = true }
             Divider()
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
+            if bibliotek.profil(id: valgtID)?.modell == .cmyk {
+                // UCR/GCR: færrest mulig trykkfarger, med det grå innslaget flyttet til sort, så lenge
+                // fargen holder seg innenfor 1 ΔE00 av profilens egen separasjon.
+                Toggle("Rene CMYK-farger (UCR/GCR)", isOn: $renCMYK)
+            }
         } label: {
             HStack(spacing: 4) {
                 // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av
@@ -637,14 +660,17 @@ struct VisOgsåMeny: View {
     }
 }
 
-/// Status for fargen i alle standardrom og installerte ICC-profiler.
+/// Status for fargen i standardrommene og egne ICC-profiler.
 struct GamutOversikt: View {
     let farge: Farge
     @Environment(ProfilBibliotek.self) private var bibliotek
 
+    /// Standardrommene og egne profiler – ikke alle installerte på Macen (kan være hundrevis).
+    private var profiler: [ICCProfil] { ICCProfil.innebygde + bibliotek.importerte }
+
     var body: some View {
         DisclosureGroup {
-            ForEach(bibliotek.alle) { p in
+            ForEach(profiler) { p in
                 let innenfor = farge.erInnenfor(p)
                 HStack {
                     Text(p.navn).font(.callout)
@@ -655,12 +681,12 @@ struct GamutOversikt: View {
                 }
             }
         } label: {
-            let utenfor = bibliotek.alle.filter { !farge.erInnenfor($0) }
+            let utenfor = profiler.filter { !farge.erInnenfor($0) }
             LabeledContent("Gamut") {
                 if utenfor.isEmpty {
                     Text("Innenfor alle").foregroundStyle(Color.suksess)
                 } else {
-                    Text("Utenfor \(utenfor.count) av \(bibliotek.alle.count)")
+                    Text("Utenfor \(utenfor.count) av \(profiler.count)")
                         .foregroundStyle(Color.advarsel)
                 }
             }
