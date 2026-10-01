@@ -63,6 +63,22 @@
         }
       }
     },
+    "%@ og %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ and %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ og %2$@"
+          }
+        }
+      }
+    },
     "%@ på %@": {
       "localizations": {
         "en": {
@@ -343,12 +359,42 @@
         }
       }
     },
+    "%lld vanskelige par": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hard-to-tell pairs"
+          }
+        }
+      }
+    },
     "%lld°": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld°"
+          }
+        }
+      }
+    },
+    "1 vanskelig par": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 hard-to-tell pair"
+          }
+        }
+      }
+    },
+    "100 % er fullstendig avvik (dikromasi). Lavere verdier tilsvarer delvis avvik (anomal trikromasi), som er vanligere.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 % is complete deficiency (dichromacy). Lower values correspond to partial deficiency (anomalous trichromacy), which is more common."
           }
         }
       }
@@ -399,6 +445,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The active color is tested as text/graphics against the background. “Fix” changes only the lightness, keeping hue and saturation."
+          }
+        }
+      }
+    },
+    "Alle fargeparene kan skilles med alle typene fargesynsavvik.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All color pairs can be told apart with every type of color vision deficiency."
           }
         }
       }
@@ -723,6 +779,16 @@
         }
       }
     },
+    "Delvis avvik (anomal trikromasi). 100 % er fullstendig avvik.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partial deficiency (anomalous trichromacy). 100 % is complete deficiency."
+          }
+        }
+      }
+    },
     "Detaljer": {
       "localizations": {
         "en": {
@@ -949,6 +1015,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Color management (ICC)"
+          }
+        }
+      }
+    },
+    "Fargesyn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color vision"
           }
         }
       }
@@ -1209,6 +1285,16 @@
         }
       }
     },
+    "Grad": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Severity"
+          }
+        }
+      }
+    },
     "Gradienten lagres under «Gradienter» i Paletter og kan åpnes igjen her.": {
       "localizations": {
         "en": {
@@ -1445,6 +1531,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No single colors"
+          }
+        }
+      }
+    },
+    "Ingen forvekslinger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No confusions"
           }
         }
       }
@@ -2537,6 +2633,26 @@
         }
       }
     },
+    "Nesten like": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearly identical"
+          }
+        }
+      }
+    },
+    "Normalt syn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal vision"
+          }
+        }
+      }
+    },
     "Ny palett": {
       "localizations": {
         "en": {
@@ -2713,6 +2829,16 @@
         }
       }
     },
+    "Paletten trenger minst to farger.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The palette needs at least two colors."
+          }
+        }
+      }
+    },
     "Paletter": {
       "localizations": {
         "en": {
@@ -2739,6 +2865,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Palettes, gradients and single colors sync via iCloud."
+          }
+        }
+      }
+    },
+    "Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg. Simulering etter Machado mfl. (2009).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pairs that are clearly different with normal vision (ΔE00 ≥ 10) but drop below 10 with the deficiency. Below 5 they are nearly identical. Separate them by lightness, not just hue, or add a pattern, icon or text. Simulation after Machado et al. (2009)."
           }
         }
       }
@@ -2969,6 +3105,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Delete “%@”?"
+          }
+        }
+      }
+    },
+    "Slik ser paletten ut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How the palette looks"
           }
         }
       }
@@ -3391,6 +3537,16 @@
         }
       }
     },
+    "Vanskelige fargepar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hard-to-tell color pairs"
+          }
+        }
+      }
+    },
     "Velg": {
       "localizations": {
         "en": {
@@ -3633,6 +3789,22 @@
           "stringUnit": {
             "state": "new",
             "value": "ΔE00 %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "ΔE00 %@ → %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE00 %1$@ → %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "ΔE00 %1$@ → %2$@"
           }
         }
       }

@@ -3,16 +3,17 @@ import FargeKjerne
 import SwiftData
 import SwiftUI
 
-/// Vurdering: kontrast (WCAG), sammenligning (ΔE2000) og vurdering av hele paletter.
+/// Vurdering: kontrast (WCAG), sammenligning (ΔE2000), vurdering av hele paletter og fargesyn (CVD).
 struct VurderingVisning: View {
     enum Del: String, CaseIterable, Identifiable {
-        case kontrast, sammenlign, palett
+        case kontrast, sammenlign, palett, fargesyn
         var id: String { rawValue }
         var navn: String {
             switch self {
             case .kontrast: String(localized: "Kontrast")
             case .sammenlign: String(localized: "Sammenlign")
             case .palett: String(localized: "Palett")
+            case .fargesyn: String(localized: "Fargesyn")
             }
         }
     }
@@ -30,6 +31,7 @@ struct VurderingVisning: View {
                                      b: arbeidsbenk.målinger.last(where: { $0 != arbeidsbenk.aktivFarge }) ?? Farge(hex: "#FFFFFF")!,
                                      innebygd: true)
             case .palett: PalettVurderingDel()
+            case .fargesyn: FargesynVurdering()
             }
         }
         #if os(iOS)
@@ -67,14 +69,15 @@ private struct KontrastVurdering: View {
 /// Vurdering av en hel palett: KI-vurdering (med eksakte WCAG-fakta) og kontrastmatrise.
 private struct PalettVurderingDel: View {
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
-    @State private var valgtID: UUID?
+    /// Delt med Vurdering › Fargesyn, så samme palett er valgt i begge.
+    @AppStorage("vurderingPalett") private var valgtIDTekst = ""
     @State private var bruk = ""
     @State private var vurdering: PalettVurdering?
     @State private var arbeider = false
     @State private var feil: String?
     @State private var visMatrise = false
 
-    private var valgt: PalettDokument? { paletter.first { $0.id == valgtID } ?? paletter.first }
+    private var valgt: PalettDokument? { paletter.first { $0.id.uuidString == valgtIDTekst } ?? paletter.first }
 
     var body: some View {
         Form {
@@ -83,7 +86,7 @@ private struct PalettVurderingDel: View {
                                        description: Text("Lag en palett først, så kan den vurderes her."))
             } else {
                 Section {
-                    Picker("Palett", selection: Binding(get: { valgt?.id }, set: { valgtID = $0; vurdering = nil })) {
+                    Picker("Palett", selection: Binding(get: { valgt?.id }, set: { valgtIDTekst = $0?.uuidString ?? ""; vurdering = nil })) {
                         ForEach(paletter) { Text($0.navn.isEmpty ? "Uten navn" : $0.navn).tag(Optional($0.id)) }
                     }
                     if let valgt {
