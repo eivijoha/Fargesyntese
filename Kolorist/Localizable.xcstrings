@@ -1531,6 +1531,16 @@
         }
       }
     },
+    "ICC-profil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ICC profile"
+          }
+        }
+      }
+    },
     "Ikke bestått": {
       "localizations": {
         "en": {
@@ -2431,16 +2441,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add"
-          }
-        }
-      }
-    },
-    "Legg til ICC-profil …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add ICC profile …"
           }
         }
       }

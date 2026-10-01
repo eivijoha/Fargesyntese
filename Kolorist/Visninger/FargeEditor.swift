@@ -618,7 +618,7 @@ struct VisOgsåMeny: View {
                 }
             }
             #endif
-            Button("Legg til ICC-profil …", systemImage: "plus") { importerer = true }
+            Button("ICC-profil", systemImage: "plus") { importerer = true }
             Divider()
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
             if bibliotek.profil(id: valgtID)?.modell == .cmyk {
