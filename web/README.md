@@ -69,9 +69,7 @@ Søk etter `TODO:` i HTML-filene, og etter den synlige teksten i hakeparenteser.
 
 | Plassholder | Hvor | Hva |
 |---|---|---|
-| `[kontakt-e-post]` / `<!-- TODO: kontakt-e-post -->` | `support.html`, `privacy.html`, `terms.html` | Bytt ut `<span class="plassholder">…</span>` med f.eks. `<a href="mailto:…">…</a>` |
-| `[contact email]` / `<!-- TODO: contact-email -->` | `en/support.html`, `en/privacy.html`, `en/terms.html` | Samme |
-| `href="#"` + `[app-store-lenke]` / `[app-store-link]` | `index.html`, `en/index.html` | Lenken til appen i App Store. Fjern `<small>`-plassholderen. Vurder Apples offisielle «Download on the App Store»-merke (Apple Marketing Tools / App Store Marketing Guidelines) |
+| «Kommer snart i App Store» | `index.html`, `en/index.html` | Bytt `<span class="knapp knapp-kommer">` med `<a class="knapp" href="https://apps.apple.com/…">` og teksten «Last ned i App Store» når appen er godkjent. Vurder Apples offisielle «Download on the App Store»-merke (App Store Marketing Guidelines) |
 | `<!-- TODO: app-id -->` | `index.html`, `en/index.html` (i `<head>`) | Fjern kommentarene rundt `<meta name="apple-itunes-app" content="app-id=…">` og sett inn App Store-ID-en for Smart App Banner |
 | `<!-- TODO: skjermbilder -->` / `<!-- TODO: screenshots -->` | `index.html`, `en/index.html` | Bytt `<div class="ramme">` med `<img>` (legg bildene i `assets/`), med beskrivende `alt`-tekst |
 

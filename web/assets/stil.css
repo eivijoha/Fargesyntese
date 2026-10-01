@@ -769,3 +769,9 @@ thead th {
     color: #000;
   }
 }
+
+/* «Kommer snart i App Store»: samme form som knappen, men ikke klikkbar. */
+.knapp-kommer {
+  cursor: default;
+  opacity: 0.85;
+}
