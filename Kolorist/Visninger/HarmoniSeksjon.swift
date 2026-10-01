@@ -148,6 +148,24 @@ struct HarmoniSeksjon: View {
                 ForEach(Fargesirkel.allCases) { Text($0.navn).tag($0) }
             }
 
+            // Fargeprøvene over fargesirkelen, så resultatet sees før detaljene.
+            HStack(spacing: 4) {
+                ForEach(Array(farger.enumerated()), id: \.offset) { i, farge in
+                    FargeRute(farge: farge, visTekst: false, hjørne: 6,
+                              lagre: { lagreEnkeltfarger([PalettFarge(farge: $0)], i: kontekst) },
+                              leggIPalett: { lagre([PalettFarge(farge: $0)], "") },
+                              valgBoble: true)
+                        .frame(height: 44)
+                        .overlay {
+                            // Rammen markerer harmoniens grunnfarge, også når metning/lyshet er justert.
+                            if råfarger.indices.contains(i), råfarger[i] == grunnfarge {
+                                RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
+                            }
+                        }
+                        .onTapGesture { velg(farge) }
+                }
+            }
+
             // Ringen og midten tegnes med gjeldende metning og lyshet, så gliderne under virker direkte på sirkelen.
             Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg,
                                ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut))
@@ -168,23 +186,6 @@ struct HarmoniSeksjon: View {
                     lyshet = nil
                 }
             }
-            HStack(spacing: 4) {
-                ForEach(Array(farger.enumerated()), id: \.offset) { i, farge in
-                    FargeRute(farge: farge, visTekst: false, hjørne: 6,
-                              lagre: { lagreEnkeltfarger([PalettFarge(farge: $0)], i: kontekst) },
-                              leggIPalett: { lagre([PalettFarge(farge: $0)], "") },
-                              valgBoble: true)
-                        .frame(height: 44)
-                        .overlay {
-                            // Rammen markerer harmoniens grunnfarge, også når metning/lyshet er justert.
-                            if råfarger.indices.contains(i), råfarger[i] == grunnfarge {
-                                RoundedRectangle(cornerRadius: 6).strokeBorder(.primary, lineWidth: 2)
-                            }
-                        }
-                        .onTapGesture { velg(farge) }
-                }
-            }
-
             Button("Legg harmonien i palett", systemImage: "plus.square.on.square") {
                 lagre(farger.map { PalettFarge(farge: $0, opphav: .manuell) }, harmoni.navn)
             }
