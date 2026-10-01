@@ -1,5 +1,6 @@
 import Testing
 @testable import FargeKjerne
+@testable import FargeKI
 
 @Suite("Fargesyn (CVD)")
 struct FargesynTests {
@@ -42,5 +43,22 @@ struct FargesynTests {
         // Blå-gul er det tritan som forveksler, ikke deutan.
         let gul = Farge(hex: "#FBC02D")!, lyseblå = Farge(hex: "#90CAF9")!
         #expect(Fargesynsanalyse.forvekslinger(i: [gul, lyseblå], type: .deutan).isEmpty)
+    }
+}
+
+@Suite("Fargesyn i palettvurdering")
+struct FargesynVurderingTests {
+    @Test func faktaNevnerRødGrønnForveksling() {
+        let f = [PalettFarge(navn: "Rød", farge: Farge(hex: "#D32F2F")!), PalettFarge(navn: "Grønn", farge: Farge(hex: "#388E3C")!)]
+        let fakta = Palettvurderer.fargesynsfakta(f)
+        #expect(fakta.contains { $0.contains("Rød") && $0.contains("Grønn") })
+    }
+
+    @Test func regelbasertVurderingVarslerOmRødGrønn() {
+        let p = Palett(navn: "T", farger: [PalettFarge(farge: Farge(hex: "#D32F2F")!), PalettFarge(farge: Farge(hex: "#388E3C")!),
+                                           PalettFarge(farge: Farge(hex: "#FFFFFF")!)])
+        let v = Palettvurderer.regelbasert(p, fakta: [])
+        #expect(v.svakheter.count >= 1)
+        #expect(v.svakheter.contains { $0.lowercased().contains("rød-grønn") || $0.lowercased().contains("red-green") })
     }
 }

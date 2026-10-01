@@ -87,17 +87,6 @@
         }
       }
     },
-    "Bygget fra leksikonet: kulør rundt %lld°, med analog sekundærfarge og komplementær aksent.": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Built from the lexicon: hue around %lld°, with an analogous secondary color and a complementary accent."
-          }
-        }
-      }
-    },
     "Denne enheten støtter ikke Apple Intelligence. Kolorist bruker den innebygde kunnskapsbasen i stedet.": {
       "localizations": {
         "en": {
@@ -118,6 +107,16 @@
         }
       }
     },
+    "Fargene kan skilles også med rød-grønn fargesynsavvik.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The colors can be told apart even with red-green color vision deficiency."
+          }
+        }
+      }
+    },
     "Fargepar som består WCAG AA for tekst (4,5:1): %lld av %lld": {
       "localizations": {
         "en": {
@@ -130,6 +129,32 @@
           "stringUnit": {
             "state": "new",
             "value": "Fargepar som består WCAG AA for tekst (4,5:1): %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Fargesyn – %@: %lld fargepar blir vanskelige å skille: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color vision – %1$@: %2$lld color pairs become hard to tell apart: %3$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Fargesyn – %1$@: %2$lld fargepar blir vanskelige å skille: %3$@"
+          }
+        }
+      }
+    },
+    "Fargesyn: alle fargepar kan skilles med protanopi, deuteranopi, tritanopi og akromatopsi.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color vision: all color pairs can be told apart with protanopia, deuteranopia, tritanopia and achromatopsia."
           }
         }
       }
@@ -230,6 +255,16 @@
         }
       }
     },
+    "Noen fargepar blir vanskelige å skille med rød-grønn fargesynsavvik (rundt 8 % av menn).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Some color pairs become hard to tell apart with red-green color vision deficiency (about 8 % of men)."
+          }
+        }
+      }
+    },
     "Noen farger er utenfor sRGB; kontroller dem på en vanlig skjerm og i trykk.": {
       "localizations": {
         "en": {
@@ -270,6 +305,16 @@
         }
       }
     },
+    "Regelbasert vurdering (Apple Intelligence feilet: %@).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rule-based critique (Apple Intelligence failed: %@)."
+          }
+        }
+      }
+    },
     "Samtalen ble for lang for modellen. Start et nytt forslag.": {
       "localizations": {
         "en": {
@@ -286,6 +331,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Secondary"
+          }
+        }
+      }
+    },
+    "Skill fargene som forveksles med tydelig forskjell i lyshet, eller bruk ikon, mønster eller tekst i tillegg til farge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Separate the colors that get confused with a clear difference in lightness, or add an icon, pattern or text in addition to color."
           }
         }
       }

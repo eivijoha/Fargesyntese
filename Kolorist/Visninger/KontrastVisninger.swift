@@ -5,6 +5,10 @@ import SwiftUI
 struct KontrastSeksjon: View {
     @Binding var forgrunn: Farge
     @AppStorage("kontrastBakgrunn") private var bakgrunnHex = "#FFFFFF"
+    /// Vis forhåndsvisningen slik den ser ut med et fargesynsavvik («normalt» = ingen simulering).
+    @AppStorage("kontrastFargesyn") private var fargesyn = "normalt"
+
+    private var fargesynstype: Fargesynstype? { Fargesynstype(rawValue: fargesyn) }
 
     private var bakgrunn: Farge { Fargetolk.tolk(bakgrunnHex) ?? Farge(hex: "#FFFFFF")! }
 
@@ -30,7 +34,17 @@ struct KontrastSeksjon: View {
             .buttonStyle(.bordered)
             .controlSize(.small)
 
-            KontrastForhåndsvisning(forgrunn: forgrunn, bakgrunn: bakgrunn, test: test)
+            Picker("Vis med", selection: $fargesyn) {
+                Text("Normalt syn").tag("normalt")
+                ForEach(Fargesynstype.allCases) { Text($0.navn).tag($0.rawValue) }
+            }
+            if let type = fargesynstype {
+                let f = forgrunn.simulert(type), b = bakgrunn.simulert(type)
+                KontrastForhåndsvisning(forgrunn: f, bakgrunn: b, test: Kontrasttest(forgrunn: f, bakgrunn: b),
+                                        merknad: type.navn)
+            } else {
+                KontrastForhåndsvisning(forgrunn: forgrunn, bakgrunn: bakgrunn, test: test)
+            }
 
             ForEach(WCAGKrav.allCases) { krav in
                 KravRad(krav: krav, test: test) { forgrunn = test.rettet(for: krav) }
@@ -38,7 +52,7 @@ struct KontrastSeksjon: View {
         } header: { Group {
             Text("Kontrast (WCAG 2.2)")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning.")
+            Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
         }
     }
 }
@@ -47,6 +61,8 @@ struct KontrastForhåndsvisning: View {
     let forgrunn: Farge
     let bakgrunn: Farge
     let test: Kontrasttest
+    /// Vises i hjørnet når forhåndsvisningen er simulert (f.eks. «Deuteranopi»).
+    var merknad: String? = nil
 
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
@@ -70,10 +86,20 @@ struct KontrastForhåndsvisning: View {
             .foregroundStyle(forgrunn.swiftUI)
         }
         .padding(14)
+        .padding(.top, merknad == nil ? 0 : 14)
         .background(bakgrunn.swiftUI, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(alignment: .topLeading) {
+            if let merknad {
+                Label(merknad, systemImage: "eye")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(forgrunn.swiftUI)
+                    .padding(8)
+            }
+        }
         .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Kontrast \(test.formatert), \(test.sammendrag)")
+        .accessibilityLabel(merknad.map { String(localized: "\($0): kontrast \(test.formatert), \(test.sammendrag)") }
+                            ?? String(localized: "Kontrast \(test.formatert), \(test.sammendrag)"))
     }
 }
 

@@ -458,34 +458,10 @@ struct VurderingArk: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section { Text(vurdering.oppsummering) }
-                punktliste(String(localized: "Styrker"), vurdering.styrker, symbol: "plus.circle.fill", farge: Color.suksess)
-                punktliste(String(localized: "Svakheter"), vurdering.svakheter, symbol: "minus.circle.fill", farge: Color.advarsel)
-                punktliste(String(localized: "Forslag"), vurdering.forslag, symbol: "arrow.right.circle.fill", farge: Color.accentColor)
-                Section {
-                    DisclosureGroup("Fakta vurderingen bygger på") {
-                        ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
-                    }
-                } footer: { Group {
-                    Text(vurdering.kilde == .appleIntelligence
-                         ? "Laget med Apple Intelligence på enheten. Kontrasttallene er beregnet eksakt."
-                         : "Regelbasert vurdering.")
-                }.foregroundStyle(Color.sekundærTekst) }
-            }
-            .navigationTitle("Vurdering")
-            .toolbar { Button("Ferdig") { lukk() } }
-        }
-    }
-
-    @ViewBuilder
-    private func punktliste(_ tittel: String, _ punkter: [String], symbol: String, farge: Color) -> some View {
-        if !punkter.isEmpty {
-            Seksjon(tittel) {
-                ForEach(punkter, id: \.self) { p in
-                    Label { Text(p) } icon: { Image(systemName: symbol).foregroundStyle(farge) }
-                }
-            }
+            Form { PalettVurderingInnhold(vurdering: vurdering) }
+                .formStyle(.grouped)
+                .navigationTitle("Vurdering")
+                .toolbar { Button("Ferdig") { lukk() } }
         }
     }
 }

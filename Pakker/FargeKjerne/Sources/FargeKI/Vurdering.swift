@@ -41,9 +41,28 @@ public enum Palettvurderer {
         let kromatiske = f.filter { $0.farge.okLCH.c >= 0.03 }
         ut.append(String(localized: "Kulører:", bundle: .module) + " " + (kromatiske.isEmpty ? String(localized: "ingen (kun nøytrale)", bundle: .module) :
             Set(kromatiske.map { Fargebeskrivelse.kulørnavn($0.farge.okLCH.h) }).sorted().joined(separator: ", ")))
+        ut += fargesynsfakta(f)
         let utenforSRGB = f.filter { !$0.farge.erISRGB }
         if !utenforSRGB.isEmpty {
             ut.append(String(localized: "Utenfor sRGB (bare P3-skjermer viser riktig):", bundle: .module) + " " + utenforSRGB.map(\.visningsnavn).joined(separator: ", "))
+        }
+        return ut
+    }
+
+    /// Fargepar som blir vanskelige å skille med fullstendig fargesynsavvik (Machado mfl. 2009).
+    static func fargesynsfakta(_ f: [PalettFarge]) -> [String] {
+        guard f.count >= 2 else { return [] }
+        var ut: [String] = []
+        for type in Fargesynstype.allCases {
+            let par = Fargesynsanalyse.forvekslinger(i: f.map(\.farge), type: type)
+            if par.isEmpty { continue }
+            let liste = par.prefix(3).map { p in
+                "\(f[p.i].visningsnavn) og \(f[p.j].visningsnavn) (ΔE00 \(Int(p.normalt.rounded())) → \(Int(p.simulert.rounded())))"
+            }.joined(separator: "; ")
+            ut.append(String(localized: "Fargesyn – \(type.navn): \(par.count) fargepar blir vanskelige å skille: \(liste)", bundle: .module))
+        }
+        if ut.isEmpty {
+            ut.append(String(localized: "Fargesyn: alle fargepar kan skilles med protanopi, deuteranopi, tritanopi og akromatopsi.", bundle: .module))
         }
         return ut
     }
@@ -56,7 +75,9 @@ public enum Palettvurderer {
             Du er en erfaren fargedesigner og tilgjengelighetsekspert. Du vurderer fargepaletter \
             ærlig og konkret: harmoni, stemning, hierarki, og lesbarhet etter WCAG 2.2 \
             (4,5:1 for vanlig tekst, 3:1 for stor tekst og grafikk, 7:1 for AAA). \
-            Bruk faktaene du får – ikke regn ut kontrast selv. Trenger du kontrasten for et par \
+            Bruk faktaene du får – ikke regn ut kontrast eller fargesyn selv. Nevn fargepar som blir \
+            vanskelige å skille med fargesynsavvik (særlig rød-grønn, som er vanligst), og foreslå å skille \
+            dem med lyshet eller ikon/tekst. Trenger du kontrasten for et par \
             som ikke er oppgitt, bruk verktøyet «kontrast». Svar kort og presist. \(Språk.svarinstruks)
             """)
             do {
@@ -69,8 +90,13 @@ public enum Palettvurderer {
                 let v = svar.content
                 return PalettVurdering(oppsummering: v.oppsummering, styrker: v.styrker, svakheter: v.svakheter,
                                        forslag: v.forslag, fakta: fakta, kilde: .appleIntelligence)
+            } catch let feil where KIFeil.fra(feil).erBrukerrettet {
+                throw KIFeil.fra(feil)
             } catch {
-                throw KIFeil.fra(error)
+                // Uventet modellfeil (f.eks. manglende modellressurser): gi likevel en vurdering.
+                var v = regelbasert(palett, fakta: fakta)
+                v.oppsummering = String(localized: "Regelbasert vurdering (Apple Intelligence feilet: \(KIFeil.fra(error).localizedDescription)).", bundle: .module)
+                return v
             }
         }
         #endif
@@ -88,6 +114,13 @@ public enum Palettvurderer {
         let bestePar = f.indices.flatMap { i in f.indices.filter { $0 > i }.map { Kontrasttest(forgrunn: f[i], bakgrunn: f[$0]) } }
         if bestePar.contains(where: { $0.består(.aaTekst) }) { styrker.append(String(localized: "Minst ett fargepar kan brukes til brødtekst (WCAG AA).", bundle: .module)) }
         else { svakheter.append(String(localized: "Ingen fargepar når 4,5:1 – paletten egner seg ikke til tekst alene.", bundle: .module)); forslag.append(String(localized: "Bruk «Mer kontrast» eller legg til sort/hvit tekstfarge.", bundle: .module)) }
+        let rødGrønn = [Fargesynstype.protan, .deutan].flatMap { Fargesynsanalyse.forvekslinger(i: f, type: $0) }
+        if rødGrønn.isEmpty {
+            styrker.append(String(localized: "Fargene kan skilles også med rød-grønn fargesynsavvik.", bundle: .module))
+        } else {
+            svakheter.append(String(localized: "Noen fargepar blir vanskelige å skille med rød-grønn fargesynsavvik (rundt 8 % av menn).", bundle: .module))
+            forslag.append(String(localized: "Skill fargene som forveksles med tydelig forskjell i lyshet, eller bruk ikon, mønster eller tekst i tillegg til farge.", bundle: .module))
+        }
         if f.contains(where: { !$0.erISRGB }) { forslag.append(String(localized: "Noen farger er utenfor sRGB; kontroller dem på en vanlig skjerm og i trykk.", bundle: .module)) }
         return PalettVurdering(oppsummering: String(localized: "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig).", bundle: .module),
                                styrker: styrker, svakheter: svakheter, forslag: forslag, fakta: fakta, kilde: .leksikon)

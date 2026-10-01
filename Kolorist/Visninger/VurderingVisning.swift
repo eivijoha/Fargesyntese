@@ -105,39 +105,18 @@ private struct PalettVurderingDel: View {
                     Button("Kontrastmatrise", systemImage: "square.grid.3x3.fill") { visMatrise = true }
                         .disabled((valgt?.farger.count ?? 0) < 2)
                 } footer: { Group {
-                    Text("Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Kontrasttallene er beregnet eksakt.")
+                    Text("Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Den tar med kontrast (WCAG) og fargesyn.")
                 }.foregroundStyle(Color.sekundærTekst) }
                 if let feil {
                     Section { Label(feil, systemImage: "xmark.circle").foregroundStyle(Color.advarsel) }
                 }
-                if let vurdering {
-                    Seksjon("Oppsummering") { Text(vurdering.oppsummering) }
-                    punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", Color.suksess)
-                    punkter(String(localized: "Svakheter"), vurdering.svakheter, "minus.circle.fill", Color.advarsel)
-                    punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", Color.accentColor)
-                    Section {
-                        DisclosureGroup("Fakta vurderingen bygger på") {
-                            ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
-                        }
-                    }
-                }
+                if let vurdering { PalettVurderingInnhold(vurdering: vurdering) }
             }
         }
         .formStyle(.grouped)
         .navigationTitle("Palett")
         .sheet(isPresented: $visMatrise) {
             if let valgt { KontrastmatriseArk(palett: valgt.palett) }
-        }
-    }
-
-    @ViewBuilder
-    private func punkter(_ tittel: String, _ liste: [String], _ symbol: String, _ farge: Color) -> some View {
-        if !liste.isEmpty {
-            Seksjon(tittel) {
-                ForEach(liste, id: \.self) { p in
-                    Label { Text(p) } icon: { Image(systemName: symbol).foregroundStyle(farge) }
-                }
-            }
         }
     }
 
@@ -150,6 +129,39 @@ private struct PalettVurderingDel: View {
             vurdering = try await Palettvurderer.vurder(valgt.palett, bruk: bruk.isEmpty ? nil : bruk)
         } catch {
             feil = error.localizedDescription
+        }
+    }
+}
+
+/// Resultatet av en palettvurdering som seksjoner i en liste/et skjema. Brukes både i
+/// Vurdering › Palett og i vurderingsarket fra en palett, så de ser like ut.
+struct PalettVurderingInnhold: View {
+    let vurdering: PalettVurdering
+
+    var body: some View {
+        Seksjon("Oppsummering") { Text(vurdering.oppsummering) }
+        punkter(String(localized: "Styrker"), vurdering.styrker, "plus.circle.fill", Color.suksess)
+        punkter(String(localized: "Svakheter"), vurdering.svakheter, "minus.circle.fill", Color.advarsel)
+        punkter(String(localized: "Forslag"), vurdering.forslag, "arrow.right.circle.fill", Color.accentColor)
+        Section {
+            DisclosureGroup("Fakta vurderingen bygger på") {
+                ForEach(vurdering.fakta, id: \.self) { Text($0).font(.callout) }
+            }
+        } footer: { Group {
+            Text(vurdering.kilde == .appleIntelligence
+                 ? "Laget med Apple Intelligence på enheten. Kontrast og fargesyn er beregnet eksakt."
+                 : "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig). Kontrast og fargesyn er beregnet eksakt.")
+        }.foregroundStyle(Color.sekundærTekst) }
+    }
+
+    @ViewBuilder
+    private func punkter(_ tittel: String, _ liste: [String], _ symbol: String, _ farge: Color) -> some View {
+        if !liste.isEmpty {
+            Seksjon(tittel) {
+                ForEach(liste, id: \.self) { p in
+                    Label { Text(p) } icon: { Image(systemName: symbol).foregroundStyle(farge) }
+                }
+            }
         }
     }
 }

@@ -265,6 +265,22 @@
         }
       }
     },
+    "%@: kontrast %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: contrast %2$@, %3$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: kontrast %2$@, %3$@"
+          }
+        }
+      }
+    },
     "%@×": {
       "localizations": {
         "en": {
@@ -439,12 +455,12 @@
         }
       }
     },
-    "Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning.": {
+    "Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The active color is tested as text/graphics against the background. “Fix” changes only the lightness, keeping hue and saturation."
+            "value": "The active color is tested as text/graphics against the background. “Fix” only changes lightness and keeps hue and saturation. “Show with” simulates a color vision deficiency in the preview; the WCAG requirements always apply to the actual colors."
           }
         }
       }
@@ -2057,12 +2073,12 @@
         }
       }
     },
-    "Laget med Apple Intelligence på enheten. Kontrasttallene er beregnet eksakt.": {
+    "Laget med Apple Intelligence på enheten. Kontrast og fargesyn er beregnet eksakt.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Made with Apple Intelligence on device. The contrast figures are calculated exactly."
+            "value": "Made with Apple Intelligence on device. Contrast and color vision are computed exactly."
           }
         }
       }
@@ -2959,12 +2975,12 @@
         }
       }
     },
-    "Regelbasert vurdering.": {
+    "Regelbasert vurdering (Apple Intelligence er ikke tilgjengelig). Kontrast og fargesyn er beregnet eksakt.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rule-based critique."
+            "value": "Rule-based critique (Apple Intelligence is not available). Contrast and color vision are computed exactly."
           }
         }
       }
@@ -3677,6 +3693,16 @@
         }
       }
     },
+    "Vis med": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show with"
+          }
+        }
+      }
+    },
     "Vis også:": {
       "localizations": {
         "en": {
@@ -3707,12 +3733,12 @@
         }
       }
     },
-    "Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Kontrasttallene er beregnet eksakt.": {
+    "Vurderingen lages med Apple Intelligence på enheten når det er tilgjengelig, ellers med faste regler. Den tar med kontrast (WCAG) og fargesyn.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. The contrast figures are calculated exactly."
+            "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. It includes contrast (WCAG) and color vision."
           }
         }
       }
