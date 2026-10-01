@@ -123,7 +123,7 @@ struct NyEksportTests {
         let json = try JSONSerialization.jsonObject(with: Eksportformat.designTokens.data(for: p)) as? [String: Any]
         let g = try #require(json?["trykk"] as? [String: Any])
         let trykk = try #require(g["trykkbla"] as? [String: Any])
-        let ext = try #require((trykk["$extensions"] as? [String: Any])?["no.engenett.gamutchanger"] as? [String: Any])
+        let ext = try #require((trykk["$extensions"] as? [String: Any])?["no.engenett.kolorist"] as? [String: Any])
         #expect(ext["iccProfil"] as? String == "FOGRA39")
         let lab = try #require((g["lab"] as? [String: Any])?["$value"] as? [String: Any])
         #expect(lab["colorSpace"] as? String == "lab")

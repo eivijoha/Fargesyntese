@@ -740,7 +740,7 @@ extension View {
 struct Utviklerlinje: View {
     private var appnavn: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
-            ?? (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Gamut Changer"
+            ?? (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Kolorist"
     }
     private var versjon: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? ""

@@ -98,12 +98,12 @@
         }
       }
     },
-    "Denne enheten støtter ikke Apple Intelligence. Gamut Changer bruker den innebygde kunnskapsbasen i stedet.": {
+    "Denne enheten støtter ikke Apple Intelligence. Kolorist bruker den innebygde kunnskapsbasen i stedet.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This device doesn't support Apple Intelligence. Gamut Changer uses the built-in knowledge base instead."
+            "value": "This device doesn't support Apple Intelligence. Kolorist uses the built-in knowledge base instead."
           }
         }
       }

@@ -51,8 +51,8 @@ final class Lysfelt: NSObject, NSWindowDelegate {
         v.delegate = self
         v.contentView = NSHostingView(rootView: LysfeltInnhold(lysfelt: self))
         // Første gang: øverst i full bredde. Senere: brukerens egen plassering og størrelse.
-        if !v.setFrameUsingName("GamutChanger.Lysfelt") { v.setFrame(ramme, display: true) }
-        v.setFrameAutosaveName("GamutChanger.Lysfelt")
+        if !v.setFrameUsingName("Kolorist.Lysfelt") { v.setFrame(ramme, display: true) }
+        v.setFrameAutosaveName("Kolorist.Lysfelt")
         return v
     }
 }

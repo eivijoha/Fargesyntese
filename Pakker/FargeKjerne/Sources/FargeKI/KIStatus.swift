@@ -47,7 +47,7 @@ public enum KIStatus: Sendable, Equatable {
     public var forklaring: String {
         switch self {
         case .klar: String(localized: "Apple Intelligence er klar. Alt skjer på enheten.", bundle: .module)
-        case .enhetStøttesIkke: String(localized: "Denne enheten støtter ikke Apple Intelligence. Gamut Changer bruker den innebygde kunnskapsbasen i stedet.", bundle: .module)
+        case .enhetStøttesIkke: String(localized: "Denne enheten støtter ikke Apple Intelligence. Kolorist bruker den innebygde kunnskapsbasen i stedet.", bundle: .module)
         case .ikkeSlåttPå: String(localized: "Slå på Apple Intelligence i Innstillinger for å få KI-forslag. Inntil da brukes det innebygde leksikonet.", bundle: .module)
         case .modellenLastes: String(localized: "Språkmodellen lastes ned eller gjøres klar. Prøv igjen om litt – leksikonet brukes så lenge.", bundle: .module)
         case .språkStøttesIkke: String(localized: "Apple Intelligence støtter ikke språket ditt på denne enheten ennå. Leksikonet brukes i stedet.", bundle: .module)

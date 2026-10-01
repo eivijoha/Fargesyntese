@@ -5,12 +5,12 @@ import SwiftData
 import SwiftUI
 
 @main
-struct GamutChangerApp: App {
+struct KoloristApp: App {
     @State private var arbeidsbenk = Arbeidsbenk.delt
     @State private var profiler = ProfilBibliotek()
 
     init() {
-        GamutChangerSnarveier.updateAppShortcutParameters()
+        KoloristSnarveier.updateAppShortcutParameters()
     }
 
     var body: some Scene {

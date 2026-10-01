@@ -1383,12 +1383,12 @@
         }
       }
     },
-    "Importerte profiler ligger i iCloud Drive › Gamut Changer › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder.": {
+    "Importerte profiler ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Imported profiles live in iCloud Drive › Gamut Changer › Profiler and sync between your devices. You can also add .icc files there from Files or Finder."
+            "value": "Imported profiles live in iCloud Drive › Kolorist › Profiler and sync between your devices. You can also add .icc files there from Files or Finder."
           }
         }
       }

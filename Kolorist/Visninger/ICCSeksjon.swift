@@ -66,7 +66,7 @@ struct ICCSeksjon: View {
                 .buttonStyle(.borderless)
                 .font(.callout)
                 Text(bibliotek.brukerICloud
-                     ? "Importerte profiler ligger i iCloud Drive › Gamut Changer › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder."
+                     ? "Importerte profiler ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder."
                      : "Importerte profiler lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
                     .font(.caption)
             }

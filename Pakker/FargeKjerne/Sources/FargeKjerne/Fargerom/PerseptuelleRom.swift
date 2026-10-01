@@ -1,7 +1,7 @@
 import Foundation
 
 /// OKLab (Björn Ottosson 2020). L 0…1, a/b ca. −0,4…0,4.
-/// Perseptuelt jevnt rom – brukes til all interpolasjon i Gamut Changer.
+/// Perseptuelt jevnt rom – brukes til all interpolasjon i Kolorist.
 public struct OKLab: Hashable, Codable, Sendable {
     public var l, a, b: Double
     public init(l: Double, a: Double, b: Double) { self.l = l; self.a = a; self.b = b }

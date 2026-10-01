@@ -1,6 +1,6 @@
-# Gamut Changer – grunnlag og veikart
+# Kolorist – grunnlag og veikart
 
-> Appen het Fargesyntese til 2026-10-01. Alt er nå Gamut Changer (bundle-ID, iCloud-container, prosjekt og target); gamle data er ikke overført.
+> Appen het Fargesyntese (og kort Gamut Changer) til 2026-10-01. Alt er nå Kolorist (bundle-ID, iCloud-container, prosjekt og target); gamle data er ikke overført.
 
 ## Mål
 
@@ -12,7 +12,7 @@ iOS er den avgrensende plattformen; iPad og Mac får mer plass, ikke andre funks
 ## Arkitektur
 
 ```
-┌──────────────── Fargesyntese (SwiftUI, iOS/iPadOS/macOS) ────────────────┐
+┌────────────────── Kolorist (SwiftUI, iOS/iPadOS/macOS) ──────────────────┐
 │ Visninger: Studio · Paletter · Overgang · Kamera · Verdiord              │
 │ Plattform: KameraFargeplukker · Pipette · Utklippstavle · Transferable   │
 │ Intents:   PalettEntity (IndexedEntity) · 3 intents · AppShortcuts       │
@@ -102,7 +102,7 @@ appen faller da tilbake til leksikonet. Samme kode fungerer mot modellen på mac
 - [x] **Fargesirkler**: OKLCH, CIE LCH, HSL og RYB (kunstnersirkel); interaktiv sirkel
 - [x] **Paletter**: dra farger mellom paletter (også i listen på iPhone), «Kopier til» / «Flytt til»,
       hver utplukket farge kan legges i palett
-- [x] **ICC via iCloud Drive**: importerte profiler i «Fargesyntese › Profiler» (synlig i Filer/Finder), med
+- [x] **ICC via iCloud Drive**: importerte profiler i «Kolorist › Profiler» (synlig i Filer/Finder), med
       NSMetadataQuery for endringer fra andre enheter; lokal reserve uten iCloud
 - [x] **Profil-til-profil-konvertering** med valgt gjengivelseshensikt, sammenligning av alle fire hensikter med ΔE00
 

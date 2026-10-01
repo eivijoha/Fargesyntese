@@ -19,7 +19,7 @@ final class KameraFargeplukker {
     @ObservationIgnored var vedFangst: ((Farge) -> Void)?
 
     @ObservationIgnored private let leser = BufferLeser()
-    @ObservationIgnored private let kø = DispatchQueue(label: "no.engenett.gamutchanger.kamera")
+    @ObservationIgnored private let kø = DispatchQueue(label: "no.engenett.kolorist.kamera")
     @ObservationIgnored private var erKonfigurert = false
     @ObservationIgnored private var enhet: AVCaptureDevice?
 

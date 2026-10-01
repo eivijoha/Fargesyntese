@@ -8,12 +8,12 @@
 	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>iCloud.no.engenett.GamutChanger</key>
+		<key>iCloud.no.engenett.Kolorist</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>Gamut Changer</string>
+			<string>Kolorist</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>
@@ -22,9 +22,9 @@
 	<array>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>no.engenett.gamutchanger.farge</string>
+			<string>no.engenett.kolorist.farge</string>
 			<key>UTTypeDescription</key>
-			<string>Gamut Changer-farge</string>
+			<string>Kolorist-farge</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.json</string>
@@ -33,15 +33,15 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>gamutchangerfarge</string>
+					<string>koloristfarge</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>no.engenett.gamutchanger.palettfarge</string>
+			<string>no.engenett.kolorist.palettfarge</string>
 			<key>UTTypeDescription</key>
-			<string>Gamut Changer-palettfarge</string>
+			<string>Kolorist-palettfarge</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.json</string>
