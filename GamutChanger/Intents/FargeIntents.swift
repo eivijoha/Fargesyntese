@@ -158,7 +158,7 @@ struct SjekkKontrastIntent: AppIntent {
 
 // MARK: - Snarveier og Siri
 
-struct FargesynteseSnarveier: AppShortcutsProvider {
+struct GamutChangerSnarveier: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: LagPalettFraVerdiordIntent(),

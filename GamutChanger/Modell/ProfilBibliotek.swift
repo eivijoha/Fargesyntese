@@ -3,7 +3,7 @@ import Foundation
 
 /// Innebygde og importerte ICC-profiler.
 ///
-/// Importerte profiler ligger i appens iCloud Drive-mappe («Fargesyntese › Profiler»), synlig i
+/// Importerte profiler ligger i appens iCloud Drive-mappe («Gamut Changer › Profiler»), synlig i
 /// Filer og Finder. Profiler som legges der fra en annen enhet eller fra Finder, dukker opp
 /// automatisk. Uten iCloud brukes Application Support/Profiler lokalt, og lokale profiler flyttes
 /// til iCloud når det blir tilgjengelig.
@@ -15,7 +15,7 @@ final class ProfilBibliotek {
 
     var alle: [ICCProfil] { ICCProfil.innebygde + importerte }
 
-    nonisolated static let containerID = "iCloud.no.engenett.Fargesyntese"
+    nonisolated static let containerID = "iCloud.no.engenett.GamutChanger"
 
     @ObservationIgnored private var mappe: URL = ProfilBibliotek.lokalMappe
     @ObservationIgnored private var filer: [String: URL] = [:]  // profil-id → fil

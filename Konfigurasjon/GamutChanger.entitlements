@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.no.engenett.Fargesyntese</string>
+		<string>iCloud.no.engenett.GamutChanger</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
@@ -15,7 +15,7 @@
 	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
-		<string>iCloud.no.engenett.Fargesyntese</string>
+		<string>iCloud.no.engenett.GamutChanger</string>
 	</array>
 </dict>
 </plist>

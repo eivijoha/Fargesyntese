@@ -1,6 +1,6 @@
-# Fargesyntese – grunnlag og veikart
+# Gamut Changer – grunnlag og veikart
 
-> Appen heter **Gamut Changer** (fra 2026-10-01). «Fargesyntese» er fortsatt prosjekt-, modul- og pakkenavn.
+> Appen het Fargesyntese til 2026-10-01. Alt er nå Gamut Changer (bundle-ID, iCloud-container, prosjekt og target); gamle data er ikke overført.
 
 ## Mål
 

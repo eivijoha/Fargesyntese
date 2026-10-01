@@ -26,7 +26,7 @@ public enum Fargetolk {
     }
 
     /// Finner alle farger i en tekstblokk – én per linje – med eventuelle navn.
-    /// Takler bl.a. Fargesyntese sin «Navn⇥#hex», CSS-variabler (`--navn: #hex;`) og rene lister.
+    /// Takler bl.a. Gamut Changer sin «Navn⇥#hex», CSS-variabler (`--navn: #hex;`) og rene lister.
     public static func tolkListe(_ tekst: String) -> [PalettFarge] {
         tekst.split(whereSeparator: \.isNewline).compactMap { linje in
             let l = String(linje)

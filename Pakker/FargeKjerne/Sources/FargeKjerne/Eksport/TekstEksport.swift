@@ -11,7 +11,7 @@ enum TekstEksport {
         // Moderne verdi i lagret modell når CSS har syntaks for den, ellers OKLCH.
         let oklch = zip(n, p.farger).map { "    --\($0): \(($1.lagretCSSModell ?? .okLCH).tekst(for: $1.farge));" }
         return """
-        /* \(p.navn) – eksportert fra Fargesyntese */
+        /* \(p.navn) – eksportert fra Gamut Changer */
         :root {
         \(sRGB.joined(separator: "\n"))
         }
@@ -42,7 +42,7 @@ enum TekstEksport {
             if let cmyk = f.lagretCMYK {
                 var ext: [String: Any] = ["cmyk": cmyk.map { ($0 * 10000).rounded() / 10000 }]
                 if let profil = f.lagretProfilnavn { ext["iccProfil"] = profil }
-                token["$extensions"] = ["no.engenett.fargesyntese": ext]
+                token["$extensions"] = ["no.engenett.gamutchanger": ext]
             }
             gruppe[n] = token
         }
@@ -84,7 +84,7 @@ enum TekstEksport {
             return "    static let \(id) = Color(.displayP3, red: \(v[0]), green: \(v[1]), blue: \(v[2]), opacity: \(String(format: "%.3f", f.farge.alfa))) // \(f.farge.hex())"
         }
         return """
-        // \(p.navn) – eksportert fra Fargesyntese
+        // \(p.navn) – eksportert fra Gamut Changer
         import SwiftUI
 
         enum \(typenavn) {

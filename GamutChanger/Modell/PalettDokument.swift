@@ -101,7 +101,7 @@ final class LagretGradient {
 /// logget inn i iCloud. Ellers lagres de lokalt. Modellene oppfyller CloudKit-kravene: alle felt
 /// har standardverdier, ingen unike begrensninger og ingen påkrevde relasjoner.
 enum Lagring {
-    static let containerID = "iCloud.no.engenett.Fargesyntese"
+    static let containerID = "iCloud.no.engenett.GamutChanger"
     private static let skjema = Schema([PalettDokument.self, LagretFarge.self, LagretGradient.self])
 
     /// Om lageret synkroniseres via iCloud (for visning i appen).

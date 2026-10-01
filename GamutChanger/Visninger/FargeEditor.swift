@@ -540,7 +540,8 @@ struct VisOgsåMeny: View {
     let farge: Farge
     @Environment(ProfilBibliotek.self) private var bibliotek
 
-    private var standard: [ICCProfil] { ICCProfil.innebygde.filter { $0.id != ICCProfil.displayP3.id } }
+    /// Standardrommene: sRGB, Display P3, Adobe RGB og Generic CMYK.
+    private var standard: [ICCProfil] { ICCProfil.innebygde }
     private var valgtNavn: String { bibliotek.profil(id: valgtID)?.navn ?? ICCProfil.sRGB.navn }
 
     /// Menyvalg med varsel når fargen er utenfor rommets gamut.
@@ -578,7 +579,7 @@ struct VisOgsåMeny: View {
             .font(.callout)
         }
         .menuIndicator(.hidden)
-        .help("Velg fargerommet som vises ved siden av Display P3")
+        .help("Velg fargerommet som vises ved siden av fargen")
     }
 }
 

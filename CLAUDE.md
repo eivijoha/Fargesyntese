@@ -1,8 +1,4 @@
-# Fargesyntese (appnavn: «Gamut Changer»)
-
-Appen heter **Gamut Changer** utad (visningsnavn, `CFBundleName` i `InfoPlist.xcstrings`, iCloud Drive-mappen
-og nettsiden). Prosjekt, target, modul, pakker, bundle-ID (`no.engenett.Fargesyntese`) og iCloud-containeren
-beholder navnet Fargesyntese – de kan ikke endres uten å miste iCloud-data og App Store-identitet.
+# Gamut Changer
 
 Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-target, SwiftUI).
 **iOS er den avgrensende plattformen**: design og test for iPhone først, utvid for iPad/Mac.
@@ -16,10 +12,13 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
     med kulørfamilier, lyshet og metning) gir grunnlaget; modellen velger i et kategorisk fargespråk
     (`Fargespraak.swift`), og fargene regnes ut i OKLCH. `LeksikonTolker` bygger på samme base uten KI.
     Mål endringer med `swift run kiprove eval` (treff på kulør, andel brune og grå toner).
-- `Fargesyntese/` – appen (filsystem-synkronisert gruppe; nye filer plukkes opp automatisk).
+- `GamutChanger/` – appen (filsystem-synkronisert gruppe; nye filer plukkes opp automatisk).
   `App/`, `Modell/` (SwiftData), `Visninger/`, `Plattform/` (kamera, pipette, utklippstavle), `Intents/`.
 - `Konfigurasjon/Info.plist` – kun det som ikke kan settes med `INFOPLIST_KEY_*` (eksporterte UTType-er,
-  iCloud Drive-mappen). `Konfigurasjon/Fargesyntese.entitlements` – iCloud Documents (`iCloud.no.engenett.Fargesyntese`).
+  iCloud Drive-mappen). `Konfigurasjon/GamutChanger.entitlements` – iCloud Documents og CloudKit (`iCloud.no.engenett.GamutChanger`).
+- Bundle-ID `no.engenett.GamutChanger`. Byttet fra Fargesyntese 2026-10-01; gamle data (iCloud-containeren
+  `iCloud.no.engenett.Fargesyntese`) blir liggende og overføres ikke. Pakkene `FargeKjerne`/`FargeKI` er
+  fagnavn, ikke appnavn, og beholdes.
 - Fysisk testenhet: «Burgund» (iPhone 18 Pro). Bygg med `-allowProvisioningUpdates`, installer med `xcrun devicectl`.
 - `Dokumentasjon/Grunnlag.md` – arkitektur, beslutninger og veikart.
 
@@ -33,7 +32,7 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
 
 ## Lokalisering (nb = kildespråk, en)
 
-- Strengkataloger: `Fargesyntese/Localizable.xcstrings`, `AppShortcuts.xcstrings` (Siri-fraser), `InfoPlist.xcstrings`,
+- Strengkataloger: `GamutChanger/Localizable.xcstrings`, `AppShortcuts.xcstrings` (Siri-fraser), `InfoPlist.xcstrings`,
   og `Localizable.xcstrings` i hvert pakkemål (`FargeKjerne`, `FargeKI`, deklarert som `resources`).
 - `Text("…")`-literaler lokaliseres automatisk. Tekst som går via `String` må pakkes i `String(localized:)`
   (i pakken: `String(localized: "…", bundle: .module)`).
@@ -47,6 +46,6 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
 
 ```bash
 cd Pakker/FargeKjerne && swift test
-xcodebuild -project Fargesyntese.xcodeproj -scheme Fargesyntese -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
-xcodebuild -project Fargesyntese.xcodeproj -scheme Fargesyntese -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
+xcodebuild -project GamutChanger.xcodeproj -scheme GamutChanger -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+xcodebuild -project GamutChanger.xcodeproj -scheme GamutChanger -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
 ```

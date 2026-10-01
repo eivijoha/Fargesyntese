@@ -3325,12 +3325,12 @@
         }
       }
     },
-    "Velg fargerommet som vises ved siden av Display P3": {
+    "Velg fargerommet som vises ved siden av fargen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose the color space shown next to Display P3"
+            "value": "Choose the color space shown next to the color"
           }
         }
       }

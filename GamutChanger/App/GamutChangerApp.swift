@@ -5,12 +5,12 @@ import SwiftData
 import SwiftUI
 
 @main
-struct FargesynteseApp: App {
+struct GamutChangerApp: App {
     @State private var arbeidsbenk = Arbeidsbenk.delt
     @State private var profiler = ProfilBibliotek()
 
     init() {
-        FargesynteseSnarveier.updateAppShortcutParameters()
+        GamutChangerSnarveier.updateAppShortcutParameters()
     }
 
     var body: some Scene {
