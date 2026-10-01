@@ -347,10 +347,10 @@ struct VerdiRad: View {
 /// Antall lysere/mørkere steg hver for seg, og én felles stegstørrelse for begge retninger.
 struct LyshetstrinnKontroller: View {
     @Binding var trinn: Lyshetstrinn
-    /// OKLCH-lysheten stegene regnes fra i forklaringen (grunnfargen).
+    /// OKLCH-lysheten skalaen regnes fra (grunnfargen).
     var grunnlyshet: Double = 0.6
 
-    private var område: ClosedRange<Double> { trinn.modus == .fast ? 0.01...0.2 : 0.05...0.6 }
+    private let område: ClosedRange<Double> = 0.01...0.2
 
     /// Felles steg: setter begge retningene likt.
     private var steg: Binding<Double> {
@@ -363,61 +363,31 @@ struct LyshetstrinnKontroller: View {
         )
     }
 
-    private var forklaring: String {
-        let v = Int((trinn.lysereSteg * 100).rounded())
-        switch trinn.modus {
-        case .fast:
-            return String(localized: "Hver tone endrer lysheten like mye, \(v) prosentpoeng. Ytterste toner kan nå helt hvitt eller sort.")
-        case .relativ:
-            return String(localized: "Hver tone går \(v) % av veien som er igjen til hvitt eller sort. Stegene blir mindre mot endene, og tonene blir aldri helt hvite eller sorte.")
-        }
-    }
-
-    private var stegtekst: String {
-        let v = Int((trinn.lysereSteg * 100).rounded())
-        return trinn.modus == .fast ? String(localized: "±\(v) %-poeng") : String(localized: "\(v) % mot hvitt/sort")
-    }
-
     var body: some View {
-        Picker("Stegtype", selection: $trinn.modus) {
-            Text("Like steg").tag(Lyshetstrinn.Modus.fast)
-            Text("Avtagende steg").tag(Lyshetstrinn.Modus.relativ)
-        }
-        .pickerStyle(.segmented)
-        VStack(alignment: .leading, spacing: 8) {
-            Lyshetsstige(lysheter: trinn.lysheter(fra: grunnlyshet), grunnindeks: trinn.antallLysere)
-                .frame(height: 34)
-            Text(forklaring)
-                .font(.footnote)
-                .foregroundStyle(Color.sekundærTekst)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(.vertical, 2)
+        Lyshetsstige(lysheter: trinn.lysheter(fra: grunnlyshet), grunnindeks: trinn.antallLysere)
+            .frame(height: 34)
+            .padding(.vertical, 2)
         Stepper("Lysere: \(trinn.antallLysere) steg", value: $trinn.antallLysere, in: 0...8)
         Stepper("Mørkere: \(trinn.antallMørkere) steg", value: $trinn.antallMørkere, in: 0...8)
         HStack {
             Text("Steg")
             Slider(value: steg, in: område, step: 0.01)
                 .disabled(trinn.antallLysere == 0 && trinn.antallMørkere == 0)
-            Text(stegtekst)
+            Text("±\(Int((trinn.lysereSteg * 100).rounded())) %-poeng")
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(Color.sekundærTekst)
                 .frame(minWidth: 96, alignment: .trailing)
         }
-        .onChange(of: trinn.modus) { gammel, ny in
-            // Oversett steget så første tone blir omtrent den samme i den nye stegtypen;
-            // forskjellen synes da mot endene, der avtagende steg blir mindre.
-            let igjen = max(1 - grunnlyshet, 0.1)
-            let omregnet = gammel == .fast && ny == .relativ ? trinn.lysereSteg / igjen
-                : gammel == .relativ && ny == .fast ? trinn.lysereSteg * igjen : trinn.lysereSteg
-            steg.wrappedValue = (omregnet * 100).rounded() / 100
-            steg.wrappedValue = trinn.lysereSteg.clamped(to: område)
-        }
         .onAppear {
-            // Tidligere versjoner kunne ha ulike steg per retning; samkjør dem.
-            if trinn.mørkereSteg != trinn.lysereSteg { steg.wrappedValue = trinn.lysereSteg }
+            // Bare like steg: «mot hvitt/sort» er tatt ut. Gjør om et lagret relativt steg
+            // til omtrent samme første tone, og samkjør retningene.
+            if trinn.modus == .relativ {
+                trinn.modus = .fast
+                steg.wrappedValue = ((trinn.lysereSteg * max(1 - grunnlyshet, 0.1)) * 100).rounded() / 100
+            }
+            steg.wrappedValue = trinn.lysereSteg.clamped(to: område)
         }
     }
 }

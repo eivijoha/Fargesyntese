@@ -263,16 +263,6 @@
         }
       }
     },
-    "%lld %% mot hvitt/sort": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld %% toward white/black"
-          }
-        }
-      }
-    },
     "%lld farger": {
       "localizations": {
         "en": {
@@ -453,16 +443,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cancel"
-          }
-        }
-      }
-    },
-    "Avtagende steg": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Easing steps"
           }
         }
       }
@@ -1309,26 +1289,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "The quick buttons change the colors precisely in OKLCH. Free text is interpreted by the language model, which remembers the conversation."
-          }
-        }
-      }
-    },
-    "Hver tone endrer lysheten like mye, %lld prosentpoeng. Ytterste toner kan nå helt hvitt eller sort.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Each tone changes lightness by the same amount, %lld percentage points. The outermost tones can reach pure white or black."
-          }
-        }
-      }
-    },
-    "Hver tone går %lld %% av veien som er igjen til hvitt eller sort. Stegene blir mindre mot endene, og tonene blir aldri helt hvite eller sorte.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Each tone moves %lld %% of the remaining way to white or black. The steps get smaller toward the ends, and the tones never become pure white or black."
           }
         }
       }
@@ -2257,16 +2217,6 @@
         }
       }
     },
-    "Like steg": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Equal steps"
-          }
-        }
-      }
-    },
     "Lim inn": {
       "localizations": {
         "en": {
@@ -2993,16 +2943,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Step"
-          }
-        }
-      }
-    },
-    "Stegtype": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Step type"
           }
         }
       }
