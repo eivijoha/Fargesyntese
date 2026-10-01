@@ -51,7 +51,7 @@ struct ICCSeksjon: View {
                 Label("Konverter mellom profiler …", systemImage: "arrow.triangle.swap")
             }
         } header: {
-            Text("Fargestyring (ICC) – \(profil.navn)")
+            Text("Fargestyring (ICC)")
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {

@@ -897,12 +897,12 @@
         }
       }
     },
-    "Fargestyring (ICC) – %@": {
+    "Fargestyring (ICC)": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color management (ICC) – %@"
+            "value": "Color management (ICC)"
           }
         }
       }
