@@ -47,6 +47,16 @@
         }
       }
     },
+    "Akromatopsi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Achromatopsia"
+          }
+        }
+      }
+    },
     "Analog": {
       "localizations": {
         "en": {
@@ -73,6 +83,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Blue"
+          }
+        }
+      }
+    },
+    "Blå-gul – sjelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blue-yellow – rare"
           }
         }
       }
@@ -123,6 +143,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "The traditional RGB wheel from the screen world. Blue is complementary to yellow."
+          }
+        }
+      }
+    },
+    "Deuteranomali": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deuteranomaly"
+          }
+        }
+      }
+    },
+    "Deuteranopi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deuteranopia"
           }
         }
       }
@@ -253,6 +293,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not noticeable"
+          }
+        }
+      }
+    },
+    "Ingen fargesyn, bare lyshet – svært sjelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No color vision, only lightness – very rare"
           }
         }
       }
@@ -467,6 +517,26 @@
         }
       }
     },
+    "Protanomali": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protanomaly"
+          }
+        }
+      }
+    },
+    "Protanopi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protanopia"
+          }
+        }
+      }
+    },
     "RYB (kunstnersirkel)": {
       "localizations": {
         "en": {
@@ -493,6 +563,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Red"
+          }
+        }
+      }
+    },
+    "Rød-grønn, svak grønnsans – den vanligste formen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-green, weak green sensitivity – the most common form"
+          }
+        }
+      }
+    },
+    "Rød-grønn, svak rødsans – rødt virker også mørkere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red-green, weak red sensitivity – red also looks darker"
           }
         }
       }
@@ -563,6 +653,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Text AAA"
+          }
+        }
+      }
+    },
+    "Tritanomali": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tritanomaly"
+          }
+        }
+      }
+    },
+    "Tritanopi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tritanopia"
           }
         }
       }
