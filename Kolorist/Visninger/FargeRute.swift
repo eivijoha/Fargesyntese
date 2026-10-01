@@ -153,7 +153,8 @@ struct FargeValgBoble: View {
                     Button(lagret ? "Lagret" : "Lagre som enkeltfarge", systemImage: lagret ? "checkmark.square.fill" : "plus.square") {
                         lagre(farge)
                         lagret = true
-                        Task { try? await Task.sleep(for: .seconds(0.8)); lukk() }
+                        // Lukk før navnearket for den nye fargen vises.
+                        Task { try? await Task.sleep(for: .seconds(0.4)); lukk() }
                     }
                     .disabled(lagret)
                     .sensoryFeedback(.success, trigger: lagret) { _, ny in ny }

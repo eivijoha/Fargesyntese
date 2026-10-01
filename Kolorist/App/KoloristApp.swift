@@ -101,6 +101,18 @@ final class Arbeidsbenk {
     /// Én arbeidsbenk for hele appen, så App Intents («Beskriv en farge») kan vise resultatet.
     static let delt = Arbeidsbenk()
 
+    /// En nylig lagret enkeltfarge som skal få navn (ark i roten av appen).
+    var nyEnkeltfarge: LagretFarge?
+
+    /// Ber om navn på en nylagret enkeltfarge. Litt forsinket, så valgbobler og menyer rekker å lukkes
+    /// før arket vises.
+    func navngiNy(_ farge: LagretFarge) {
+        Task {
+            try? await Task.sleep(for: .milliseconds(650))
+            nyEnkeltfarge = farge
+        }
+    }
+
     /// Viser en beskrevet farge i Studio, i OKLCH (fargen er regnet ut der).
     func vis(_ beskrevet: BeskrevetFarge) {
         profilverdier = nil
@@ -170,6 +182,13 @@ struct InnholdsVisning: View {
         .tabViewStyle(.sidebarAdaptable)
         .sheet(item: $arbeidsbenk.sammenligning) { par in
             SammenligningVisning(a: par.a, b: par.b)
+        }
+        .sheet(item: $arbeidsbenk.nyEnkeltfarge) { lagret in
+            NavngiArk(farge: lagret.palettFarge, tittel: "Ny enkeltfarge", avbryt: "Hopp over") { navn in
+                var f = lagret.palettFarge
+                f.navn = navn
+                lagret.palettFarge = f
+            }
         }
     }
 }

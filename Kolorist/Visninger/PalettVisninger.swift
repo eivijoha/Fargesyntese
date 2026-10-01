@@ -17,6 +17,8 @@ struct PalettListe: View {
     @State private var slettes: PalettDokument?
     @State private var omdøpes: PalettDokument?
     @State private var visVerdiord = false
+    @State private var visNyPalett = false
+    @State private var nyPalettNavn = ""
 
     enum Valg: Hashable {
         case enkeltfarger
@@ -70,10 +72,9 @@ struct PalettListe: View {
             .navigationTitle("Paletter")
             .toolbar {
                 Menu("Ny palett", systemImage: "plus") {
-                    Button("Ny tom palett", systemImage: "square.dashed") {
-                        let p = PalettDokument(navn: String(localized: "Ny palett"))
-                        kontekst.insert(p)
-                        velg(.palett(p))
+                    Button("Ny tom palett …", systemImage: "square.dashed") {
+                        nyPalettNavn = ""
+                        visNyPalett = true
                     }
                     Button("Ny palett fra verdiord (KI)", systemImage: "sparkles") { visVerdiord = true }
                 }
@@ -87,6 +88,18 @@ struct PalettListe: View {
                 }
             }
             .omdøpPalett($omdøpes)
+            .alert("Ny palett", isPresented: $visNyPalett) {
+                TextField("Navn", text: $nyPalettNavn)
+                Button("Avbryt", role: .cancel) {}
+                Button("Opprett") {
+                    let navn = nyPalettNavn.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let p = PalettDokument(navn: navn.isEmpty ? String(localized: "Ny palett") : navn)
+                    kontekst.insert(p)
+                    velg(.palett(p))
+                }
+            } message: {
+                Text("Gi paletten et navn. Du kan endre det senere.")
+            }
             .confirmationDialog("Slette «\(slettes?.navn ?? "")»?", isPresented: Binding(get: { slettes != nil }, set: { if !$0 { slettes = nil } }),
                                 titleVisibility: .visible) {
                 Button("Slett palett", role: .destructive) {
@@ -154,7 +167,7 @@ func flyttTilEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) -> 
     let lagrede = Set(((try? kontekst.fetch(FetchDescriptor<LagretFarge>())) ?? []).map(\.id))
     let nye = farger.filter { !lagrede.contains($0.id) }
     guard !nye.isEmpty else { return false }
-    lagreEnkeltfarger(nye, i: kontekst)
+    lagreEnkeltfarger(nye, i: kontekst, navngi: false)
     fjernFraKilder(nye, i: kontekst, beholdEnkeltfarger: true)
     return true
 }
@@ -176,8 +189,14 @@ private func fjernFraKilder(_ farger: [PalettFarge], i kontekst: ModelContext,
 }
 
 /// Lagrer farger som enkeltfarger (uten palett), med nye identiteter.
-func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext) {
-    for f in farger { kontekst.insert(LagretFarge(f.kopi)) }
+/// Lagrer farger som enkeltfarger. Én ny farge lagres med en gang og åpner så et ark for å gi den
+/// navn (Avbryt beholder den uten navn), så fargen aldri går tapt om arket ikke kan vises.
+func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext, navngi: Bool = true) {
+    let nye = farger.map { LagretFarge($0.kopi) }
+    for f in nye { kontekst.insert(f) }
+    if navngi, nye.count == 1, let ny = nye.first, ny.palettFarge.navn.isEmpty {
+        Arbeidsbenk.delt.navngiNy(ny)
+    }
 }
 
 struct EnkeltfargerRad: View {
@@ -625,6 +644,9 @@ struct FlyttMeny: View {
 /// Gi en farge navn, med fargebeskrivelse som hjelp og forslag fra KI.
 struct NavngiArk: View {
     let farge: PalettFarge
+    /// Tittel og avbrytknapp; for nye farger «Ny enkeltfarge» og «Hopp over».
+    var tittel: LocalizedStringKey = "Gi navn"
+    var avbryt: LocalizedStringKey = "Avbryt"
     var lagre: (String) -> Void
     @Environment(\.dismiss) private var lukk
     @State private var navn = ""
@@ -659,12 +681,12 @@ struct NavngiArk: View {
                 }.foregroundStyle(Color.sekundærTekst) }
             }
             .formStyle(.grouped)
-            .navigationTitle("Gi navn")
+            .navigationTitle(tittel)
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Avbryt") { lukk() } }
+                ToolbarItem(placement: .cancellationAction) { Button(avbryt) { lukk() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Lagre", action: lagreOgLukk) }
             }
             .onAppear {

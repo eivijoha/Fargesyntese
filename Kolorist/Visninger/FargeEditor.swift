@@ -616,6 +616,10 @@ struct VisOgsåMeny: View {
         }
         .menuIndicator(.hidden)
         .help("Velg fargerommet som vises ved siden av fargen")
+        // En installert Mac-profil som velges, kopieres til «Mine profiler» og synkes til de andre enhetene.
+        .onChange(of: valgtID) { _, ny in
+            if let p = bibliotek.profil(id: ny) { bibliotek.taMedTilMineProfiler(p) }
+        }
         .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
             do {
                 let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }

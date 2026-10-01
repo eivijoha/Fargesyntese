@@ -15,7 +15,7 @@ struct GradientSeksjon: View {
     var body: some View {
         Text("Gradienter").font(.title3.weight(.semibold)).padding(.top, 8)
         if gradienter.isEmpty {
-            Text("Ingen gradienter ennå. Lagre en fra Overgang med lagre-knappen øverst.")
+            Text("Ingen gradienter ennå. Lagre en fra Overgang med + på gradienten.")
                 .font(.callout)
                 .foregroundStyle(Color.sekundærTekst)
         }

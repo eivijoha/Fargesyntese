@@ -78,6 +78,23 @@ final class ProfilBibliotek {
         return profil
     }
 
+    /// Kopierer en profil installert på Macen inn i profilmappen (iCloud Drive), så den blir med til
+    /// de andre enhetene. Id-en er en hash av profildataene, så valget i menyene peker fortsatt riktig.
+    /// Gjør ingenting for innebygde, allerede kopierte eller ikke-installerte profiler.
+    @discardableResult
+    func taMedTilMineProfiler(_ profil: ICCProfil) -> Bool {
+        guard installerte.contains(where: { $0.id == profil.id }),
+              !importerte.contains(where: { $0.id == profil.id }),
+              let data = profil.data
+        else { return false }
+        let mål = ledigFilnavn(for: visningsnavn(profil))
+        do { try skriv(data, til: mål) } catch { return false }
+        filer[profil.id] = mål
+        importerte.append(profil)
+        sorter()
+        return true
+    }
+
     func fjern(_ profil: ICCProfil) {
         if let fil = filer[profil.id] {
             var feil: NSError?

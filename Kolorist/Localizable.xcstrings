@@ -1261,6 +1261,16 @@
         }
       }
     },
+    "Gi paletten et navn. Du kan endre det senere.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give the palette a name. You can change it later."
+          }
+        }
+      }
+    },
     "Gi paletten navn": {
       "localizations": {
         "en": {
@@ -1441,6 +1451,16 @@
         }
       }
     },
+    "Hopp over": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        }
+      }
+    },
     "Hurtigknappene endrer fargene presist i OKLCH. Fritekst tolkes av språkmodellen, som husker samtalen.": {
       "localizations": {
         "en": {
@@ -1561,12 +1581,12 @@
         }
       }
     },
-    "Ingen gradienter ennå. Lagre en fra Overgang med lagre-knappen øverst.": {
+    "Ingen gradienter ennå. Lagre en fra Overgang med + på gradienten.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No gradients yet. Save one from Gradient with the save button at the top."
+            "value": "No gradients yet. Save one from Gradient with + on the gradient."
           }
         }
       }
@@ -2669,6 +2689,16 @@
         }
       }
     },
+    "Ny enkeltfarge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New single color"
+          }
+        }
+      }
+    },
     "Ny palett": {
       "localizations": {
         "en": {
@@ -2689,12 +2719,12 @@
         }
       }
     },
-    "Ny tom palett": {
+    "Ny tom palett …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New empty palette"
+            "value": "New empty palette …"
           }
         }
       }
@@ -2745,6 +2775,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "OKLab"
+          }
+        }
+      }
+    },
+    "Opprett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create"
           }
         }
       }
