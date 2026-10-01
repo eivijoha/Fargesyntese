@@ -3225,6 +3225,16 @@
         }
       }
     },
+    "Slett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
     "Slett gradient": {
       "localizations": {
         "en": {

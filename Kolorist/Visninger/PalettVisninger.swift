@@ -47,14 +47,16 @@ struct PalettListe: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 12, alignment: .top)],
                               alignment: .leading, spacing: 12) {
                         ForEach(paletter) { p in
-                            kort(.palett(p)) {
-                                PalettRad(dokument: p)
-                            } slipp: { farger in
-                                flytt(farger, til: p, i: kontekst)
-                            }
-                            .contextMenu {
-                                Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
-                                Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
+                            SveipForÅSlette(slett: { slettes = p }) {
+                                kort(.palett(p)) {
+                                    PalettRad(dokument: p)
+                                } slipp: { farger in
+                                    flytt(farger, til: p, i: kontekst)
+                                }
+                                .contextMenu {
+                                    Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
+                                    Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
+                                }
                             }
                         }
                     }
@@ -754,4 +756,78 @@ struct Utviklerlinje: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, 4)
     }
+}
+
+/// Sveip til venstre på et kort for å vise «Slett» (iPhone/iPad). Kortene ligger i en rullevisning,
+/// ikke en `List` (der tar raden over dra-gesten for fargeprøvene), så sveipet er laget her.
+/// Et langt sveip sletter direkte; slettingen bekreftes av kalleren.
+struct SveipForÅSlette<Innhold: View>: View {
+    var slett: () -> Void
+    @ViewBuilder var innhold: Innhold
+
+    #if os(iOS)
+    @State private var åpen = false
+    /// Sveipet mens fingeren er nede. Nullstilles av seg selv om gesten avbrytes (f.eks. av rulling).
+    @GestureState private var drag: CGFloat = 0
+    private let knappebredde: CGFloat = 88
+
+    private var forskyvning: CGFloat { min(0, (åpen ? -knappebredde : 0) + drag) }
+
+    private func sett(åpen nyÅpen: Bool) {
+        withAnimation(.snappy(duration: 0.25)) { åpen = nyÅpen }
+    }
+
+    var body: some View {
+        ZStack(alignment: .trailing) {
+            if forskyvning < 0 {
+                Button(role: .destructive) {
+                    sett(åpen: false)
+                    slett()
+                } label: {
+                    VStack(spacing: 4) {
+                        Image(systemName: "trash").font(.title3)
+                        Text("Slett").font(.caption.weight(.semibold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(width: max(knappebredde - 8, -forskyvning - 8))
+                    .frame(maxHeight: .infinity)
+                    .background(Color.feil, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .buttonStyle(.plain)
+            }
+            innhold
+                // Når knappen vises, lukker et trykk på kortet sveipet i stedet for å åpne paletten.
+                // (Før offset, så laget følger kortet og ikke dekker slett-knappen.)
+                .overlay {
+                    if åpen {
+                        Color.clear.contentShape(Rectangle()).onTapGesture { sett(åpen: false) }
+                    }
+                }
+                .offset(x: forskyvning)
+                .animation(.snappy(duration: 0.2), value: drag == 0)
+        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 20)
+                .updating($drag) { g, tilstand, _ in
+                    // Bare tydelig vannrette sveip; loddrette lar rullevisningen rulle.
+                    guard abs(g.translation.width) > abs(g.translation.height) * 1.5 else { return }
+                    tilstand = g.translation.width
+                }
+                .onEnded { g in
+                    guard abs(g.translation.width) > abs(g.translation.height) * 1.5 else { return }
+                    let mål = (åpen ? -knappebredde : 0) + g.translation.width
+                    if mål < -knappebredde * 2.5 {
+                        sett(åpen: false)
+                        slett()
+                    } else {
+                        sett(åpen: mål < -knappebredde / 2)
+                    }
+                }
+        )
+        .accessibilityAction(named: "Slett") { slett() }
+    }
+    #else
+    // Mac: slett via høyreklikkmenyen.
+    var body: some View { innhold }
+    #endif
 }
