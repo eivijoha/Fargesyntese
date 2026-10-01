@@ -1,6 +1,7 @@
 import FargeKjerne
 import SwiftData
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// Fargeharmonier rundt aktiv farge, med en liten fargesirkel som viser vinklene.
 struct HarmoniSeksjon: View {
@@ -21,6 +22,10 @@ struct HarmoniSeksjon: View {
     /// høyeste kroma innenfor gamut (100 % = så mettet som fargen kan bli).
     @State private var metning: Double?
     @State private var lyshet: Double?
+    #if DEBUG
+    /// Midlertidig: eksport av fargesirkelen som vektor (SVG/PDF) til arbeidet med app-ikonet.
+    @State private var sirkeleksport: (data: Data, type: UTType, navn: String)?
+    #endif
 
     private var råfarger: [Farge] {
         harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel, gamut: gamut)
@@ -63,6 +68,15 @@ struct HarmoniSeksjon: View {
         let h = f.okLCH.h
         return Farge(okLCH: OKLCH(l: l, c: m * Farge.maksKroma(lyshet: l, kulør: h, i: gamut), h: h)).gamutKartlagt(til: gamut)
     }
+
+    #if DEBUG
+    private func eksporterSirkel(svg: Bool) {
+        let tegning = Fargesirkeltegning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel,
+                                         ringfarge: { ringfarge(vinkel: $0) },
+                                         midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut))
+        sirkeleksport = svg ? (Data(tegning.svg.utf8), .svg, "Fargesirkel.svg") : (tegning.pdf, .pdf, "Fargesirkel.pdf")
+    }
+    #endif
 
     /// Grunnfargens egne verdier, som gliderne starter på.
     private var brukerHSL: Bool { sirkel == .hsl || sirkel == .ryb }
@@ -140,6 +154,12 @@ struct HarmoniSeksjon: View {
                 .frame(height: 220)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
+            #if DEBUG
+            Menu("Eksporter sirkelen (midlertidig)", systemImage: "square.and.arrow.up") {
+                Button("SVG") { eksporterSirkel(svg: true) }
+                Button("PDF (Display P3)") { eksporterSirkel(svg: false) }
+            }
+            #endif
             glider("Metning", verdi: $metning, grunn: grunnMetning, metningsakse: true)
             glider("Lyshet", verdi: $lyshet, grunn: grunnLyshet, metningsakse: false)
             if metning != nil || lyshet != nil {
@@ -173,6 +193,12 @@ struct HarmoniSeksjon: View {
         } footer: {
             Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien."))
         }
+        #if DEBUG
+        .fileExporter(isPresented: Binding(get: { sirkeleksport != nil }, set: { if !$0 { sirkeleksport = nil } }),
+                      document: EksportDokument(data: sirkeleksport?.data ?? Data()),
+                      contentType: sirkeleksport?.type ?? .data,
+                      defaultFilename: sirkeleksport?.navn) { _ in }
+        #endif
         // Gliderne betyr noe annet i HSL enn i OKLCH; start på nytt ved bytte av sirkel.
         .onChange(of: sirkel) { _, _ in metning = nil; lyshet = nil }
         // Primærfargen (grunnfargen med gjeldende metning/lyshet) blir aktiv farge, så den vises i
