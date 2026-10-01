@@ -1,11 +1,13 @@
-#if DEBUG
+#if SIRKELEKSPORT
 import CoreGraphics
 import FargeKjerne
 import Foundation
 import UniformTypeIdentifiers
 
-/// MIDLERTIDIG (bare i debug-bygg): fargesirkelen fra Harmoni som vektorgrafikk (SVG og PDF),
-/// til bruk i arbeidet med app-ikonet. Geometrien er den samme som i ``Fargesirkelvisning``.
+/// Fargesirkelen fra Harmoni som vektorgrafikk (SVG og PDF) – laget til arbeidet med app-ikonet.
+/// Avslått: kompileres bare med betingelsen `SIRKELEKSPORT` (legg den til under Build Settings ›
+/// Active Compilation Conditions for Debug, så dukker «Eksporter sirkelen» opp under fargesirkelen).
+/// Geometrien er den samme som i ``Fargesirkelvisning``.
 struct Fargesirkeltegning {
     struct Markør { var vinkel: Double; var farge: Farge; var erGrunn: Bool }
 

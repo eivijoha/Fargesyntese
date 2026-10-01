@@ -22,7 +22,7 @@ struct HarmoniSeksjon: View {
     /// høyeste kroma innenfor gamut (100 % = så mettet som fargen kan bli).
     @State private var metning: Double?
     @State private var lyshet: Double?
-    #if DEBUG
+    #if SIRKELEKSPORT
     /// Midlertidig: eksport av fargesirkelen som vektor (SVG/PDF) til arbeidet med app-ikonet.
     @State private var sirkeleksport: (data: Data, type: UTType, navn: String)?
     #endif
@@ -69,7 +69,7 @@ struct HarmoniSeksjon: View {
         return Farge(okLCH: OKLCH(l: l, c: m * Farge.maksKroma(lyshet: l, kulør: h, i: gamut), h: h)).gamutKartlagt(til: gamut)
     }
 
-    #if DEBUG
+    #if SIRKELEKSPORT
     private func eksporterSirkel(svg: Bool) {
         let tegning = Fargesirkeltegning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel,
                                          ringfarge: { ringfarge(vinkel: $0) },
@@ -154,7 +154,7 @@ struct HarmoniSeksjon: View {
                 .frame(height: 220)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
-            #if DEBUG
+            #if SIRKELEKSPORT
             Menu("Eksporter sirkelen (midlertidig)", systemImage: "square.and.arrow.up") {
                 Button("SVG") { eksporterSirkel(svg: true) }
                 Button("PDF (Display P3)") { eksporterSirkel(svg: false) }
@@ -193,7 +193,7 @@ struct HarmoniSeksjon: View {
         } footer: {
             Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør. Metning og lyshet gjelder hele harmonien."))
         }
-        #if DEBUG
+        #if SIRKELEKSPORT
         .fileExporter(isPresented: Binding(get: { sirkeleksport != nil }, set: { if !$0 { sirkeleksport = nil } }),
                       document: EksportDokument(data: sirkeleksport?.data ?? Data()),
                       contentType: sirkeleksport?.type ?? .data,

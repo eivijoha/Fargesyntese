@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Kolorist">
-  <rect width="1024" height="1024" rx="230" fill="#FFFFFF"/>
-  <g transform="translate(512 512) scale(0.88) translate(-512 -512)">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <g id="ring">
     <path fill="#E40075" d="M512.00 25.60 A486.40 486.40 0 0 1 540.85 26.46 L531.74 179.79 A332.80 332.80 0 0 0 512.00 179.20 Z"/>
     <path fill="#E6006D" d="M537.46 26.27 A486.40 486.40 0 0 1 566.22 28.63 L549.10 181.27 A332.80 332.80 0 0 0 529.42 179.66 Z"/>
@@ -132,5 +131,4 @@
     <circle cx="102.46" cy="518.85" r="66.56" fill="#4564FF" stroke="#FFFFFF" stroke-width="13.96"/>
   </g>
   <circle id="midt" cx="512.00" cy="512.00" r="174.08" fill="#4564FF"/>
-  </g>
 </svg>
