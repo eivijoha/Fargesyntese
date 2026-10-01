@@ -9,6 +9,8 @@ import Foundation
 /// til iCloud når det blir tilgjengelig.
 @Observable
 final class ProfilBibliotek {
+    /// Ett bibliotek for hele appen, så dra-og-slipp kan slå opp profilen en farge er lagret i.
+    static let delt = ProfilBibliotek()
     private(set) var importerte: [ICCProfil] = []
     /// Om profilene synkroniseres via iCloud Drive.
     private(set) var brukerICloud = false

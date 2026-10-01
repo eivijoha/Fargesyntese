@@ -30,7 +30,14 @@ struct FargeRute: View {
     @State private var visValg = false
 
     var body: some View {
-        if valgBoble {
+        #if os(macOS)
+        // På Mac kan alle prøver dras (til paletter, fargebrønner og andre apper), og valgene ligger i
+        // høyreklikkmenyen – der gjelder menyen bare prøven, ikke hele raden som på iOS.
+        let boble = false
+        #else
+        let boble = valgBoble
+        #endif
+        if boble {
             rute
                 .onLongPressGesture(minimumDuration: 0.35) { visValg = true }
                 .sensoryFeedback(.impact(weight: .medium), trigger: visValg) { _, ny in ny }

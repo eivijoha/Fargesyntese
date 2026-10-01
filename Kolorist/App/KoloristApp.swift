@@ -7,7 +7,7 @@ import SwiftUI
 @main
 struct KoloristApp: App {
     @State private var arbeidsbenk = Arbeidsbenk.delt
-    @State private var profiler = ProfilBibliotek()
+    @State private var profiler = ProfilBibliotek.delt
 
     init() {
         KoloristSnarveier.updateAppShortcutParameters()

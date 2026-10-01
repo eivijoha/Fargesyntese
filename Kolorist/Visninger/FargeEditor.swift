@@ -516,7 +516,7 @@ struct Fargeflate: View {
 
     private func halvdel(_ pf: PalettFarge, tittel: String, tekst: String, merknad: String? = nil) -> some View {
         let f = pf.farge
-        return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
+        return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false, palettFarge: pf)
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(tittel).font(.caption.weight(.semibold)).lineLimit(2).minimumScaleFactor(0.85)
