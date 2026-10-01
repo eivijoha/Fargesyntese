@@ -539,17 +539,33 @@ struct VisOgsåMeny: View {
     @Binding var begrens: Bool
     let farge: Farge
     @Environment(ProfilBibliotek.self) private var bibliotek
+    @State private var importerer = false
+    @State private var importfeil: String?
 
     /// Standardrommene: sRGB, Display P3, Adobe RGB og Generic CMYK.
     private var standard: [ICCProfil] { ICCProfil.innebygde }
-    private var valgtNavn: String { bibliotek.profil(id: valgtID)?.navn ?? ICCProfil.sRGB.navn }
+    private var valgtNavn: String { bibliotek.profil(id: valgtID).map(bibliotek.visningsnavn) ?? ICCProfil.sRGB.navn }
+
+    #if os(macOS)
+    /// Installerte profiler gruppert etter mappe: Systemet og Maskinen først, så mappene alfabetisk, Brukeren sist.
+    private func installertGrupper(_ profiler: [ICCProfil]) -> [(navn: String, profiler: [ICCProfil])] {
+        let grupper = Dictionary(grouping: profiler) { bibliotek.installertGruppe[$0.id] ?? String(localized: "Andre") }
+        let først = [String(localized: "Systemet"), String(localized: "Maskinen")], sist = String(localized: "Brukeren")
+        return grupper.keys.sorted { a, b in
+            func rang(_ n: String) -> Int { først.firstIndex(of: n) ?? (n == sist ? 3 : 2) }
+            return rang(a) != rang(b) ? rang(a) < rang(b) : a.localizedStandardCompare(b) == .orderedAscending
+        }
+        .map { ($0, grupper[$0]!) }
+    }
+    #endif
 
     /// Menyvalg med varsel når fargen er utenfor rommets gamut.
     @ViewBuilder private func valg(_ p: ICCProfil) -> some View {
+        let navn = bibliotek.visningsnavn(p)
         if farge.erInnenfor(p) {
-            Text(p.navn).tag(p.id)
+            Text(navn).tag(p.id)
         } else {
-            Text(String(localized: "\(p.navn) – utenfor gamut")).tag(p.id)
+            Text(String(localized: "\(navn) – utenfor gamut")).tag(p.id)
         }
     }
 
@@ -560,11 +576,31 @@ struct VisOgsåMeny: View {
             }
             .pickerStyle(.inline)
             if !bibliotek.importerte.isEmpty {
-                Picker("Installerte ICC-profiler", selection: $valgtID) {
+                Picker("Mine profiler", selection: $valgtID) {
                     ForEach(bibliotek.importerte) { valg($0) }
                 }
                 .pickerStyle(.inline)
             }
+            #if os(macOS)
+            let installerte = bibliotek.installerte.filter { p in !bibliotek.importerte.contains { $0.id == p.id } }
+            if !installerte.isEmpty {
+                // Én undermeny per mappe; innen hver mappe RGB, CMYK og gråtone hver for seg.
+                Menu("Installert på denne Macen") {
+                    ForEach(installertGrupper(installerte), id: \.navn) { gruppe in
+                        Menu("\(gruppe.navn) (\(gruppe.profiler.count))") {
+                            let typer: [(LocalizedStringKey, CGColorSpaceModel)] = [("RGB", .rgb), ("CMYK", .cmyk), ("Gråtone", .monochrome)]
+                            ForEach(typer, id: \.1.rawValue) { tittel, modell in
+                                let utvalg = gruppe.profiler.filter { $0.modell == modell }
+                                if !utvalg.isEmpty {
+                                    Picker(tittel, selection: $valgtID) { ForEach(utvalg) { valg($0) } }.pickerStyle(.inline)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endif
+            Button("Legg til ICC-profil …", systemImage: "plus") { importerer = true }
             Divider()
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
         } label: {
@@ -580,6 +616,20 @@ struct VisOgsåMeny: View {
         }
         .menuIndicator(.hidden)
         .help("Velg fargerommet som vises ved siden av fargen")
+        .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
+            do {
+                let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }
+                // Siste importerte profil vises med en gang.
+                if let siste = profiler.last { valgtID = siste.id }
+            } catch {
+                importfeil = error.localizedDescription
+            }
+        }
+        .alert("Kunne ikke legge til profilen", isPresented: Binding(get: { importfeil != nil }, set: { if !$0 { importfeil = nil } })) {
+            Button("OK") {}
+        } message: {
+            Text(importfeil ?? "")
+        }
     }
 }
 

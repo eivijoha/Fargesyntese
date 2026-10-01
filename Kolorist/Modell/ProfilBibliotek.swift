@@ -13,7 +13,18 @@ final class ProfilBibliotek {
     /// Om profilene synkroniseres via iCloud Drive.
     private(set) var brukerICloud = false
 
-    var alle: [ICCProfil] { ICCProfil.innebygde + importerte }
+    /// Profiler installert på Macen (tom på iPhone/iPad, der apper ikke ser systemets profiler).
+    private(set) var installerte: [ICCProfil] = []
+    /// Mappegruppe og entydig visningsnavn for hver installerte profil (id → verdi).
+    @ObservationIgnored private(set) var installertGruppe: [String: String] = [:]
+    @ObservationIgnored private var installertNavn: [String: String] = [:]
+
+    /// Navnet som vises i menyer: entydig for installerte profiler med like beskrivelser.
+    func visningsnavn(_ p: ICCProfil) -> String { installertNavn[p.id] ?? p.navn }
+
+    var alle: [ICCProfil] {
+        ICCProfil.innebygde + importerte + installerte.filter { p in !importerte.contains { $0.id == p.id } }
+    }
 
     nonisolated static let containerID = "iCloud.no.engenett.Kolorist"
 
@@ -30,6 +41,14 @@ final class ProfilBibliotek {
     init() {
         lastInn()
         Task { await kobleTilICloud() }
+        #if os(macOS)
+        Task {
+            let funnet = await Task.detached(priority: .utility) { InstallerteProfiler.finn() }.value
+            installertGruppe = Dictionary(funnet.map { ($0.profil.id, $0.gruppe) }, uniquingKeysWith: { a, _ in a })
+            installertNavn = Dictionary(funnet.map { ($0.profil.id, $0.visningsnavn) }, uniquingKeysWith: { a, _ in a })
+            installerte = funnet.map(\.profil)
+        }
+        #endif
     }
 
     func profil(id: String) -> ICCProfil? { alle.first { $0.id == id } }

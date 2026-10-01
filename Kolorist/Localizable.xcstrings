@@ -21,6 +21,22 @@
         }
       }
     },
+    "%@ (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ (%2$lld)"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ (%2$lld)"
+          }
+        }
+      }
+    },
     "%@ er utviklet av Eivind Arnstein Johansen.": {
       "localizations": {
         "en": {
@@ -397,6 +413,16 @@
         }
       }
     },
+    "Andre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        }
+      }
+    },
     "Antall farger": {
       "localizations": {
         "en": {
@@ -593,6 +619,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use suggested names?"
+          }
+        }
+      }
+    },
+    "Brukeren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "User"
           }
         }
       }
@@ -1203,6 +1239,16 @@
         }
       }
     },
+    "Gråtone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grayscale"
+          }
+        }
+      }
+    },
     "HSB": {
       "localizations": {
         "en": {
@@ -1483,12 +1529,12 @@
         }
       }
     },
-    "Installerte ICC-profiler": {
+    "Installert på denne Macen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installed ICC profiles"
+            "value": "Installed on this Mac"
           }
         }
       }
@@ -1811,6 +1857,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn't import"
+          }
+        }
+      }
+    },
+    "Kunne ikke legge til profilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t add the profile"
           }
         }
       }
@@ -2217,6 +2273,16 @@
         }
       }
     },
+    "Legg til ICC-profil …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add ICC profile …"
+          }
+        }
+      }
+    },
     "Legg til aktiv farge": {
       "localizations": {
         "en": {
@@ -2349,6 +2415,16 @@
         }
       }
     },
+    "Maskinen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Computer"
+          }
+        }
+      }
+    },
     "Med lysere og mørkere rader": {
       "localizations": {
         "en": {
@@ -2375,6 +2451,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saturation"
+          }
+        }
+      }
+    },
+    "Mine profiler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My profiles"
           }
         }
       }
@@ -3003,6 +3089,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weaknesses"
+          }
+        }
+      }
+    },
+    "Systemet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
           }
         }
       }
