@@ -21,7 +21,30 @@ Hver side har språkvelger, riktig `<html lang>` og `hreflang`-lenker (`nb`, `en
 
 ## Hvilken URL går hvor i App Store Connect
 
-Med GitHub Pages blir adressen typisk `https://<brukernavn>.github.io/<repo>/` (eller et eget domene).
+Sidene publiseres på **https://kolorist.no/** (GitHub Pages med eget domene; `CNAME` i denne mappen).
+
+| Felt i App Store Connect | Norsk (nb) | Engelsk (en) |
+|---|---|---|
+| Marketing URL | `https://kolorist.no/` | `https://kolorist.no/en/` |
+| Support URL | `https://kolorist.no/support.html` | `https://kolorist.no/en/support.html` |
+| Privacy Policy URL | `https://kolorist.no/privacy.html` | `https://kolorist.no/en/privacy.html` |
+
+## Publisering på kolorist.no
+
+1. **DNS hos domeneleverandøren** (apex-domenet `kolorist.no`):
+   - `A`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `AAAA`: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - `CNAME` for `www`: `eivijoha.github.io`
+2. **GitHub › Settings › Pages:** *Source* = «GitHub Actions», *Custom domain* = `kolorist.no`, og slå på
+   *Enforce HTTPS* når sertifikatet er klart (kan ta opptil et døgn etter at DNS er på plass).
+   Med Actions-publisering er det innstillingen i GitHub som teller; `CNAME`-filen er med for ordens skyld.
+3. Anbefalt: verifiser domenet under GitHub › Settings (konto) › Pages › *Add a verified domain*, så ingen
+   andre kan ta det i bruk på GitHub Pages.
+4. Arbeidsflyten `.github/workflows/pages.yml` publiserer ved hver push til `main` som endrer `web/`.
+
+`robots.txt` og `sitemap.xml` peker på kolorist.no. Hver side har `canonical` og absolutte `hreflang`-lenker.
+
+### Generelt om adressene
 
 | Felt i App Store Connect | Norsk (nb) | Engelsk (en) |
 |---|---|---|

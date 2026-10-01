@@ -1,4 +1,4 @@
-/* Fargesyntese – felles stilark for nettsidene.
+/* Kolorist – felles stilark for nettsidene.
    Ingen eksterne ressurser. Lys og mørk modus via prefers-color-scheme.
    Farger i OKLCH der nettleseren støtter det, med sRGB-hex som reserve
    (hex-verdien står alltid først, oklch()-linjen overstyrer der den forstås). */
