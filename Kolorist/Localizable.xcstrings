@@ -1721,6 +1721,16 @@
         }
       }
     },
+    "Kamerabildet vises med %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera image is shown with %@"
+          }
+        }
+      }
+    },
     "Kilde": {
       "localizations": {
         "en": {
@@ -3719,6 +3729,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show the color ${beskrivelse}"
+          }
+        }
+      }
+    },
+    "Vis kamerabildet slik det ser ut med et fargesynsavvik": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the camera image as it looks with a color vision deficiency"
           }
         }
       }

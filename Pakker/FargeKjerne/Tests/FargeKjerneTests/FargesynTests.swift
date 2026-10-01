@@ -62,3 +62,20 @@ struct FargesynVurderingTests {
         #expect(v.svakheter.contains { $0.lowercased().contains("rød-grønn") || $0.lowercased().contains("red-green") })
     }
 }
+
+@Suite("Fargesyn som bildefilter")
+struct FargesynMatriseTests {
+    @Test func matriseGirSammeSomSimulering() {
+        let f = Farge(hex: "#E5A23C")!
+        for type in Fargesynstype.allCases {
+            for grad in [0.5, 1.0] {
+                let m = type.lineærMatrise(grad: grad)
+                let r = m[0][0] * f.r + m[0][1] * f.g + m[0][2] * f.b
+                let g = m[1][0] * f.r + m[1][1] * f.g + m[1][2] * f.b
+                let b = m[2][0] * f.r + m[2][1] * f.g + m[2][2] * f.b
+                let s = f.simulert(type, grad: grad)
+                #expect(abs(r - s.r) < 1e-9 && abs(g - s.g) < 1e-9 && abs(b - s.b) < 1e-9, "\(type) \(grad)")
+            }
+        }
+    }
+}

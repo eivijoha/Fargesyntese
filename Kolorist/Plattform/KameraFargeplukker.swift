@@ -1,4 +1,5 @@
 @preconcurrency import AVFoundation
+import CoreImage
 import FargeKjerne
 import SwiftUI
 
@@ -31,6 +32,27 @@ final class KameraFargeplukker {
     /// Zoom relativt til vanlig 1×-utsnitt (0,5 = ultravidvinkel på iPhone).
     private(set) var zoom: CGFloat = 1
     @ObservationIgnored private var grunnZoom: CGFloat = 1
+
+    /// Kamerabildet vist slik det ser ut med et fargesynsavvik (nil = normalt). Bare visningen
+    /// filtreres; fargene som plukkes er de faktiske.
+    var fargesyn: Fargesynstype? {
+        didSet {
+            leser.settFilter(fargesyn.map { $0.lineærMatrise() })
+            if fargesyn == nil { filterlag.contents = nil }
+        }
+    }
+    /// Lag over forhåndsvisningen som viser det filtrerte bildet.
+    @ObservationIgnored let filterlag: CALayer = {
+        let lag = CALayer()
+        lag.contentsGravity = .resizeAspectFill
+        lag.masksToBounds = true
+        return lag
+    }()
+
+    /// Forhåndsvisningens rotasjon og speiling, så det filtrerte bildet ligger likt med kamerabildet.
+    func settVisningsorientering(vinkel: CGFloat, speilet: Bool) {
+        leser.settOrientering(vinkel: vinkel, speilet: speilet)
+    }
     @ObservationIgnored private var zoomVedStart: CGFloat = 1
 
     func start() async {
@@ -43,6 +65,15 @@ final class KameraFargeplukker {
             Task { @MainActor in
                 self?.gjeldende = farge
                 if erFangst { self?.vedFangst?(farge) }
+            }
+        }
+        leser.vedFiltrertBilde = { [weak self] bilde in
+            Task { @MainActor in
+                guard let self, self.fargesyn != nil else { return }
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                self.filterlag.contents = bilde
+                CATransaction.commit()
             }
         }
         let økt = self.økt
@@ -205,7 +236,44 @@ final class KameraFargeplukker {
 /// som `AVCaptureVideoPreviewLayer.captureDevicePointConverted(fromLayerPoint:)` gir.
 nonisolated private final class BufferLeser: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, @unchecked Sendable {
     var vedFarge: (@Sendable (Farge, Bool) -> Void)?
+    var vedFiltrertBilde: (@Sendable (CGImage) -> Void)?
     private var sist = Date.distantPast
+    private var filter: [[Double]]?
+    private var sistFiltrert = Date.distantPast
+    private var orientering: CGImagePropertyOrientation = .right
+    private let ciKontekst = CIContext(options: [.cacheIntermediates: false])
+    private let utRom = CGColorSpace(name: CGColorSpace.displayP3)!
+
+    func settFilter(_ matrise: [[Double]]?) {
+        lås.withLock { filter = matrise; sistFiltrert = .distantPast }
+    }
+
+    func settOrientering(vinkel: CGFloat, speilet: Bool) {
+        let o: CGImagePropertyOrientation
+        switch (Int(vinkel.rounded()) % 360 + 360) % 360 {
+        case 90: o = speilet ? .leftMirrored : .right
+        case 180: o = speilet ? .downMirrored : .down
+        case 270: o = speilet ? .rightMirrored : .left
+        default: o = speilet ? .upMirrored : .up
+        }
+        lås.withLock { orientering = o }
+    }
+
+    /// Kamerabildet gjennom fargesynsmatrisen. Core Image arbeider i lineær (utvidet) sRGB, som er
+    /// rommet Machado-matrisene er definert i. Nedskalert og ca. 20 bilder i sekundet.
+    private func filtrer(_ buffer: CVPixelBuffer, matrise m: [[Double]], orientering: CGImagePropertyOrientation) {
+        var bilde = CIImage(cvPixelBuffer: buffer).oriented(orientering)
+        let skala = min(1, 900 / max(bilde.extent.width, bilde.extent.height))
+        if skala < 1 { bilde = bilde.transformed(by: CGAffineTransform(scaleX: skala, y: skala)) }
+        let v = { (rad: [Double]) in CIVector(x: rad[0], y: rad[1], z: rad[2], w: 0) }
+        bilde = bilde.applyingFilter("CIColorMatrix", parameters: [
+            "inputRVector": v(m[0]), "inputGVector": v(m[1]), "inputBVector": v(m[2]),
+            "inputAVector": CIVector(x: 0, y: 0, z: 0, w: 1), "inputBiasVector": CIVector(x: 0, y: 0, z: 0, w: 0),
+        ])
+        if let cg = ciKontekst.createCGImage(bilde, from: bilde.extent, format: .RGBA8, colorSpace: utRom) {
+            vedFiltrertBilde?(cg)
+        }
+    }
     private let lås = NSLock()
     private var mål = CGPoint(x: 0.5, y: 0.5)
     private var ventendeFangst = false
@@ -219,6 +287,14 @@ nonisolated private final class BufferLeser: NSObject, AVCaptureVideoDataOutputS
     }
 
     nonisolated func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        let (matrise, orientering) = lås.withLock { () -> ([[Double]]?, CGImagePropertyOrientation) in
+            guard let filter, Date.now.timeIntervalSince(sistFiltrert) >= 0.05 else { return (nil, .up) }
+            sistFiltrert = .now
+            return (filter, orientering)
+        }
+        if let matrise, let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
+            filtrer(buffer, matrise: matrise, orientering: orientering)
+        }
         let (punkt, fangst, forTidlig) = lås.withLock { () -> (CGPoint, Bool, Bool) in
             let forTidlig = Date.now.timeIntervalSince(sist) <= 0.1
             if forTidlig { return (mål, false, true) }
@@ -273,10 +349,26 @@ struct KameraForhåndsvisning: UIViewRepresentable {
     /// (skala relativt til start av knipet, om knipet nettopp begynte)
     var vedKnip: (CGFloat, Bool) -> Void = { _, _ in }
     var vedDobbelttrykk: () -> Void = {}
+    /// Lag med det fargesynsfiltrerte bildet, og mottaker av forhåndsvisningens orientering.
+    var filterlag: CALayer? = nil
+    var vedOrientering: (CGFloat, Bool) -> Void = { _, _ in }
 
     final class Visning: UIView {
         override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
         var lag: AVCaptureVideoPreviewLayer { layer as! AVCaptureVideoPreviewLayer }
+        var filterlag: CALayer?
+        var vedOrientering: (CGFloat, Bool) -> Void = { _, _ in }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            filterlag?.frame = bounds
+            meldOrientering()
+        }
+
+        func meldOrientering() {
+            guard let k = lag.connection else { return }
+            vedOrientering(k.videoRotationAngle, k.isVideoMirrored)
+        }
         var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
         var vedKnip: (CGFloat, Bool) -> Void = { _, _ in }
         var vedDobbelttrykk: () -> Void = {}
@@ -314,6 +406,13 @@ struct KameraForhåndsvisning: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: Visning, context: Context) {
+        if let filterlag, filterlag.superlayer !== uiView.layer {
+            uiView.layer.addSublayer(filterlag)
+            filterlag.frame = uiView.bounds
+        }
+        uiView.filterlag = filterlag
+        uiView.vedOrientering = vedOrientering
+        uiView.meldOrientering()
         uiView.vedTrykk = vedTrykk
         uiView.vedKnip = vedKnip
         uiView.vedDobbelttrykk = vedDobbelttrykk
@@ -323,6 +422,8 @@ struct KameraForhåndsvisning: UIViewRepresentable {
 struct KameraForhåndsvisning: NSViewRepresentable {
     let økt: AVCaptureSession
     var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
+    var filterlag: CALayer? = nil
+    var vedOrientering: (CGFloat, Bool) -> Void = { _, _ in }
 
     final class Visning: NSView {
         let lag: AVCaptureVideoPreviewLayer
@@ -346,6 +447,11 @@ struct KameraForhåndsvisning: NSViewRepresentable {
 
         override func resetCursorRects() { addCursorRect(bounds, cursor: .crosshair) }
 
+        override func layout() {
+            super.layout()
+            lag.sublayers?.forEach { $0.frame = lag.bounds }
+        }
+
         /// Første klikk plukker farge også når vinduet ikke er aktivt.
         override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
     }
@@ -353,6 +459,12 @@ struct KameraForhåndsvisning: NSViewRepresentable {
     func makeNSView(context: Context) -> Visning { Visning(økt: økt) }
 
     func updateNSView(_ nsView: Visning, context: Context) {
+        if let filterlag, filterlag.superlayer !== nsView.lag {
+            filterlag.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
+            nsView.lag.addSublayer(filterlag)
+            filterlag.frame = nsView.lag.bounds
+        }
+        if let k = nsView.lag.connection { vedOrientering(k.videoRotationAngle, k.isVideoMirrored) }
         nsView.vedTrykk = vedTrykk
     }
 }

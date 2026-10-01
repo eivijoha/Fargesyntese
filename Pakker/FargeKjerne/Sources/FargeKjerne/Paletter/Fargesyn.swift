@@ -53,6 +53,20 @@ public enum Fargesynstype: String, CaseIterable, Codable, Sendable, Identifiable
     }
 }
 
+public extension Fargesynstype {
+    /// Simuleringen som 3×3-matrise i lineær sRGB (rad for rad), blandet med identitet etter `grad`.
+    /// For bildefiltre (f.eks. kamerabildet); gir samme resultat som ``Farge/simulert(_:grad:)``.
+    func lineærMatrise(grad: Double = 1) -> [[Double]] {
+        let g = min(max(grad, 0), 1)
+        let m: [[Double]] = matrise?.rader ?? {
+            // Akromatopsi: luminansen (Y-raden i sRGB → XYZ) i alle tre kanaler.
+            let y = Matriser.lineærSRGBTilXYZ.rader[1]
+            return [y, y, y]
+        }()
+        return (0..<3).map { i in (0..<3).map { j in (i == j ? 1 - g : 0) + m[i][j] * g } }
+    }
+}
+
 public extension Farge {
     /// Fargen slik den oppfattes med fargesynsavviket. `grad` 1 er fullstendig avvik (dikromasi);
     /// lavere verdier tilnærmer delvis avvik ved lineær blanding med normalt syn.
