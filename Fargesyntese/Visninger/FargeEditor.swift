@@ -63,6 +63,7 @@ struct FargeEditor: View {
             HStack {
                 TextField("Hex, CSS eller beskrivelse", text: $hexTekst)
                     .font(.body.monospaced())
+                    .frame(minWidth: 96)
                     .autocorrectionDisabled()
                     .onSubmit {
                         if let f = Fargetolk.tolk(hexTekst) {
@@ -80,7 +81,9 @@ struct FargeEditor: View {
                     .overlay(alignment: .trailing) {
                         if beskriver { ProgressView().controlSize(.small) }
                     }
+                // Menyen får plass først; profilnavnet kortes ned når feltet ellers ville blitt for smalt.
                 VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
+                    .layoutPriority(1)
                 #if os(macOS)
                 // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
                 PipetteKnapp {
@@ -93,6 +96,7 @@ struct FargeEditor: View {
             .padding(.horizontal, 16)
             .frame(minHeight: 48)
         }
+        .frame(maxWidth: .infinity)
         .background(Color.kortbakgrunn, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .padding(.horizontal, 16)
         .padding(.top, 4)
@@ -503,7 +507,7 @@ struct Fargeflate: View {
         return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false)
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(tittel).font(.caption.weight(.semibold)).lineLimit(1)
+                    Text(tittel).font(.caption.weight(.semibold)).lineLimit(2).minimumScaleFactor(0.85)
                     Text(tekst).font(.caption.monospaced()).lineLimit(2).minimumScaleFactor(0.6)
                     if let merknad {
                         Label(merknad, systemImage: "exclamationmark.triangle.fill").font(.caption2)
@@ -566,13 +570,13 @@ struct VisOgsåMeny: View {
             HStack(spacing: 4) {
                 // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av
                 // aksenten ga bare 1,9:1 kontrast.
-                Text("Vis også:").foregroundStyle(Color.sekundærTekst)
-                Text(valgtNavn).lineLimit(1).foregroundStyle(Color.accentColor)
+                Text("Vis også:").foregroundStyle(Color.sekundærTekst).fixedSize()
+                // Lange profilnavn kortes ned i stedet for å presse panelet utenfor skjermen.
+                Text(valgtNavn).lineLimit(1).truncationMode(.tail).foregroundStyle(Color.accentColor)
                 Image(systemName: "chevron.down").font(.caption.weight(.semibold)).foregroundStyle(Color.accentColor)
             }
             .font(.callout)
         }
-        .fixedSize()
         .menuIndicator(.hidden)
         .help("Velg fargerommet som vises ved siden av Display P3")
     }
