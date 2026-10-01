@@ -225,6 +225,18 @@ struct KomponentGlidere: View {
         return modell.farge(fra: v, alfa: alfa)
     }
 
+    /// Fargene langs sporet for komponent `i`: de andre komponentene holdes fast, så sporet viser
+    /// nøyaktig hva gliden gir. Farger utenfor skjermens gamut kartlegges ved visning.
+    private func spor(for i: Int, område: ClosedRange<Double>, prøver: Int = 24) -> [Color] {
+        let basis = gjeldende
+        guard basis.indices.contains(i) else { return [] }
+        return (0..<prøver).map { n in
+            var v = basis
+            v[i] = område.lowerBound + (område.upperBound - område.lowerBound) * Double(n) / Double(prøver - 1)
+            return farge(fra: v, alfa: 1).swiftUI
+        }
+    }
+
     /// Lokale verdier når de hører til gjeldende modell, ellers utledet fra fargen.
     private var gjeldende: [Double] {
         verdier.count == modell.komponenter.count ? verdier : verdier(for: farge)
@@ -241,7 +253,7 @@ struct KomponentGlidere: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                     .frame(width: 78, alignment: .leading)
-                Slider(value: Binding(
+                FargeGlider(verdi: Binding(
                     get: { gjeldende[i] },
                     set: { ny in
                         var v = gjeldende
@@ -253,7 +265,9 @@ struct KomponentGlidere: View {
                         if let profil { profilverdier(profil, v, ny) }
                         farge = ny
                     }
-                ), in: k.område)
+                ), område: k.område, spor: spor(for: i, område: k.område), gjeldende: farge.swiftUI,
+                   tittel: Text(k.navn),
+                   verdiTekst: gjeldende[i].formatted(.number.precision(.fractionLength(k.desimaler))))
                 Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
                     .font(.callout.monospacedDigit())
                     .foregroundStyle(Color.sekundærTekst)

@@ -69,10 +69,37 @@ struct HarmoniSeksjon: View {
     private var grunnMetning: Double { brukerHSL ? grunnfarge.hsl.s : relativMetning(grunnfarge) }
     private var grunnLyshet: Double { brukerHSL ? grunnfarge.hsl.l : grunnfarge.okLCH.l }
 
-    private func glider(_ tittel: LocalizedStringKey, verdi: Binding<Double?>, grunn: Double) -> some View {
-        HStack(spacing: 10) {
+    /// Grunnfargen med gitt metning og lyshet (samme regler som harmonien).
+    private func grunnfarge(metning m: Double, lyshet l: Double) -> Farge {
+        if brukerHSL {
+            var h = grunnfarge.hsl
+            h.s = m
+            h.l = l
+            return Farge(hsl: h)
+        }
+        let h = grunnfarge.okLCH.h
+        return Farge(okLCH: OKLCH(l: l, c: m * Farge.maksKroma(lyshet: l, kulør: h, i: gamut), h: h))
+    }
+
+    /// Sporfarger: grunnfargen langs gliderens akse, med den andre verdien som den er.
+    private func spor(metningsakse: Bool) -> [Color] {
+        let m = metning ?? grunnMetning, l = lyshet ?? grunnLyshet
+        return (0..<24).map { n in
+            let t = Double(n) / 23
+            return grunnfarge(metning: metningsakse ? t : m, lyshet: metningsakse ? l : t).swiftUI
+        }
+    }
+
+    private func glider(_ tittel: LocalizedStringKey, verdi: Binding<Double?>, grunn: Double, metningsakse: Bool) -> some View {
+        let gjeldende = verdi.wrappedValue ?? grunn
+        return HStack(spacing: 10) {
             Text(tittel).lineLimit(1).minimumScaleFactor(0.8).frame(width: 96, alignment: .leading)
-            Slider(value: Binding(get: { verdi.wrappedValue ?? grunn }, set: { verdi.wrappedValue = $0 }), in: 0...1)
+            FargeGlider(verdi: Binding(get: { gjeldende }, set: { verdi.wrappedValue = $0 }), område: 0...1,
+                        spor: spor(metningsakse: metningsakse),
+                        gjeldende: grunnfarge(metning: metning ?? grunnMetning, lyshet: lyshet ?? grunnLyshet).swiftUI,
+                        tittel: Text(tittel),
+                        verdiTekst: gjeldende.formatted(.percent.precision(.fractionLength(0))),
+                        stegForTilgjengelighet: 0.05)
             Text(verdi.wrappedValue ?? grunn, format: .percent.precision(.fractionLength(0)))
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(Color.sekundærTekst)
@@ -107,8 +134,8 @@ struct HarmoniSeksjon: View {
                 .frame(height: 220)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 4)
-            glider("Metning", verdi: $metning, grunn: grunnMetning)
-            glider("Lyshet", verdi: $lyshet, grunn: grunnLyshet)
+            glider("Metning", verdi: $metning, grunn: grunnMetning, metningsakse: true)
+            glider("Lyshet", verdi: $lyshet, grunn: grunnLyshet, metningsakse: false)
             if metning != nil || lyshet != nil {
                 Button("Tilbakestill til grunnfargen", systemImage: "arrow.uturn.backward") {
                     metning = nil

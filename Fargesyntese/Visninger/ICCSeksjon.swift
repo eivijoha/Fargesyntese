@@ -124,12 +124,23 @@ private struct ProfilGlidere: View {
         verdier.count == profil.antallKomponenter ? verdier : (farge.komponenter(i: profil) ?? [])
     }
 
+    /// Fargene langs sporet: komponent `i` fra 0 til 1 i profilen, de andre som de er.
+    private func spor(for i: Int, prøver: Int = 16) -> [Color] {
+        let basis = gjeldende
+        guard basis.indices.contains(i) else { return [] }
+        return (0..<prøver).compactMap { n in
+            var v = basis
+            v[i] = Double(n) / Double(prøver - 1)
+            return Farge(komponenter: v, i: profil, alfa: 1)?.swiftUI
+        }
+    }
+
     var body: some View {
         ForEach(Array(profil.komponentnavn.enumerated()), id: \.offset) { i, navn in
             if i < gjeldende.count {
                 HStack {
                     Text(navn).frame(width: 36, alignment: .leading)
-                    Slider(value: Binding(
+                    FargeGlider(verdi: Binding(
                         get: { gjeldende.indices.contains(i) ? gjeldende[i] : 0 },
                         set: { ny in
                             var v = gjeldende
@@ -138,7 +149,10 @@ private struct ProfilGlidere: View {
                             verdier = v
                             if let f = Farge(komponenter: v, i: profil, alfa: farge.alfa) { farge = f }
                         }
-                    ), in: 0...1)
+                    ), område: 0...1, spor: spor(for: i), gjeldende: farge.swiftUI,
+                       tittel: Text(navn),
+                       verdiTekst: (gjeldende[i] * profil.visningsskala).formatted(.number.precision(.fractionLength(0))),
+                       stegForTilgjengelighet: 0.01)
                     Text(gjeldende[i] * profil.visningsskala, format: .number.precision(.fractionLength(0)))
                         .monospacedDigit()
                         .frame(width: 36, alignment: .trailing)
