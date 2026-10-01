@@ -7,13 +7,31 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fargesyntese"
+            "value": "Gamut Changer"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fargesyntese"
+            "value": "Gamut Changer"
+          }
+        }
+      }
+    },
+    "CFBundleName": {
+      "comment": "Kort appnavn (menylinjen på Mac).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gamut Changer"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gamut Changer"
           }
         }
       }
@@ -24,13 +42,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fargesyntese uses the camera to pick colors from your surroundings."
+            "value": "Gamut Changer uses the camera to pick colors from your surroundings."
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fargesyntese bruker kameraet til å plukke farger fra omgivelsene dine."
+            "value": "Gamut Changer bruker kameraet til å plukke farger fra omgivelsene dine."
           }
         }
       }

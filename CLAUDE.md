@@ -1,4 +1,8 @@
-# Fargesyntese
+# Fargesyntese (appnavn: «Gamut Changer»)
+
+Appen heter **Gamut Changer** utad (visningsnavn, `CFBundleName` i `InfoPlist.xcstrings`, iCloud Drive-mappen
+og nettsiden). Prosjekt, target, modul, pakker, bundle-ID (`no.engenett.Fargesyntese`) og iCloud-containeren
+beholder navnet Fargesyntese – de kan ikke endres uten å miste iCloud-data og App Store-identitet.
 
 Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-target, SwiftUI).
 **iOS er den avgrensende plattformen**: design og test for iPhone først, utvid for iPad/Mac.

@@ -1,4 +1,4 @@
-# Nettsider for Fargesyntese
+# Nettsider for Gamut Changer
 
 Statiske nettsider for App Store-oppføringen: markedsføring, støtte, personvern og vilkår – på norsk bokmål
 og engelsk. Ren HTML og ett felles stilark. Ingen byggesteg, ingen rammeverk, ingen eksterne skript eller

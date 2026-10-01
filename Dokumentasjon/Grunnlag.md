@@ -1,5 +1,7 @@
 # Fargesyntese – grunnlag og veikart
 
+> Appen heter **Gamut Changer** (fra 2026-10-01). «Fargesyntese» er fortsatt prosjekt-, modul- og pakkenavn.
+
 ## Mål
 
 Et fargeverktøy for designere som bygger paletter på tvers av fargemodeller (OKLab, OKLCH, CIELab,
