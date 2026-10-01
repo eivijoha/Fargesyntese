@@ -39,9 +39,8 @@ Fargepalett-verktøy for designere – iOS, iPadOS og macOS (én multiplattform-
 - Nye strenger: bygg, og kjør `xcrun xcstringstool sync <katalog> --stringsdata …` med `.stringsdata` fra byggets
   `Objects-normal` (Xcode-IDE-et gjør dette automatisk ved bygg). Legg så inn engelsk.
 - KI svarer på appens språk (`Språk.svarinstruks` i FargeKI).
-- Utviklermappen er `~/Jottacloud/App-utvikling/Kolorist`. Den er tatt ut av Jottacloud-synkroniseringen (2026-10-01)
-  og får bare backup, så «conflicted copy»-filer skal ikke lenger oppstå. Finnes det likevel slike, er de rester:
-  `find . -iname "*conflicted*"` før commit. GitHub er fasiten.
+- Arbeidsmappen er `~/App-utvikling/Kolorist` (utenfor Jottacloud, fra 2026-10-01). Den gamle kopien i
+  `~/Jottacloud/App-utvikling/Kolorist` er tatt ut av synk og brukes ikke. GitHub er fasiten.
 
 ## Bygg og test
 
