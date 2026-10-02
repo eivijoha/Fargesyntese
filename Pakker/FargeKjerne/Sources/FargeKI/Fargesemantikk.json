@@ -1,5 +1,5 @@
 {
- "versjon": 1,
+ "versjon": 2,
  "begreper": [
   {
    "id": "rød",
@@ -253,7 +253,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Nevnt eksplisitt: brun er mørk oransje/rav med moderat metning."
+   "notat": "Nevnt eksplisitt: brun er mørk oransje/rav med moderat metning.",
+   "brunt": true
   },
   {
    "id": "beige",
@@ -1389,7 +1390,6 @@
    "kategori": "natur",
    "nb": [
     "jord",
-    "jordnær",
     "åker",
     "leire",
     "mold"
@@ -1398,8 +1398,7 @@
     "earth",
     "earthy",
     "soil",
-    "clay",
-    "grounded"
+    "clay"
    ],
    "familier": {
     "oransje": 1,
@@ -1418,7 +1417,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Her er brune toner riktige: mørk oransje/rav, moderat metning."
+   "notat": "Her er brune toner riktige: mørk oransje/rav, moderat metning.",
+   "brunt": true
   },
   {
    "id": "stein",
@@ -1698,7 +1698,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Høstløv er klart oransje, rødt og gult – brunt bare som støtte."
+   "notat": "Høstløv er klart oransje, rødt og gult – brunt bare som støtte.",
+   "brunt": true
   },
   {
    "id": "vinter",
@@ -1804,7 +1805,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Treverk gir legitime brun- og honningtoner."
+   "notat": "Treverk gir legitime brun- og honningtoner.",
+   "brunt": true
   },
   {
    "id": "lin",
@@ -1903,7 +1905,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": ""
+   "notat": "",
+   "brunt": true
   },
   {
    "id": "kobber",
@@ -1936,7 +1939,8 @@
    ],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Kobber med irgrønn (blågrønn) som naturlig aksent."
+   "notat": "Kobber med irgrønn (blågrønn) som naturlig aksent.",
+   "brunt": true
   },
   {
    "id": "messing",
@@ -2206,23 +2210,17 @@
    "kategori": "verdi",
    "nb": [
     "tillit",
-    "pålitelig",
     "troverdig",
     "ærlig",
     "ærlighet",
-    "ekte",
-    "åpenhet",
-    "åpen"
+    "ekte"
    ],
    "en": [
     "trust",
-    "reliable",
     "credible",
     "honest",
     "honesty",
-    "authentic",
-    "transparency",
-    "open"
+    "authentic"
    ],
    "familier": {
     "blå": 1,
@@ -2810,7 +2808,6 @@
    "nb": [
     "vennlig",
     "imøtekommende",
-    "inkluderende",
     "sosial",
     "fellesskap",
     "sammen"
@@ -2818,7 +2815,6 @@
    "en": [
     "friendly",
     "welcoming",
-    "inclusive",
     "social",
     "community",
     "together"
@@ -3272,14 +3268,12 @@
     "sterk",
     "styrke",
     "kraftfull",
-    "robust",
     "tydelig"
    ],
    "en": [
     "strong",
     "strength",
-    "powerful",
-    "robust"
+    "powerful"
    ],
    "familier": {
     "rød": 1,
@@ -3886,7 +3880,8 @@
    "aksent": [],
    "harmoni": "analog",
    "unngå": [],
-   "notat": "Låverødt, grantrær og honningtoner."
+   "notat": "Låverødt, grantrær og honningtoner.",
+   "brunt": true
   },
   {
    "id": "akademisk",
@@ -3953,6 +3948,851 @@
    "harmoni": "triade",
    "unngå": [],
    "notat": ""
+  },
+  {
+   "id": "pålitelig",
+   "kategori": "verdi",
+   "nb": [
+    "pålitelig",
+    "pålitelighet",
+    "etterrettelig",
+    "til å stole på",
+    "ordholden",
+    "lojal",
+    "lojalitet"
+   ],
+   "en": [
+    "reliable",
+    "reliability",
+    "dependable",
+    "trustworthy",
+    "loyal",
+    "loyalty"
+   ],
+   "familier": {
+    "blå": 1,
+    "indigo": 0.6,
+    "blågrønn": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Stødige, dype kjølige toner med klar kulør."
+  },
+  {
+   "id": "inkluderende",
+   "kategori": "verdi",
+   "nb": [
+    "inkluderende",
+    "inkludering",
+    "mangfold",
+    "mangfoldig",
+    "raus",
+    "raushet",
+    "romslig",
+    "likeverd",
+    "likeverdig"
+   ],
+   "en": [
+    "inclusive",
+    "inclusion",
+    "diversity",
+    "diverse",
+    "generous",
+    "generosity",
+    "equality"
+   ],
+   "familier": {
+    "korall": 0.9,
+    "turkis": 0.9,
+    "fiolett": 0.7,
+    "gul": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": "Flere likeverdige, klare kulører side om side."
+  },
+  {
+   "id": "åpen",
+   "kategori": "verdi",
+   "nb": [
+    "åpenhet",
+    "åpen",
+    "lyttende",
+    "tilgjengelig",
+    "tilgjengelighet",
+    "brukervennlig"
+   ],
+   "en": [
+    "transparency",
+    "open",
+    "openness",
+    "accessible",
+    "accessibility",
+    "approachable"
+   ],
+   "familier": {
+    "himmelblå": 1,
+    "turkis": 0.7,
+    "grønn": 0.4
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Lyse, luftige blåtoner – himmel og åpent vann."
+  },
+  {
+   "id": "kompetent",
+   "kategori": "verdi",
+   "nb": [
+    "kompetent",
+    "kompetanse",
+    "faglig",
+    "fagkunnskap",
+    "dyktig",
+    "ekspert",
+    "ekspertise",
+    "erfaren",
+    "erfaring",
+    "grundig"
+   ],
+   "en": [
+    "competent",
+    "competence",
+    "expert",
+    "expertise",
+    "skilled",
+    "experienced",
+    "thorough"
+   ],
+   "familier": {
+    "indigo": 1,
+    "blå": 0.8,
+    "blågrønn": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Dyp indigo og blå: faglig tyngde uten å bli grått."
+  },
+  {
+   "id": "ambisiøs",
+   "kategori": "verdi",
+   "nb": [
+    "ambisiøs",
+    "ambisjon",
+    "ambisjoner",
+    "målrettet",
+    "fremoverlent",
+    "offensiv",
+    "vekst",
+    "driv",
+    "ledende"
+   ],
+   "en": [
+    "ambitious",
+    "ambition",
+    "driven",
+    "growth",
+    "leading",
+    "leader"
+   ],
+   "familier": {
+    "magenta": 0.9,
+    "indigo": 0.8,
+    "rød": 0.7
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Kraftfulle kulører med retning og kontrast."
+  },
+  {
+   "id": "respekt",
+   "kategori": "verdi",
+   "nb": [
+    "respekt",
+    "respektfull",
+    "verdighet",
+    "verdig",
+    "rettferdig",
+    "rettferdighet",
+    "integritet",
+    "redelig"
+   ],
+   "en": [
+    "respect",
+    "respectful",
+    "dignity",
+    "fair",
+    "fairness",
+    "justice",
+    "integrity"
+   ],
+   "familier": {
+    "indigo": 1,
+    "fiolett": 0.7,
+    "blågrønn": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Rolige, dype toner med verdighet."
+  },
+  {
+   "id": "kvalitet",
+   "kategori": "verdi",
+   "nb": [
+    "robust",
+    "kvalitet",
+    "kvalitetsbevisst",
+    "gjennomført",
+    "holdbar",
+    "varig",
+    "slitesterk",
+    "bestandig"
+   ],
+   "en": [
+    "robust",
+    "quality",
+    "durable",
+    "lasting",
+    "well-made",
+    "craftsmanship"
+   ],
+   "familier": {
+    "blågrønn": 0.9,
+    "indigo": 0.8,
+    "rød": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Dype, mettede toner som virker gjennomarbeidet."
+  },
+  {
+   "id": "samarbeid",
+   "kategori": "verdi",
+   "nb": [
+    "samarbeid",
+    "samspill",
+    "samhandling",
+    "lagånd",
+    "lagspill",
+    "team",
+    "partnerskap",
+    "dialog",
+    "samhold"
+   ],
+   "en": [
+    "collaboration",
+    "cooperation",
+    "teamwork",
+    "team",
+    "partnership",
+    "dialogue"
+   ],
+   "familier": {
+    "turkis": 1,
+    "korall": 0.8,
+    "himmelblå": 0.7
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "To kulører som møtes: kjølig og varm i balanse."
+  },
+  {
+   "id": "engasjert",
+   "kategori": "verdi",
+   "nb": [
+    "engasjert",
+    "engasjement",
+    "engasjerende",
+    "entusiasme",
+    "entusiastisk",
+    "ivrig",
+    "brenner for"
+   ],
+   "en": [
+    "engaged",
+    "engagement",
+    "engaging",
+    "enthusiasm",
+    "enthusiastic",
+    "eager",
+    "passionate"
+   ],
+   "familier": {
+    "korall": 1,
+    "rød": 0.8,
+    "magenta": 0.6
+   },
+   "lyshet": [
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Varme, klare kulører med glød – korall og rød, ikke brunt."
+  },
+  {
+   "id": "ansvarlig",
+   "kategori": "verdi",
+   "nb": [
+    "ansvarlig",
+    "ansvar",
+    "ansvarsfull",
+    "samfunnsansvar",
+    "etisk",
+    "etikk",
+    "samvittighetsfull"
+   ],
+   "en": [
+    "responsible",
+    "responsibility",
+    "ethical",
+    "ethics",
+    "accountable",
+    "accountability"
+   ],
+   "familier": {
+    "blågrønn": 1,
+    "grønn": 0.7,
+    "blå": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Dyp blågrønn: omtanke og stødighet."
+  },
+  {
+   "id": "jordnær",
+   "kategori": "verdi",
+   "nb": [
+    "jordnær",
+    "nede på jorda",
+    "ujålete",
+    "folkelig",
+    "likefrem",
+    "uhøytidelig",
+    "hverdagslig"
+   ],
+   "en": [
+    "grounded",
+    "down-to-earth",
+    "unpretentious",
+    "humble",
+    "everyday"
+   ],
+   "familier": {
+    "grønn": 0.9,
+    "blågrønn": 0.7,
+    "korall": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "moderat",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Naturnære, vennlige toner – grønt og korall, ikke brunt."
+  },
+  {
+   "id": "stolt",
+   "kategori": "verdi",
+   "nb": [
+    "stolt",
+    "stolthet",
+    "selvsikker",
+    "selvtillit",
+    "rakrygget",
+    "standhaftig"
+   ],
+   "en": [
+    "proud",
+    "pride",
+    "confident",
+    "confidence",
+    "self-assured"
+   ],
+   "familier": {
+    "rød": 0.9,
+    "indigo": 0.8,
+    "magenta": 0.6
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Dype, sterke kulører som står støtt."
+  },
+  {
+   "id": "nær",
+   "kategori": "verdi",
+   "nb": [
+    "nær",
+    "nærhet",
+    "personlig",
+    "tilstede",
+    "tett på",
+    "menneskelig",
+    "medmenneskelig",
+    "human",
+    "forståelse"
+   ],
+   "en": [
+    "close",
+    "closeness",
+    "personal",
+    "present",
+    "human",
+    "humane",
+    "compassion",
+    "compassionate",
+    "understanding"
+   ],
+   "familier": {
+    "korall": 1,
+    "rosa": 0.8,
+    "turkis": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Hudnære, varme toner – korall og rosa – med et kjølig motstykke."
+  },
+  {
+   "id": "effektiv",
+   "kategori": "verdi",
+   "nb": [
+    "effektiv",
+    "effektivitet",
+    "rask",
+    "hurtig",
+    "smidig",
+    "produktiv",
+    "strømlinjeformet"
+   ],
+   "en": [
+    "efficient",
+    "efficiency",
+    "fast",
+    "quick",
+    "agile",
+    "productive",
+    "streamlined"
+   ],
+   "familier": {
+    "blå": 0.9,
+    "turkis": 0.8,
+    "lime": 0.6
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "sterk",
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Skarpe, klare toner med fart."
+  },
+  {
+   "id": "inspirerende",
+   "kategori": "verdi",
+   "nb": [
+    "inspirerende",
+    "inspirasjon",
+    "visjonær",
+    "visjon",
+    "begeistring",
+    "begeistret",
+    "løfterik"
+   ],
+   "en": [
+    "inspiring",
+    "inspiration",
+    "visionary",
+    "vision",
+    "uplifting"
+   ],
+   "familier": {
+    "fiolett": 1,
+    "magenta": 0.7,
+    "himmelblå": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Fiolett og magenta: forestillingsevne og løft."
+  },
+  {
+   "id": "fleksibel",
+   "kategori": "verdi",
+   "nb": [
+    "fleksibel",
+    "fleksibilitet",
+    "tilpasningsdyktig",
+    "endringsvillig",
+    "omstillingsdyktig",
+    "smidighet"
+   ],
+   "en": [
+    "flexible",
+    "flexibility",
+    "adaptable",
+    "adaptive",
+    "versatile"
+   ],
+   "familier": {
+    "turkis": 1,
+    "lime": 0.7,
+    "fiolett": 0.6
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "triade",
+   "unngå": [],
+   "notat": "Lette, bevegelige kulører."
+  },
+  {
+   "id": "service",
+   "kategori": "verdi",
+   "nb": [
+    "service",
+    "serviceinnstilt",
+    "hjelpsom",
+    "gjestfri",
+    "gjestfrihet",
+    "velkommen",
+    "vertskap"
+   ],
+   "en": [
+    "service",
+    "helpful",
+    "hospitable",
+    "hospitality",
+    "welcome",
+    "host"
+   ],
+   "familier": {
+    "korall": 0.9,
+    "himmelblå": 0.8,
+    "gul": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Varm velkomst med et friskt, kjølig motstykke."
+  },
+  {
+   "id": "global",
+   "kategori": "verdi",
+   "nb": [
+    "global",
+    "internasjonal",
+    "verden",
+    "verdensvendt",
+    "grenseløs"
+   ],
+   "en": [
+    "global",
+    "international",
+    "world",
+    "worldwide",
+    "borderless"
+   ],
+   "familier": {
+    "blå": 1,
+    "turkis": 0.7,
+    "grønn": 0.5
+   },
+   "lyshet": [
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Hav og klode: blått, turkis og grønt."
+  },
+  {
+   "id": "kultur",
+   "kategori": "verdi",
+   "nb": [
+    "kultur",
+    "kulturell",
+    "estetisk",
+    "scene",
+    "musikk",
+    "teater",
+    "litteratur",
+    "design"
+   ],
+   "en": [
+    "culture",
+    "cultural",
+    "aesthetic",
+    "stage",
+    "music",
+    "theatre",
+    "theater",
+    "literature",
+    "design"
+   ],
+   "familier": {
+    "magenta": 1,
+    "fiolett": 0.8,
+    "turkis": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Uttrykksfulle, mettede kulører."
+  },
+  {
+   "id": "nøktern",
+   "kategori": "verdi",
+   "nb": [
+    "nøktern",
+    "objektiv",
+    "behersket",
+    "diskret",
+    "lavmælt",
+    "sober",
+    "stillferdig"
+   ],
+   "en": [
+    "understated",
+    "objective",
+    "restrained",
+    "discreet",
+    "sober",
+    "subtle"
+   ],
+   "familier": {
+    "blå": 0.9,
+    "blågrønn": 0.7,
+    "indigo": 0.5
+   },
+   "lyshet": [
+    "mørk",
+    "middels-mørk",
+    "middels"
+   ],
+   "metning": [
+    "dempet",
+    "moderat"
+   ],
+   "aksent": [],
+   "harmoni": "monokrom",
+   "unngå": [],
+   "notat": "Dempede kjølige toner – tilbakeholdent, men med kulør."
+  },
+  {
+   "id": "håp",
+   "kategori": "verdi",
+   "nb": [
+    "håp",
+    "håpefull",
+    "fremtidstro",
+    "lysning",
+    "mulighet",
+    "muligheter"
+   ],
+   "en": [
+    "hope",
+    "hopeful",
+    "promise",
+    "opportunity",
+    "possibility"
+   ],
+   "familier": {
+    "gul": 0.9,
+    "himmelblå": 0.9,
+    "grønn": 0.6
+   },
+   "lyshet": [
+    "lys",
+    "svært-lys",
+    "middels"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "komplementær",
+   "unngå": [],
+   "notat": "Soloppgang og himmel: lyst gult mot klart blått."
+  },
+  {
+   "id": "helse",
+   "kategori": "verdi",
+   "nb": [
+    "vital",
+    "vitalitet",
+    "livskraft",
+    "livskvalitet",
+    "sprek",
+    "helsefremmende"
+   ],
+   "en": [
+    "vital",
+    "vitality",
+    "health-promoting",
+    "fit",
+    "lively"
+   ],
+   "familier": {
+    "grønn": 0.9,
+    "turkis": 0.8,
+    "korall": 0.5
+   },
+   "lyshet": [
+    "middels",
+    "lys"
+   ],
+   "metning": [
+    "klar",
+    "sterk"
+   ],
+   "aksent": [],
+   "harmoni": "analog",
+   "unngå": [],
+   "notat": "Friske, levende kulører."
   }
  ]
 }

@@ -41,16 +41,22 @@ public struct PalettForslag: Sendable, Hashable {
     public var kilde: Kilde
     /// Begrepene fra kunnskapsbasen forslaget bygger på (vises for åpenhet).
     public var grunnlag: [String]
+    /// Oppskriften paletten er komponert etter. `nil` når fargene er justert fritt etterpå.
+    public var oppskrift: Palettoppskrift?
 
     public enum Kilde: String, Sendable { case appleIntelligence, leksikon }
 
-    public init(tittel: String, forklaring: String, farger: [Fargeforslag], kilde: Kilde, grunnlag: [String] = []) {
+    public init(tittel: String, forklaring: String, farger: [Fargeforslag], kilde: Kilde, grunnlag: [String] = [],
+                oppskrift: Palettoppskrift? = nil) {
         self.tittel = tittel
         self.forklaring = forklaring
         self.farger = farger
         self.kilde = kilde
         self.grunnlag = grunnlag
+        self.oppskrift = oppskrift
     }
+
+    public var bakgrunn: Farge? { farger.first { $0.rolle.lowercased().contains("bakgrunn") }?.farge }
 
     public var palett: Palett {
         Palett(navn: tittel, farger: farger.map { PalettFarge(navn: $0.navn, farge: $0.farge, opphav: .ki) })

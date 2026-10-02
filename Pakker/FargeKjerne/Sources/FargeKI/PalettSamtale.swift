@@ -8,8 +8,9 @@ import FoundationModels
 
 /// Interaktiv palettbygging med språkmodellen på enheten.
 ///
-/// - Forslag og justeringer strømmes: `forslag` oppdateres fortløpende mens modellen skriver,
-///   så fargene dukker opp én etter én.
+/// - Første forslag: språkmodellen tolker verdiordene (kulører og uttrykk), og paletten komponeres
+///   etter en ``Palettoppskrift`` som kan endres uten nytt modellkall (harmoni, samklang, bakgrunn).
+/// - Fritekstjusteringer strømmes: `forslag` oppdateres fortløpende mens modellen skriver.
 /// - Samtalen husker tidligere runder, slik at «litt mer dempet» forstås i sammenheng.
 /// - Hurtigjusteringer (``Justering``) gjøres deterministisk i OKLCH og virker uten KI.
 /// - Uten Apple Intelligence brukes ``LeksikonTolker`` for første forslag.
@@ -33,6 +34,8 @@ public final class PalettSamtale {
     @ObservationIgnored private var oppgave: Task<Void, Never>?
     /// Begrepsgrunnlaget for gjeldende samtale (verdiordene pluss ord fra justeringene).
     @ObservationIgnored private var grunnlag = Begrepsgrunnlag(treff: [])
+    @ObservationIgnored private var verdiord = ""
+    @ObservationIgnored private var antall = 5
 
     public init() {}
 
@@ -51,24 +54,48 @@ public final class PalettSamtale {
     public func foreslå(verdiord: String, antall: Int) {
         logg = [verdiord]
         grunnlag = Fargesemantikk.oppslag(verdiord)
+        self.verdiord = verdiord
+        self.antall = antall
         kjør {
+            var tolkning = Palettolkning(grunnlag: self.grunnlag, gamut: self.gamut)
             #if canImport(FoundationModels)
             if self.status.erKlar {
                 self.økt = Self.nyØkt()
                 do {
-                    try await self.strøm(Instruksjoner.forslag(verdiord: verdiord, antall: antall, grunnlag: self.grunnlag))
-                    return
+                    tolkning = try await AppleIntelligenceTolker.tolk(verdiord, grunnlag: self.grunnlag, gamut: self.gamut)
                 } catch let feil where !(feil is CancellationError) && !KIFeil.fra(feil).erBrukerrettet {
-                    // Uventet modellfeil (f.eks. manglende modellressurser): vis leksikonforslag
+                    // Uventet modellfeil (f.eks. manglende modellressurser): bruk kunnskapsbasen alene
                     // i stedet for bare en feilmelding, og si ifra.
-                    self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut)
                     self.feil = .reserveBrukt(KIFeil.fra(feil).localizedDescription)
-                    return
                 }
             }
             #endif
-            self.forslag = try await LeksikonTolker().forslag(for: verdiord, antall: antall).begrenset(til: self.gamut)
+            try Task.checkCancellation()
+            self.forslag = tolkning.forslag(antall: antall, grunnlag: self.grunnlag, gamut: self.gamut)
+            await self.navngi()
         }
+    }
+
+    /// Endrer oppskriften (harmoni, samklang, bakgrunn) og komponerer paletten på nytt, uten ny tolkning.
+    public func endreOppskrift(_ endring: (inout Palettoppskrift) -> Void) {
+        guard var f = forslag, var o = f.oppskrift else { return }
+        endring(&o)
+        guard o != f.oppskrift else { return }
+        f.oppskrift = o
+        f.farger = Palettkomponist.komponer(o, antall: antall, grunnlag: grunnlag, gamut: gamut)
+        forslag = f
+        kjør { await self.navngi() }
+    }
+
+    /// Gir fargene navn med språkmodellen. Uten den beholdes de beskrivende navnene.
+    private func navngi() async {
+        guard status.erKlar, let før = forslag else { return }
+        let farger = før.farger.map(\.farge)
+        guard let navn = try? await Fargenavngiver.navngi(farger, tema: verdiord), !Task.isCancelled,
+              var nå = forslag, nå.farger.map(\.farge) == farger
+        else { return }
+        for (i, n) in navn.enumerated() where i < nå.farger.count { nå.farger[i].navn = n }
+        forslag = nå
     }
 
     /// Fritekst-justering via språkmodellen, f.eks. «mer som en skandinavisk kafé».
@@ -100,6 +127,8 @@ public final class PalettSamtale {
         guard var f = forslag else { return }
         let nye = justering.bruk(på: f.farger.map(\.farge), gamut: gamut)
         for i in f.farger.indices { f.farger[i].farge = nye[i]; f.farger[i].spesifikasjon = nil }
+        // Fargene følger ikke lenger oppskriften.
+        f.oppskrift = nil
         forslag = f.medRolleregler().begrenset(til: gamut)
         logg.append(justering.navn)
     }

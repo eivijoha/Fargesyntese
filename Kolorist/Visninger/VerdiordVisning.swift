@@ -3,9 +3,9 @@ import FargeKjerne
 import SwiftData
 import SwiftUI
 
-/// Verdiord → palett med Apple Intelligence på enheten.
-/// Fargene strømmes inn mens modellen skriver; deretter kan paletten justeres
-/// presist (hurtigknapper i OKLCH) eller med fritekst (språkmodellen).
+/// Verdiord → palett. Verdiordene tolkes (Apple Intelligence på enheten, ellers kunnskapsbasen),
+/// og paletten komponeres etter en oppskrift brukeren kan endre: harmoni, samklang og bakgrunn.
+/// Deretter kan den justeres presist (hurtigknapper i OKLCH) eller med fritekst (språkmodellen).
 struct VerdiordVisning: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var samtale = PalettSamtale()
@@ -84,6 +84,18 @@ struct VerdiordVisning: View {
         Section {
             PalettStripe(farger: forslag.farger.map(\.farge)).frame(height: 56)
             if !forslag.forklaring.isEmpty { Text(forslag.forklaring).font(.callout) }
+            if let o = forslag.oppskrift {
+                // Oppskriften paletten er komponert etter. Endringer bygger paletten på nytt uten ny tolkning.
+                Picker("Harmoni", selection: Binding(get: { o.harmoni }, set: { ny in samtale.endreOppskrift { $0.harmoni = ny } })) {
+                    ForEach(Harmoniprinsipp.allCases) { Text($0.navn).tag($0) }
+                }
+                Picker("Samklang", selection: Binding(get: { o.samklang }, set: { ny in samtale.endreOppskrift { $0.samklang = ny } })) {
+                    ForEach(Samklang.allCases) { Text($0.navn).tag($0) }
+                }
+                Picker("Bakgrunn", selection: Binding(get: { o.bakgrunn }, set: { ny in samtale.endreOppskrift { $0.bakgrunn = ny } })) {
+                    ForEach(Bakgrunnstype.allCases) { Text($0.navn).tag($0) }
+                }
+            }
             if !forslag.grunnlag.isEmpty {
                 // Åpenhet: hvilke begreper i kunnskapsbasen forslaget bygger på.
                 Label("Bygger på: \(Fargesemantikk.visningsnavn(forslag.grunnlag).joined(separator: " · "))", systemImage: "books.vertical")
@@ -95,7 +107,7 @@ struct VerdiordVisning: View {
                     FargeRute(farge: f.farge, visTekst: false, hjørne: 8).frame(width: 44, height: 44)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(f.navn.isEmpty ? "…" : f.navn).font(.headline)
-                        Text(f.spesifikasjon.map { "\(f.rollenavn) · \($0.familie.navn) · \(f.farge.hex())" } ?? "\(f.rollenavn) · \(f.farge.hex())")
+                        Text(([f.rollenavn] + (f.spesifikasjon.map { [$0.familie.navn] } ?? []) + [f.farge.hex()] + kontrast(f, i: forslag)).joined(separator: " · "))
                             .font(.caption.monospaced())
                             .foregroundStyle(Color.sekundærTekst)
                         if !f.begrunnelse.isEmpty { Text(f.begrunnelse).font(.caption) }
@@ -114,11 +126,20 @@ struct VerdiordVisning: View {
         }.foregroundStyle(Color.sekundærTekst) } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 Text(forslag.kilde == .appleIntelligence
-                     ? "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen."
-                     : "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).")
-                MetodeHenvisning(.kunnskapsbase, .oklab, .wcag)
+                     ? "Verdiordene er tolket med Apple Intelligence på enheten."
+                     : "Verdiordene er tolket med den innebygde kunnskapsbasen (uten Apple Intelligence).")
+                if forslag.oppskrift != nil {
+                    Text("Paletten er komponert etter harmoniprinsippet, med lik valør eller lik metning i hovedfargene. Teksten har minst 7:1 kontrast mot bakgrunnen, og hovedfargene minst 3:1 der kuløren tillater det. Tallet ved hver farge er kontrasten mot bakgrunnen.")
+                }
+                MetodeHenvisning(.kunnskapsbase, .harmonier, .oklab, .wcag)
             }
         }
+    }
+
+    /// Kontrast mot palettens bakgrunn, for alle andre farger enn bakgrunnen selv.
+    private func kontrast(_ f: Fargeforslag, i forslag: PalettForslag) -> [String] {
+        guard let bakgrunn = forslag.bakgrunn, f.farge != bakgrunn else { return [] }
+        return [f.farge.wcagKontrast(mot: bakgrunn).formatted(.number.precision(.fractionLength(1))) + ":1"]
     }
 
     private var justeringsseksjon: some View {

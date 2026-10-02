@@ -76,7 +76,7 @@ enum Metode: String, CaseIterable, Identifiable {
         case .harmonier:
             String(localized: "Komplementær, split-komplementær, analog og jevn fordeling beregnes som vinkler på valgt fargesirkel: OKLCH, CIE LCH, HSL eller RYB. RYB-sirkelen er en stykkevis lineær avbildning til RGB-kulør laget for appen.")
         case .kunnskapsbase:
-            String(localized: "Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten velger kulørfamilie, lyshet og metning, og fargene regnes ut i OKLCH. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.")
+            String(localized: "Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten tolker ordene og velger kulørfamilier og uttrykk. Selve paletten komponeres deretter etter faste regler i OKLCH: harmoniprinsipp, lik valør eller lik metning, én aksent, lys eller mørk bakgrunn og tekst med minst 7:1 kontrast. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.")
         }
     }
 

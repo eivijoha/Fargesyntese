@@ -16,6 +16,8 @@ public struct Fargebegrep: Codable, Sendable, Hashable, Identifiable {
     public var harmoni: String
     public var unngå: [Kulørfamilie]
     public var notat: String
+    /// Om begrepet handler om noe brunt (jord, tre, lær …). Bare da får paletten brune toner.
+    public var brunt: Bool?
 
     /// Navn på appens språk (norsk id, ellers første engelske synonym).
     public var visningsnavn: String { Språk.erNorsk ? id : (en.first ?? id) }
@@ -36,6 +38,8 @@ public struct Begrepsgrunnlag: Sendable, Hashable {
 
     public var treff: [Treff]
 
+    public init(treff: [Treff] = []) { self.treff = treff }
+
     public var erTomt: Bool { treff.isEmpty }
     public var begreper: [Fargebegrep] { treff.map(\.begrep) }
 
@@ -49,14 +53,9 @@ public struct Begrepsgrunnlag: Sendable, Hashable {
         return sum.sorted { $0.value > $1.value }
     }
 
-    /// Om begrepene åpner for brune toner: et varmt kulørpreg sammen med mørk lyshet
+    /// Om begrepene åpner for brune toner: bare begreper som uttrykkelig handler om noe brunt
     /// (jord, tre, lær, høst …). Ellers løftes varme, mørke farger ut av det brune.
-    public var tillaterBrunt: Bool {
-        begreper.contains { b in
-            let varm = b.sorterteFamilier.contains { [.korall, .oransje, .rav, .gul].contains($0.0) && $0.1 >= 0.5 }
-            return varm && b.lyshet.contains { $0 <= .mørk }
-        }
-    }
+    public var tillaterBrunt: Bool { begreper.contains { $0.brunt == true } }
 
     /// Brunvakt: løfter en varm, mørk farge til lysheten der den er klarest, når grunnlaget ikke ber om brunt.
     public func utenUønsketBrunt(_ spes: Fargespesifikasjon, rolle: String, gamut: Gamut) -> Fargespesifikasjon {

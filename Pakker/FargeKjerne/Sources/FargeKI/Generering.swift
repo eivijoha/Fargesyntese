@@ -39,7 +39,82 @@ struct GenerertFarge {
     var begrunnelse: String
 }
 
+/// Språkmodellens tolkning av verdiordene. Modellen velger bare retning – kulører og uttrykk –
+/// og paletten komponeres etterpå av ``Palettkomponist``.
+@Generable
+struct GenerertTolkning {
+    @Guide(description: "Kort, stemningsfull tittel på svarspråket, 1–4 ord")
+    var tittel: String
+    @Guide(description: "Én setning på svarspråket om hvilket fargeuttrykk verdiordene peker mot, og hvorfor")
+    var forklaring: String
+    @Guide(description: "Kulørfamilien som best uttrykker det viktigste verdiordet", .anyOf(Kulørfamilie.kromatiske.map(\.rawValue)))
+    var primær: String
+    @Guide(description: "Kulørfamilien for det nest viktigste verdiordet – en annen enn primær", .anyOf(Kulørfamilie.kromatiske.map(\.rawValue)))
+    var sekundær: String
+    @Guide(description: "Uttrykkets lyshet", .anyOf(["mørk", "middels", "lys"]))
+    var lyshet: String
+    @Guide(description: "Uttrykkets metning", .anyOf(["dempet", "moderat", "klar", "sterk"]))
+    var metning: String
+    @Guide(description: "Bakgrunn: lys for åpne og lette uttrykk, mørk for dype, eksklusive eller dramatiske", .anyOf(["lys", "mørk"]))
+    var bakgrunn: String
+}
+
+extension GenerertTolkning {
+    /// Oppskriften: kunnskapsbasen gir rammene, modellen veier mellom kulørene. Uten treff i basen
+    /// gjelder modellens valg alene.
+    func tolkning(grunnlag: Begrepsgrunnlag, gamut: Gamut) -> Palettolkning {
+        var o = Palettoppskrift(grunnlag: grunnlag, gamut: gamut)
+        let p = Kulørfamilie(rawValue: primær), s = Kulørfamilie(rawValue: sekundær)
+        let mørktUttrykk = lyshet == "mørk"
+        if grunnlag.erTomt {
+            if let p { o.primær = p }
+            o.sekundær = s != o.primær ? s : nil
+            o.metning = max(Metningsnivå(rawValue: metning) ?? .klar, .moderat)
+            let ønsket: [Lyshetsnivå] = mørktUttrykk ? [.mørk, .middelsMørk] : lyshet == "lys" ? [.middels, .lys] : [.middelsMørk, .middels]
+            o.lyshet = Fargespesifikasjon.klaresteLyshet(for: o.primær, blant: ønsket, i: gamut)
+            o.bakgrunn = bakgrunn == "mørk" ? .mørk : .lys
+        } else {
+            let vektet = grunnlag.familievekter.map(\.0).filter { $0 != .nøytral }
+            if let p, vektet.prefix(3).contains(p) { o.primær = p }
+            if let s, s != o.primær, vektet.contains(s) {
+                o.sekundær = s
+            } else if o.sekundær == o.primær {
+                o.sekundær = vektet.first { $0 != o.primær }
+            }
+            if o.aksent == o.primær || o.aksent == o.sekundær { o.aksent = nil }
+            if bakgrunn == "mørk", mørktUttrykk { o.bakgrunn = .mørk }
+        }
+        if let harmoni = Palettoppskrift.harmoni(o.primær, o.sekundær) { o.harmoni = harmoni }
+        return Palettolkning(tittel: tittel, forklaring: forklaring, oppskrift: o, kilde: .appleIntelligence)
+    }
+}
+
 enum Instruksjoner {
+    static var tolk: String { """
+    Du er en erfaren fargedesigner. Du tolker verdiord for en visuell identitet og velger hvilke kulører \
+    og hvilket uttrykk som bærer dem. Selve paletten bygges etterpå etter faste harmoniregler, så du \
+    velger bare retning. Merkevaren er formålet, ikke grunnlaget: begrunn valgene i hva ordene betyr og \
+    i begrepsgrunnlaget du får, ikke i bransjeklisjeer.
+
+    Kulørfamilier: rød, korall, oransje, rav, gul, lime, grønn, blågrønn, turkis, himmelblå, blå, indigo, \
+    fiolett, magenta, rosa.
+    To verdiord skal gi to ulike kulører. Varme og menneskelige ord er ikke bare oransje og rav – korall, \
+    rosa, rød og gul er også varme. Velg kulører med egenart, og aldri for å få brunt eller grått.
+    Følg begrepsgrunnlaget når det finnes: primær hentes fra de tyngste kulørfamiliene, sekundær fra et \
+    annet verdiord enn primær.
+    \(Språk.svarinstruks)
+    """ }
+
+    static func tolk(verdiord: String, grunnlag: Begrepsgrunnlag) -> String {
+        """
+        Verdiord: \(verdiord)
+
+        \(grunnlag.fakta)
+
+        Tolk verdiordene: velg primær og sekundær kulørfamilie, lyshet, metning og bakgrunn.
+        """
+    }
+
     static var fargedesigner: String { """
     Du er en erfaren fargedesigner. Du oversetter verdiord og stemninger til harmoniske fargepaletter \
     som skal brukes i visuelle identiteter for digital og trykt bruk. Merkevaren er formålet, ikke \

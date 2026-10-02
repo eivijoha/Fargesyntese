@@ -23,56 +23,81 @@ func vent(på samtale: PalettSamtale) async {
     if let feil = samtale.feil { print("FEIL: \(feil.localizedDescription)") }
 }
 
-/// Faste verdiord med forventede kulørområder (OKLCH-grader) for primærfargen, der det gir mening.
+/// Faste verdiord: mest abstrakte ord slik virksomheter bruker dem, og noen konkrete med forventet
+/// kulørområde (OKLCH-grader) for primærfargen.
 let evalsett: [(ord: String, primær: [ClosedRange<Double>])] = [
+    ("pålitelig, innovativ, inkluderende", []),
+    ("raus, nær, kompetent", []),
+    ("ambisiøs, modig, åpen", []),
+    ("profesjonell, tilgjengelig, engasjert", []),
+    ("respekt, kvalitet, samarbeid", []),
+    ("nyskapende, bærekraftig, ansvarlig", []),
+    ("ekte, jordnær, stolt", []),
+    ("omsorg, trygghet, glede", []),
+    ("trygg, varm, nordisk", []),
+    ("menneskelig, nær, varm", []),
+    ("tradisjon, håndverk, kvalitet", []),
+    ("lokal, ærlig, solid", []),
+    ("leken, modig", []),
+    ("luksus, eleganse", []),
+    ("verdiskapende, helhetlig, fremragende", []),
     ("natur, frisk, grønn", [115...185]),
     ("hav, frihet", [180...275]),
-    ("trygg, varm, nordisk", []),
-    ("leken, modig", []),
     ("energi, sport", [15...110]),
-    ("ro, balanse, velvære", []),
-    ("luksus, eleganse", []),
-    ("bærekraft, ærlig", [110...200]),
-    ("kreativ, nysgjerrig", []),
     ("tillit, kunnskap", [220...290]),
-    ("sommer, glede", [60...130]),
     ("høst, lun", [20...95]),
-    ("fjell, snø, klar luft", [200...280]),
-    ("blomstereng", []),
     ("teknologi, presisjon", [200...300]),
 ]
 
-/// Kjører evalsettet og måler: treff på forventet kulør for primærfargen, andel brune toner og
-/// andel toner med lite kulør blant primær/sekundær/aksent/støtte (bakgrunn og tekst holdes utenfor).
+/// Kjører evalsettet og måler det en brukbar palett må ha: få brune og grå toner, kulørspredning mellom
+/// primær, sekundær og aksent, lesbar tekst, og hovedfarger som synes mot bakgrunnen.
 func evaluer(runder: Int) async {
     var farger = 0, brune = 0, gråaktige = 0, forventet = 0, treff = 0
-    var kromaSum = 0.0
+    var paletter = 0, ensfargede = 0, tekstOK = 0, primærOK = 0, hovedfarger = 0, hovedOK = 0
     for (ord, primær) in evalsett {
         for _ in 0..<runder {
             guard let f = try? await Verdiordtjeneste.beste().forslag(for: ord, antall: 5) else { print("FEIL: \(ord)"); continue }
+            paletter += 1
+            let bakgrunn = f.bakgrunn ?? Farge(hex: "#FFFFFF")!
             let kjerne = f.farger.filter { !["bakgrunn", "tekst"].contains($0.rolle.lowercased()) }
             var linje = [String]()
             for c in kjerne {
                 let lch = c.farge.okLCH
                 farger += 1
-                kromaSum += lch.c
                 let brun = (30...90).contains(lch.h) && lch.l < 0.62 && lch.c > 0.02 && lch.c < 0.13
                 if brun { brune += 1 }
                 if lch.c < 0.05 { gråaktige += 1 }
+                hovedfarger += 1
+                if c.farge.wcagKontrast(mot: bakgrunn) >= 3 { hovedOK += 1 }
                 linje.append("\(c.farge.hex())\(brun ? "ᵇ" : "")\(lch.c < 0.05 ? "ᵍ" : "")")
             }
+            // Ensfarget: alle hovedfargene innenfor 25° og med liten forskjell i lyshet.
+            let h = kjerne.map { $0.farge.okLCH }
+            let spredning = h.flatMap { a in h.map { b in min(abs(a.h - b.h), 360 - abs(a.h - b.h)) } }.max() ?? 0
+            let lysspenn = (h.map(\.l).max() ?? 0) - (h.map(\.l).min() ?? 0)
+            let ensfarget = spredning < 25 && lysspenn < 0.15
+            if ensfarget { ensfargede += 1 }
+            if let t = f.farger.first(where: { $0.rolle.lowercased() == "tekst" }), t.farge.wcagKontrast(mot: bakgrunn) >= 4.5 { tekstOK += 1 }
             var merke = ""
-            if !primær.isEmpty, let p = f.farger.first(where: { $0.rolle.lowercased() == "primær" }) {
-                forventet += 1
-                let h = p.farge.okLCH.h
-                if primær.contains(where: { $0.contains(h) }) && p.farge.okLCH.c >= 0.05 { treff += 1; merke = " ✓" } else { merke = " ✗" }
+            if let p = f.farger.first(where: { $0.rolle.lowercased() == "primær" }) {
+                if p.farge.wcagKontrast(mot: bakgrunn) >= 3 { primærOK += 1 }
+                if !primær.isEmpty {
+                    forventet += 1
+                    let hp = p.farge.okLCH.h
+                    if primær.contains(where: { $0.contains(hp) }) && p.farge.okLCH.c >= 0.05 { treff += 1; merke = " ✓" } else { merke = " ✗" }
+                }
             }
-            print("\(ord.padding(toLength: 24, withPad: " ", startingAt: 0)) \(linje.joined(separator: " "))\(merke)")
+            let harmoni = f.oppskrift.map { " [\($0.harmoni.rawValue)\($0.bakgrunn == .mørk ? ", mørk" : "")]" } ?? ""
+            print("\(ord.padding(toLength: 40, withPad: " ", startingAt: 0)) \(linje.joined(separator: " "))\(ensfarget ? " ENSFARGET" : "")\(merke)\(harmoni)")
         }
     }
-    print(String(format: "\nPrimær i forventet kulør: %d/%d  ·  brune: %.0f %%  ·  lite kulør (C<0,05): %.0f %%  ·  snittkroma: %.3f",
-                 treff, forventet, 100 * Double(brune) / Double(max(farger, 1)),
-                 100 * Double(gråaktige) / Double(max(farger, 1)), kromaSum / Double(max(farger, 1))))
+    func pst(_ a: Int, _ b: Int) -> String { String(format: "%.0f %%", 100 * Double(a) / Double(max(b, 1))) }
+    print("""
+
+    Primær i forventet kulør: \(treff)/\(forventet)
+    Brune toner: \(pst(brune, farger))  ·  lite kulør (C<0,05): \(pst(gråaktige, farger))  ·  ensfargede paletter: \(ensfargede)/\(paletter)
+    Tekst ≥ 4,5:1 mot bakgrunn: \(tekstOK)/\(paletter)  ·  primær ≥ 3:1: \(primærOK)/\(paletter)  ·  hovedfarger ≥ 3:1: \(pst(hovedOK, hovedfarger))
+    """)
 }
 
 let arg = Array(CommandLine.arguments.dropFirst())
@@ -125,8 +150,9 @@ default:
 if arg.first == "enkel" {
     let start = Date()
     do {
-        let f = try await AppleIntelligenceTolker().forslag(for: arg[1], antall: 5)
+        let f = try await AppleIntelligenceTolker().forslag(for: arg[1], antall: arg.count > 2 ? Int(arg[2]) ?? 5 : 5)
         skriv(f)
+        if let o = f.oppskrift { print("  Oppskrift: \(o.primær.rawValue) + \(o.sekundær?.rawValue ?? "–") · \(o.harmoni.rawValue) · \(o.samklang.rawValue) · \(o.lyshet.rawValue) · \(o.metning.rawValue) · bakgrunn \(o.bakgrunn.rawValue)") }
     } catch { print("FEIL: \(error)") }
     print(String(format: "\n(%.1f s)", Date().timeIntervalSince(start)))
 }

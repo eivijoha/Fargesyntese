@@ -54,6 +54,71 @@ struct SemantikkTests {
     }
 }
 
+@Suite("Palettkomponist")
+struct PalettkomponistTests {
+    private func kjerne(_ f: [Fargeforslag]) -> [Fargeforslag] { f.filter { !["bakgrunn", "tekst"].contains($0.rolle) } }
+
+    @Test(arguments: Harmoniprinsipp.allCases, Samklang.allCases)
+    func lesbarOgUtenBruntForAlleOppskrifter(_ harmoni: Harmoniprinsipp, _ samklang: Samklang) throws {
+        for primær in Kulørfamilie.kromatiske {
+            for bakgrunn in Bakgrunnstype.allCases {
+                let o = Palettoppskrift(primær: primær, harmoni: harmoni, samklang: samklang, bakgrunn: bakgrunn)
+                let farger = Palettkomponist.komponer(o, antall: 8, gamut: .sRGB)
+                #expect(farger.prefix(5).map(\.rolle) == ["primær", "sekundær", "aksent", "bakgrunn", "tekst"])
+                let bg = try #require(farger.first { $0.rolle == "bakgrunn" }).farge
+                let tekst = try #require(farger.first { $0.rolle == "tekst" }).farge
+                #expect(tekst.wcagKontrast(mot: bg) >= Palettkomponist.tekstkontrast - 0.01)
+                #expect(bakgrunn == .mørk ? bg.okLCH.l < 0.25 : bg.okLCH.l > 0.94)
+                for f in farger.prefix(3) {
+                    let lch = f.farge.okLCH
+                    // Ingen brune eller grå hovedfarger uten at oppskriften ber om det.
+                    #expect(lch.c > 0.05, "\(primær) \(harmoni) \(samklang) \(f.rolle) \(f.farge.hex())")
+                    #expect(!((30...90).contains(lch.h) && lch.l < 0.6 && lch.c < 0.11), "brun: \(primær) \(harmoni) \(f.rolle) \(f.farge.hex())")
+                    // Hovedfargene synes mot bakgrunnen; gul og lime får være klare i stedet.
+                    let spes = Fargespesifikasjon.nærmeste(f.farge, i: .sRGB)
+                    // En tone av primærfargen (monokrom og komplementær sekundær) er en flatefarge og er unntatt.
+                    let toneITone = f.rolle == "sekundær" && [.monokrom, .komplementær].contains(harmoni)
+                    if ![.gul, .lime, .rav].contains(spes.familie), !toneITone {
+                        #expect(f.farge.wcagKontrast(mot: bg) >= Palettkomponist.fargekontrast - 0.05, "\(primær) \(harmoni) \(samklang) \(bakgrunn) \(f.rolle) \(f.farge.hex())")
+                    }
+                }
+            }
+        }
+    }
+
+    @Test func harmoniFølgerVinkelenMellomOrdeneskulører() {
+        let trygtOgVarmt = Palettoppskrift(grunnlag: Fargesemantikk.oppslag("trygg, varm"), gamut: .sRGB)
+        #expect(trygtOgVarmt.primær == .blå)
+        #expect(trygtOgVarmt.sekundær == .oransje)
+        #expect(trygtOgVarmt.harmoni == .komplementær)
+        // Komplementær: sekundær er tone i tone, og ordets andre kulør blir aksent.
+        let f = Palettkomponist.komponer(trygtOgVarmt, antall: 5, grunnlag: Fargesemantikk.oppslag("trygg, varm"), gamut: .sRGB)
+        #expect(vinkelavstand(f[1].farge.okLCH.h, f[0].farge.okLCH.h) < 12)
+        #expect(Kulørfamilie.nærmeste(kulør: f[2].farge.okLCH.h) == .oransje)
+        #expect(Palettoppskrift.harmoni(.grønn, .blågrønn) == .analog)
+        #expect(Palettoppskrift.harmoni(.grønn, .blå) == .triade)
+        #expect(Palettoppskrift.harmoni(.blå, .gul) == .splittkomplementær)
+    }
+
+    @Test func likValørGirSammeLyshet() {
+        // Grønn + blågrønn med magenta aksent: ingen av kulørene trenger egen lyshet for å være klare.
+        let o = Palettoppskrift(primær: .grønn, sekundær: .blågrønn, harmoni: .analog, samklang: .likValør, lyshet: .middelsMørk)
+        let f = Palettkomponist.komponer(o, antall: 5, gamut: .sRGB)
+        let l = f.prefix(3).map { $0.farge.okLCH.l }
+        #expect(l.max()! - l.min()! < 0.08)
+        // Lik metning: lysheten skiller primær og sekundær i stedet.
+        let variert = Palettkomponist.komponer({ var v = o; v.samklang = .likMetning; return v }(), antall: 5, gamut: .sRGB)
+        #expect(abs(variert[0].farge.okLCH.l - variert[1].farge.okLCH.l) > 0.06)
+    }
+
+    @Test func bruntBareNårBegrepetBerOmDet() {
+        #expect(Fargesemantikk.oppslag("jord").tillaterBrunt)
+        #expect(!Fargesemantikk.oppslag("moderne, lokal, luksus, tidløs").tillaterBrunt)
+        #expect(Palettoppskrift(grunnlag: Fargesemantikk.oppslag("varm, nær, raus"), gamut: .sRGB).brunt == nil)
+        #expect(Fargesemantikk.oppslag("raus, kompetent, ambisiøs, respekt, samarbeid, jordnær").begreper.count == 6)
+    }
+}
+
 @Suite("Fargebeskriver")
 struct FargebeskriverTests {
     @Test func regelbasertTolkerModifikatorer() {

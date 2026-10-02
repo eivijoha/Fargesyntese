@@ -3217,6 +3217,16 @@
         }
       }
     },
+    "Paletten er komponert etter harmoniprinsippet, med lik valør eller lik metning i hovedfargene. Teksten har minst 7:1 kontrast mot bakgrunnen, og hovedfargene minst 3:1 der kuløren tillater det. Tallet ved hver farge er kontrasten mot bakgrunnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The palette is composed by the harmony principle, with equal value or equal saturation in the main colors. Text has at least 7:1 contrast against the background, and the main colors at least 3:1 where the hue allows. The number by each color is its contrast against the background."
+          }
+        }
+      }
+    },
     "Paletten trenger minst to farger.": {
       "localizations": {
         "en": {
@@ -3237,12 +3247,12 @@
         }
       }
     },
-    "Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten velger kulørfamilie, lyshet og metning, og fargene regnes ut i OKLCH. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.": {
+    "Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten tolker ordene og velger kulørfamilier og uttrykk. Selve paletten komponeres deretter etter faste regler i OKLCH: harmoniprinsipp, lik valør eller lik metning, én aksent, lys eller mørk bakgrunn og tekst med minst 7:1 kontrast. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes from value words and “Describe a color” build on a knowledge base of color concepts made for the app. The on-device language model chooses hue family, lightness and saturation, and the colors are computed in OKLCH. Text about color meaning describes conventions, not scientific facts."
+            "value": "Palettes from value words and “Describe a color” build on a knowledge base of color concepts made for the app. The on-device language model interprets the words and chooses hue families and expression. The palette itself is then composed by fixed rules in OKLCH: harmony principle, equal value or equal saturation, one accent, a light or dark background and text with at least 7:1 contrast. Text about color meaning describes conventions, not scientific facts."
           }
         }
       }
@@ -3423,6 +3433,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fix"
+          }
+        }
+      }
+    },
+    "Samklang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cohesion"
           }
         }
       }
@@ -4211,6 +4231,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Value words"
+          }
+        }
+      }
+    },
+    "Verdiordene er tolket med Apple Intelligence på enheten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The value words were interpreted with Apple Intelligence on device."
+          }
+        }
+      }
+    },
+    "Verdiordene er tolket med den innebygde kunnskapsbasen (uten Apple Intelligence).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The value words were interpreted with the built-in knowledge base (without Apple Intelligence)."
           }
         }
       }
