@@ -3335,6 +3335,16 @@
         }
       }
     },
+    "Som vektorbilde (PDF) med riktige farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As vector image (PDF) with exact colors"
+          }
+        }
+      }
+    },
     "Som vektorformer (PDF), med fargerom og ICC": {
       "localizations": {
         "en": {

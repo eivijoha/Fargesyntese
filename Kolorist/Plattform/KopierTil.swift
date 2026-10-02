@@ -17,10 +17,12 @@ import AppKit
 ///   fargeprøvepanelet.)
 /// - Photoshop: PDF (limes inn som formlag, smartobjekt eller piksler – Photoshop spør), PNG som
 ///   reserve, og hex uten «#» som tekst til hex-feltet i fargevelgeren.
+/// - Pages, Keynote, Numbers: PDF (vektorbilde med riktige farger, som pipetten i fargepanelet kan
+///   hente fra) og PNG; på Mac også selve fargen (NSColor) for første farge.
 /// - CSS og SwiftUI: kode.
 /// Alle mål får i tillegg tekst (hex), så innliming i et tekstfelt også gir mening.
 enum Kopimål: String, CaseIterable, Identifiable {
-    case figma, illustrator, indesign, photoshop, sketchAffinity, css, swiftUI
+    case figma, illustrator, indesign, photoshop, sketchAffinity, iWork, css, swiftUI
 
     var id: String { rawValue }
 
@@ -31,6 +33,7 @@ enum Kopimål: String, CaseIterable, Identifiable {
         case .indesign: "InDesign"
         case .photoshop: "Photoshop"
         case .sketchAffinity: "Sketch / Affinity"
+        case .iWork: "Pages / Keynote / Numbers"
         case .css: "CSS"
         case .swiftUI: "SwiftUI"
         }
@@ -41,6 +44,7 @@ enum Kopimål: String, CaseIterable, Identifiable {
         case .figma, .sketchAffinity: String(localized: "Som former (SVG)")
         case .illustrator, .indesign: String(localized: "Som vektorformer (PDF), med fargerom og ICC")
         case .photoshop: String(localized: "Som formlag (PDF), og hex til fargevelgeren")
+        case .iWork: String(localized: "Som vektorbilde (PDF) med riktige farger")
         case .css: String(localized: "Som variabler")
         case .swiftUI: String(localized: "Som Color-konstanter")
         }
@@ -51,6 +55,7 @@ enum Kopimål: String, CaseIterable, Identifiable {
         case .figma, .sketchAffinity: "square.on.circle"
         case .illustrator, .indesign: "doc.richtext"
         case .photoshop: "photo"
+        case .iWork: "doc.on.doc"
         case .css, .swiftUI: "chevron.left.forwardslash.chevron.right"
         }
     }
@@ -96,6 +101,13 @@ extension Utklippstavle {
             typer.append(("com.adobe.pdf", Fargeprøvepdf.data(for: farger)))
             if let png = Fargeprøvepdf.png(for: farger) { typer.append(("public.png", png)) }
             tekst = farger.map { String($0.farge.hex().dropFirst()) }.joined(separator: "\n")
+        case .iWork:
+            typer.append(("com.adobe.pdf", Fargeprøvepdf.data(for: farger)))
+            if let png = Fargeprøvepdf.png(for: farger) { typer.append(("public.png", png)) }
+            #if os(macOS)
+            if let farge = try? farger[0].farge.macFargedata() { typer.append((NSPasteboard.PasteboardType.color.rawValue, farge)) }
+            #endif
+            tekst = hex
         case .css:
             tekst = String(decoding: Eksportformat.css.data(for: palett), as: UTF8.self)
         case .swiftUI:
