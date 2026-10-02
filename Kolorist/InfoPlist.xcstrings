@@ -36,8 +36,40 @@
         }
       }
     },
-    "Kolorist-farge": {},
-    "Kolorist-palettfarge": {},
+    "Kolorist-farge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist color"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist-farge"
+          }
+        }
+      }
+    },
+    "Kolorist-palettfarge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist palette color"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist-palettfarge"
+          }
+        }
+      }
+    },
     "NSCameraUsageDescription": {
       "extractionState": "manual",
       "localizations": {
@@ -61,7 +93,13 @@
       "localizations": {
         "nb": {
           "stringUnit": {
-            "state": "new",
+            "state": "translated",
+            "value": "© 2026 Eivind Arnstein Johansen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
             "value": "© 2026 Eivind Arnstein Johansen"
           }
         }

@@ -11,12 +11,84 @@
         }
       }
     },
+    "«%@» er ikke en gyldig farge. Bruk hex eller CSS, f.eks. #2F7FD8 eller oklch(0.6 0.15 250).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is not a valid color. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
+          }
+        }
+      }
+    },
+    "«%@» er ikke en gyldig ICC-profil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is not a valid ICC profile."
+          }
+        }
+      }
+    },
     "%@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%@"
+          }
+        }
+      }
+    },
+    "%@ – utenfor gamut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ – out of gamut"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · minst %@:1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · at least %@:1"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · minst %2$@:1"
+          }
+        }
+      }
+    },
+    "%@ · rene farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · clean colors"
           }
         }
       }
@@ -111,70 +183,18 @@
         }
       }
     },
-    "%@ · %@": {
+    "%@-verdiene angis i %@ og vises slik de gjengis i dette fargerommet.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ · %@"
+            "value": "%1$@ values are entered in %2$@ and shown as they render in that color space."
           }
         },
         "nb": {
           "stringUnit": {
             "state": "new",
-            "value": "%1$@ · %2$@"
-          }
-        }
-      }
-    },
-    "%@ · %@ · %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ · %2$@ · %3$@"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · %2$@ · %3$@"
-          }
-        }
-      }
-    },
-    "%@ · minst %@:1": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · at least %@:1"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · minst %2$@:1"
-          }
-        }
-      }
-    },
-    "%@ · rene farger": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · clean colors"
-          }
-        }
-      }
-    },
-    "%@ – utenfor gamut": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ – out of gamut"
+            "value": "%1$@-verdiene angis i %2$@ og vises slik de gjengis i dette fargerommet."
           }
         }
       }
@@ -207,22 +227,6 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$@, %2$@ til %3$@, %4$lld toner"
-          }
-        }
-      }
-    },
-    "%@-verdiene angis i %@ og vises slik de gjengis i dette fargerommet.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ values are entered in %2$@ and shown as they render in that color space."
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@-verdiene angis i %2$@ og vises slik de gjengis i dette fargerommet."
           }
         }
       }
@@ -405,6 +409,16 @@
         }
       }
     },
+    "±%lld %%-poeng": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "±%lld %%-points"
+          }
+        }
+      }
+    },
     "1 vanskelig par": {
       "localizations": {
         "en": {
@@ -555,6 +569,26 @@
         }
       }
     },
+    "Åpne i Overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open in Gradient"
+          }
+        }
+      }
+    },
+    "Åpner gradienten i Overgang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the gradient in Gradient"
+          }
+        }
+      }
+    },
     "Av": {
       "localizations": {
         "en": {
@@ -665,6 +699,16 @@
         }
       }
     },
+    "Brødtekst i vanlig størrelse, slik den leses i appen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Body text at regular size, as it reads in the app."
+          }
+        }
+      }
+    },
     "Bruk": {
       "localizations": {
         "en": {
@@ -731,16 +775,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "User"
-          }
-        }
-      }
-    },
-    "Brødtekst i vanlig størrelse, slik den leses i appen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Body text at regular size, as it reads in the app."
           }
         }
       }
@@ -1501,6 +1535,16 @@
         }
       }
     },
+    "Gråtone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grayscale"
+          }
+        }
+      }
+    },
     "Grunnfarge": {
       "localizations": {
         "en": {
@@ -1517,36 +1561,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Base color %lld degrees"
-          }
-        }
-      }
-    },
-    "Gråtone": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Grayscale"
-          }
-        }
-      }
-    },
-    "HSB": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HSB"
-          }
-        }
-      }
-    },
-    "HSL": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HSL"
           }
         }
       }
@@ -1627,6 +1641,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Skip"
+          }
+        }
+      }
+    },
+    "HSB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HSB"
+          }
+        }
+      }
+    },
+    "HSL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HSL"
           }
         }
       }
@@ -1891,22 +1925,22 @@
         }
       }
     },
-    "KI": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI"
-          }
-        }
-      }
-    },
     "Kamera": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Camera"
+          }
+        }
+      }
+    },
+    "KI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI"
           }
         }
       }
@@ -1971,6 +2005,16 @@
         }
       }
     },
+    "Kontrast (WCAG 2.2)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrast (WCAG 2.2)"
+          }
+        }
+      }
+    },
     "Kontrast %@, %@": {
       "localizations": {
         "en": {
@@ -1983,16 +2027,6 @@
           "stringUnit": {
             "state": "new",
             "value": "Kontrast %1$@, %2$@"
-          }
-        }
-      }
-    },
-    "Kontrast (WCAG 2.2)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contrast (WCAG 2.2)"
           }
         }
       }
@@ -2083,16 +2117,6 @@
         }
       }
     },
-    "Kopier CSS": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copy CSS"
-          }
-        }
-      }
-    },
     "Kopier aktiv farge som OKLCH": {
       "localizations": {
         "en": {
@@ -2103,22 +2127,22 @@
         }
       }
     },
-    "Kopier alle som OKLCH": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copy all as OKLCH"
-          }
-        }
-      }
-    },
     "Kopier alle som hex": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Copy all as hex"
+          }
+        }
+      }
+    },
+    "Kopier alle som OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy all as OKLCH"
           }
         }
       }
@@ -2139,6 +2163,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copy fallback only (sRGB)"
+          }
+        }
+      }
+    },
+    "Kopier CSS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy CSS"
           }
         }
       }
@@ -2243,16 +2277,6 @@
         }
       }
     },
-    "LCH": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LCH"
-          }
-        }
-      }
-    },
     "Lag ${antall} toner fra ${fra} til ${til}": {
       "localizations": {
         "en": {
@@ -2333,36 +2357,6 @@
         }
       }
     },
-    "Laget med Apple Intelligence på enheten. Kontrast og fargesyn er beregnet eksakt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with Apple Intelligence on device. Contrast and color vision are computed exactly."
-          }
-        }
-      }
-    },
-    "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with Apple Intelligence on device. The text color is adjusted to at least WCAG AA against the background."
-          }
-        }
-      }
-    },
-    "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with the built-in knowledge base (without Apple Intelligence)."
-          }
-        }
-      }
-    },
     "Laget «%@» med %lld farger.": {
       "localizations": {
         "en": {
@@ -2387,6 +2381,16 @@
           "stringUnit": {
             "state": "new",
             "value": "Laget «%1$@» med %2$lld farger."
+          }
+        }
+      }
+    },
+    "Laget med Apple Intelligence på enheten. Kontrast og fargesyn er beregnet eksakt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made with Apple Intelligence on device. Contrast and color vision are computed exactly."
           }
         }
       }
@@ -2581,6 +2585,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Loading image …"
+          }
+        }
+      }
+    },
+    "LCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LCH"
           }
         }
       }
@@ -3081,16 +3095,6 @@
         }
       }
     },
-    "OKLCH": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OKLCH"
-          }
-        }
-      }
-    },
     "OKLab": {
       "localizations": {
         "en": {
@@ -3107,6 +3111,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "OKLab and OKLCH"
+          }
+        }
+      }
+    },
+    "OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OKLCH"
           }
         }
       }
@@ -3193,6 +3207,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "P3"
+          }
+        }
+      }
+    },
+    "På, %lld prosent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On, %lld percent"
           }
         }
       }
@@ -3337,26 +3361,6 @@
         }
       }
     },
-    "På, %lld prosent": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "On, %lld percent"
-          }
-        }
-      }
-    },
-    "RGB": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "RGB"
-          }
-        }
-      }
-    },
     "Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.": {
       "localizations": {
         "en": {
@@ -3433,6 +3437,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fix"
+          }
+        }
+      }
+    },
+    "RGB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RGB"
           }
         }
       }
@@ -3547,6 +3561,16 @@
         }
       }
     },
+    "Slå av": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off"
+          }
+        }
+      }
+    },
     "Slett": {
       "localizations": {
         "en": {
@@ -3617,16 +3641,6 @@
         }
       }
     },
-    "Slå av": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Turn off"
-          }
-        }
-      }
-    },
     "Som Color-konstanter": {
       "localizations": {
         "en": {
@@ -3693,6 +3707,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Black"
+          }
+        }
+      }
+    },
+    "sRGB-hex som #2F7FD8 eller 2F7FD8; CSS-farger som oklch(…) og rgb(…) går også.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sRGB hex such as #2F7FD8 or 2F7FD8; CSS colors such as oklch(…) and rgb(…) also work."
           }
         }
       }
@@ -3807,22 +3831,22 @@
         }
       }
     },
-    "Tekst og grafikk": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text and graphics"
-          }
-        }
-      }
-    },
     "Tekst ↓ / bakgrunn →": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Text ↓ / background →"
+          }
+        }
+      }
+    },
+    "Tekst og grafikk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text and graphics"
           }
         }
       }
@@ -4055,22 +4079,22 @@
         }
       }
     },
-    "Utenfor P3": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Outside P3"
-          }
-        }
-      }
-    },
     "Utenfor gamut · ΔE00 %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Out of gamut · ΔE00 %@"
+          }
+        }
+      }
+    },
+    "Utenfor P3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside P3"
           }
         }
       }
@@ -4371,66 +4395,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "WCAG 2.2 contrast"
-          }
-        }
-      }
-    },
-    "sRGB-hex som #2F7FD8 eller 2F7FD8; CSS-farger som oklch(…) og rgb(…) går også.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "sRGB hex such as #2F7FD8 or 2F7FD8; CSS colors such as oklch(…) and rgb(…) also work."
-          }
-        }
-      }
-    },
-    "«%@» er ikke en gyldig ICC-profil.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” is not a valid ICC profile."
-          }
-        }
-      }
-    },
-    "«%@» er ikke en gyldig farge. Bruk hex eller CSS, f.eks. #2F7FD8 eller oklch(0.6 0.15 250).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” is not a valid color. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
-          }
-        }
-      }
-    },
-    "±%lld %%-poeng": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "±%lld %%-points"
-          }
-        }
-      }
-    },
-    "Åpne i Overgang": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open in Gradient"
-          }
-        }
-      }
-    },
-    "Åpner gradienten i Overgang": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Opens the gradient in Gradient"
           }
         }
       }
