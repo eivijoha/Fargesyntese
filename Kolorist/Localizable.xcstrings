@@ -1451,16 +1451,6 @@
         }
       }
     },
-    "Hex uten #, til fargevelgeren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hex without #, for the color picker"
-          }
-        }
-      }
-    },
     "Hex, CSS eller beskrivelse": {
       "localizations": {
         "en": {
@@ -3321,6 +3311,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "As shapes (SVG)"
+          }
+        }
+      }
+    },
+    "Som formlag (PDF), og hex til fargevelgeren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As shape layer (PDF), plus hex for the color picker"
           }
         }
       }

@@ -1,4 +1,5 @@
 import CoreGraphics
+import ImageIO
 import FargeKjerne
 import SwiftUI
 
@@ -14,7 +15,8 @@ import AppKit
 /// - Illustrator, InDesign: PDF – vektorformer i fargens eget fargerom, også CMYK med ICC-profil.
 ///   (Adobe har ikke noe felles utklippsformat for fargeprøver; ASE-eksporten er veien inn i
 ///   fargeprøvepanelet.)
-/// - Photoshop: hex uten «#», til hex-feltet i fargevelgeren.
+/// - Photoshop: PDF (limes inn som formlag, smartobjekt eller piksler – Photoshop spør), PNG som
+///   reserve, og hex uten «#» som tekst til hex-feltet i fargevelgeren.
 /// - CSS og SwiftUI: kode.
 /// Alle mål får i tillegg tekst (hex), så innliming i et tekstfelt også gir mening.
 enum Kopimål: String, CaseIterable, Identifiable {
@@ -38,7 +40,7 @@ enum Kopimål: String, CaseIterable, Identifiable {
         switch self {
         case .figma, .sketchAffinity: String(localized: "Som former (SVG)")
         case .illustrator, .indesign: String(localized: "Som vektorformer (PDF), med fargerom og ICC")
-        case .photoshop: String(localized: "Hex uten #, til fargevelgeren")
+        case .photoshop: String(localized: "Som formlag (PDF), og hex til fargevelgeren")
         case .css: String(localized: "Som variabler")
         case .swiftUI: String(localized: "Som Color-konstanter")
         }
@@ -48,7 +50,7 @@ enum Kopimål: String, CaseIterable, Identifiable {
         switch self {
         case .figma, .sketchAffinity: "square.on.circle"
         case .illustrator, .indesign: "doc.richtext"
-        case .photoshop: "number"
+        case .photoshop: "photo"
         case .css, .swiftUI: "chevron.left.forwardslash.chevron.right"
         }
     }
@@ -89,6 +91,10 @@ extension Utklippstavle {
             typer.append(("com.adobe.pdf", Fargeprøvepdf.data(for: farger)))
             tekst = hex
         case .photoshop:
+            // Photoshop limer inn grafikk fra utklippstavlen: PDF gir valget «Formlag» (vektor med
+            // riktig fyll), PNG er reserve. Teksten (hex uten #) brukes når man limer i hex-feltet.
+            typer.append(("com.adobe.pdf", Fargeprøvepdf.data(for: farger)))
+            if let png = Fargeprøvepdf.png(for: farger) { typer.append(("public.png", png)) }
             tekst = farger.map { String($0.farge.hex().dropFirst()) }.joined(separator: "\n")
         case .css:
             tekst = String(decoding: Eksportformat.css.data(for: palett), as: UTF8.self)
@@ -128,6 +134,25 @@ enum Fargeprøvepdf {
         ctx.endPDFPage()
         ctx.closePDF()
         return data as Data
+    }
+
+    /// Samme fargeprøver som PNG (for programmer som bare tar imot punktgrafikk).
+    static func png(for farger: [PalettFarge], skala: CGFloat = 2) -> Data? {
+        let b = Int((CGFloat(farger.count) * (rute + mellomrom) - mellomrom) * skala), h = Int(rute * skala)
+        guard let rom = CGColorSpace(name: CGColorSpace.displayP3),
+              let ctx = CGContext(data: nil, width: b, height: h, bitsPerComponent: 8, bytesPerRow: 0, space: rom,
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        else { return nil }
+        ctx.scaleBy(x: skala, y: skala)
+        for (i, pf) in farger.enumerated() {
+            ctx.setFillColor(cgFarge(pf))
+            ctx.fill(CGRect(x: CGFloat(i) * (rute + mellomrom), y: 0, width: rute, height: rute))
+        }
+        guard let bilde = ctx.makeImage() else { return nil }
+        let data = NSMutableData()
+        guard let mål = CGImageDestinationCreateWithData(data as CFMutableData, "public.png" as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(mål, bilde, nil)
+        return CGImageDestinationFinalize(mål) ? data as Data : nil
     }
 
     static func cgFarge(_ pf: PalettFarge) -> CGColor {
