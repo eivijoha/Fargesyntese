@@ -11,9 +11,10 @@ både lokalt (åpne `index.html` i nettleseren) og på GitHub Pages.
 |---|---|
 | `index.html` | Forside/markedsføring (norsk) – funksjoner, plass til skjermbilder, plattformer, App Store-knapp |
 | `support.html` | Støtte (norsk) – kontakt og ofte stilte spørsmål |
-| `privacy.html` | Personvernerklæring (norsk), sist oppdatert 2026-09-30 |
+| `privacy.html` | Personvernerklæring (norsk), sist oppdatert 2026-10-02 |
 | `terms.html` | Vilkår for bruk (norsk) – viser til Apples standard EULA |
-| `en/index.html`, `en/support.html`, `en/privacy.html`, `en/terms.html` | Engelske versjoner av de samme sidene |
+| `methods.html` | Metoder og kilder (norsk) – samme innhold som «Metoder og kilder» i appen |
+| `en/index.html`, `en/support.html`, `en/privacy.html`, `en/terms.html`, `en/methods.html` | Engelske versjoner av de samme sidene |
 | `assets/stil.css` | Felles stilark: lys/mørk modus, OKLCH/OKLab-farger med sRGB-reserve |
 | `assets/ikon.svg` | Forenklet appikon (favicon og logo), avledet av `App-ikon.icon` |
 

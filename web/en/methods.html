@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methods and sources – Kolorist</title>
+  <meta name="description" content="The methods and sources Kolorist builds on: OKLab, CSS Color 4, CIELab, CIEDE2000, WCAG 2.2, color vision simulation, ICC, and what was developed for the app.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="../assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/stil.css">
+  <link rel="canonical" href="https://kolorist.no/en/methods.html">
+  <link rel="alternate" hreflang="nb" href="https://kolorist.no/methods.html">
+  <link rel="alternate" hreflang="en" href="https://kolorist.no/en/methods.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolorist.no/methods.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Skip to main content</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="../assets/ikon.svg" alt="" width="32" height="32">
+        Kolorist
+      </a>
+      <nav class="hovednav" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Language">
+        <a href="../methods.html" hreflang="nb" lang="nb">Norsk</a>
+        <span aria-current="true" lang="en">English</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold lesetekst" tabindex="-1">
+    <h1>Methods and sources</h1>
+    <p class="ingress">Kolorist builds on established color science and open standards. This page lists what the app uses, where it comes from, and what was developed for the app. The same explanations are in the app: tap “Method: …” below a section, or choose <strong>Methods and sources</strong> at the bottom of Palettes.</p>
+    
+    <h2 id="oklab">OKLab and OKLCH</h2>
+    <p>A perceptual color space where equal numeric steps are perceived as equally large color differences. Kolorist computes gradients in OKLab, and tone scales, lighter/darker steps, harmonies and saturation in OKLCH (lightness, chroma, hue).</p>
+    <p class="dempet">Source: <a href="https://bottosson.github.io/posts/oklab/">Björn Ottosson: “A perceptual color space for image processing” (2020)</a></p>
+    
+    <h2 id="css">CSS Color Module Level 4</h2>
+    <p>The standard for color on the web. Kolorist uses the specification’s matrices and transfer functions for sRGB, Display P3, Adobe RGB, Lab and OKLab, its gamut mapping (chroma is reduced in OKLCH while lightness and hue are preserved) and its color text syntax.</p>
+    <p class="dempet">Source: <a href="https://www.w3.org/TR/css-color-4/">W3C: CSS Color Module Level 4 (Candidate Recommendation)</a></p>
+    
+    <h2 id="cielab">CIELab, CIE LCH and Bradford adaptation</h2>
+    <p>The CIE color space based on human color vision. Kolorist reports Lab and LCH with a D50 white point, like ICC profiles and Photoshop, and uses the Bradford transform between D65 and D50.</p>
+    <p class="dempet">Source: <a href="https://cie.co.at/publications/colorimetry-4th-edition">CIE 15:2018 Colorimetry; K. M. Lam (1985), the Bradford transform</a></p>
+    
+    <h2 id="ciede2000">CIEDE2000 (ΔE00)</h2>
+    <p>The CIE formula for perceived color difference. Used when comparing colors, for gamut deviations and in the analysis of colors that become hard to tell apart with color vision deficiency. The implementation is checked against the test data in Sharma et al.</p>
+    <p class="dempet">Source: <a href="https://doi.org/10.1002/col.20070">G. Sharma, W. Wu, E. N. Dalal: Color Research &amp; Application 30(1), 2005; CIE 142-2001</a></p>
+    
+    <h2 id="wcag">WCAG 2.2 contrast</h2>
+    <p>The W3C requirements for contrast between text/graphics and background, computed from relative luminance. “Fix” changes only lightness (OKLCH) until the requirement is met.</p>
+    <p class="dempet">Source: <a href="https://www.w3.org/TR/WCAG22/">W3C: Web Content Accessibility Guidelines 2.2, success criteria 1.4.3, 1.4.6 and 1.4.11</a></p>
+    
+    <h2 id="fargesyn">Color vision deficiency simulation</h2>
+    <p>A physiologically based model of protan, deutan and tritan deficiencies, with matrices in linear sRGB and severity as a blend with normal vision. Achromatopsia is shown as luminance alone. Used in Assess › Color vision, the contrast preview and the camera filter. The simulation is an approximation; experience varies between people.</p>
+    <p class="dempet">Source: <a href="https://doi.org/10.1109/TVCG.2009.113">G. M. Machado, M. M. Oliveira, L. A. F. Fernandes: IEEE TVCG 15(6), 2009</a></p>
+    
+    <h2 id="icc">ICC profiles and color management</h2>
+    <p>Conversion between color spaces via ICC profiles, with the chosen rendering intent. Performed by Apple’s color management (ColorSync). Profiles are not bundled with the app; Kolorist uses the system’s profiles and profiles you import.</p>
+    <p class="dempet">Source: <a href="https://www.color.org/specification/ICC.1-2022-05.pdf">International Color Consortium (ICC.1); Apple ColorSync via Core Graphics</a></p>
+    
+    <h2 id="cmyk">Clean CMYK values (UCR/GCR)</h2>
+    <p>The common grey component of C, M and Y is moved to black, and Kolorist searches for the separation with the fewest inks that stays within 1 ΔE00 of the profile’s own separation.</p>
+    <p class="dempet">Source: Established print technique; the search was developed for Kolorist</p>
+    
+    <h2 id="harmonier">Color wheels and harmonies</h2>
+    <p>Complementary, split-complementary, analogous and even distributions are computed as angles on the chosen color wheel: OKLCH, CIE LCH, HSL or RYB. The RYB wheel is a piecewise linear mapping to RGB hue made for the app.</p>
+    <p class="dempet">Source: Classical color theory (Johannes Itten for RYB); the mappings were developed for Kolorist</p>
+    
+    <h2 id="ki">Color semantics and AI</h2>
+    <p>Palettes from value words and “Describe a color” build on a knowledge base of color concepts made for the app. The on-device language model chooses hue family, lightness and saturation, and the colors are computed in OKLCH. Text about color meaning describes conventions, not scientific facts.</p>
+    <p class="dempet">Source: Developed for Kolorist; language model from Apple (Foundation Models)</p>
+    
+    <div class="boks">
+      <h2>About the implementation</h2>
+      <p>The formulas are implemented in the app from the published specifications and papers above, and checked with tests against reference values where available. If you have questions about a method or find something that doesn’t add up, please email <a href="mailto:eivind.johansen@ntnu.no">eivind.johansen@ntnu.no</a>.</p>
+    </div>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Footer menu">
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="methods.html" aria-current="page">Methods and sources</a></li>
+          <li><a href="../methods.html" hreflang="nb" lang="nb">Norsk</a></li>
+        </ul>
+      </nav>
+      <p class="utvikler">Kolorist is developed by Eivind Arnstein Johansen.</p>
+      <p>© 2026 Eivind Arnstein Johansen. Apple, iPhone, iPad, Mac, iCloud, Siri and Apple Intelligence are trademarks of Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

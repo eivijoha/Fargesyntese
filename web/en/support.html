@@ -127,7 +127,7 @@
             <li><strong>iPhone and iPad:</strong> Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
             <li><strong>Mac:</strong> System Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
           </ul>
-          <p>The camera is only used live on the device to pick colors. No images are stored or sent.</p>
+          <p>The camera is only used live on the device to pick colors and for the color vision filter. No images are stored or sent.</p>
           <p>You can also pick colors from images you choose yourself, without camera access.</p>
         </div>
       </details>
@@ -141,13 +141,36 @@
       </details>
 
       <details>
+        <summary>What does “Copy to …” do?</summary>
+        <div class="svar">
+          <p>Touch and hold a color or a palette (right-click on Mac) and choose <strong>Copy to</strong> and the app you’ll paste into. Kolorist puts the colors on the clipboard in the format that app accepts:</p>
+          <ul>
+            <li><strong>Figma, Sketch and Affinity:</strong> filled shapes (SVG) you paste straight onto the canvas.</li>
+            <li><strong>Illustrator and InDesign:</strong> vector shapes (PDF) with color space and ICC profile – colors saved in a CMYK profile arrive as CMYK.</li>
+            <li><strong>Photoshop:</strong> shape layers (PDF, with an image as fallback), and the hex value for the color picker.</li>
+            <li><strong>Pages, Keynote and Numbers:</strong> swatches as PDF and image, and on Mac also as a system color.</li>
+            <li><strong>CSS and SwiftUI:</strong> code as text.</li>
+          </ul>
+          <p>With Universal Clipboard you can copy on iPhone or iPad and paste on Mac. On Mac you can also drag swatches straight into other apps.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How does the app simulate color vision deficiency?</summary>
+        <div class="svar">
+          <p>Under <strong>Assess › Color vision</strong> you see the palette with protanopia, deuteranopia, tritanopia and achromatopsia. Severity can be set below 100 % for partial deficiencies, which are the most common. The app shows which color pairs become hard to tell apart (ΔE2000), and the camera button next to each deficiency shows your surroundings through the same filter.</p>
+          <p>The simulation is based on the model by Machado, Oliveira and Fernandes (2009). It is an approximation – how colors are perceived varies between people. <a href="methods.html">Read more about the methods</a>.</p>
+        </div>
+      </details>
+
+      <details>
         <summary>How do I get my colors into Adobe apps?</summary>
         <div class="svar">
           <ul>
             <li><strong>Adobe ASE</strong> (Adobe Swatch Exchange) can be imported as swatches in Photoshop, Illustrator, InDesign and others.</li>
             <li><strong>Photoshop ACO</strong> is Photoshop’s own swatch format, with color names. Colors outside sRGB are stored as Lab so they aren’t clipped.</li>
           </ul>
-          <p>Export from the palette, save the file in Files or Finder, and open it from the Swatches panel in the Adobe app.</p>
+          <p>Export from the palette, save the file in Files or Finder, and open it from the Swatches panel in the Adobe app. For one color at a time, <strong>Copy to</strong> is quicker.</p>
         </div>
       </details>
 
@@ -160,6 +183,13 @@
             <li><strong>SVG swatches:</strong> Copy and paste into Figma – the colors arrive as filled shapes.</li>
           </ul>
           <p>Other formats: CSS, W3C Design Tokens, GIMP GPL, SwiftUI and hex list.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Which methods and sources does the app build on?</summary>
+        <div class="svar">
+          <p>Every section in the app has a “Method: …” line. Tap it to see the explanation and source. All of them are collected at the bottom of Palettes under <strong>Methods and sources</strong>, and on the <a href="methods.html">Methods and sources</a> page.</p>
         </div>
       </details>
 
@@ -182,6 +212,7 @@
           <li><a href="support.html">Support</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
+          <li><a href="methods.html">Methods and sources</a></li>
           <li><a href="../support.html" hreflang="nb" lang="nb">Norsk</a></li>
         </ul>
       </nav>

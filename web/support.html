@@ -127,7 +127,7 @@
             <li><strong>iPhone og iPad:</strong> Innstillinger › Personvern og sikkerhet › Kamera › slå på Kolorist.</li>
             <li><strong>Mac:</strong> Systeminnstillinger › Personvern og sikkerhet › Kamera › slå på Kolorist.</li>
           </ul>
-          <p>Kameraet brukes bare direkte på enheten for å plukke farger. Ingen bilder lagres eller sendes.</p>
+          <p>Kameraet brukes bare direkte på enheten for å plukke farger og for fargesynsfilteret. Ingen bilder lagres eller sendes.</p>
           <p>Du kan også plukke farger fra bilder du velger selv, uten kameratilgang.</p>
         </div>
       </details>
@@ -141,13 +141,36 @@
       </details>
 
       <details>
+        <summary>Hva gjør «Kopier til …»?</summary>
+        <div class="svar">
+          <p>Trykk og hold på en farge eller en palett (høyreklikk på Mac) og velg <strong>Kopier til</strong> og programmet du skal lime inn i. Kolorist legger fargene på utklippstavlen i formatet det programmet tar imot:</p>
+          <ul>
+            <li><strong>Figma, Sketch og Affinity:</strong> fylte former (SVG), som du limer rett inn på lerretet.</li>
+            <li><strong>Illustrator og InDesign:</strong> vektorformer (PDF) med fargerom og ICC-profil – farger lagret i en CMYK-profil kommer inn som CMYK.</li>
+            <li><strong>Photoshop:</strong> formlag (PDF, med bilde som reserve), og hex-verdien til fargevelgeren.</li>
+            <li><strong>Pages, Keynote og Numbers:</strong> fargeprøver som PDF og bilde, og på Mac også som systemfarge.</li>
+            <li><strong>CSS og SwiftUI:</strong> kode som tekst.</li>
+          </ul>
+          <p>Med Universal utklippstavle kan du kopiere på iPhone eller iPad og lime inn på Mac. På Mac kan du også dra fargeprøver rett inn i andre programmer.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvordan simulerer appen fargesynsavvik?</summary>
+        <div class="svar">
+          <p>Under <strong>Vurdering › Fargesyn</strong> ser du paletten med protanopi, deuteranopi, tritanopi og akromatopsi. Alvorlighetsgraden kan settes lavere enn 100 % for delvise avvik, som er vanligst. Appen viser hvilke fargepar som blir vanskelige å skille (ΔE2000), og kameraknappen ved hvert avvik viser omgivelsene gjennom samme filter.</p>
+          <p>Simuleringen bygger på modellen til Machado, Oliveira og Fernandes (2009). Den er en tilnærming – hvordan farger oppleves, varierer mellom personer. <a href="methods.html">Les mer om metodene</a>.</p>
+        </div>
+      </details>
+
+      <details>
         <summary>Hvordan får jeg fargene inn i Adobe-programmer?</summary>
         <div class="svar">
           <ul>
             <li><strong>Adobe ASE</strong> (Adobe Swatch Exchange) kan importeres som fargeprøver i blant annet Photoshop, Illustrator og InDesign.</li>
             <li><strong>Photoshop ACO</strong> er Photoshops eget format for fargeprøver, med fargenavn. Farger utenfor sRGB lagres som Lab, slik at de ikke klippes.</li>
           </ul>
-          <p>Eksporter fra paletten, lagre filen i Filer eller Finder, og åpne den fra fargeprøve-panelet (Swatches) i Adobe-programmet.</p>
+          <p>Eksporter fra paletten, lagre filen i Filer eller Finder, og åpne den fra fargeprøve-panelet (Swatches) i Adobe-programmet. For én og én farge er <strong>Kopier til</strong> raskere.</p>
         </div>
       </details>
 
@@ -160,6 +183,13 @@
             <li><strong>SVG-fargeprøver:</strong> Kopier og lim inn i Figma – fargene blir fylte former.</li>
           </ul>
           <p>Andre formater: CSS, W3C Design Tokens, GIMP GPL, SwiftUI og hex-liste.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hvilke metoder og kilder bygger appen på?</summary>
+        <div class="svar">
+          <p>Hver seksjon i appen har en linje «Metode: …». Trykk på den for å se forklaring og kilde. Alle samlet finner du nederst i Paletter under <strong>Metoder og kilder</strong>, og på siden <a href="methods.html">Metoder og kilder</a>.</p>
         </div>
       </details>
 
@@ -182,6 +212,7 @@
           <li><a href="support.html">Støtte</a></li>
           <li><a href="privacy.html">Personvern</a></li>
           <li><a href="terms.html">Vilkår</a></li>
+          <li><a href="methods.html">Metoder og kilder</a></li>
           <li><a href="en/support.html" hreflang="en" lang="en">English</a></li>
         </ul>
       </nav>

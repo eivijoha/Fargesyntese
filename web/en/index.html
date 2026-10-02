@@ -83,7 +83,7 @@
 
     <section class="seksjon" aria-labelledby="funksjoner">
       <h2 id="funksjoner">Features</h2>
-      <p class="lesetekst">Kolorist is designed for iPhone first. On iPad and Mac you get more room – and on the Mac an eyedropper that picks colors from anywhere on screen.</p>
+      <p class="lesetekst">Kolorist is designed for iPhone first. On iPad and Mac you get more room – in landscape on iPad the color swatches sit beside the tools – and on the Mac an eyedropper that picks colors from anywhere on screen.</p>
 
       <ul class="kort-rutenett">
         <li>
@@ -96,6 +96,7 @@
               <li>Save a color in its color model or in the profile – exports follow the format</li>
               <li>Warnings when a color is out of gamut</li>
               <li>Optionally limit new colors to a chosen profile</li>
+              <li>Clean CMYK values: grey components move to black (UCR/GCR), with as few inks as possible</li>
             </ul>
           </article>
         </li>
@@ -163,6 +164,8 @@
               <li>Auto-fix that adjusts the color until it passes</li>
               <li>Contrast matrix for the whole palette</li>
               <li>Compare colors with ΔE2000</li>
+              <li>See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colors become hard to tell apart</li>
+              <li>Camera with a color vision filter: see your surroundings as they may appear with each deficiency</li>
             </ul>
           </article>
         </li>
@@ -178,7 +181,8 @@
             <h3>Export</h3>
             <p>Adobe ASE, Photoshop ACO, Figma variables (DTCG JSON), Tokens Studio, SVG swatches, CSS, Design Tokens, GIMP GPL, SwiftUI and hex list.</p>
             <p>Colors are exported in the format they were saved in – for example CMYK to Adobe.</p>
-            <p>Copy and paste the way you’re used to on each platform.</p>
+            <p><strong>Copy to …</strong> Figma, Illustrator, InDesign, Photoshop, Sketch and Affinity, Pages, Keynote and Numbers, CSS or SwiftUI – in the format each app accepts. Works for single colors and whole palettes.</p>
+            <p>On Mac, drag swatches straight into other apps.</p>
           </article>
         </li>
         <li>
@@ -191,6 +195,13 @@
               <li>Check contrast</li>
               <li>Describe a color</li>
             </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Open about methods</h3>
+            <p>Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, color vision simulation, ICC – with source and explanation. What was developed for Kolorist is marked as such.</p>
+            <p><a href="methods.html">Read about the methods and sources</a></p>
           </article>
         </li>
       </ul>
@@ -246,6 +257,7 @@
           <li><a href="support.html">Support</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
+          <li><a href="methods.html">Methods and sources</a></li>
           <li><a href="../index.html" hreflang="nb" lang="nb">Norsk</a></li>
         </ul>
       </nav>
