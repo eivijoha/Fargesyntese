@@ -3,7 +3,7 @@
 Statiske nettsider for App Store-oppføringen: markedsføring, støtte, personvern og vilkår – på norsk bokmål
 og engelsk. Ren HTML og ett felles stilark. Ingen byggesteg, ingen rammeverk, ingen eksterne skript eller
 skrifter, ingen sporing og ingen informasjonskapsler (cookies). Alle lenker er relative, så sidene fungerer
-både lokalt (åpne `index.html` i nettleseren) og på GitHub Pages.
+både lokalt (åpne `index.html` i nettleseren) og på kolorist.no.
 
 ## Filer
 
