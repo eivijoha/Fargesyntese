@@ -643,6 +643,7 @@ struct VisOgsåMeny: View {
                 // fargen holder seg innenfor 1 ΔE00 av profilens egen separasjon.
                 Toggle("Rene CMYK-farger (UCR/GCR)", isOn: $renCMYK)
             }
+            Divider()
             Button("ICC-profil", systemImage: "plus") { importerer = true }
             Divider()
             Picker("Standard", selection: $valgtID) {
@@ -691,6 +692,8 @@ struct VisOgsåMeny: View {
             .font(.callout)
         }
         .menuIndicator(.hidden)
+        // Fast rekkefølge: ellers snur iPadOS lista når menyen åpnes oppover, og bryterne havner nederst.
+        .menuOrder(.fixed)
         .help("Velg fargerommet som vises ved siden av fargen")
         // En installert Mac-profil som velges, kopieres til «Mine profiler» og synkes til de andre enhetene.
         .onChange(of: valgtID) { _, ny in
