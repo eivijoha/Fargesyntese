@@ -2847,16 +2847,6 @@
         }
       }
     },
-    "Metode:": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Method:"
-          }
-        }
-      }
-    },
     "Metode: %@ %@": {
       "localizations": {
         "en": {
@@ -2889,16 +2879,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Methods and sources"
-          }
-        }
-      }
-    },
-    "Metoder:": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Methods:"
           }
         }
       }

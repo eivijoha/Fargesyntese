@@ -620,7 +620,8 @@ struct ToneskalaArk: View {
     }
 }
 
-/// «Kopier til» / «Flytt til» en annen palett. Uten `fra` (enkeltfarger) vises «Legg i palett».
+/// «Flytt til» en annen palett. Uten `fra` (enkeltfarger) vises «Legg i palett».
+/// «Kopier til» er forbeholdt kopiering til andre programmer (`KopierTilMeny`).
 struct FlyttMeny: View {
     let farge: PalettFarge
     let fra: PalettDokument?
@@ -629,8 +630,10 @@ struct FlyttMeny: View {
     var body: some View {
         let andre = paletter.filter { $0.id != fra?.id }
         if !andre.isEmpty {
-            Menu(fra == nil ? "Legg i palett" : "Kopier til", systemImage: fra == nil ? "plus.square.on.square" : "doc.on.doc") {
-                ForEach(andre) { p in Button(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn) { leggTil([farge], i: p) } }
+            if fra == nil {
+                Menu("Legg i palett", systemImage: "plus.square.on.square") {
+                    ForEach(andre) { p in Button(p.navn.isEmpty ? String(localized: "Uten navn") : p.navn) { leggTil([farge], i: p) } }
+                }
             }
             if let fra {
                 Menu("Flytt til", systemImage: "arrow.right.square") {
