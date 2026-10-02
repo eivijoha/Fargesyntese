@@ -69,7 +69,7 @@ Søk etter `TODO:` i HTML-filene, og etter den synlige teksten i hakeparenteser.
 |---|---|---|
 | «Kommer snart i App Store» | `index.html`, `en/index.html` | Bytt `<span class="knapp knapp-kommer">` med `<a class="knapp" href="https://apps.apple.com/…">` og teksten «Last ned i App Store» når appen er godkjent. Vurder Apples offisielle «Download on the App Store»-merke (App Store Marketing Guidelines) |
 | `<!-- TODO: app-id -->` | `index.html`, `en/index.html` (i `<head>`) | Fjern kommentarene rundt `<meta name="apple-itunes-app" content="app-id=…">` og sett inn App Store-ID-en for Smart App Banner |
-| Plassholderbilder | `assets/skjermbilde-studio.png`, `-overgang.png`, `-kamera.png`, `-paletter.png` | Erstatt filene med ekte skjermbilder fra iPhone (1206 × 2622) med samme filnavn. Sidene (norsk og engelsk) bruker de samme bildene; juster `alt`-tekstene i `index.html` og `en/index.html` om motivet avviker |
+| Plassholderbilder | `assets/skjermbilde-studio.png`, `-harmoni.png`, `-overgang.png`, `-kamera.png`, `-fargesyn.png` | Erstatt filene med ekte skjermbilder fra iPhone (1206 × 2622) med samme filnavn. Sidene (norsk og engelsk) bruker de samme bildene; juster `alt`-tekstene i `index.html` og `en/index.html` om motivet avviker |
 
 Når alt er fylt inn, skal dette ikke gi treff:
 
