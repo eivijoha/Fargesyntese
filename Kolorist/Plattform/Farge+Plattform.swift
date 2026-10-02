@@ -99,6 +99,37 @@ nonisolated extension PalettFarge {
         return try farge.macFargedata()
     }
 }
+
+/// Dra fra Kolorist på Mac. SwiftUIs `.draggable` (Transferable) leverer typene lat, og AppKit-mål som
+/// fargebrønnene i Keynote/Pages tok ikke imot fargen. Her legges alle typene ferdig inn i
+/// leverandøren – fargen først (som fargepanelet gjør), så Kolorists egne typer og hex-tekst.
+@MainActor
+func dragLeverandør(farge: Farge, palettFarge: PalettFarge?) -> NSItemProvider {
+    let leverandør = NSItemProvider()
+    var fargedata = try? farge.macFargedata()
+    // ICC-lagrede farger (CMYK m.m.) sendes i profilens fargerom med de lagrede verdiene.
+    if let pf = palettFarge, let rep = pf.representasjon, case .icc(let id, _) = rep.rom,
+       let rom = ProfilBibliotek.delt.profil(id: id)?.fargerom, rom.numberOfComponents == rep.verdier.count,
+       let nsRom = NSColorSpace(cgColorSpace: rom) {
+        var k = rep.verdier.map { CGFloat($0) } + [CGFloat(farge.alfa)]
+        if let d = NSColor(colorSpace: nsRom, components: &k, count: k.count).pasteboardPropertyList(forType: .color) as? Data {
+            fargedata = d
+        }
+    }
+    func registrer(_ type: String, _ data: Data?) {
+        guard let data else { return }
+        leverandør.registerDataRepresentation(forTypeIdentifier: type, visibility: .all) { ferdig in
+            ferdig(data, nil)
+            return nil
+        }
+    }
+    registrer(NSPasteboard.PasteboardType.color.rawValue, fargedata)
+    if let pf = palettFarge { registrer(UTType.koloristPalettfarge.identifier, try? JSONEncoder().encode(pf)) }
+    registrer(UTType.koloristFarge.identifier, try? JSONEncoder().encode(farge))
+    registrer(UTType.utf8PlainText.identifier, Data(farge.hex(medAlfa: farge.alfa < 1).utf8))
+    leverandør.suggestedName = palettFarge.flatMap { $0.navn.isEmpty ? nil : $0.navn } ?? farge.hex()
+    return leverandør
+}
 #endif
 
 nonisolated extension UTType {

@@ -46,10 +46,18 @@ struct FargeRute: View {
                         .presentationCompactAdaptation(.popover)
                 }
                 .accessibilityAction(named: "Valg for fargen") { visValg = true }
-        } else if let palettFarge {
-            medMeny.draggable(palettFarge) { FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56) }
         } else {
-            medMeny.draggable(farge)
+            #if os(macOS)
+            medMeny.onDrag { dragLeverandør(farge: farge, palettFarge: palettFarge) } preview: {
+                FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56)
+            }
+            #else
+            if let palettFarge {
+                medMeny.draggable(palettFarge) { FargeRute(farge: farge, visTekst: false, hjørne: 8).frame(width: 56, height: 56) }
+            } else {
+                medMeny.draggable(farge)
+            }
+            #endif
         }
     }
 
