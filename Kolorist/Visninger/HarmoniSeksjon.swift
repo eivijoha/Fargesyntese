@@ -33,6 +33,19 @@ struct HarmoniSeksjon: View {
         harmoni.farger(fra: grunnfarge, antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil, sirkel: sirkel, gamut: gamut)
     }
 
+    /// Harmoniens eksakte vinkler i sirkelen, i samme rekkefølge som fargene. Markørene tegnes her, ikke på
+    /// fargenes målte kulør: gamut-kartlegging og metning/lyshet flytter kuløren noen grader, så markørene
+    /// ellers ble ujevnt fordelt.
+    private var vinkler: [Double] {
+        let basis = sirkel.vinkel(for: grunnfarge)
+        return harmoni.forskyvninger(antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil).map { basis + $0 }
+    }
+
+    /// Plassen til grunnfargen blant fargene (i midten for analog).
+    private var grunnIndeks: Int? {
+        harmoni.forskyvninger(antall: antall, vinkel: harmoni.harVinkel ? vinkel : nil).firstIndex(of: 0)
+    }
+
     private var farger: [Farge] {
         råfarger.map { begrens(juster($0).gamutKartlagt(til: gamut)) }
     }
@@ -73,7 +86,7 @@ struct HarmoniSeksjon: View {
 
     #if SIRKELEKSPORT
     private func eksporterSirkel(svg: Bool) {
-        let tegning = Fargesirkeltegning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel,
+        let tegning = Fargesirkeltegning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, vinkler: vinkler, grunnIndeks: grunnIndeks,
                                          ringfarge: { ringfarge(vinkel: $0) },
                                          midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut))
         sirkeleksport = svg ? (Data(tegning.svg.utf8), .svg, "Fargesirkel.svg") : (tegning.pdf, .pdf, "Fargesirkel.pdf")
@@ -169,8 +182,8 @@ struct HarmoniSeksjon: View {
             }
 
             // Ringen og midten tegnes med gjeldende metning og lyshet, så gliderne under virker direkte på sirkelen.
-            Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, velg: velg,
-                               ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut),
+            Fargesirkelvisning(grunnfarge: grunnfarge, farger: farger, sirkel: sirkel, vinkler: vinkler, grunnIndeks: grunnIndeks,
+                               velg: velg, ringfarge: { ringfarge(vinkel: $0) }, midtfarge: juster(grunnfarge).gamutKartlagt(til: gamut),
                                vedMidttrykk: { velgerGrunnfarge = true })
                 .sheet(isPresented: $velgerGrunnfarge) {
                     LagretFargeArk(tittel: String(localized: "Grunnfarge")) { f in
@@ -229,6 +242,10 @@ struct Fargesirkelvisning: View {
     let grunnfarge: Farge
     let farger: [Farge]
     let sirkel: Fargesirkel
+    /// Markørenes vinkler, i samme rekkefølge som `farger`. Uten dem brukes fargenes målte kulør.
+    var vinkler: [Double]? = nil
+    /// Hvilken av fargene som er grunnfargen (større markør). Uten den sammenlignes med midtfargen.
+    var grunnIndeks: Int? = nil
     var velg: ((Farge) -> Void)? = nil
     /// Ringens farge ved en vinkel; standard er sirkelens egen ringfarge.
     var ringfarge: ((Double) -> Farge)? = nil
@@ -250,14 +267,16 @@ struct Fargesirkelvisning: View {
                     sti.addArc(center: senter, radius: r * 0.8, startAngle: .degrees(a0 - 90), endAngle: .degrees(a1 - 89.5), clockwise: false)
                     ctx.stroke(sti, with: .color((ringfarge?(a0) ?? sirkel.ringfarge(vinkel: a0, grunn: grunnfarge)).swiftUI), lineWidth: r * 0.3)
                 }
-                for f in farger.reversed() {
-                    let v = (sirkel.vinkel(for: f) - 90) * .pi / 180
+                for i in farger.indices.reversed() {
+                    let f = farger[i]
+                    let vinkel = vinkler.flatMap { i < $0.count ? $0[i] : nil } ?? sirkel.vinkel(for: f)
+                    let v = (vinkel - 90) * .pi / 180
                     let p = CGPoint(x: senter.x + cos(v) * r * 0.8, y: senter.y + sin(v) * r * 0.8)
                     var linje = Path()
                     linje.move(to: senter)
                     linje.addLine(to: p)
                     ctx.stroke(linje, with: .color(.primary.opacity(0.35)), lineWidth: 1)
-                    let erGrunn = f == (midtfarge ?? grunnfarge)
+                    let erGrunn = grunnIndeks.map { $0 == i } ?? (f == (midtfarge ?? grunnfarge))
                     let d = erGrunn ? r * 0.26 : r * 0.19
                     let rute = CGRect(x: p.x - d / 2, y: p.y - d / 2, width: d, height: d)
                     ctx.fill(Path(ellipseIn: rute), with: .color(f.swiftUI))

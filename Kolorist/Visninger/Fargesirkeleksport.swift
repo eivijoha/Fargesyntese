@@ -24,13 +24,17 @@ struct Fargesirkeltegning {
     private var r: Double { Self.side / 2 }
     private var senter: Double { Self.side / 2 }
 
-    init(grunnfarge: Farge, farger: [Farge], sirkel: Fargesirkel, ringfarge: ((Double) -> Farge)?, midtfarge: Farge?) {
+    init(grunnfarge: Farge, farger: [Farge], sirkel: Fargesirkel, vinkler: [Double]? = nil, grunnIndeks: Int? = nil,
+         ringfarge: ((Double) -> Farge)?, midtfarge: Farge?) {
         segmenter = (0..<Self.antallSegmenter).map { i in
             let a = Double(i) / Double(Self.antallSegmenter) * 360
             return (a, ringfarge?(a) ?? sirkel.ringfarge(vinkel: a, grunn: grunnfarge))
         }
         let midt = midtfarge ?? grunnfarge
-        markører = farger.reversed().map { Markør(vinkel: sirkel.vinkel(for: $0), farge: $0, erGrunn: $0 == midt) }
+        markører = farger.indices.reversed().map { i in
+            Markør(vinkel: vinkler.flatMap { i < $0.count ? $0[i] : nil } ?? sirkel.vinkel(for: farger[i]), farge: farger[i],
+                   erGrunn: grunnIndeks.map { $0 == i } ?? (farger[i] == midt))
+        }
         self.midt = midt
     }
 
