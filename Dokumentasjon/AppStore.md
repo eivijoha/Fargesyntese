@@ -215,30 +215,169 @@ color,palette,picker,OKLCH,CMYK,ICC,contrast,WCAG,gradient,eyedropper,harmony,co
 
 ---
 
-## 3b. Mac-versjonen (macOS)
+## 3b. Mac-versjonen (macOS) – norsk (bokmål)
 
-I App Store Connect har macOS sin egen versjonsside med egen beskrivelse, reklametekst, nøkkelord og
-skjermbilder. Navn og undertittel er felles (App-informasjon). iPad deler tekst med iPhone (iOS-versjonen).
+macOS har egen versjonsside i App Store Connect, med egen reklametekst, beskrivelse, nøkkelord og skjermbilder.
+Navn og undertittel er felles (App-informasjon), og iPad deler tekst med iPhone. Support- og markedsførings-URL
+er de samme som for iOS.
 
-Bruk samme tekster som over, med disse endringene i beskrivelsen:
+**Reklametekst (170)**
 
-| Norsk | Erstatt med |
-|---|---|
-| `Kolorist er et fargeverktøy for designere på iPhone, iPad og Mac.` | `Kolorist er et fargeverktøy for designere på Mac – og på iPhone og iPad med samme kjøp.` |
-| Hele «PLUKK FARGER»-blokken | `PLUKK FARGER` / `• Skjermpipette som plukker farger fra hele skjermen` / `• Bilder, med dominerende farger` / `• Kamera, også iPhone som kamera, med lysfelt på skjermen` |
-| `• Dra fargeprøver rett inn i andre programmer på Mac` | `• Dra fargeprøver rett inn i andre programmer` |
-| `Krever iOS 26, iPadOS 26 eller macOS 26.` | `Krever macOS 26. Apple Intelligence krever en Mac med Apple-chip.` |
+```
+Bygg paletter i OKLCH, CMYK med ICC-profiler, kontroller kontrast og fargesyn-problematikk, plukk farger fra hele skjermen og dra dem rett inn i annen design-programvare.
+```
 
-| Engelsk | Erstatt med |
-|---|---|
-| `Kolorist is a color tool for designers on iPhone, iPad and Mac.` | `Kolorist is a color tool for designers on Mac – and on iPhone and iPad with the same purchase.` |
-| Hele «PICK COLORS»-blokken | `PICK COLORS` / `• Screen eyedropper that picks colors from anywhere on screen` / `• Photos, with dominant colors` / `• Camera, including iPhone as a camera, with a light panel on screen` |
-| `• Drag swatches straight into other apps on Mac` | `• Drag swatches straight into other apps` |
-| `Requires iOS 26, iPadOS 26 or macOS 26.` | `Requires macOS 26. Apple Intelligence requires a Mac with Apple silicon.` |
+**Beskrivelse (4000)**
 
-Reklametekst og nøkkelord kan være de samme som for iOS.
+```
+Kolorist er et fargeverktøy for designere på Mac – og på iPhone og iPad med samme kjøp. Bygg paletter på tvers av fargerom, med perseptuelt jevne overganger, kontrastsjekk, simulering av fargesyn og ICC-profiler – og få fargene inn i programmene du allerede bruker.
 
-## 3c. Skjermbilder
+PLUKK OG DRA
+• Skjermpipette som plukker farger fra hvor som helst på skjermen
+• Dra fargeprøver rett inn i andre programmer – også i fargebrønner
+• Bilder, med dominerende farger
+• Kamera, også iPhone som kamera, med lysfelt på skjermen som lyskilde
+• Kopier aktiv farge som OKLCH med ⌥⌘C, og lim inn en farge med ⌥⌘V
+
+ALLE FARGEROMMENE
+• Rediger i OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB og CMYK
+• Display P3 side om side med sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK eller en hvilken som helst ICC-profil
+• Varsel når fargen er utenfor fargeområdet – farger kartlegges inn i fargerommet uten å klippes
+• Angi CMYK eller RGB direkte i en valgt ICC-profil
+• Rene CMYK-verdier: grått innslag flyttes til sort (UCR/GCR), med færrest mulig trykkfarger
+• Feltet for fargeverdi forstår hex, CSS-farger og vanlige beskrivelser som «dyp havblå»
+
+ICC-PROFILER
+• Bruk profilene som allerede er installert på Macen, ordnet etter mappe
+• Importer egne .icc- og .icm-profiler – de følger med til iPhone og iPad via iCloud Drive
+• Konverter mellom profiler og sammenlign gjengivelseshensiktene med ΔE2000
+
+OVERGANGER, TONER OG HARMONIER
+• Overganger i like perseptuelle steg i OKLab, med lysere og mørkere rader
+• CSS-gradient i oklab med sRGB-reserve – lineær, radiell eller konisk
+• Toneskalaer fra 50 til 950
+• Komplementær, split-komplementær, analog og jevn fordeling på fargesirkel i OKLCH, CIE LCH, HSL eller RYB, med metning og lyshet for hele harmonien
+
+TILGJENGELIGHET OG FARGESYN
+• WCAG 2.2-kontrast: AA og AAA, stor tekst og grafikk, og «Rett opp» som justerer fargen til den består
+• Kontrastmatrise for hele paletten
+• Se paletten med protan-, deutan- og tritanavvik og akromatopsi, med valgfri alvorlighetsgrad – og hvilke farger som blir vanskelige å skille
+• Kamera med fargesynsfilter: se omgivelsene slik de kan oppleves med hvert avvik
+
+APPLE INTELLIGENCE PÅ MACEN
+• Fra verdiord til palett – «trygg, varm, nordisk» – forankret i en kunnskapsbase med over hundre fargebegreper
+• Beskriv en farge og se den i Studio
+• Juster med fritekst, navngi farger og få en vurdering av paletten
+Alt kjøres lokalt. Uten Apple Intelligence lages palettene direkte fra kunnskapsbasen.
+
+KOPIER TIL OG EKSPORT
+• «Kopier til» designverktøy, layoutprogrammer, bilderedigering og presentasjonsprogrammer – i formatet hvert program tar imot, for enkeltfarger og hele paletter
+• Eksport til ASE- og ACO-fargeprøver, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI og hex
+• Fargene eksporteres i formatet de er lagret i – for eksempel som CMYK
+
+PALETTER OG ICLOUD
+Samle farger i paletter, lagre enkeltfarger og hele gradienter, og synkroniser med iPhone og iPad via din egen, private iCloud.
+
+SIRI OG SNARVEIER
+Lag palett fra verdiord, beskriv en farge, lag overgang, konverter farge og sjekk kontrast.
+
+ÅPENT OM METODENE
+Hver del av appen viser hvilke metoder den bygger på – OKLab, CSS Color 4, CIEDE2000, WCAG, simulering av fargesyn og ICC – med kilde og forklaring.
+
+PERSONVERN
+Ingen konto, ingen analyse, ingen reklame og ingen sporing. Utvikleren samler ikke inn data.
+
+Krever macOS 26. Apple Intelligence krever en Mac med Apple-chip.
+```
+
+**Nøkkelord (100)**
+
+```
+farge,palett,fargevelger,pipette,OKLCH,CMYK,ICC,kontrast,WCAG,overgang,gradient,harmoni,fargeblind
+```
+
+---
+
+## 3c. Mac-versjonen (macOS) – engelsk
+
+**Promotional text (170)**
+
+```
+Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and color vision challenges, pick colors anywhere on screen and drag them into other design software.
+```
+
+**Description (4000)**
+
+```
+Kolorist is a color tool for designers on Mac – and on iPhone and iPad with the same purchase. Build palettes across color spaces, with perceptually even gradients, contrast checks, color vision simulation and ICC profiles – and get your colors into the apps you already use.
+
+PICK AND DRAG
+• Screen eyedropper that picks colors from anywhere on screen
+• Drag swatches straight into other apps – including color wells
+• Photos, with dominant colors
+• Camera, including iPhone as a camera, with a light panel on screen as a light source
+• Copy the active color as OKLCH with ⌥⌘C, and paste a color with ⌥⌘V
+
+EVERY COLOR SPACE
+• Edit in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK
+• Display P3 side by side with sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK or any ICC profile
+• Out-of-gamut warnings – colors are mapped into the color space instead of clipped
+• Enter CMYK or RGB directly in a chosen ICC profile
+• Clean CMYK values: grey components move to black (UCR/GCR), with as few inks as possible
+• The color field understands hex, CSS colors and plain descriptions like “deep ocean blue”
+
+ICC PROFILES
+• Use the profiles already installed on your Mac, organized by folder
+• Import your own .icc and .icm profiles – they follow you to iPhone and iPad through iCloud Drive
+• Convert between profiles and compare rendering intents with ΔE2000
+
+GRADIENTS, TONES AND HARMONIES
+• Gradients in equal perceptual steps in OKLab, with lighter and darker rows
+• CSS gradients in oklab with an sRGB fallback – linear, radial or conic
+• Tone scales from 50 to 950
+• Complementary, split complementary, analogous and even distributions on an OKLCH, CIE LCH, HSL or RYB color wheel, with saturation and lightness for the whole harmony
+
+ACCESSIBILITY AND COLOR VISION
+• WCAG 2.2 contrast: AA and AAA, large text and graphics, and auto-fix that adjusts the color until it passes
+• Contrast matrix for the whole palette
+• See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colors become hard to tell apart
+• Camera with a color vision filter: see your surroundings as they may appear with each deficiency
+
+APPLE INTELLIGENCE ON YOUR MAC
+• From value words to a palette – “calm, warm, Nordic” – grounded in a knowledge base of more than a hundred color concepts
+• Describe a color and see it in Studio
+• Adjust with free text, name colors and get a critique of your palette
+Everything runs locally. Without Apple Intelligence, palettes are built straight from the knowledge base.
+
+COPY TO AND EXPORT
+• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colors and whole palettes
+• Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
+• Colors are exported in the format they were saved in – for example as CMYK
+
+PALETTES AND ICLOUD
+Collect colors in palettes, save single colors and whole gradients, and sync with iPhone and iPad through your own private iCloud.
+
+SIRI AND SHORTCUTS
+Create a palette from value words, describe a color, create a gradient, convert a color and check contrast.
+
+OPEN ABOUT METHODS
+Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, color vision simulation and ICC – with source and explanation.
+
+PRIVACY
+No account, no analytics, no ads and no tracking. The developer collects no data.
+
+Requires macOS 26. Apple Intelligence requires a Mac with Apple silicon.
+```
+
+**Keywords (100)**
+
+```
+color,palette,picker,eyedropper,OKLCH,CMYK,ICC,contrast,WCAG,gradient,harmony,colorblind,hex,swatch
+```
+
+---
+
+## 3d. Skjermbilder
 
 Alle i `Dokumentasjon/Skjermbilder/`, fem per plattform og språk: Studio, Harmoni, Overgang, Kontrast, Fargesyn.
 
@@ -308,7 +447,7 @@ Contact: eivind.johansen@ntnu.no
 - [ ] `ITSAppUsesNonExemptEncryption = NO` i Info.plist.
 - [ ] CloudKit-skjemaet er distribuert til produksjon (CloudKit Console › Deploy Schema Changes), ellers
       synkroniserer ikke TestFlight- og App Store-bygg.
-- [x] Skjermbilder for iPhone, iPad og Mac på norsk og engelsk (se 3c).
+- [x] Skjermbilder for iPhone, iPad og Mac på norsk og engelsk (se 3d).
       Samme bilder kan legges inn på nettsiden der det står «Skjermbilde kommer».
 - [ ] Appikon 1024 × 1024 følger med i bygget (Icon Composer-ikonet).
 - [ ] App Store-ID inn på nettsiden (Smart App Banner) og «Kommer snart» byttes med App Store-lenke etter godkjenning.
