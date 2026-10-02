@@ -1451,6 +1451,16 @@
         }
       }
     },
+    "Hex uten #, til fargevelgeren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hex without #, for the color picker"
+          }
+        }
+      }
+    },
     "Hex, CSS eller beskrivelse": {
       "localizations": {
         "en": {
@@ -1791,6 +1801,16 @@
         }
       }
     },
+    "Kolorist": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist"
+          }
+        }
+      }
+    },
     "Kontrast": {
       "localizations": {
         "en": {
@@ -1979,16 +1999,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copy as"
-          }
-        }
-      }
-    },
-    "Kopier som SVG (lim inn i Figma/Illustrator)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copy as SVG (paste into Figma/Illustrator)"
           }
         }
       }
@@ -3291,6 +3301,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turn off"
+          }
+        }
+      }
+    },
+    "Som Color-konstanter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As Color constants"
+          }
+        }
+      }
+    },
+    "Som former (SVG)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As shapes (SVG)"
+          }
+        }
+      }
+    },
+    "Som variabler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As variables"
+          }
+        }
+      }
+    },
+    "Som vektorformer (PDF), med fargerom og ICC": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As vector shapes (PDF), with color space and ICC"
           }
         }
       }

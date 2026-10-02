@@ -66,6 +66,7 @@ struct FargeRute: View {
                     Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(farge) }
                 }
                 KopierMeny(farge: farge)
+                KopierTilMeny(farger: [palettFarge ?? PalettFarge(navn: navn ?? "", farge: farge)], navn: navn ?? "")
                 if let ekstraMeny { ekstraMeny }
                 if let fjern {
                     Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)

@@ -371,6 +371,7 @@ struct PalettDetalj: View {
                         }
                         .contextMenu {
                             KopierMeny(farge: pf.farge)
+                            KopierTilMeny(farger: [pf], navn: pf.navn)
                             Button("Lag toneskala", systemImage: "square.3.layers.3d") { visSkala = pf }
                             Button("Fjern", systemImage: "trash", role: .destructive) {
                                 dokument.farger.removeAll { $0.id == pf.id }
@@ -417,7 +418,7 @@ struct PalettDetalj: View {
                     Divider()
                     Button("Kopier alle som hex") { Utklippstavle.kopier(dokument.palett) }
                     Button("Kopier alle som OKLCH") { Utklippstavle.kopier(dokument.palett, som: .okLCH) }
-                    Button("Kopier som SVG (lim inn i Figma/Illustrator)") { Utklippstavle.kopierSVG(dokument.palett) }
+                    KopierTilMeny(farger: dokument.farger, navn: dokument.navn)
                 }
             }
         }
