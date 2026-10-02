@@ -65,9 +65,13 @@ public struct ICCProfil: Sendable, Hashable, Identifiable {
     public static let sRGB = ICCProfil(navngitt: CGColorSpace.sRGB, visningsnavn: "sRGB IEC61966-2.1")
     public static let displayP3 = ICCProfil(navngitt: CGColorSpace.displayP3, visningsnavn: "Display P3")
     public static let adobeRGB = ICCProfil(navngitt: CGColorSpace.adobeRGB1998, visningsnavn: "Adobe RGB (1998)")
+    /// Rec. 2020 (ITU-R BT.2020): bredt fargeområde for video og HDR. Kodet med gamma 2,4 (BT.1886).
+    public static let rec2020 = ICCProfil(navngitt: CGColorSpace.itur_2020, visningsnavn: "Rec. 2020")
+    /// ProPhoto RGB (ROMM RGB, ISO 22028-2): svært bredt fargeområde for foto, hvitpunkt D50.
+    public static let proPhotoRGB = ICCProfil(navngitt: CGColorSpace.rommrgb, visningsnavn: "ProPhoto RGB")
     public static let genericCMYK = ICCProfil(navngitt: CGColorSpace.genericCMYK, visningsnavn: String(localized: "Generisk CMYK", bundle: .module))
 
-    public static let innebygde: [ICCProfil] = [.sRGB, .displayP3, .adobeRGB, .genericCMYK]
+    public static let innebygde: [ICCProfil] = [.sRGB, .displayP3, .adobeRGB, .rec2020, .proPhotoRGB, .genericCMYK]
 
     /// Kortnavn for komponentene, i profilens rekkefølge.
     public var komponentnavn: [String] {

@@ -30,6 +30,11 @@ struct FargetolkTests {
         #expect(lik("oklch(62.8% 0.2577 29.23)", "#FF0000"))
         #expect(lik("color(srgb 1 0 0)", "#FF0000"))
         #expect(lik("color(display-p3 0.9176 0.2003 0.1386)", "#FF0000"))
+        // sRGB-rød i de brede RGB-rommene. Rec. 2020 er kodet med gamma 2,4 (BT.1886), slik
+        // ColorSync og gjeldende CSS Color 4 gjør – ikke den eldre kamerakurven fra BT.2020.
+        #expect(lik("color(a98-rgb 0.8586 0 0)", "#FF0000"))
+        #expect(lik("color(rec2020 0.8235 0.3284 0.1804)", "#FF0000"))
+        #expect(lik("color(prophoto-rgb 0.7023 0.2757 0.1036)", "#FF0000"))
         #expect(lik("rebeccapurple", "#663399"))
         #expect(lik("--merkevare: oklch(0.593 0.156 253.9);", "#2F7FD8"))
         #expect(Fargetolk.tolk("oklch(banan)") == nil)

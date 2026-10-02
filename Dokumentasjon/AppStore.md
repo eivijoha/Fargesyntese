@@ -68,7 +68,7 @@ Kolorist er et fargeverktøy for designere på iPhone, iPad og Mac. Bygg palette
 
 ALLE FARGEROMMENE
 • Rediger i OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB og CMYK
-• Display P3 side om side med sRGB, Adobe RGB, CMYK eller en hvilken som helst ICC-profil
+• Display P3 side om side med sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK eller en hvilken som helst ICC-profil
 • Varsel når fargen er utenfor fargeområdet – farger kartlegges inn i fargerommet uten å klippes
 • Angi CMYK eller RGB direkte i en valgt ICC-profil
 • Rene CMYK-verdier: grått innslag flyttes til sort (UCR/GCR), med færrest mulig trykkfarger
@@ -153,7 +153,7 @@ Kolorist is a color tool for designers on iPhone, iPad and Mac. Build palettes a
 
 EVERY COLOR SPACE
 • Edit in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK
-• Display P3 side by side with sRGB, Adobe RGB, CMYK or any ICC profile
+• Display P3 side by side with sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK or any ICC profile
 • Out-of-gamut warnings – colors are mapped into the color space instead of clipped
 • Enter CMYK or RGB directly in a chosen ICC profile
 • Clean CMYK values: grey components move to black (UCR/GCR), with as few inks as possible
@@ -247,7 +247,7 @@ APPLE INTELLIGENCE
 Value-word palettes, "Describe a color", free-text adjustments, color naming and palette critique use the on-device Foundation Models framework. On devices without Apple Intelligence, or when it is turned off, palettes are generated from a built-in knowledge base instead, and the app explains what is unavailable. No text leaves the device.
 
 ICC PROFILES
-No ICC profiles are bundled. The app uses the system's built-in color spaces (sRGB, Display P3, Adobe RGB, Generic CMYK) and profiles the user imports ("Import profile …" in Studio). Imported profiles are stored in the app's iCloud Drive folder.
+No ICC profiles are bundled. The app uses the system's built-in color spaces (sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB, Generic CMYK) and profiles the user imports ("Import profile …" in Studio). Imported profiles are stored in the app's iCloud Drive folder.
 
 SIRI AND SHORTCUTS
 App Shortcuts: "Describe a color in Kolorist", "Create a palette in Kolorist", plus actions to create a gradient, convert a color and check contrast.

@@ -607,7 +607,7 @@ struct VisOgsåMeny: View {
     @State private var importerer = false
     @State private var importfeil: String?
 
-    /// Standardrommene: sRGB, Display P3, Adobe RGB og Generic CMYK.
+    /// Standardrommene: sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB og Generic CMYK.
     private var standard: [ICCProfil] { ICCProfil.innebygde }
     private var valgtNavn: String { bibliotek.profil(id: valgtID).map(bibliotek.visningsnavn) ?? ICCProfil.sRGB.navn }
 

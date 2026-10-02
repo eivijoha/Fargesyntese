@@ -157,6 +157,11 @@ public enum Fargetolk {
             case "xyz-d50":
                 let d65 = Matriser.d50TilD65 * Vektor3(v[0], v[1], v[2])
                 return Farge(xyz: XYZ(x: d65.x, y: d65.y, z: d65.z), alfa: alfa)
+            #if canImport(CoreGraphics)
+            case "a98-rgb": return Farge(komponenter: v, i: .adobeRGB, alfa: alfa)
+            case "rec2020": return Farge(komponenter: v, i: .rec2020, alfa: alfa)
+            case "prophoto-rgb": return Farge(komponenter: v, i: .proPhotoRGB, alfa: alfa)
+            #endif
             default: return nil
             }
         default:
