@@ -18,6 +18,10 @@ struct KoloristApp: App {
             InnholdsVisning()
                 .environment(arbeidsbenk)
                 .environment(profiler)
+                #if DEBUG
+                .focusEffectDisabled(Skjermbildemodus.på)
+                .task { Skjermbildemodus.forbered(Lagring.container.mainContext) }
+                #endif
         }
         .modelContainer(Lagring.container)
         #if os(macOS)
@@ -85,7 +89,7 @@ final class Arbeidsbenk {
         return farge.begrenset(til: profil)
     }
     var modell: Fargemodell = .okLCH
-    var valgtFane: Fane = .studio
+    var valgtFane: Fane = Arbeidsbenk.startfane
     /// Lysere/mørkere-innstillinger, delt mellom Studio og Overgang og husket mellom oppstarter.
     var lyshetstrinn: Lyshetstrinn = Arbeidsbenk.lastTrinn() {
         didSet { try? UserDefaults.standard.set(JSONEncoder().encode(lyshetstrinn), forKey: "lyshetstrinn") }
@@ -96,7 +100,16 @@ final class Arbeidsbenk {
             ?? Lyshetstrinn()
     }
 
-    enum Fane: Hashable { case studio, paletter, overgang, utplukk, vurdering }
+    enum Fane: String, Hashable { case studio, paletter, overgang, utplukk, vurdering }
+
+    /// Debug: `-startfane overgang` åpner appen på en bestemt fane (brukes til skjermbilder).
+    private static var startfane: Fane {
+        #if DEBUG
+        UserDefaults.standard.string(forKey: "startfane").flatMap(Fane.init(rawValue:)) ?? .studio
+        #else
+        .studio
+        #endif
+    }
 
     /// Én arbeidsbenk for hele appen, så App Intents («Beskriv en farge») kan vise resultatet.
     static let delt = Arbeidsbenk()

@@ -58,7 +58,7 @@ Fargepaletter for designere
 **Reklametekst (170)**
 
 ```
-Bygg paletter i OKLCH, CMYK og ICC-profiler, sjekk kontrast og fargesyn, og kopier fargene rett inn i Figma, Adobe-programmene, Keynote og Pages.
+Bygg paletter i OKLCH, CMYK med ICC-profiler, kontroller kontrast og fargesyn-problematikk, og kopier fargene rett inn i annen design-programvare.
 ```
 
 **Beskrivelse (4000)**
@@ -102,10 +102,10 @@ APPLE INTELLIGENCE PÅ ENHETEN
 Alt kjøres på enheten. Uten Apple Intelligence lages palettene direkte fra kunnskapsbasen.
 
 KOPIER TIL OG EKSPORT
-• «Kopier til» Figma, Illustrator, InDesign, Photoshop, Sketch, Affinity, Pages, Keynote og Numbers – i formatet hvert program tar imot, for enkeltfarger og hele paletter
+• «Kopier til» designverktøy, layoutprogrammer, bilderedigering og presentasjonsprogrammer – i formatet hvert program tar imot, for enkeltfarger og hele paletter
 • Dra fargeprøver rett inn i andre programmer på Mac
-• Eksport til Adobe ASE, Photoshop ACO, Figma-variabler (DTCG), Tokens Studio, SVG, CSS, Design Tokens, GIMP GPL, SwiftUI og hex
-• Fargene eksporteres i formatet de er lagret i – for eksempel CMYK til Adobe
+• Eksport til ASE- og ACO-fargeprøver, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI og hex
+• Fargene eksporteres i formatet de er lagret i – for eksempel som CMYK
 
 PALETTER OG ICLOUD
 Samle farger i paletter, lagre enkeltfarger og hele gradienter, og synkroniser via din egen, private iCloud.
@@ -143,7 +143,7 @@ Color palettes for designers
 **Promotional text (170)**
 
 ```
-Build palettes in OKLCH, CMYK and ICC profiles, check contrast and color vision, and copy colors straight into Figma, Adobe apps, Keynote and Pages.
+Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and color vision challenges, and copy colors straight into other design software packages.
 ```
 
 **Description (4000)**
@@ -187,10 +187,10 @@ APPLE INTELLIGENCE ON DEVICE
 Everything runs on device. Without Apple Intelligence, palettes are built straight from the knowledge base.
 
 COPY TO AND EXPORT
-• “Copy to” Figma, Illustrator, InDesign, Photoshop, Sketch, Affinity, Pages, Keynote and Numbers – in the format each app accepts, for single colors and whole palettes
+• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colors and whole palettes
 • Drag swatches straight into other apps on Mac
-• Export to Adobe ASE, Photoshop ACO, Figma variables (DTCG), Tokens Studio, SVG, CSS, Design Tokens, GIMP GPL, SwiftUI and hex
-• Colors are exported in the format they were saved in – for example CMYK to Adobe
+• Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
+• Colors are exported in the format they were saved in – for example as CMYK
 
 PALETTES AND ICLOUD
 Collect colors in palettes, save single colors and whole gradients, and sync through your own private iCloud.
@@ -214,6 +214,43 @@ color,palette,picker,OKLCH,CMYK,ICC,contrast,WCAG,gradient,eyedropper,harmony,co
 ```
 
 ---
+
+## 3b. Mac-versjonen (macOS)
+
+I App Store Connect har macOS sin egen versjonsside med egen beskrivelse, reklametekst, nøkkelord og
+skjermbilder. Navn og undertittel er felles (App-informasjon). iPad deler tekst med iPhone (iOS-versjonen).
+
+Bruk samme tekster som over, med disse endringene i beskrivelsen:
+
+| Norsk | Erstatt med |
+|---|---|
+| `Kolorist er et fargeverktøy for designere på iPhone, iPad og Mac.` | `Kolorist er et fargeverktøy for designere på Mac – og på iPhone og iPad med samme kjøp.` |
+| Hele «PLUKK FARGER»-blokken | `PLUKK FARGER` / `• Skjermpipette som plukker farger fra hele skjermen` / `• Bilder, med dominerende farger` / `• Kamera, også iPhone som kamera, med lysfelt på skjermen` |
+| `• Dra fargeprøver rett inn i andre programmer på Mac` | `• Dra fargeprøver rett inn i andre programmer` |
+| `Krever iOS 26, iPadOS 26 eller macOS 26.` | `Krever macOS 26. Apple Intelligence krever en Mac med Apple-chip.` |
+
+| Engelsk | Erstatt med |
+|---|---|
+| `Kolorist is a color tool for designers on iPhone, iPad and Mac.` | `Kolorist is a color tool for designers on Mac – and on iPhone and iPad with the same purchase.` |
+| Hele «PICK COLORS»-blokken | `PICK COLORS` / `• Screen eyedropper that picks colors from anywhere on screen` / `• Photos, with dominant colors` / `• Camera, including iPhone as a camera, with a light panel on screen` |
+| `• Drag swatches straight into other apps on Mac` | `• Drag swatches straight into other apps` |
+| `Requires iOS 26, iPadOS 26 or macOS 26.` | `Requires macOS 26. Apple Intelligence requires a Mac with Apple silicon.` |
+
+Reklametekst og nøkkelord kan være de samme som for iOS.
+
+## 3c. Skjermbilder
+
+Alle i `Dokumentasjon/Skjermbilder/`, fem per plattform og språk: Studio, Harmoni, Overgang, Kontrast, Fargesyn.
+
+| Mappe | Plattform | Størrelse |
+|---|---|---|
+| `nb/`, `en/` | iPhone 6,5" | 1284 × 2778 |
+| `ipad-nb/`, `ipad-en/` | iPad 13" | 2064 × 2752 |
+| `mac-nb/`, `mac-en/` | Mac | 2880 × 1800 |
+
+iPhone og iPad er tatt i simulatorene «Skjermbilder 6,5» (iPhone 14 Plus) og «Skjermbilder iPad 13» (iPad Pro 13"),
+begge iOS 26.5. Mac-bildene er vinduet alene (1440 × 900 pt), tatt fra et Debug-bygg med
+`-skjermbilde YES -startfane <fane>` (se `Kolorist/App/Skjermbildemodus.swift`).
 
 ## 4. App Review Information
 
@@ -271,9 +308,7 @@ Contact: eivind.johansen@ntnu.no
 - [ ] `ITSAppUsesNonExemptEncryption = NO` i Info.plist.
 - [ ] CloudKit-skjemaet er distribuert til produksjon (CloudKit Console › Deploy Schema Changes), ellers
       synkroniserer ikke TestFlight- og App Store-bygg.
-- [x] Skjermbilder iPhone 6,5" (1284 × 2778): `Dokumentasjon/Skjermbilder/nb/` og `en/` – Studio, Harmoni, Overgang,
-      Kontrast, Fargesyn. Tatt i simulatoren «Skjermbilder 6,5» (iPhone 14 Plus, iOS 26.5).
-- [ ] Skjermbilder iPad 13" (2064 × 2752) og Mac (2880 × 1800 e.l.).
+- [x] Skjermbilder for iPhone, iPad og Mac på norsk og engelsk (se 3c).
       Samme bilder kan legges inn på nettsiden der det står «Skjermbilde kommer».
 - [ ] Appikon 1024 × 1024 følger med i bygget (Icon Composer-ikonet).
 - [ ] App Store-ID inn på nettsiden (Smart App Banner) og «Kommer snart» byttes med App Store-lenke etter godkjenning.
