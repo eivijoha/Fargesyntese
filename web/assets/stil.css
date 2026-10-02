@@ -640,11 +640,33 @@ main {
 
 .faq summary {
   cursor: pointer;
-  padding: 0.85rem 1rem;
+  padding: 0.85rem 1.1rem;
   font-weight: 600;
-  list-style-position: outside;
-  margin-left: 1rem;
   min-height: 44px;
+  /* Egen pil inne i boksen, med luft til kanten (standardmarkøren havnet helt ute ved kanten). */
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::before {
+  content: "▸";
+  flex: none;
+  color: var(--tekst-dempet);
+  transition: transform 0.15s ease;
+}
+
+.faq details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq summary::before { transition: none; }
 }
 
 .faq details[open] summary {
@@ -652,7 +674,7 @@ main {
 }
 
 .faq .svar {
-  padding: 0.85rem 1rem 0.25rem;
+  padding: 0.85rem 1.1rem 0.25rem;
 }
 
 /* ---------- Tabeller ---------- */
