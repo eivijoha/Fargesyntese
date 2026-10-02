@@ -1,110 +1,109 @@
 {
-  "sourceLanguage": "nb",
-  "strings": {
-    "CFBundleDisplayName": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist"
+  "sourceLanguage" : "nb",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist"
           }
         },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist"
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist"
           }
         }
       }
     },
-    "CFBundleName": {
-      "comment": "Kort appnavn (menylinjen på Mac).",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist"
+    "CFBundleName" : {
+      "comment" : "Kort appnavn (menylinjen på Mac).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist"
           }
         },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist"
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist"
           }
         }
       }
     },
-    "Kolorist-farge": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist color"
+    "Kolorist-farge" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist colour"
           }
         },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist-farge"
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist-farge"
           }
         }
       }
     },
-    "Kolorist-palettfarge": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist palette color"
+    "Kolorist-palettfarge" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist palette colour"
           }
         },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist-palettfarge"
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist-palettfarge"
           }
         }
       }
     },
-    "NSCameraUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist uses the camera to pick colors from your surroundings and to show them as they look with color vision deficiencies."
+    "NSCameraUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist uses the camera to pick colours from your surroundings and to show them as they look with colour vision deficiencies."
           }
         },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine og til å vise dem slik de ser ut med fargesynsavvik."
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolorist bruker kameraet til å plukke farger fra omgivelsene dine og til å vise dem slik de ser ut med fargesynsavvik."
           }
         }
       }
     },
-    "NSHumanReadableCopyright": {
-      "comment": "Copyright (human-readable)",
-      "extractionState": "extracted_with_value",
-      "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "© 2026 Eivind Arnstein Johansen"
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2026 Eivind Arnstein Johansen"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "© 2026 Eivind Arnstein Johansen"
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2026 Eivind Arnstein Johansen"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

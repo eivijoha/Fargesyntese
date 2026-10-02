@@ -14,7 +14,7 @@ public enum Språk {
     static var lokale: Locale { erNorsk ? Locale(identifier: "nb_NO") : Locale(identifier: "en_US") }
 
     /// Linje som legges til i KI-instruksjonene.
-    static var svarinstruks: String { erNorsk ? "Svar alltid på norsk bokmål." : "Always answer in English." }
+    static var svarinstruks: String { erNorsk ? "Svar alltid på norsk bokmål." : "Always answer in British English (colour, grey)." }
 }
 
 /// Om Apple Intelligence (Foundation Models) kan brukes nå, med forklaring til brukeren.

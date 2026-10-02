@@ -10,7 +10,7 @@ i tillegg engelsk. Tegngrensene står i parentes, og alle tekstene er innenfor.
 
 | Felt | Verdi |
 |---|---|
-| Navn (30) | **Kolorist** – er navnet opptatt: «Kolorist – fargepaletter» / «Kolorist: Color Palettes» |
+| Navn (30) | **Kolorist** – er navnet opptatt: «Kolorist – fargepaletter» / «Kolorist: Colour Palettes» |
 | Bundle-ID | `no.engenett.Kolorist` |
 | SKU | `kolorist-2026` (bare til eget bruk) |
 | Primærkategori | Grafikk og design (Graphics & Design) |
@@ -137,27 +137,27 @@ farge,palett,fargekart,OKLCH,CMYK,ICC,kontrast,WCAG,overgang,gradient,pipette,ha
 **Subtitle (30)**
 
 ```
-Color palettes for designers
+Colour palettes for designers
 ```
 
 **Promotional text (170)**
 
 ```
-Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and color vision challenges, and copy colors straight into other design software packages.
+Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and colour vision challenges, and copy colours straight into other design software packages.
 ```
 
 **Description (4000)**
 
 ```
-Kolorist is a color tool for designers on iPhone, iPad and Mac. Build palettes across color spaces, with perceptually even gradients, contrast checks, color vision simulation and ICC profiles – and get your colors into the tools you already use.
+Kolorist is a colour tool for designers on iPhone, iPad and Mac. Build palettes across colour spaces, with perceptually even gradients, contrast checks, colour vision simulation and ICC profiles – and get your colours into the tools you already use.
 
 EVERY COLOR SPACE
 • Edit in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK
 • Display P3 side by side with sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK or any ICC profile
-• Out-of-gamut warnings – colors are mapped into the color space instead of clipped
+• Out-of-gamut warnings – colours are mapped into the colour space instead of clipped
 • Enter CMYK or RGB directly in a chosen ICC profile
 • Clean CMYK values: grey components move to black (UCR/GCR), with as few inks as possible
-• The color field understands hex, CSS colors and plain descriptions like “deep ocean blue”
+• The colour field understands hex, CSS colours and plain descriptions like “deep ocean blue”
 
 ICC PROFILES
 • Import your own .icc and .icm profiles – they follow you to your other devices through iCloud Drive
@@ -167,39 +167,39 @@ GRADIENTS, TONES AND HARMONIES
 • Gradients in equal perceptual steps in OKLab, with lighter and darker rows
 • CSS gradients in oklab with an sRGB fallback – linear, radial or conic
 • Tone scales from 50 to 950
-• Complementary, split complementary, analogous and even distributions on an OKLCH, CIE LCH, HSL or RYB color wheel, with saturation and lightness for the whole harmony
+• Complementary, split complementary, analogous and even distributions on an OKLCH, CIE LCH, HSL or RYB colour wheel, with saturation and lightness for the whole harmony
 
 ACCESSIBILITY AND COLOR VISION
-• WCAG 2.2 contrast: AA and AAA, large text and graphics, and auto-fix that adjusts the color until it passes
+• WCAG 2.2 contrast: AA and AAA, large text and graphics, and auto-fix that adjusts the colour until it passes
 • Contrast matrix for the whole palette
-• See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colors become hard to tell apart
-• Camera with a color vision filter: see your surroundings as they may appear with each deficiency
+• See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colours become hard to tell apart
+• Camera with a colour vision filter: see your surroundings as they may appear with each deficiency
 
 PICK COLORS
 • Camera with zoom, macro focus and torch
-• Photos, with dominant colors
+• Photos, with dominant colours
 • Screen eyedropper on Mac
 
 APPLE INTELLIGENCE ON DEVICE
-• From value words to a palette – “calm, warm, Nordic” – grounded in a knowledge base of more than a hundred color concepts
-• Describe a color and see it in Studio
-• Adjust with free text, name colors and get a critique of your palette
+• From value words to a palette – “calm, warm, Nordic” – grounded in a knowledge base of more than a hundred colour concepts
+• Describe a colour and see it in Studio
+• Adjust with free text, name colours and get a critique of your palette
 Everything runs on device. Without Apple Intelligence, palettes are built straight from the knowledge base.
 
 COPY TO AND EXPORT
-• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colors and whole palettes
+• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colours and whole palettes
 • Drag swatches straight into other apps on Mac
 • Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
-• Colors are exported in the format they were saved in – for example as CMYK
+• Colours are exported in the format they were saved in – for example as CMYK
 
 PALETTES AND ICLOUD
-Collect colors in palettes, save single colors and whole gradients, and sync through your own private iCloud.
+Collect colours in palettes, save single colours and whole gradients, and sync through your own private iCloud.
 
 SIRI AND SHORTCUTS
-Create a palette from value words, describe a color, create a gradient, convert a color and check contrast.
+Create a palette from value words, describe a colour, create a gradient, convert a colour and check contrast.
 
 OPEN ABOUT METHODS
-Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, color vision simulation and ICC – with source and explanation.
+Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, colour vision simulation and ICC – with source and explanation.
 
 PRIVACY
 No account, no analytics, no ads and no tracking. The developer collects no data.
@@ -210,7 +210,7 @@ Requires iOS 26, iPadOS 26 or macOS 26. Apple Intelligence requires a supported 
 **Keywords (100)**
 
 ```
-color,palette,picker,OKLCH,CMYK,ICC,contrast,WCAG,gradient,eyedropper,harmony,colorblind,hex,swatch
+colour,color,palette,picker,OKLCH,CMYK,ICC,contrast,WCAG,gradient,eyedropper,harmony,colorblind,hex
 ```
 
 ---
@@ -303,28 +303,28 @@ farge,palett,fargevelger,pipette,OKLCH,CMYK,ICC,kontrast,WCAG,overgang,gradient,
 **Promotional text (170)**
 
 ```
-Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and color vision challenges, pick colors anywhere on screen and drag them into other design software.
+Build palettes in OKLCH, CMYK with ICC profiles, check for contrast and colour vision challenges, pick colours anywhere on screen and drag them into other design apps.
 ```
 
 **Description (4000)**
 
 ```
-Kolorist is a color tool for designers on Mac – and on iPhone and iPad with the same purchase. Build palettes across color spaces, with perceptually even gradients, contrast checks, color vision simulation and ICC profiles – and get your colors into the apps you already use.
+Kolorist is a colour tool for designers on Mac – and on iPhone and iPad with the same purchase. Build palettes across colour spaces, with perceptually even gradients, contrast checks, colour vision simulation and ICC profiles – and get your colours into the apps you already use.
 
 PICK AND DRAG
-• Screen eyedropper that picks colors from anywhere on screen
-• Drag swatches straight into other apps – including color wells
-• Photos, with dominant colors
+• Screen eyedropper that picks colours from anywhere on screen
+• Drag swatches straight into other apps – including colour wells
+• Photos, with dominant colours
 • Camera, including iPhone as a camera, with a light panel on screen as a light source
-• Copy the active color as OKLCH with ⌥⌘C, and paste a color with ⌥⌘V
+• Copy the active colour as OKLCH with ⌥⌘C, and paste a colour with ⌥⌘V
 
 EVERY COLOR SPACE
 • Edit in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK
 • Display P3 side by side with sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK or any ICC profile
-• Out-of-gamut warnings – colors are mapped into the color space instead of clipped
+• Out-of-gamut warnings – colours are mapped into the colour space instead of clipped
 • Enter CMYK or RGB directly in a chosen ICC profile
 • Clean CMYK values: grey components move to black (UCR/GCR), with as few inks as possible
-• The color field understands hex, CSS colors and plain descriptions like “deep ocean blue”
+• The colour field understands hex, CSS colours and plain descriptions like “deep ocean blue”
 
 ICC PROFILES
 • Use the profiles already installed on your Mac, organized by folder
@@ -335,33 +335,33 @@ GRADIENTS, TONES AND HARMONIES
 • Gradients in equal perceptual steps in OKLab, with lighter and darker rows
 • CSS gradients in oklab with an sRGB fallback – linear, radial or conic
 • Tone scales from 50 to 950
-• Complementary, split complementary, analogous and even distributions on an OKLCH, CIE LCH, HSL or RYB color wheel, with saturation and lightness for the whole harmony
+• Complementary, split complementary, analogous and even distributions on an OKLCH, CIE LCH, HSL or RYB colour wheel, with saturation and lightness for the whole harmony
 
 ACCESSIBILITY AND COLOR VISION
-• WCAG 2.2 contrast: AA and AAA, large text and graphics, and auto-fix that adjusts the color until it passes
+• WCAG 2.2 contrast: AA and AAA, large text and graphics, and auto-fix that adjusts the colour until it passes
 • Contrast matrix for the whole palette
-• See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colors become hard to tell apart
-• Camera with a color vision filter: see your surroundings as they may appear with each deficiency
+• See the palette with protan, deutan and tritan deficiencies and achromatopsia, at any severity – and which colours become hard to tell apart
+• Camera with a colour vision filter: see your surroundings as they may appear with each deficiency
 
 APPLE INTELLIGENCE ON YOUR MAC
-• From value words to a palette – “calm, warm, Nordic” – grounded in a knowledge base of more than a hundred color concepts
-• Describe a color and see it in Studio
-• Adjust with free text, name colors and get a critique of your palette
+• From value words to a palette – “calm, warm, Nordic” – grounded in a knowledge base of more than a hundred colour concepts
+• Describe a colour and see it in Studio
+• Adjust with free text, name colours and get a critique of your palette
 Everything runs locally. Without Apple Intelligence, palettes are built straight from the knowledge base.
 
 COPY TO AND EXPORT
-• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colors and whole palettes
+• “Copy to” design tools, layout apps, photo editors and presentation apps – in the format each app accepts, for single colours and whole palettes
 • Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
-• Colors are exported in the format they were saved in – for example as CMYK
+• Colours are exported in the format they were saved in – for example as CMYK
 
 PALETTES AND ICLOUD
-Collect colors in palettes, save single colors and whole gradients, and sync with iPhone and iPad through your own private iCloud.
+Collect colours in palettes, save single colours and whole gradients, and sync with iPhone and iPad through your own private iCloud.
 
 SIRI AND SHORTCUTS
-Create a palette from value words, describe a color, create a gradient, convert a color and check contrast.
+Create a palette from value words, describe a colour, create a gradient, convert a colour and check contrast.
 
 OPEN ABOUT METHODS
-Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, color vision simulation and ICC – with source and explanation.
+Every part of the app shows the methods it builds on – OKLab, CSS Color 4, CIEDE2000, WCAG, colour vision simulation and ICC – with source and explanation.
 
 PRIVACY
 No account, no analytics, no ads and no tracking. The developer collects no data.
@@ -372,7 +372,7 @@ Requires macOS 26. Apple Intelligence requires a Mac with Apple silicon.
 **Keywords (100)**
 
 ```
-color,palette,picker,eyedropper,OKLCH,CMYK,ICC,contrast,WCAG,gradient,harmony,colorblind,hex,swatch
+colour,color,palette,picker,eyedropper,OKLCH,CMYK,ICC,contrast,WCAG,gradient,harmony,colorblind,hex
 ```
 
 ---
@@ -404,32 +404,32 @@ begge iOS 26.5. Mac-bildene er vinduet alene (1440 × 900 pt), tatt fra et Debug
 **Notes (4000)** – på engelsk, som App Review leser raskest:
 
 ```
-Thank you for reviewing Kolorist, a color palette tool for designers on iPhone, iPad and Mac (one universal purchase).
+Thank you for reviewing Kolorist, a colour palette tool for designers on iPhone, iPad and Mac (one universal purchase).
 
 NO ACCOUNT NEEDED
 All features work without signing in. There is no account, no server of our own, no analytics, no ads and no in-app purchases. Palettes sync through the user's private iCloud database (CloudKit) when the device is signed in to iCloud; without iCloud everything is stored on device.
 
 WHERE TO FIND THE MAIN FEATURES
-• Studio (first tab): edit the active color in OKLCH, Lab, RGB, CMYK etc. "Also show" picks a second color space or an ICC profile shown side by side. Below: harmonies, tones and ICC conversion.
-• Palettes: tap + to create a palette, either empty or "New palette from value words (AI)". Touch and hold a color or palette for "Copy to" (Figma, Adobe apps, Pages/Keynote/Numbers, CSS, SwiftUI) and other actions.
-• Gradient: perceptual gradients between two colors, with lighter/darker rows and CSS export.
+• Studio (first tab): edit the active colour in OKLCH, Lab, RGB, CMYK etc. "Also show" picks a second colour space or an ICC profile shown side by side. Below: harmonies, tones and ICC conversion.
+• Palettes: tap + to create a palette, either empty or "New palette from value words (AI)". Touch and hold a colour or palette for "Copy to" (Figma, Adobe apps, Pages/Keynote/Numbers, CSS, SwiftUI) and other actions.
+• Gradient: perceptual gradients between two colours, with lighter/darker rows and CSS export.
 • Pick: camera, photos and (on Mac) a screen eyedropper.
-• Assess: WCAG contrast, color comparison (ΔE2000), palette critique and Color vision (simulation of color vision deficiencies). The camera button next to each deficiency opens the camera with that filter.
+• Assess: WCAG contrast, colour comparison (ΔE2000), palette critique and Colour vision (simulation of colour vision deficiencies). The camera button next to each deficiency opens the camera with that filter.
 
 CAMERA
-The camera is used live, on device only, to pick colors and to show the color vision filter. No photos or video are stored or sent. If no camera is available (for example on a Mac without one), picking from photos and the screen eyedropper still work.
+The camera is used live, on device only, to pick colours and to show the colour vision filter. No photos or video are stored or sent. If no camera is available (for example on a Mac without one), picking from photos and the screen eyedropper still work.
 
 APPLE INTELLIGENCE
-Value-word palettes, "Describe a color", free-text adjustments, color naming and palette critique use the on-device Foundation Models framework. On devices without Apple Intelligence, or when it is turned off, palettes are generated from a built-in knowledge base instead, and the app explains what is unavailable. No text leaves the device.
+Value-word palettes, "Describe a colour", free-text adjustments, colour naming and palette critique use the on-device Foundation Models framework. On devices without Apple Intelligence, or when it is turned off, palettes are generated from a built-in knowledge base instead, and the app explains what is unavailable. No text leaves the device.
 
 ICC PROFILES
-No ICC profiles are bundled. The app uses the system's built-in color spaces (sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB, Generic CMYK) and profiles the user imports ("Import profile …" in Studio). Imported profiles are stored in the app's iCloud Drive folder.
+No ICC profiles are bundled. The app uses the system's built-in colour spaces (sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB, Generic CMYK) and profiles the user imports ("Import profile …" in Studio). Imported profiles are stored in the app's iCloud Drive folder.
 
 SIRI AND SHORTCUTS
-App Shortcuts: "Describe a color in Kolorist", "Create a palette in Kolorist", plus actions to create a gradient, convert a color and check contrast.
+App Shortcuts: "Describe a colour in Kolorist", "Create a palette in Kolorist", plus actions to create a gradient, convert a colour and check contrast.
 
 MAC
-The screen eyedropper uses the system color sampler (NSColorSampler) and does not require screen recording permission. Swatches can be dragged into other apps.
+The screen eyedropper uses the system colour sampler (NSColorSampler) and does not require screen recording permission. Swatches can be dragged into other apps.
 
 Methods and sources used by the app are listed in the app (bottom of Palettes › Methods and sources) and at https://kolorist.no/en/methods.html.
 

@@ -16,7 +16,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "“%@” is not a valid color. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
+            "value": "“%@” is not a valid colour. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
           }
         }
       }
@@ -88,7 +88,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ · clean colors"
+            "value": "%@ · clean colours"
           }
         }
       }
@@ -124,7 +124,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ color wheel with %lld marked hues"
+            "value": "%@ colour wheel with %lld marked hues"
           }
         },
         "nb": {
@@ -188,7 +188,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ values are entered in %2$@ and shown as they render in that color space."
+            "value": "%1$@ values are entered in %2$@ and shown as they render in that colour space."
           }
         },
         "nb": {
@@ -268,7 +268,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@: %@. Choose from saved colors"
+            "value": "%@: %@. Choose from saved colours"
           }
         },
         "nb": {
@@ -474,7 +474,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Active color"
+            "value": "Active colour"
           }
         }
       }
@@ -484,7 +484,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The active color is tested as text/graphics against the background. “Fix” only changes lightness and keeps hue and saturation. “Show with” simulates a color vision deficiency in the preview; the WCAG requirements always apply to the actual colors."
+            "value": "The active colour is tested as text/graphics against the background. “Fix” only changes lightness and keeps hue and saturation. “Show with” simulates a colour vision deficiency in the preview; the WCAG requirements always apply to the actual colours."
           }
         }
       }
@@ -494,7 +494,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All color pairs can be told apart with every type of color vision deficiency."
+            "value": "All colour pairs can be told apart with every type of colour vision deficiency."
           }
         }
       }
@@ -534,7 +534,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Number of colors"
+            "value": "Number of colours"
           }
         }
       }
@@ -544,7 +544,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Number of colors: %lld"
+            "value": "Number of colours: %lld"
           }
         }
       }
@@ -634,7 +634,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limit new colors to %@"
+            "value": "Limit new colours to %@"
           }
         }
       }
@@ -644,7 +644,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Calculated in CIELab D50. Interpretation: below 1 is not noticeable, 1–2 noticeable on close comparison, 2–3.5 noticeable, above 5 counts as different colors. Camera measurements are affected by lighting and white balance."
+            "value": "Calculated in CIELab D50. Interpretation: below 1 is not noticeable, 1–2 noticeable on close comparison, 2–3.5 noticeable, above 5 counts as different colours. Camera measurements are affected by lighting and white balance."
           }
         }
       }
@@ -654,7 +654,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Describe a color"
+            "value": "Describe a colour"
           }
         }
       }
@@ -694,7 +694,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Image. Tap or drag to pick a color, pinch to zoom."
+            "value": "Image. Tap or drag to pick a colour, pinch to zoom."
           }
         }
       }
@@ -744,7 +744,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use as active color"
+            "value": "Use as active colour"
           }
         }
       }
@@ -824,7 +824,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Swap text color and background"
+            "value": "Swap text colour and background"
           }
         }
       }
@@ -864,7 +864,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The CIE color space based on human color vision. Kolorist reports Lab and LCH with a D50 white point, like ICC profiles and Photoshop, and uses the Bradford transform between D65 and D50."
+            "value": "The CIE colour space based on human colour vision. Kolorist reports Lab and LCH with a D50 white point, like ICC profiles and Photoshop, and uses the Bradford transform between D65 and D50."
           }
         }
       }
@@ -874,7 +874,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The CIE formula for perceived color difference. Used when comparing colors, for gamut deviations and in the analysis of colors that become hard to tell apart with color vision deficiency. The implementation is checked against the test data in Sharma et al."
+            "value": "The CIE formula for perceived colour difference. Used when comparing colours, for gamut deviations and in the analysis of colours that become hard to tell apart with colour vision deficiency. The implementation is checked against the test data in Sharma et al."
           }
         }
       }
@@ -964,7 +964,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag in the wheel to change the base color’s hue, or tap the center to start from a saved color. Saturation and lightness apply to the whole harmony."
+            "value": "Drag in the wheel to change the base colour’s hue, or tap the center to start from a saved colour. Saturation and lightness apply to the whole harmony."
           }
         }
       }
@@ -1004,7 +1004,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Single colors"
+            "value": "Single colours"
           }
         }
       }
@@ -1014,7 +1014,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A perceptual color space where equal numeric steps are perceived as equally large color differences. Kolorist computes gradients in OKLab, and tone scales, lighter/darker steps, harmonies and saturation in OKLCH (lightness, chroma, hue)."
+            "value": "A perceptual colour space where equal numeric steps are perceived as equally large colour differences. Kolorist computes gradients in OKLab, and tone scales, lighter/darker steps, harmonies and saturation in OKLCH (lightness, chroma, hue)."
           }
         }
       }
@@ -1064,7 +1064,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Capture color"
+            "value": "Capture colour"
           }
         }
       }
@@ -1074,7 +1074,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color"
+            "value": "Colour"
           }
         }
       }
@@ -1084,7 +1084,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color A"
+            "value": "Colour A"
           }
         }
       }
@@ -1094,7 +1094,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color B"
+            "value": "Colour B"
           }
         }
       }
@@ -1104,7 +1104,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color harmonies"
+            "value": "Colour harmonies"
           }
         }
       }
@@ -1114,7 +1114,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color model"
+            "value": "Colour model"
           }
         }
       }
@@ -1124,7 +1124,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The palette's colors are deleted too. This can't be undone."
+            "value": "The palette's colours are deleted too. This can't be undone."
           }
         }
       }
@@ -1134,7 +1134,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Colors (hex)"
+            "value": "Colours (hex)"
           }
         }
       }
@@ -1144,7 +1144,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Colors saved without a palette end up here"
+            "value": "Colours saved without a palette end up here"
           }
         }
       }
@@ -1154,7 +1154,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color semantics and AI"
+            "value": "Colour semantics and AI"
           }
         }
       }
@@ -1164,7 +1164,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color wheel"
+            "value": "Colour wheel"
           }
         }
       }
@@ -1174,7 +1174,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color wheels"
+            "value": "Colour wheels"
           }
         }
       }
@@ -1184,7 +1184,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color wheels and harmonies"
+            "value": "Colour wheels and harmonies"
           }
         }
       }
@@ -1194,7 +1194,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color management (ICC)"
+            "value": "Colour management (ICC)"
           }
         }
       }
@@ -1204,7 +1204,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color vision"
+            "value": "Colour vision"
           }
         }
       }
@@ -1214,7 +1214,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color picker with eyedropper"
+            "value": "Colour picker with eyedropper"
           }
         }
       }
@@ -1284,7 +1284,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suggests a color palette from value words or a mood, and saves it."
+            "value": "Suggests a colour palette from value words or a mood, and saves it."
           }
         }
       }
@@ -1304,7 +1304,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Difference between the last two colors: Delta E 2000 %@, %@"
+            "value": "Difference between the last two colours: Delta E 2000 %@, %@"
           }
         },
         "nb": {
@@ -1350,7 +1350,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "From color"
+            "value": "From colour"
           }
         }
       }
@@ -1360,7 +1360,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A physiologically based model of protan, deutan and tritan deficiencies, with matrices in linear sRGB and severity as a blend with normal vision. Achromatopsia is shown as luminance alone. Used in Assess › Color vision, the contrast preview and the camera filter. The simulation is an approximation; experience varies between people."
+            "value": "A physiologically based model of protan, deutan and tritan deficiencies, with matrices in linear sRGB and severity as a blend with normal vision. Achromatopsia is shown as luminance alone. Used in Assess › Colour vision, the contrast preview and the camera filter. The simulation is an approximation; experience varies between people."
           }
         }
       }
@@ -1380,7 +1380,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gamut-map colors outside sRGB (keeps lightness and hue)"
+            "value": "Gamut-map colours outside sRGB (keeps lightness and hue)"
           }
         }
       }
@@ -1390,7 +1390,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Name the colors"
+            "value": "Name the colours"
           }
         }
       }
@@ -1470,7 +1470,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Allow access in Settings to pick colors from your surroundings."
+            "value": "Allow access in Settings to pick colours from your surroundings."
           }
         }
       }
@@ -1480,7 +1480,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Allow access in Settings to see your surroundings with a color vision filter."
+            "value": "Allow access in Settings to see your surroundings with a colour vision filter."
           }
         }
       }
@@ -1550,7 +1550,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Base color"
+            "value": "Base colour"
           }
         }
       }
@@ -1560,7 +1560,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Base color %lld degrees"
+            "value": "Base colour %lld degrees"
           }
         }
       }
@@ -1580,7 +1580,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Get from active color"
+            "value": "Get from active colour"
           }
         }
       }
@@ -1590,7 +1590,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hex or CSS color, e.g. #767676"
+            "value": "Hex or CSS colour, e.g. #767676"
           }
         }
       }
@@ -1670,7 +1670,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The quick buttons change the colors precisely in OKLCH. Free text is interpreted by the language model, which remembers the conversation."
+            "value": "The quick buttons change the colours precisely in OKLCH. Free text is interpreted by the language model, which remembers the conversation."
           }
         }
       }
@@ -1710,7 +1710,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "What does the color look like?"
+            "value": "What does the colour look like?"
           }
         }
       }
@@ -1730,7 +1730,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "ICC profiles and color management"
+            "value": "ICC profiles and colour management"
           }
         }
       }
@@ -1790,7 +1790,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No single colors"
+            "value": "No single colours"
           }
         }
       }
@@ -1830,7 +1830,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No saved colors yet. Save colors from Studio or Pick, or create a palette."
+            "value": "No saved colours yet. Save colours from Studio or Pick, or create a palette."
           }
         }
       }
@@ -1970,7 +1970,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Classical color theory (Johannes Itten for RYB); the mappings were developed for Kolorist"
+            "value": "Classical colour theory (Johannes Itten for RYB); the mappings were developed for Kolorist"
           }
         }
       }
@@ -1990,7 +1990,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Complementary, split-complementary, analogous and even distributions are computed as angles on the chosen color wheel: OKLCH, CIE LCH, HSL or RYB. The RYB wheel is a piecewise linear mapping to RGB hue made for the app."
+            "value": "Complementary, split-complementary, analogous and even distributions are computed as angles on the chosen colour wheel: OKLCH, CIE LCH, HSL or RYB. The RYB wheel is a piecewise linear mapping to RGB hue made for the app."
           }
         }
       }
@@ -2072,7 +2072,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Convert color"
+            "value": "Convert colour"
           }
         }
       }
@@ -2102,7 +2102,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conversion between color spaces via ICC profiles, with the chosen rendering intent. Performed by Apple’s color management (ColorSync). Profiles are not bundled with the app; Kolorist uses the system’s profiles and profiles you import."
+            "value": "Conversion between colour spaces via ICC profiles, with the chosen rendering intent. Performed by Apple’s colour management (ColorSync). Profiles are not bundled with the app; Kolorist uses the system’s profiles and profiles you import."
           }
         }
       }
@@ -2122,7 +2122,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copy active color as OKLCH"
+            "value": "Copy active colour as OKLCH"
           }
         }
       }
@@ -2322,7 +2322,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Create palette with ${antall} colors from ${verdiord}"
+            "value": "Create palette with ${antall} colours from ${verdiord}"
           }
         }
       }
@@ -2342,7 +2342,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Makes a color from a description, e.g. “deep ocean blue” or “dusty pink”. The color is computed in OKLCH and shown in Studio."
+            "value": "Makes a colour from a description, e.g. “deep ocean blue” or “dusty pink”. The colour is computed in OKLCH and shown in Studio."
           }
         }
       }
@@ -2352,7 +2352,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Makes tones in equal perceptual steps (OKLab) between two colors."
+            "value": "Makes tones in equal perceptual steps (OKLab) between two colours."
           }
         }
       }
@@ -2390,7 +2390,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Made with Apple Intelligence on device. Contrast and color vision are computed exactly."
+            "value": "Made with Apple Intelligence on device. Contrast and colour vision are computed exactly."
           }
         }
       }
@@ -2432,7 +2432,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save active color"
+            "value": "Save active colour"
           }
         }
       }
@@ -2442,7 +2442,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save a color without a palette from Studio, Pick or “Add to palette”."
+            "value": "Save a colour without a palette from Studio, Pick or “Add to palette”."
           }
         }
       }
@@ -2452,7 +2452,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save color"
+            "value": "Save colour"
           }
         }
       }
@@ -2462,7 +2462,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save colors as palette …"
+            "value": "Save colours as palette …"
           }
         }
       }
@@ -2492,7 +2492,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save last captured color"
+            "value": "Save last captured colour"
           }
         }
       }
@@ -2524,7 +2524,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Save as single color"
+            "value": "Save as single colour"
           }
         }
       }
@@ -2564,7 +2564,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saved without a palette, under “Single colors” in Palettes."
+            "value": "Saved without a palette, under “Single colours” in Palettes."
           }
         }
       }
@@ -2664,7 +2664,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add active color"
+            "value": "Add active colour"
           }
         }
       }
@@ -2694,7 +2694,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paste color"
+            "value": "Paste colour"
           }
         }
       }
@@ -2704,7 +2704,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paste colors"
+            "value": "Paste colours"
           }
         }
       }
@@ -3030,7 +3030,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New single color"
+            "value": "New single colour"
           }
         }
       }
@@ -3246,7 +3246,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The palette is composed by the harmony principle, with equal value or equal saturation in the main colors. Text has at least 7:1 contrast against the background, and the main colors at least 3:1 where the hue allows. The number by each color is its contrast against the background."
+            "value": "The palette is composed by the harmony principle, with equal value or equal saturation in the main colours. Text has at least 7:1 contrast against the background, and the main colours at least 3:1 where the hue allows. The number by each colour is its contrast against the background."
           }
         }
       }
@@ -3256,7 +3256,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The palette needs at least two colors."
+            "value": "The palette needs at least two colours."
           }
         }
       }
@@ -3276,7 +3276,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes from value words and “Describe a color” build on a knowledge base of color concepts made for the app. The on-device language model interprets the words and chooses hue families and expression. The palette itself is then composed by fixed rules in OKLCH: harmony principle, equal value or equal saturation, one accent, a light or dark background and text with at least 7:1 contrast. Text about color meaning describes conventions, not scientific facts."
+            "value": "Palettes from value words and “Describe a colour” build on a knowledge base of colour concepts made for the app. The on-device language model interprets the words and chooses hue families and expression. The palette itself is then composed by fixed rules in OKLCH: harmony principle, equal value or equal saturation, one accent, a light or dark background and text with at least 7:1 contrast. Text about colour meaning describes conventions, not scientific facts."
           }
         }
       }
@@ -3286,7 +3286,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes, gradients and single colors are stored only on this device."
+            "value": "Palettes, gradients and single colours are stored only on this device."
           }
         }
       }
@@ -3296,7 +3296,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Palettes, gradients and single colors sync via iCloud."
+            "value": "Palettes, gradients and single colours sync via iCloud."
           }
         }
       }
@@ -3336,7 +3336,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pick a color from anywhere on the screen"
+            "value": "Pick a colour from anywhere on the screen"
           }
         }
       }
@@ -3346,7 +3346,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pick colors from an image"
+            "value": "Pick colours from an image"
           }
         }
       }
@@ -3376,7 +3376,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rule-based critique (Apple Intelligence is not available). Contrast and color vision are computed exactly."
+            "value": "Rule-based critique (Apple Intelligence is not available). Contrast and colour vision are computed exactly."
           }
         }
       }
@@ -3386,7 +3386,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Converts a color to another color model, e.g. from hex to OKLCH or CMYK."
+            "value": "Converts a colour to another colour model, e.g. from hex to OKLCH or CMYK."
           }
         }
       }
@@ -3406,7 +3406,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Clean CMYK colors (UCR/GCR)"
+            "value": "Clean CMYK colours (UCR/GCR)"
           }
         }
       }
@@ -3506,7 +3506,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color vision deficiency simulation"
+            "value": "Colour vision deficiency simulation"
           }
         }
       }
@@ -3626,7 +3626,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drop colors here"
+            "value": "Drop colours here"
           }
         }
       }
@@ -3646,7 +3646,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "As Color constants"
+            "value": "As Colour constants"
           }
         }
       }
@@ -3666,7 +3666,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "As shape layer (PDF), plus hex for the color picker"
+            "value": "As shape layer (PDF), plus hex for the colour picker"
           }
         }
       }
@@ -3686,7 +3686,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "As vector image (PDF) with exact colors"
+            "value": "As vector image (PDF) with exact colours"
           }
         }
       }
@@ -3696,7 +3696,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "As vector shapes (PDF), with color space and ICC"
+            "value": "As vector shapes (PDF), with colour space and ICC"
           }
         }
       }
@@ -3716,7 +3716,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "sRGB hex such as #2F7FD8 or 2F7FD8; CSS colors such as oklch(…) and rgb(…) also work."
+            "value": "sRGB hex such as #2F7FD8 or 2F7FD8; CSS colours such as oklch(…) and rgb(…) also work."
           }
         }
       }
@@ -3736,7 +3736,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The standard for color on the web. Kolorist uses the specification’s matrices and transfer functions for sRGB, Display P3, Adobe RGB, Lab and OKLab, its gamut mapping (chroma is reduced in OKLCH while lightness and hue are preserved) and its color text syntax."
+            "value": "The standard for colour on the web. Kolorist uses the specification’s matrices and transfer functions for sRGB, Display P3, Adobe RGB, Lab and OKLab, its gamut mapping (chroma is reduced in OKLCH while lightness and hue are preserved) and its colour text syntax."
           }
         }
       }
@@ -3826,7 +3826,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The numbers under each swatch are OKLCH lightness in percent. Tap a tone to make it the active color, or touch and hold to save it."
+            "value": "The numbers under each swatch are OKLCH lightness in percent. Tap a tone to make it the active colour, or touch and hold to save it."
           }
         }
       }
@@ -3856,7 +3856,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Text color"
+            "value": "Text colour"
           }
         }
       }
@@ -3866,7 +3866,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Thinking about colors …"
+            "value": "Thinking about colours …"
           }
         }
       }
@@ -3876,7 +3876,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tests two colors against the WCAG 2.2 contrast requirements for text and graphics."
+            "value": "Tests two colours against the WCAG 2.2 contrast requirements for text and graphics."
           }
         }
       }
@@ -3896,7 +3896,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "To color"
+            "value": "To colour"
           }
         }
       }
@@ -3916,7 +3916,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset to base color"
+            "value": "Reset to base colour"
           }
         }
       }
@@ -4018,7 +4018,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap a color to make it active, or touch and hold to save it."
+            "value": "Tap a colour to make it active, or touch and hold to save it."
           }
         }
       }
@@ -4144,7 +4144,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color options"
+            "value": "Colour options"
           }
         }
       }
@@ -4154,7 +4154,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hard-to-tell color pairs"
+            "value": "Hard-to-tell colour pairs"
           }
         }
       }
@@ -4174,7 +4174,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose a photo or screenshot. Colors are read using the image's own color profile."
+            "value": "Choose a photo or screenshot. Colours are read using the image's own colour profile."
           }
         }
       }
@@ -4184,7 +4184,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose color – %@"
+            "value": "Choose colour – %@"
           }
         }
       }
@@ -4194,7 +4194,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose the color space shown next to the color"
+            "value": "Choose the colour space shown next to the colour"
           }
         }
       }
@@ -4224,7 +4224,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose base color from saved colors"
+            "value": "Choose base colour from saved colours"
           }
         }
       }
@@ -4244,7 +4244,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Values for this profile type are taken from the active color."
+            "value": "Values for this profile type are taken from the active colour."
           }
         }
       }
@@ -4304,7 +4304,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show the color ${beskrivelse}"
+            "value": "Show the colour ${beskrivelse}"
           }
         }
       }
@@ -4374,7 +4374,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. It includes contrast (WCAG) and color vision."
+            "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. It includes contrast (WCAG) and colour vision."
           }
         }
       }
@@ -4446,7 +4446,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "ΔE00 measures the deviation from the source color. The intents only differ when the profiles have their own tables for them, typically CMYK profiles from print shops; pure matrix profiles like sRGB and Display P3 give the same result for all."
+            "value": "ΔE00 measures the deviation from the source colour. The intents only differ when the profiles have their own tables for them, typically CMYK profiles from print shops; pure matrix profiles like sRGB and Display P3 give the same result for all."
           }
         }
       }

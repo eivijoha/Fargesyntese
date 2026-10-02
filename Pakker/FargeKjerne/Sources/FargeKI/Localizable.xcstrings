@@ -36,7 +36,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Second color of the triad."
+            "value": "Second colour of the triad."
           }
         }
       }
@@ -96,7 +96,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use “More contrast” or add a black/white text color."
+            "value": "Use “More contrast” or add a black/white text colour."
           }
         }
       }
@@ -136,7 +136,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The colors can be told apart even with red-green color vision deficiency."
+            "value": "The colours can be told apart even with red-green colour vision deficiency."
           }
         }
       }
@@ -146,7 +146,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color pairs passing WCAG AA for text (4.5:1): %lld of %lld"
+            "value": "Colour pairs passing WCAG AA for text (4.5:1): %lld of %lld"
           }
         },
         "nb": {
@@ -162,7 +162,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color vision – %1$@: %2$lld color pairs become hard to tell apart: %3$@"
+            "value": "Colour vision – %1$@: %2$lld colour pairs become hard to tell apart: %3$@"
           }
         },
         "nb": {
@@ -178,7 +178,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Color vision: all color pairs can be told apart with protanopia, deuteranopia, tritanopia and achromatopsia."
+            "value": "Colour vision: all colour pairs can be told apart with protanopia, deuteranopia, tritanopia and achromatopsia."
           }
         }
       }
@@ -208,7 +208,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Main color for the value words."
+            "value": "Main colour for the value words."
           }
         }
       }
@@ -218,7 +218,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Main color from “%@”."
+            "value": "Main colour from “%@”."
           }
         }
       }
@@ -238,7 +238,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No color pair reaches 4.5:1 – the palette is not suitable for text on its own."
+            "value": "No colour pair reaches 4.5:1 – the palette is not suitable for text on its own."
           }
         }
       }
@@ -288,7 +288,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add a clearly light and a clearly dark color."
+            "value": "Add a clearly light and a clearly dark colour."
           }
         }
       }
@@ -338,7 +338,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Light background with a hint of the main color."
+            "value": "Light background with a hint of the main colour."
           }
         }
       }
@@ -364,7 +364,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "At least one color pair can be used for body text (WCAG AA)."
+            "value": "At least one colour pair can be used for body text (WCAG AA)."
           }
         }
       }
@@ -414,7 +414,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dark background with a hint of the main color."
+            "value": "Dark background with a hint of the main colour."
           }
         }
       }
@@ -424,7 +424,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Neighboring hue to the main color."
+            "value": "Neighboring hue to the main colour."
           }
         }
       }
@@ -434,7 +434,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Some color pairs become hard to tell apart with red-green color vision deficiency (about 8 % of men)."
+            "value": "Some colour pairs become hard to tell apart with red-green colour vision deficiency (about 8 % of men)."
           }
         }
       }
@@ -444,7 +444,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Some colors are outside sRGB; check them on a regular display and in print."
+            "value": "Some colours are outside sRGB; check them on a regular display and in print."
           }
         }
       }
@@ -524,7 +524,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Separate the colors that get confused with a clear difference in lightness, or add an icon, pattern or text in addition to color."
+            "value": "Separate the colours that get confused with a clear difference in lightness, or add an icon, pattern or text in addition to colour."
           }
         }
       }
@@ -564,7 +564,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Split complementary to the main color."
+            "value": "Split complementary to the main colour."
           }
         }
       }
@@ -604,7 +604,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supporting color in the same harmony."
+            "value": "Supporting colour in the same harmony."
           }
         }
       }
@@ -634,7 +634,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tone on tone with the main color."
+            "value": "Tone on tone with the main colour."
           }
         }
       }
@@ -644,7 +644,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Third color of the triad, as accent."
+            "value": "Third colour of the triad, as accent."
           }
         }
       }

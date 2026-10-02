@@ -8,8 +8,8 @@
           "stringSet": {
             "state": "translated",
             "values": [
-              "Describe a color in ${applicationName}",
-              "Show a color in ${applicationName}"
+              "Describe a colour in ${applicationName}",
+              "Show a colour in ${applicationName}"
             ]
           }
         },
@@ -31,8 +31,8 @@
           "stringSet": {
             "state": "translated",
             "values": [
-              "Convert a color with ${applicationName}",
-              "Convert color in ${applicationName}"
+              "Convert a colour with ${applicationName}",
+              "Convert colour in ${applicationName}"
             ]
           }
         },
@@ -55,8 +55,8 @@
             "state": "translated",
             "values": [
               "Create a palette in ${applicationName}",
-              "Suggest colors with ${applicationName}",
-              "Make a color palette from value words in ${applicationName}"
+              "Suggest colours with ${applicationName}",
+              "Make a colour palette from value words in ${applicationName}"
             ]
           }
         },
@@ -80,7 +80,7 @@
             "state": "translated",
             "values": [
               "Make gradient tones in ${applicationName}",
-              "Make a color gradient with ${applicationName}"
+              "Make a colour gradient with ${applicationName}"
             ]
           }
         },
@@ -103,7 +103,7 @@
             "state": "translated",
             "values": [
               "Check contrast in ${applicationName}",
-              "Test color contrast with ${applicationName}"
+              "Test colour contrast with ${applicationName}"
             ]
           }
         },

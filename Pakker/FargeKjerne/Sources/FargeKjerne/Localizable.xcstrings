@@ -302,7 +302,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No color vision, only lightness – very rare"
+            "value": "No colour vision, only lightness – very rare"
           }
         }
       }
@@ -382,7 +382,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lab-based wheel, as in Photoshop and color measurement. Lightness and chroma are kept fixed."
+            "value": "Lab-based wheel, as in Photoshop and colour measurement. Lightness and chroma are kept fixed."
           }
         }
       }
@@ -502,7 +502,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Perceptually even angles, with lightness and saturation kept fixed so the colors carry equal weight."
+            "value": "Perceptually even angles, with lightness and saturation kept fixed so the colours carry equal weight."
           }
         }
       }
@@ -692,7 +692,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Different colors"
+            "value": "Different colours"
           }
         }
       }

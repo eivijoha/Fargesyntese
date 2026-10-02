@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Support – Kolorist</title>
-  <meta name="description" content="Help and frequently asked questions about Kolorist: color spaces, Display P3 and sRGB, ICC profiles, iCloud sync, Apple Intelligence, camera and export.">
+  <meta name="description" content="Help and frequently asked questions about Kolorist: colour spaces, Display P3 and sRGB, ICC profiles, iCloud sync, Apple Intelligence, camera and export.">
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="no-referrer">
   <link rel="icon" href="../assets/ikon.svg" type="image/svg+xml">
@@ -54,7 +54,7 @@
         <li>your device (iPhone, iPad or Mac) and iOS, iPadOS or macOS version</li>
         <li>the version of Kolorist</li>
         <li>what you did, what you expected and what happened</li>
-        <li>a screenshot or the color values involved, if possible</li>
+        <li>a screenshot or the colour values involved, if possible</li>
       </ul>
       <p class="dempet">Kolorist is made by Eivind Arnstein Johansen.</p>
     </section>
@@ -63,12 +63,12 @@
       <h2 id="faq">Frequently asked questions</h2>
 
       <details>
-        <summary>Which color spaces and color models are supported?</summary>
+        <summary>Which colour spaces and colour models are supported?</summary>
         <div class="svar">
-          <p>You can edit colors in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK. RGB colors can be in Display P3, beyond sRGB. You can also view and edit the values in any ICC profile – built in or imported.</p>
+          <p>You can edit colours in OKLCH, OKLab, CIE LCH, CIELab, HSB, HSL, RGB and CMYK. RGB colours can be in Display P3, beyond sRGB. You can also view and edit the values in any ICC profile – built in or imported.</p>
           <p>CIELab and CIE LCH use the D50 white point, like ICC profiles, Photoshop and CSS <code>lab()</code>, so the values match your design tools.</p>
-          <p>The color value field also understands CSS text: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> and CSS color names. If you type a description, such as “deep ocean blue” or “dusty pink”, the color is made in OKLCH and shown in Studio.</p>
-          <p>When the color model is CMYK and you show a CMYK profile (or RGB and an RGB profile), the values are entered directly in the profile. The color is then rendered as it will be in that color space, without a gamut warning.</p>
+          <p>The colour value field also understands CSS text: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code> and CSS colour names. If you type a description, such as “deep ocean blue” or “dusty pink”, the colour is made in OKLCH and shown in Studio.</p>
+          <p>When the colour model is CMYK and you show a CMYK profile (or RGB and an RGB profile), the values are entered directly in the profile. The colour is then rendered as it will be in that colour space, without a gamut warning.</p>
         </div>
       </details>
 
@@ -76,7 +76,7 @@
         <summary>What is the difference between Display P3 and sRGB?</summary>
         <div class="svar">
           <p>Display P3 is a wider gamut than sRGB. The screens on recent iPhone, iPad and Mac models can show P3, and saturated reds, oranges and greens in particular can fall outside what sRGB can hold. Much of the web, older software and many workflows still use sRGB.</p>
-          <p>Kolorist shows the color in Display P3 side by side with another color space – sRGB, Adobe RGB, CMYK or an installed ICC profile – and warns you when the color is outside that space. When a color has to fit into a smaller space, its saturation (chroma) is reduced while lightness and hue are preserved, rather than clipping the values. You can also choose to limit new colors to a specific profile.</p>
+          <p>Kolorist shows the colour in Display P3 side by side with another colour space – sRGB, Adobe RGB, CMYK or an installed ICC profile – and warns you when the colour is outside that space. When a colour has to fit into a smaller space, its saturation (chroma) is reduced while lightness and hue are preserved, rather than clipping the values. You can also choose to limit new colours to a specific profile.</p>
         </div>
       </details>
 
@@ -92,7 +92,7 @@
       <details>
         <summary>How does iCloud sync work?</summary>
         <div class="svar">
-          <p>Palettes and saved colors sync through your private iCloud database when you’re signed in to iCloud with the same Apple Account on all your devices. Only you can access this data – it is not stored with the developer.</p>
+          <p>Palettes and saved colours sync through your private iCloud database when you’re signed in to iCloud with the same Apple Account on all your devices. Only you can access this data – it is not stored with the developer.</p>
           <p>If something doesn’t show up on another device:</p>
           <ul>
             <li>Check that you’re signed in to iCloud with the same Apple Account on both devices.</li>
@@ -113,7 +113,7 @@
             <li>the model to have finished downloading, and</li>
             <li>Apple Intelligence to be available for the language and region you use.</li>
           </ul>
-          <p>Palettes from value words are grounded in a knowledge base of more than a hundred color concepts – nature, materials, styles and values – in Norwegian and English. The language model is given the relevant concepts and chooses hue family, lightness and saturation; the colors themselves are computed in OKLCH. The app shows which concepts a suggestion is based on.</p>
+          <p>Palettes from value words are grounded in a knowledge base of more than a hundred colour concepts – nature, materials, styles and values – in Norwegian and English. The language model is given the relevant concepts and chooses hue family, lightness and saturation; the colours themselves are computed in OKLCH. The app shows which concepts a suggestion is based on.</p>
           <p>When Apple Intelligence isn’t available, the app builds the palette directly from the knowledge base. It works offline, but is less flexible than the language model – for example, free-text adjustments, naming and palette critique may be limited or unavailable.</p>
           <p>Either way, everything happens on device. What you type is not sent to the developer.</p>
         </div>
@@ -127,28 +127,28 @@
             <li><strong>iPhone and iPad:</strong> Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
             <li><strong>Mac:</strong> System Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
           </ul>
-          <p>The camera is only used live on the device to pick colors and for the color vision filter. No images are stored or sent.</p>
-          <p>You can also pick colors from images you choose yourself, without camera access.</p>
+          <p>The camera is only used live on the device to pick colours and for the colour vision filter. No images are stored or sent.</p>
+          <p>You can also pick colours from images you choose yourself, without camera access.</p>
         </div>
       </details>
 
       <details>
-        <summary>Can I pick colors from other apps?</summary>
+        <summary>Can I pick colours from other apps?</summary>
         <div class="svar">
-          <p><strong>On Mac:</strong> Yes, the screen eyedropper picks colors from anywhere on screen.</p>
-          <p><strong>On iPhone and iPad:</strong> The system doesn’t let apps read the screen outside themselves. Take a screenshot and pick the color from the image in Kolorist instead.</p>
+          <p><strong>On Mac:</strong> Yes, the screen eyedropper picks colours from anywhere on screen.</p>
+          <p><strong>On iPhone and iPad:</strong> The system doesn’t let apps read the screen outside themselves. Take a screenshot and pick the colour from the image in Kolorist instead.</p>
         </div>
       </details>
 
       <details>
         <summary>What does “Copy to …” do?</summary>
         <div class="svar">
-          <p>Touch and hold a color or a palette (right-click on Mac) and choose <strong>Copy to</strong> and the app you’ll paste into. Kolorist puts the colors on the clipboard in the format that app accepts:</p>
+          <p>Touch and hold a colour or a palette (right-click on Mac) and choose <strong>Copy to</strong> and the app you’ll paste into. Kolorist puts the colours on the clipboard in the format that app accepts:</p>
           <ul>
             <li><strong>Figma, Sketch and Affinity:</strong> filled shapes (SVG) you paste straight onto the canvas.</li>
-            <li><strong>Illustrator and InDesign:</strong> vector shapes (PDF) with color space and ICC profile – colors saved in a CMYK profile arrive as CMYK.</li>
-            <li><strong>Photoshop:</strong> shape layers (PDF, with an image as fallback), and the hex value for the color picker.</li>
-            <li><strong>Pages, Keynote and Numbers:</strong> swatches as PDF and image, and on Mac also as a system color.</li>
+            <li><strong>Illustrator and InDesign:</strong> vector shapes (PDF) with colour space and ICC profile – colours saved in a CMYK profile arrive as CMYK.</li>
+            <li><strong>Photoshop:</strong> shape layers (PDF, with an image as fallback), and the hex value for the colour picker.</li>
+            <li><strong>Pages, Keynote and Numbers:</strong> swatches as PDF and image, and on Mac also as a system colour.</li>
             <li><strong>CSS and SwiftUI:</strong> code as text.</li>
           </ul>
           <p>With Universal Clipboard you can copy on iPhone or iPad and paste on Mac. On Mac you can also drag swatches straight into other apps.</p>
@@ -156,31 +156,31 @@
       </details>
 
       <details>
-        <summary>How does the app simulate color vision deficiency?</summary>
+        <summary>How does the app simulate colour vision deficiency?</summary>
         <div class="svar">
-          <p>Under <strong>Assess › Color vision</strong> you see the palette with protanopia, deuteranopia, tritanopia and achromatopsia. Severity can be set below 100 % for partial deficiencies, which are the most common. The app shows which color pairs become hard to tell apart (ΔE2000), and the camera button next to each deficiency shows your surroundings through the same filter.</p>
-          <p>The simulation is based on the model by Machado, Oliveira and Fernandes (2009). It is an approximation – how colors are perceived varies between people. <a href="methods.html">Read more about the methods</a>.</p>
+          <p>Under <strong>Assess › Colour vision</strong> you see the palette with protanopia, deuteranopia, tritanopia and achromatopsia. Severity can be set below 100 % for partial deficiencies, which are the most common. The app shows which colour pairs become hard to tell apart (ΔE2000), and the camera button next to each deficiency shows your surroundings through the same filter.</p>
+          <p>The simulation is based on the model by Machado, Oliveira and Fernandes (2009). It is an approximation – how colours are perceived varies between people. <a href="methods.html">Read more about the methods</a>.</p>
         </div>
       </details>
 
       <details>
-        <summary>How do I get my colors into Adobe apps?</summary>
+        <summary>How do I get my colours into Adobe apps?</summary>
         <div class="svar">
           <ul>
             <li><strong>Adobe ASE</strong> (Adobe Swatch Exchange) can be imported as swatches in Photoshop, Illustrator, InDesign and others.</li>
-            <li><strong>Photoshop ACO</strong> is Photoshop’s own swatch format, with color names. Colors outside sRGB are stored as Lab so they aren’t clipped.</li>
+            <li><strong>Photoshop ACO</strong> is Photoshop’s own swatch format, with colour names. Colours outside sRGB are stored as Lab so they aren’t clipped.</li>
           </ul>
-          <p>Export from the palette, save the file in Files or Finder, and open it from the Swatches panel in the Adobe app. For one color at a time, <strong>Copy to</strong> is quicker.</p>
+          <p>Export from the palette, save the file in Files or Finder, and open it from the Swatches panel in the Adobe app. For one colour at a time, <strong>Copy to</strong> is quicker.</p>
         </div>
       </details>
 
       <details>
-        <summary>How do I get my colors into Figma?</summary>
+        <summary>How do I get my colours into Figma?</summary>
         <div class="svar">
           <ul>
             <li><strong>Figma variables:</strong> Export as DTCG JSON and use Figma’s variable import.</li>
             <li><strong>Tokens Studio:</strong> Export in the Tokens Studio format and load it in the plugin.</li>
-            <li><strong>SVG swatches:</strong> Copy and paste into Figma – the colors arrive as filled shapes.</li>
+            <li><strong>SVG swatches:</strong> Copy and paste into Figma – the colours arrive as filled shapes.</li>
           </ul>
           <p>Other formats: CSS, W3C Design Tokens, GIMP GPL, SwiftUI and hex list.</p>
         </div>
@@ -196,7 +196,7 @@
       <details>
         <summary>How do I use Siri and Shortcuts?</summary>
         <div class="svar">
-          <p>Kolorist provides actions in the Shortcuts app: <em>create a palette from value words</em>, <em>create a gradient</em>, <em>convert a color</em>, <em>check contrast</em> and <em>describe a color</em>. Use them in your own shortcuts or ask Siri.</p>
+          <p>Kolorist provides actions in the Shortcuts app: <em>create a palette from value words</em>, <em>create a gradient</em>, <em>convert a colour</em>, <em>check contrast</em> and <em>describe a colour</em>. Use them in your own shortcuts or ask Siri.</p>
         </div>
       </details>
     </section>
