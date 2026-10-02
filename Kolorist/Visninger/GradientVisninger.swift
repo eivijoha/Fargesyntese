@@ -33,6 +33,7 @@ struct GradientSeksjon: View {
                                 omdøpes = g
                             }
                             Button("Kopier CSS", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(oppsett.css) }
+                            KopierTilMeny(farger: oppsett.toner.map { PalettFarge(farge: $0, opphav: .overgang) }, navn: g.navn)
                             Button("Lagre farger som palett …", systemImage: "swatchpalette") { somPalett = g }
                             Button("Slett gradient", systemImage: "trash", role: .destructive) { slettes = g }
                         }

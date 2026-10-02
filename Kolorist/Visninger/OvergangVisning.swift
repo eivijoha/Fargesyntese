@@ -43,6 +43,8 @@ struct OvergangVisning: View {
                     somPalett = rader.flatMap { $0 }.map { PalettFarge(farge: $0, opphav: .overgang) }
                 }
             }
+            KopierTilMeny(farger: toner.map { PalettFarge(farge: $0, opphav: .overgang) },
+                          navn: String(localized: "Overgang \(start.hex()) → \(slutt.hex())"))
         } label: {
             Image(systemName: "plus.square")
                 .font(.body.weight(.semibold))

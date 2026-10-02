@@ -185,11 +185,26 @@ struct FargeValgBoble: View {
                     Utklippstavle.kopier(farge)
                     lukk()
                 }
+                // «Kopier til …»: formatet målprogrammet tar imot (også via universell utklippstavle).
+                Menu {
+                    ForEach(Kopimål.allCases) { mål in
+                        Button {
+                            Utklippstavle.kopier([PalettFarge(farge: farge)], navn: "", til: mål)
+                            lukk()
+                        } label: {
+                            Label { Text(mål.navn); Text(mål.forklaring) } icon: { Image(systemName: mål.symbol) }
+                        }
+                    }
+                } label: {
+                    Label("Kopier til", systemImage: "arrow.up.doc.on.clipboard")
+                }
             }
             .buttonStyle(.borderless)
             .labelStyle(JustertEtikett())
         }
         .padding(16)
+        // Boblen skal få hele høyden innholdet trenger (ellers klippes de nederste valgene).
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

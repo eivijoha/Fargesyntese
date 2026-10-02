@@ -55,6 +55,7 @@ struct PalettListe: View {
                                 }
                                 .contextMenu {
                                     Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
+                                    KopierTilMeny(farger: p.farger, navn: p.navn)
                                     Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
                                 }
                             }

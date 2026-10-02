@@ -584,6 +584,7 @@ struct Fargeflate: View {
                 Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(pf) }
                 Button("Kopier verdier", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
                 Button("Kopier hex", systemImage: "number") { Utklippstavle.kopier(f) }
+                KopierTilMeny(farger: [pf])
             }
             .accessibilityElement(children: .contain)
             .accessibilityLabel("\(tittel): \(tekst)")

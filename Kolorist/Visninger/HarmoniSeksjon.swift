@@ -200,6 +200,7 @@ struct HarmoniSeksjon: View {
             Button("Legg harmonien i palett", systemImage: "plus.square.on.square") {
                 lagre(farger.map { PalettFarge(farge: $0, opphav: .manuell) }, harmoni.navn)
             }
+            KopierTilMeny(farger: farger.map { PalettFarge(farge: $0, opphav: .manuell) }, navn: harmoni.navn)
         } header: {
             Text("Fargeharmonier")
         } footer: {
