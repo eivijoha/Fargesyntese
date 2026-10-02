@@ -271,7 +271,9 @@ Contact: eivind.johansen@ntnu.no
 - [ ] `ITSAppUsesNonExemptEncryption = NO` i Info.plist.
 - [ ] CloudKit-skjemaet er distribuert til produksjon (CloudKit Console › Deploy Schema Changes), ellers
       synkroniserer ikke TestFlight- og App Store-bygg.
-- [ ] Skjermbilder: iPhone 6,9" (1320 × 2868 eller 1290 × 2796), iPad 13" (2064 × 2752), Mac (2880 × 1800 e.l.).
+- [x] Skjermbilder iPhone 6,5" (1284 × 2778): `Dokumentasjon/Skjermbilder/nb/` og `en/` – Studio, Harmoni, Overgang,
+      Kontrast, Fargesyn. Tatt i simulatoren «Skjermbilder 6,5» (iPhone 14 Plus, iOS 26.5).
+- [ ] Skjermbilder iPad 13" (2064 × 2752) og Mac (2880 × 1800 e.l.).
       Samme bilder kan legges inn på nettsiden der det står «Skjermbilde kommer».
 - [ ] Appikon 1024 × 1024 følger med i bygget (Icon Composer-ikonet).
 - [ ] App Store-ID inn på nettsiden (Smart App Banner) og «Kommer snart» byttes med App Store-lenke etter godkjenning.
