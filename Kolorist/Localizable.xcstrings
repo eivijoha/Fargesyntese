@@ -495,6 +495,16 @@
         }
       }
     },
+    "Alle metoder og kilder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All methods and sources"
+          }
+        }
+      }
+    },
     "Andre": {
       "localizations": {
         "en": {
@@ -785,6 +795,16 @@
         }
       }
     },
+    "CIEDE2000 (ΔE00)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CIEDE2000 (ΔE00)"
+          }
+        }
+      }
+    },
     "CIELab": {
       "localizations": {
         "en": {
@@ -795,12 +815,52 @@
         }
       }
     },
+    "CIELab, CIE LCH og Bradford-tilpasning": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CIELab, CIE LCH and Bradford adaptation"
+          }
+        }
+      }
+    },
+    "CIEs fargerom basert på menneskets fargesyn. Kolorist oppgir Lab og LCH med hvitpunkt D50, som ICC-profiler og Photoshop, og bruker Bradford-transformasjonen mellom D65 og D50.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The CIE color space based on human color vision. Kolorist reports Lab and LCH with a D50 white point, like ICC profiles and Photoshop, and uses the Bradford transform between D65 and D50."
+          }
+        }
+      }
+    },
+    "CIEs formel for opplevd fargeforskjell. Brukes ved sammenligning av farger, gamutavvik og i analysen av farger som blir vanskelige å skille med fargesynsavvik. Implementasjonen er kontrollert mot testdataene i Sharma mfl.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The CIE formula for perceived color difference. Used when comparing colors, for gamut deviations and in the analysis of colors that become hard to tell apart with color vision deficiency. The implementation is checked against the test data in Sharma et al."
+          }
+        }
+      }
+    },
     "CMYK": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "CMYK"
+          }
+        }
+      }
+    },
+    "CSS Color Module Level 4": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSS Color Module Level 4"
           }
         }
       }
@@ -911,6 +971,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Single colors"
+          }
+        }
+      }
+    },
+    "Et perseptuelt fargerom der like tallsteg oppleves som like store fargeforskjeller. Kolorist regner overganger i OKLab, og toneskalaer, lysere/mørkere trinn, harmonier og metning i OKLCH (lyshet, kroma, kulør).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A perceptual color space where equal numeric steps are perceived as equally large color differences. Kolorist computes gradients in OKLab, and tone scales, lighter/darker steps, harmonies and saturation in OKLCH (lightness, chroma, hue)."
+          }
+        }
+      }
+    },
+    "Etablert trykkteknikk; søket er utviklet for Kolorist": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Established print technique; the search was developed for Kolorist"
           }
         }
       }
@@ -1035,12 +1115,42 @@
         }
       }
     },
+    "Fargesemantikk og KI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color semantics and AI"
+          }
+        }
+      }
+    },
     "Fargesirkel": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Color wheel"
+          }
+        }
+      }
+    },
+    "Fargesirkler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color wheels"
+          }
+        }
+      }
+    },
+    "Fargesirkler og harmonier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color wheels and harmonies"
           }
         }
       }
@@ -1071,6 +1181,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Color picker with eyedropper"
+          }
+        }
+      }
+    },
+    "Felles grått innslag i C, M og Y flyttes til sort, og Kolorist søker etter separasjonen med færrest trykkfarger som holder seg innenfor 1 ΔE00 av profilens egen separasjon.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The common grey component of C, M and Y is moved to black, and Kolorist searches for the separation with the fewest inks that stays within 1 ΔE00 of the profile’s own separation."
           }
         }
       }
@@ -1197,6 +1317,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "From color"
+          }
+        }
+      }
+    },
+    "Fysiologisk basert modell for protan-, deutan- og tritanavvik, med matriser i lineær sRGB og alvorlighetsgrad som blanding med normalt syn. Akromatopsi vises som luminans alene. Brukes i Vurdering › Fargesyn, kontrastforhåndsvisningen og kamerafilteret. Simuleringen er en tilnærming; opplevelsen varierer mellom personer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A physiologically based model of protan, deutan and tritan deficiencies, with matrices in linear sRGB and severity as a blend with normal vision. Achromatopsia is shown as luminance alone. Used in Assess › Color vision, the contrast preview and the camera filter. The simulation is an approximation; experience varies between people."
           }
         }
       }
@@ -1561,6 +1691,16 @@
         }
       }
     },
+    "ICC-profiler og fargestyring": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ICC profiles and color management"
+          }
+        }
+      }
+    },
     "Ikke bestått": {
       "localizations": {
         "en": {
@@ -1791,12 +1931,32 @@
         }
       }
     },
+    "Klassisk fargelære (Johannes Itten for RYB); avbildningene er utviklet for Kolorist": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classical color theory (Johannes Itten for RYB); the mappings were developed for Kolorist"
+          }
+        }
+      }
+    },
     "Kolorist": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Kolorist"
+          }
+        }
+      }
+    },
+    "Komplementær, split-komplementær, analog og jevn fordeling beregnes som vinkler på valgt fargesirkel: OKLCH, CIE LCH, HSL eller RYB. RYB-sirkelen er en stykkevis lineær avbildning til RGB-kulør laget for appen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complementary, split-complementary, analogous and even distributions are computed as angles on the chosen color wheel: OKLCH, CIE LCH, HSL or RYB. The RYB wheel is a piecewise linear mapping to RGB hue made for the app."
           }
         }
       }
@@ -1899,6 +2059,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Convert between profiles …"
+          }
+        }
+      }
+    },
+    "Konvertering mellom fargerom via ICC-profiler, med valgt gjengivelseshensikt. Gjøres av Apples fargestyring (ColorSync). Profiler følger ikke med appen; Kolorist bruker systemets profiler og profiler du importerer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversion between color spaces via ICC profiles, with the chosen rendering intent. Performed by Apple’s color management (ColorSync). Profiles are not bundled with the app; Kolorist uses the system’s profiles and profiles you import."
           }
         }
       }
@@ -2059,6 +2229,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn’t add the profile"
+          }
+        }
+      }
+    },
+    "Kunnskapsbase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knowledge base"
           }
         }
       }
@@ -2475,6 +2655,16 @@
         }
       }
     },
+    "Les kilden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read the source"
+          }
+        }
+      }
+    },
     "Lim inn": {
       "localizations": {
         "en": {
@@ -2597,6 +2787,16 @@
         }
       }
     },
+    "Machado mfl. 2009": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machado et al. 2009"
+          }
+        }
+      }
+    },
     "Maskinen": {
       "localizations": {
         "en": {
@@ -2633,6 +2833,98 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saturation"
+          }
+        }
+      }
+    },
+    "Metode": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Method"
+          }
+        }
+      }
+    },
+    "Metode:": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Method:"
+          }
+        }
+      }
+    },
+    "Metode: %@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Method: %1$@ %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Metode: %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "Metoder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methods"
+          }
+        }
+      }
+    },
+    "Metoder og kilder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methods and sources"
+          }
+        }
+      }
+    },
+    "Metoder:": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methods:"
+          }
+        }
+      }
+    },
+    "Metoder: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methods: %@"
+          }
+        }
+      }
+    },
+    "Metoder: %@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methods: %1$@ %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Metoder: %1$@ %2$@"
           }
         }
       }
@@ -2829,6 +3121,16 @@
         }
       }
     },
+    "OKLab og OKLCH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OKLab and OKLCH"
+          }
+        }
+      }
+    },
     "Opprett": {
       "localizations": {
         "en": {
@@ -2955,6 +3257,16 @@
         }
       }
     },
+    "Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten velger kulørfamilie, lyshet og metning, og fargene regnes ut i OKLCH. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palettes from value words and “Describe a color” build on a knowledge base of color concepts made for the app. The on-device language model chooses hue family, lightness and saturation, and the colors are computed in OKLCH. Text about color meaning describes conventions, not scientific facts."
+          }
+        }
+      }
+    },
     "Paletter, gradienter og enkeltfarger lagres bare på denne enheten.": {
       "localizations": {
         "en": {
@@ -2975,12 +3287,12 @@
         }
       }
     },
-    "Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg. Simulering etter Machado mfl. (2009).": {
+    "Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pairs that are clearly different with normal vision (ΔE00 ≥ 10) but drop below 10 with the deficiency. Below 5 they are nearly identical. Separate them by lightness, not just hue, or add a pattern, icon or text. Simulation after Machado et al. (2009)."
+            "value": "Pairs that are clearly different with normal vision (ΔE00 ≥ 10) but fall below 10 with the deficiency. Below 5 they are almost identical. Separate them by lightness, not just hue, or add a pattern, icon or text."
           }
         }
       }
@@ -3105,6 +3417,16 @@
         }
       }
     },
+    "Rene CMYK-verdier (UCR/GCR)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean CMYK values (UCR/GCR)"
+          }
+        }
+      }
+    },
     "Retning": {
       "localizations": {
         "en": {
@@ -3161,6 +3483,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Send"
+          }
+        }
+      }
+    },
+    "Simulering av fargesynsavvik": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color vision deficiency simulation"
           }
         }
       }
@@ -3371,6 +3703,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Standard"
+          }
+        }
+      }
+    },
+    "Standarden for farger på nettet. Kolorist bruker spesifikasjonens matriser og overføringsfunksjoner for sRGB, Display P3, Adobe RGB, Lab og OKLab, dens gamut-kartlegging (kroma reduseres i OKLCH mens lyshet og kulør bevares) og dens tekstsyntaks for farger.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The standard for color on the web. Kolorist uses the specification’s matrices and transfer functions for sRGB, Display P3, Adobe RGB, Lab and OKLab, its gamut mapping (chroma is reduced in OKLCH while lightness and hue are preserved) and its color text syntax."
           }
         }
       }
@@ -3667,6 +4009,16 @@
         }
       }
     },
+    "UCR/GCR": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UCR/GCR"
+          }
+        }
+      }
+    },
     "Uten navn": {
       "localizations": {
         "en": {
@@ -3749,6 +4101,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pick"
+          }
+        }
+      }
+    },
+    "Utviklet for Kolorist; språkmodell fra Apple (Foundation Models)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developed for Kolorist; language model from Apple (Foundation Models)"
           }
         }
       }
@@ -3933,6 +4295,16 @@
         }
       }
     },
+    "Viser kilder og forklaring": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows sources and explanation"
+          }
+        }
+      }
+    },
     "Vurder paletten": {
       "localizations": {
         "en": {
@@ -3959,6 +4331,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "The critique is made with Apple Intelligence on device when available, otherwise with fixed rules. It includes contrast (WCAG) and color vision."
+          }
+        }
+      }
+    },
+    "W3Cs krav til kontrast mellom tekst/grafikk og bakgrunn, regnet ut fra relativ luminans. «Rett opp» endrer bare lysheten (OKLCH) til kravet er oppfylt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The W3C requirements for contrast between text/graphics and background, computed from relative luminance. “Fix” changes only lightness (OKLCH) until the requirement is met."
+          }
+        }
+      }
+    },
+    "WCAG 2.2 kontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WCAG 2.2 contrast"
           }
         }
       }

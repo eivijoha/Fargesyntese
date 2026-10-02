@@ -54,6 +54,7 @@ struct ICCSeksjon: View {
             Text("Fargestyring (ICC)")
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
+                MetodeHenvisning(.icc, .renCMYK, .ciede2000)
                 HStack {
                     Button("Importer profil …", systemImage: "square.and.arrow.down") { importerer = true }
                     if bibliotek.importerte.contains(where: { $0.id == profil.id }) {

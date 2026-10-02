@@ -68,7 +68,10 @@ struct SammenligningVisning: View {
             } header: { Group {
                 Text("Detaljer")
             }.foregroundStyle(Color.sekundærTekst) } footer: {
-                Text("Beregnet i CIELab D50. Tolkning: under 1 er ikke merkbart, 1–2 merkbart ved nøye sammenligning, 2–3,5 merkbart, over 5 regnes som ulike farger. Kameramålinger påvirkes av lys og hvitbalanse.")
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Beregnet i CIELab D50. Tolkning: under 1 er ikke merkbart, 1–2 merkbart ved nøye sammenligning, 2–3,5 merkbart, over 5 regnes som ulike farger. Kameramålinger påvirkes av lys og hvitbalanse.")
+                    MetodeHenvisning(.ciede2000, .cieLab)
+                }
             }
         }
         .formStyle(.grouped)

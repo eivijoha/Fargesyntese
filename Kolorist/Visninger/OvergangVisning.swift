@@ -122,7 +122,10 @@ struct OvergangVisning: View {
             } header: { Group {
                 Text("Overgang i OKLab – \(antall) toner")
             }.foregroundStyle(Color.sekundærTekst) } footer: {
-                Text("Trykk på en farge for å gjøre den aktiv, eller trykk og hold for å lagre den.")
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Trykk på en farge for å gjøre den aktiv, eller trykk og hold for å lagre den.")
+                    MetodeHenvisning(.oklab)
+                }
             }
 
             // Lysere og mørkere varianter av hver tone; overgangsraden er markert med ramme.
@@ -149,7 +152,10 @@ struct OvergangVisning: View {
                 } header: { Group {
                     Text("Med lysere og mørkere rader")
                 }.foregroundStyle(Color.sekundærTekst) } footer: {
-                    Text("Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.")
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Raden med ramme er selve overgangen. Radene over er lysere, radene under mørkere.")
+                        MetodeHenvisning(.oklab, .cssColor4)
+                    }
                 }
             }
 
@@ -257,7 +263,10 @@ struct CSSGradientSeksjon: View {
         } header: { Group {
             Text("CSS-gradient")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Moderne nettlesere bruker OKLab og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.")
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Moderne nettlesere bruker OKLab og viser nøyaktig samme overgang som her. Eldre nettlesere får tette sRGB-stopp som etterligner den.")
+                MetodeHenvisning(.cssColor4, .oklab)
+            }
         }
     }
 

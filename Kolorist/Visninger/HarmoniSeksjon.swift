@@ -204,7 +204,10 @@ struct HarmoniSeksjon: View {
         } header: {
             Text("Fargeharmonier")
         } footer: {
-            Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør, eller trykk i midten for å starte fra en lagret farge. Metning og lyshet gjelder hele harmonien."))
+            VStack(alignment: .leading, spacing: 6) {
+                Text(sirkel.forklaring + " " + String(localized: "Dra i sirkelen for å endre grunnfargens kulør, eller trykk i midten for å starte fra en lagret farge. Metning og lyshet gjelder hele harmonien."))
+                MetodeHenvisning(.harmonier, .oklab, .cieLab)
+            }
         }
         #if SIRKELEKSPORT
         .fileExporter(isPresented: Binding(get: { sirkeleksport != nil }, set: { if !$0 { sirkeleksport = nil } }),

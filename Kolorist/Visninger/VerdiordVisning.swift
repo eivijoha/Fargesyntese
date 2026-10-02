@@ -112,9 +112,12 @@ struct VerdiordVisning: View {
                 if samtale.arbeider { ProgressView().controlSize(.small) }
             }
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text(forslag.kilde == .appleIntelligence
-                 ? "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen."
-                 : "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).")
+            VStack(alignment: .leading, spacing: 6) {
+                Text(forslag.kilde == .appleIntelligence
+                     ? "Laget med Apple Intelligence på enheten. Tekstfargen er justert til minst WCAG AA mot bakgrunnen."
+                     : "Laget med den innebygde kunnskapsbasen (uten Apple Intelligence).")
+                MetodeHenvisning(.kunnskapsbase, .oklab, .wcag)
+            }
         }
     }
 

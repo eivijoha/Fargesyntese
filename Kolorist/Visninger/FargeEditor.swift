@@ -197,9 +197,12 @@ extension FargeEditor {
                 arbeidsbenk.profilverdier = .init(profilID: profil.id, verdier: verdier, farge: farge)
             }
         } footer: {
-            if let p = kobletProfil {
-                Text("\(arbeidsbenk.modell.navn)-verdiene angis i \(p.navn) og vises slik de gjengis i dette fargerommet.")
-                    .foregroundStyle(Color.sekundærTekst)
+            VStack(alignment: .leading, spacing: 6) {
+                if let p = kobletProfil {
+                    Text("\(arbeidsbenk.modell.navn)-verdiene angis i \(p.navn) og vises slik de gjengis i dette fargerommet.")
+                        .foregroundStyle(Color.sekundærTekst)
+                }
+                MetodeHenvisning(.cssColor4, .oklab, .cieLab, .icc)
             }
         }
 
@@ -247,7 +250,10 @@ extension FargeEditor {
         } header: { Group {
             Text("Lysere og mørkere")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge, eller trykk og hold for å lagre den.")
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Tallene under hver prøve er OKLCH-lyshet i prosent. Trykk på en tone for å gjøre den til aktiv farge, eller trykk og hold for å lagre den.")
+                MetodeHenvisning(.oklab, .cssColor4)
+            }
         }
     }
 }

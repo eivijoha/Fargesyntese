@@ -52,7 +52,10 @@ struct KontrastSeksjon: View {
         } header: { Group {
             Text("Kontrast (WCAG 2.2)")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
-            Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
+                MetodeHenvisning(.wcag, .oklab, .machado)
+            }
         }
     }
 }

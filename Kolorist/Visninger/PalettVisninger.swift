@@ -748,11 +748,17 @@ struct Utviklerlinje: View {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? ""
     }
 
+    @State private var visMetoder = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text("\(appnavn) er utviklet av Eivind Arnstein Johansen.")
             if !versjon.isEmpty { Text("Versjon \(versjon)") }
+            Button("Metoder og kilder", systemImage: "books.vertical") { visMetoder = true }
+                .buttonStyle(.borderless)
+                .padding(.top, 6)
         }
+        .sheet(isPresented: $visMetoder) { MetoderArk() }
         .font(.footnote)
         .foregroundStyle(Color.sekundærTekst)
         .frame(maxWidth: .infinity, alignment: .leading)

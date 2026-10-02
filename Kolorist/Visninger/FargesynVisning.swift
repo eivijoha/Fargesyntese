@@ -116,7 +116,10 @@ struct FargesynVurdering: View {
         } header: {
             Text("Vanskelige fargepar").foregroundStyle(Color.sekundærTekst)
         } footer: { Group {
-            Text("Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg. Simulering etter Machado mfl. (2009).")
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg.")
+                MetodeHenvisning(.machado, .ciede2000, .cssColor4)
+            }
         }.foregroundStyle(Color.sekundærTekst) }
     }
 
