@@ -334,7 +334,8 @@ struct KomponentGlidere: View {
                     set: { ny in
                         var v = gjeldende
                         guard v.indices.contains(i) else { return }
-                        v[i] = ny
+                        // Munsell-kulør i trinn på 2,5 (2.5R, 5R, 7.5R, 10R …), som i Munsell-boka.
+                        v[i] = profil == nil && modell == .munsell && k.erKulør ? Munsell.avrundetKulør(ny) : ny
                         verdier = v
                         let ny = farge(fra: v, alfa: farge.alfa)
                         // Meld verdiene før fargen settes, så begrensningen ser at de er angitt i profilen.

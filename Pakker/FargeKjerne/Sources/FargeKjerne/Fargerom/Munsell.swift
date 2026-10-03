@@ -24,17 +24,26 @@ public struct Munsell: Hashable, Codable, Sendable {
 
     public static let familier = ["R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP"]
 
-    /// Notasjon slik den skrives: «5R 4/14», «2.5PB 6/8» eller «N 5/» for nøytrale.
+    /// Notasjon slik den skrives: «5R 4/14», «2.5PB 6/8» eller «N 5/» for nøytrale. Kuløren avrundes
+    /// til trinn på 2,5 som i Munsell-boka; valør og kroma har én desimal.
     public var notasjon: String {
         let v = Self.tall(valør, maks: 1)
         guard kroma >= 0.25 else { return "N \(v)/" }
         return "\(kulørnavn) \(v)/\(Self.tall(kroma, maks: 1))"
     }
 
-    /// Kulørdelen, f.eks. «5R» eller «2.5PB».
+    /// Kulørtrinnet i Munsell Book of Color: 2.5, 5, 7.5 og 10 i hver familie (40 kulører rundt sirkelen).
+    public static let kulørsteg = 2.5
+
+    /// Kuløren avrundet til nærmeste trinn på 2,5.
+    public static func avrundetKulør(_ h: Double) -> Double {
+        let r = (h / kulørsteg).rounded() * kulørsteg
+        return (r.truncatingRemainder(dividingBy: 100) + 100).truncatingRemainder(dividingBy: 100)
+    }
+
+    /// Kulørdelen avrundet til nærmeste trinn, f.eks. «5R», «7.5YR» eller «10RP».
     public var kulørnavn: String {
-        var h = kulør.truncatingRemainder(dividingBy: 100)
-        if h < 0 { h += 100 }
+        let h = Self.avrundetKulør(kulør)
         var indeks = Int(h / 10)
         var tall = h - Double(indeks) * 10
         // 0 i en familie skrives som 10 i den forrige («10RP», ikke «0R»).

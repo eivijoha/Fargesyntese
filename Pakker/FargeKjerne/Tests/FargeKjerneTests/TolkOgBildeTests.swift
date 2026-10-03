@@ -47,8 +47,8 @@ struct FargetolkTests {
             let f = Farge(hex: hex)!
             let tekst = modell.tekst(for: f)
             let tilbake = try #require(Fargetolk.tolk(tekst), "\(tekst)")
-            // Munsell-notasjonen har én desimal (en tidel i valør er ~0,01 i OKLab-lyshet).
-            #expect(tilbake.avstandOK(til: f) < (modell == .munsell ? 0.02 : 0.005), "\(tekst)")
+            // Munsell-notasjonen har kulør i trinn på 2,5 og én desimal i valør og kroma.
+            #expect(tilbake.avstandOK(til: f) < (modell == .munsell ? 0.035 : 0.005), "\(tekst)")
         }
     }
 

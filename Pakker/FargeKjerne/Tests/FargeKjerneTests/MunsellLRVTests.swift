@@ -10,6 +10,11 @@ struct MunsellTests {
         #expect(Munsell("2.5PB 6/8")?.kulør == 72.5)
         #expect(Munsell("10RP 5/6")?.kulørnavn == "10RP")
         #expect(Munsell("N 5/")?.notasjon == "N 5/")
+        // Kuløren vises i trinn på 2,5, som i Munsell-boka.
+        #expect(Munsell(kulør: 75.6, valør: 5, kroma: 8).kulørnavn == "5PB")
+        #expect(Munsell(kulør: 76.4, valør: 5, kroma: 8).kulørnavn == "7.5PB")
+        #expect(Munsell(kulør: 99.2, valør: 5, kroma: 8).kulørnavn == "10RP")
+        #expect(Munsell(kulør: 0.4, valør: 5, kroma: 8).kulørnavn == "10RP")
         #expect(Munsell("tull") == nil)
     }
 
