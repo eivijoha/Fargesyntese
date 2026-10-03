@@ -441,7 +441,7 @@ struct PalettDetalj: View {
             }
             .font(.title2.weight(.semibold))
             .padding(.horizontal)
-            .padding(.top, 40)
+            .padding(.top, 20)
             .onChange(of: navnIFokus) { _, fokus in if !fokus { redigererNavn = false } }
             if iKolonne {
                 HStack(spacing: 14) { handlinger }
