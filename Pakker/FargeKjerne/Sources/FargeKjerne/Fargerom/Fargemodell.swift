@@ -3,7 +3,7 @@ import Foundation
 /// Fargemodellene brukeren kan redigere i. Gir et felles grensesnitt for
 /// glidebrytere, tallfelt og tekstformatering, uavhengig av rommet.
 public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
-    case okLCH, okLab, cieLCH, cieLab, hsb, hsl, rgb, displayP3, cmyk
+    case okLCH, okLab, cieLCH, cieLab, munsell, hsb, hsl, rgb, displayP3, cmyk
 
     public var id: String { rawValue }
 
@@ -22,6 +22,7 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
         case .rgb: "RGB"
         case .displayP3: "Display P3"
         case .cmyk: "CMYK"
+        case .munsell: "Munsell"
         }
     }
 
@@ -46,6 +47,8 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
         case .hsb: return [k(String(localized: "Kulør", bundle: .module), "H", 0...360, 0, kulør: true), k(String(localized: "Metning", bundle: .module), "S", 0...1, 3), k(String(localized: "Lysstyrke", bundle: .module), "B", 0...1, 3)]
         case .hsl: return [k(String(localized: "Kulør", bundle: .module), "H", 0...360, 0, kulør: true), k(String(localized: "Metning", bundle: .module), "S", 0...1, 3), k(String(localized: "Lyshet", bundle: .module), "L", 0...1, 3)]
         case .rgb, .displayP3: return [k(String(localized: "Rød", bundle: .module), "R", 0...1, 3), k(String(localized: "Grønn", bundle: .module), "G", 0...1, 3), k(String(localized: "Blå", bundle: .module), "B", 0...1, 3)]
+        // Munsell: kulør 0–100 rundt sirkelen (5 = 5R, 15 = 5YR … 95 = 5RP), valør 0–10, kroma 0–30.
+        case .munsell: return [k(String(localized: "Kulør", bundle: .module), "H", 0...100, 1, kulør: true), k(String(localized: "Valør", bundle: .module), "V", 0...10, 1), k(String(localized: "Kroma", bundle: .module), "C", 0...30, 1)]
         case .cmyk: return [k("Cyan", "C", 0...1, 3), k("Magenta", "M", 0...1, 3), k(String(localized: "Gul", bundle: .module), "Y", 0...1, 3), k(String(localized: "Sort", bundle: .module), "K", 0...1, 3)]
         }
     }
@@ -62,6 +65,7 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
         case .rgb: let v = f.sRGB; return [v.r, v.g, v.b]
         case .displayP3: let v = f.displayP3; return [v.r, v.g, v.b]
         case .cmyk: let v = f.naivCMYK; return [v.c, v.m, v.y, v.k]
+        case .munsell: let m = f.munsell; return [m.kulør, m.valør, m.kroma]
         }
     }
 
@@ -78,6 +82,10 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
         case .rgb: return Farge(sRGB: SRGB(r: v[0], g: v[1], b: v[2]), alfa: alfa)
         case .displayP3: return Farge(displayP3: DisplayP3(r: v[0], g: v[1], b: v[2]), alfa: alfa)
         case .cmyk: return Farge(naivCMYK: CMYK(c: v[0], m: v[1], y: v[2], k: v[3]), alfa: alfa)
+        case .munsell:
+            // Utenfor renotasjonsdataene (svært lav valør eller ekstrem kroma): grå med samme valør.
+            let m = Munsell(kulør: v[0], valør: v[1], kroma: v[2])
+            return Farge(munsell: m, alfa: alfa) ?? Farge(munsell: Munsell(kulør: 0, valør: v[1], kroma: 0), alfa: alfa) ?? Farge(lineærR: 0, g: 0, b: 0, alfa: alfa)
         }
     }
 
@@ -98,6 +106,7 @@ public enum Fargemodell: String, CaseIterable, Codable, Sendable, Identifiable {
         case .rgb: return "rgb(\(v.prefix(3).map { String(Int(($0.klampet(0, 1) * 255).rounded())) }.joined(separator: " ")))"
         case .displayP3: return "color(display-p3 \(t(0, 4)) \(t(1, 4)) \(t(2, 4)))"
         case .cmyk: return "cmyk(\((0..<4).map(prosent).joined(separator: " ")))"
+        case .munsell: return f.munsell.notasjon
         }
     }
 }

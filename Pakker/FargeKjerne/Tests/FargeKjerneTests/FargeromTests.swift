@@ -56,7 +56,8 @@ struct FargeromTests {
         for hex in ["#3366CC", "#E8A33D", "#1B1B1B", "#F2F2F2", "#7A2E8F"] {
             let f = Farge(hex: hex)!
             let tilbake = modell.farge(fra: modell.verdier(for: f))
-            #expect(tilbake.avstandOK(til: f) < 1e-6, "\(modell.navn) \(hex)")
+            // Munsell regnes ut ved iterasjon mot tabelldata, de andre analytisk.
+            #expect(tilbake.avstandOK(til: f) < (modell == .munsell ? 0.003 : 1e-6), "\(modell.navn) \(hex)")
         }
     }
 

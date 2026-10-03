@@ -223,9 +223,7 @@ extension FargeEditor {
             ForEach(Fargemodell.allCases) { modell in
                 VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
             }
-            // For arkitekter: Munsell-notasjon og lysrefleksjonsverdi.
-            let munsell = farge.munsell.notasjon
-            VerdiRad(navn: "Munsell", tekst: munsell) { Utklippstavle.kopierTekst(munsell) }
+            // For arkitekter: lysrefleksjonsverdi (Munsell står blant modellene over).
             let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
             VerdiRad(navn: "LRV", tekst: lrv) { Utklippstavle.kopierTekst(lrv) }
             GamutOversikt(farge: farge)
@@ -297,6 +295,12 @@ struct KomponentGlidere: View {
         return modell.farge(fra: v, alfa: alfa)
     }
 
+    /// Verdien slik den vises ved glideren. Munsell-kulør vises som notasjon («5.5PB»), ikke som tall 0–100.
+    private func verditekst(_ v: Double, _ k: Fargemodell.Komponent) -> String {
+        if profil == nil, modell == .munsell, k.erKulør { return Munsell(kulør: v, valør: 5, kroma: 2).kulørnavn }
+        return v.formatted(.number.precision(.fractionLength(k.desimaler)))
+    }
+
     /// Fargene langs sporet for komponent `i`: de andre komponentene holdes fast, så sporet viser
     /// nøyaktig hva gliden gir. Farger utenfor skjermens gamut kartlegges ved visning.
     private func spor(for i: Int, område: ClosedRange<Double>, prøver: Int = 24) -> [Color] {
@@ -339,8 +343,8 @@ struct KomponentGlidere: View {
                     }
                 ), område: k.område, spor: spor(for: i, område: k.område), gjeldende: farge.swiftUI,
                    tittel: Text(k.navn),
-                   verdiTekst: gjeldende[i].formatted(.number.precision(.fractionLength(k.desimaler))))
-                Text(gjeldende[i], format: .number.precision(.fractionLength(k.desimaler)))
+                   verdiTekst: verditekst(gjeldende[i], k))
+                Text(verditekst(gjeldende[i], k))
                     .font(.callout.monospacedDigit())
                     .foregroundStyle(Color.sekundærTekst)
                     .frame(width: 52, alignment: .trailing)

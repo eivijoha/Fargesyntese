@@ -5,11 +5,11 @@ import Foundation
 import SwiftData
 
 enum FargemodellAppEnum: String, AppEnum {
-    case okLCH, okLab, cieLCH, cieLab, hsb, hsl, rgb, displayP3, cmyk
+    case okLCH, okLab, cieLCH, cieLab, munsell, hsb, hsl, rgb, displayP3, cmyk
 
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Fargemodell")
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .okLCH: "OKLCH", .okLab: "OKLab", .cieLCH: "LCH", .cieLab: "CIELab",
+        .okLCH: "OKLCH", .okLab: "OKLab", .cieLCH: "LCH", .cieLab: "CIELab", .munsell: "Munsell",
         .hsb: "HSB", .hsl: "HSL", .rgb: "RGB", .displayP3: "Display P3", .cmyk: "CMYK",
     ]
 

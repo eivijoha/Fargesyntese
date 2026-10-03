@@ -737,6 +737,16 @@
         }
       }
     },
+    "Valør": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value"
+          }
+        }
+      }
+    },
     "Varmere": {
       "localizations": {
         "en": {
