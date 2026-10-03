@@ -1089,6 +1089,26 @@
         }
       }
     },
+    "Fargebiblioteker": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour libraries"
+          }
+        }
+      }
+    },
+    "Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner, som RAL, NCS, malingsprodusentenes kart eller Freetone. Kolorist leverer ingen slike kart; du importerer dine egne.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour libraries: .ase (Adobe Swatch Exchange), .aco (Photoshop swatches) and .acb (Adobe Color Book) – colour charts with named tones, such as RAL, NCS, paint manufacturers’ charts or Freetone. Kolorist ships no such charts; you import your own."
+          }
+        }
+      }
+    },
     "Fargeharmonier": {
       "localizations": {
         "en": {
@@ -1229,6 +1249,16 @@
         }
       }
     },
+    "Filen slettes fra denne enheten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file is deleted from this device."
+          }
+        }
+      }
+    },
     "Filen slettes fra denne enheten. Farger som er lagret i profilen, beholder verdiene sine.": {
       "localizations": {
         "en": {
@@ -1239,12 +1269,42 @@
         }
       }
     },
+    "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file is deleted from iCloud Drive and disappears from all your devices."
+          }
+        }
+      }
+    },
     "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine. Farger som er lagret i profilen, beholder verdiene sine.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "The file is deleted from iCloud Drive and disappears from all your devices. Colours saved in the profile keep their values."
+          }
+        }
+      }
+    },
+    "Filene lagres på denne enheten (iCloud Drive er ikke tilgjengelig).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The files are stored on this device (iCloud Drive is not available)."
+          }
+        }
+      }
+    },
+    "Filene ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene dine.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The files are kept in iCloud Drive › Kolorist › Profiles and sync between your devices."
           }
         }
       }
@@ -1755,12 +1815,12 @@
         }
       }
     },
-    "ICC-profil": {
+    "ICC-profiler": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "ICC profile"
+            "value": "ICC profiles"
           }
         }
       }
@@ -1775,6 +1835,16 @@
         }
       }
     },
+    "ICC-profiler: .icc og .icm – for eksempel trykkprofilen fra trykkeriet (FOGRA, GRACoL) eller en skjermprofil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ICC profiles: .icc and .icm – for example the press profile from your printer (FOGRA, GRACoL) or a display profile."
+          }
+        }
+      }
+    },
     "Ikke bestått": {
       "localizations": {
         "en": {
@@ -1785,22 +1855,42 @@
         }
       }
     },
-    "Importer .icc- eller .icm-filer, for eksempel trykkprofilen fra trykkeriet.": {
+    "Importer": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Import .icc or .icm files, for example the press profile from your printer."
+            "value": "Import"
           }
         }
       }
     },
-    "Importer et fargebibliotek (ASE, ACO eller ACB) i Paletter for å finne nærmeste navngitte tone.": {
+    "Importer ICC-profil …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Import a colour library (ASE, ACO or ACB) in Palettes to find the nearest named tone."
+            "value": "Import ICC profile …"
+          }
+        }
+      }
+    },
+    "Importer ICC-profiler eller fargebiblioteker nedenfor. De vises under «Vis også» i Studio.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import ICC profiles or colour libraries below. They appear under “Also show” in Studio."
+          }
+        }
+      }
+    },
+    "Importer et fargebibliotek (ASE, ACO eller ACB) under «Mine fargerom» i Studio for å finne nærmeste navngitte tone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import a colour library (ASE, ACO or ACB) under “My colour spaces” in Studio to find the nearest named tone."
           }
         }
       }
@@ -1815,16 +1905,6 @@
         }
       }
     },
-    "Importer profil …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import profile …"
-          }
-        }
-      }
-    },
     "Importerte": {
       "localizations": {
         "en": {
@@ -1835,32 +1915,32 @@
         }
       }
     },
-    "Importerte profiler lagres på denne enheten (iCloud Drive er ikke tilgjengelig).": {
+    "Importerte ICC-profiler og fargebiblioteker lagres på denne enheten (iCloud Drive er ikke tilgjengelig).": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Imported profiles are stored on this device (iCloud Drive is not available)."
+            "value": "Imported ICC profiles and colour libraries are stored on this device (iCloud Drive is not available)."
           }
         }
       }
     },
-    "Importerte profiler ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder.": {
+    "Importerte ICC-profiler og fargebiblioteker ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge filer der fra Filer eller Finder.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Imported profiles live in iCloud Drive › Kolorist › Profiler and sync between your devices. You can also add .icc files there from Files or Finder."
+            "value": "Imported ICC profiles and colour libraries are kept in iCloud Drive › Kolorist › Profiles and sync between devices. You can also put files there from Files or Finder."
           }
         }
       }
     },
-    "Ingen egne profiler": {
+    "Ingen egne fargerom": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No profiles of your own"
+            "value": "No colour spaces of your own"
           }
         }
       }
@@ -2333,16 +2413,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn't import"
-          }
-        }
-      }
-    },
-    "Kunne ikke legge til profilen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Couldn’t add the profile"
           }
         }
       }
@@ -3053,22 +3123,32 @@
         }
       }
     },
-    "Mine profiler": {
+    "Mine ICC-profiler": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "My profiles"
+            "value": "My ICC profiles"
           }
         }
       }
     },
-    "Mine profiler …": {
+    "Mine fargerom": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "My profiles …"
+            "value": "My colour spaces"
+          }
+        }
+      }
+    },
+    "Mine fargerom …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My colour spaces …"
           }
         }
       }
@@ -3241,6 +3321,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nearest in library"
+          }
+        }
+      }
+    },
+    "Nærmeste tone · ΔE00 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearest tone · ΔE00 %@"
           }
         }
       }
@@ -3511,26 +3601,6 @@
         }
       }
     },
-    "Profilene lagres på denne enheten (iCloud Drive er ikke tilgjengelig).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The profiles are stored on this device (iCloud Drive is not available)."
-          }
-        }
-      }
-    },
-    "Profilene ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene dine.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The profiles are kept in iCloud Drive › Kolorist › Profiles and sync between your devices."
-          }
-        }
-      }
-    },
     "På, %lld prosent": {
       "localizations": {
         "en": {
@@ -3747,6 +3817,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Delete"
+          }
+        }
+      }
+    },
+    "Slett biblioteket": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete library"
           }
         }
       }
@@ -4121,6 +4201,16 @@
         }
       }
     },
+    "Tomt bibliotek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty library"
+          }
+        }
+      }
+    },
     "Toner": {
       "localizations": {
         "en": {
@@ -4405,6 +4495,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose base colour from saved colours"
+          }
+        }
+      }
+    },
+    "Velges under «Vis også» i Studio: høyre halvdel viser nærmeste tone i biblioteket, og «Begrens nye farger» låser farger, toner og harmonier til bibliotekets toner.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chosen under “Also show” in Studio: the right half shows the nearest tone in the library, and “Limit new colours” locks colours, tones and harmonies to the library’s tones."
           }
         }
       }

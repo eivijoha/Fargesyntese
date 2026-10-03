@@ -18,10 +18,13 @@ struct FargeEditor: View {
     @Environment(ProfilBibliotek.self) private var bibliotek
 
     private var visOgsåProfil: ICCProfil { bibliotek.profil(id: visOgsåID) ?? .sRGB }
+    /// Fargebibliotek valgt under «Vis også» (i stedet for en profil): høyre halvdel viser nærmeste tone.
+    private var visOgsåBibliotek: Fargebibliotek? { bibliotek.fargebibliotek(id: visOgsåID) }
 
     /// Når fargemodellen og valgt ICC-profil er av samme slag (CMYK + CMYK-profil, RGB + RGB-profil),
     /// angis verdiene direkte i profilen: gliderne er profilens CMYK/RGB, og fargen er alltid innenfor.
     private var kobletProfil: ICCProfil? {
+        guard visOgsåBibliotek == nil else { return nil }
         let p = visOgsåProfil
         switch (arbeidsbenk.modell, p.modell) {
         case (.cmyk, .cmyk): return p
@@ -56,7 +59,7 @@ struct FargeEditor: View {
     private func fargepanel(_ farge: Farge, bred: Bool) -> some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         VStack(spacing: 0) {
-            Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, hensikt: hensikt,
+            Fargeflate(farge: farge, modell: arbeidsbenk.modell, profil: visOgsåProfil, fargebibliotek: visOgsåBibliotek, hensikt: hensikt,
                        kobletVerdier: kobletProfil.map { arbeidsbenk.profilverdier(for: $0) ?? farge.komponenter(i: $0, hensikt: hensikt) ?? [] },
                        renCMYK: renCMYK,
                        stablet: bred,
@@ -173,8 +176,14 @@ struct FargeEditor: View {
         .onAppear {
             hexTekst = farge.hex()
             arbeidsbenk.begrensProfil = visOgsåProfil
+            arbeidsbenk.begrensBibliotek = visOgsåBibliotek
         }
-        .onChange(of: visOgsåID) { arbeidsbenk.begrensProfil = visOgsåProfil }
+        .onChange(of: visOgsåID) {
+            arbeidsbenk.begrensProfil = visOgsåProfil
+            arbeidsbenk.begrensBibliotek = visOgsåBibliotek
+        }
+        // Biblioteket kan komme inn via iCloud etter at Studio ble vist.
+        .onChange(of: bibliotek.fargebiblioteker.map(\.id)) { arbeidsbenk.begrensBibliotek = visOgsåBibliotek }
         .onChange(of: farge) { _, ny in hexTekst = ny.hex() }
         .dropDestination(for: Farge.self) { farger, _ in
             guard let f = farger.first else { return false }
@@ -496,6 +505,8 @@ struct Fargeflate: View {
     /// Fargemodellen som er valgt i Studio – venstre halvdel viser verdiene i den.
     let modell: Fargemodell
     let profil: ICCProfil
+    /// Valgt fargebibliotek i stedet for profil: høyre halvdel viser nærmeste tone med navn og ΔE00.
+    var fargebibliotek: Fargebibliotek? = nil
     var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
     /// Verdiene i profilen når modellen er koblet til den (CMYK/RGB angitt direkte i profilen).
     /// Da er fargen per definisjon innenfor rommet, og begge halvdeler viser profilverdiene.
@@ -547,7 +558,18 @@ struct Fargeflate: View {
         let venstre = PalettFarge(farge: farge, representasjon: Fargerepresentasjon(modell: modell, farge: farge))
         let oppsett = stablet ? AnyLayout(VStackLayout(spacing: 0)) : AnyLayout(HStackLayout(spacing: 0))
         oppsett {
-            if kobletVerdier != nil {
+            if let fargebibliotek {
+                halvdel(venstre, tittel: modell.navn, tekst: modell.tekst(for: farge),
+                        merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
+                if let n = fargebibliotek.nærmeste(til: farge) {
+                    // Tonen beholder navnet sitt, så den kan lagres og kopieres som bibliotekstone.
+                    let tone = PalettFarge(navn: n.tone.navn, farge: n.tone.farge, opphav: .bibliotek, representasjon: n.tone.representasjon)
+                    halvdel(tone, tittel: fargebibliotek.navn, tekst: n.tone.visningsnavn,
+                            merknad: n.avstand < 1 ? nil : String(localized: "Nærmeste tone · ΔE00 \(String(format: "%.1f", n.avstand))"))
+                } else {
+                    halvdel(venstre, tittel: fargebibliotek.navn, tekst: String(localized: "Tomt bibliotek"))
+                }
+            } else if kobletVerdier != nil {
                 // Verdiene er angitt direkte i profilen: én flate, ingen sammenligning å vise.
                 halvdel(høyreFarge, tittel: "\(modell.navn) · \(profil.navn)", tekst: høyre.tekst,
                         merknad: farge.erIDisplayP3 ? nil : String(localized: "Utenfor P3"))
@@ -609,13 +631,13 @@ struct VisOgsåMeny: View {
     let farge: Farge
     @AppStorage("renCMYK") private var renCMYK = false
     @Environment(ProfilBibliotek.self) private var bibliotek
-    @State private var importerer = false
-    @State private var importfeil: String?
     @State private var visMineProfiler = false
 
     /// Standardrommene: sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB og Generic CMYK.
     private var standard: [ICCProfil] { ICCProfil.innebygde }
-    private var valgtNavn: String { bibliotek.profil(id: valgtID).map(bibliotek.visningsnavn) ?? ICCProfil.sRGB.navn }
+    private var valgtNavn: String {
+        bibliotek.fargebibliotek(id: valgtID)?.navn ?? bibliotek.profil(id: valgtID).map(bibliotek.visningsnavn) ?? ICCProfil.sRGB.navn
+    }
 
     #if os(macOS)
     /// Installerte profiler gruppert etter mappe: Systemet og Maskinen først, så mappene alfabetisk, Brukeren sist.
@@ -650,18 +672,23 @@ struct VisOgsåMeny: View {
                 Toggle("Rene CMYK-farger (UCR/GCR)", isOn: $renCMYK)
             }
             Divider()
-            Button("ICC-profil", systemImage: "plus") { importerer = true }
-            if !bibliotek.importerte.isEmpty {
-                Button("Mine profiler …", systemImage: "list.bullet") { visMineProfiler = true }
-            }
+            // Import og sletting av ICC-profiler og fargebiblioteker skjer i «Mine fargerom».
+            Button("Mine fargerom …", systemImage: "books.vertical") { visMineProfiler = true }
             Divider()
             Picker("Standard", selection: $valgtID) {
                 ForEach(standard) { valg($0) }
             }
             .pickerStyle(.inline)
             if !bibliotek.importerte.isEmpty {
-                Picker("Mine profiler", selection: $valgtID) {
+                Picker("Mine ICC-profiler", selection: $valgtID) {
                     ForEach(bibliotek.importerte) { valg($0) }
+                }
+                .pickerStyle(.inline)
+            }
+            if !bibliotek.fargebiblioteker.isEmpty {
+                // Fargebibliotek som «fargerom»: høyre halvdel viser nærmeste tone, og begrensningen låser til den.
+                Picker("Fargebiblioteker", selection: $valgtID) {
+                    ForEach(bibliotek.fargebiblioteker) { b in Text("\(b.navn) (\(b.farger.count))").tag(b.id) }
                 }
                 .pickerStyle(.inline)
             }
@@ -707,21 +734,6 @@ struct VisOgsåMeny: View {
         // En installert Mac-profil som velges, kopieres til «Mine profiler» og synkes til de andre enhetene.
         .onChange(of: valgtID) { _, ny in
             if let p = bibliotek.profil(id: ny) { bibliotek.taMedTilMineProfiler(p) }
-        }
-        .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
-            do {
-                let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }
-                // Siste importerte profil vises med en gang.
-                if let siste = profiler.last { valgtID = siste.id }
-            } catch {
-                importfeil = error.localizedDescription
-            }
-        }
-        .sheet(isPresented: $visMineProfiler) { MineProfilerArk(valgtID: $valgtID) }
-        .alert("Kunne ikke legge til profilen", isPresented: Binding(get: { importfeil != nil }, set: { if !$0 { importfeil = nil } })) {
-            Button("OK") {}
-        } message: {
-            Text(importfeil ?? "")
         }
     }
 }

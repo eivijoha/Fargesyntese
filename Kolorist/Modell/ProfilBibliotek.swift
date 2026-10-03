@@ -12,6 +12,8 @@ final class ProfilBibliotek {
     /// Ett bibliotek for hele appen, så dra-og-slipp kan slå opp profilen en farge er lagret i.
     static let delt = ProfilBibliotek()
     private(set) var importerte: [ICCProfil] = []
+    /// Importerte fargebiblioteker (ASE/ACO/ACB) i samme mappe som profilene, så de følger med via iCloud Drive.
+    private(set) var fargebiblioteker: [Fargebibliotek] = []
     /// Om profilene synkroniseres via iCloud Drive.
     private(set) var brukerICloud = false
 
@@ -54,6 +56,9 @@ final class ProfilBibliotek {
     }
 
     func profil(id: String) -> ICCProfil? { alle.first { $0.id == id } }
+    func fargebibliotek(id: String) -> Fargebibliotek? { fargebiblioteker.first { $0.id == id } }
+
+    static let bibliotekendelser = ["ase", "aco", "acb"]
 
     enum Feil: LocalizedError {
         case ugyldig(String)
@@ -97,15 +102,40 @@ final class ProfilBibliotek {
         return true
     }
 
+    /// Importerer et fargebibliotek (.ase/.aco/.acb) til profilmappen.
+    @discardableResult
+    func importerBibliotek(fra url: URL) throws -> Fargebibliotek {
+        let tilgang = url.startAccessingSecurityScopedResource()
+        defer { if tilgang { url.stopAccessingSecurityScopedResource() } }
+        let data = try Data(contentsOf: url)
+        let bibliotek = try Fargebibliotek(data: data, filnavn: url.lastPathComponent)
+        if let finnes = fargebiblioteker.first(where: { $0.id == bibliotek.id }) { return finnes }
+        let mål = ledigFilnavn(for: bibliotek.navn, endelse: url.pathExtension.lowercased())
+        try skriv(data, til: mål)
+        filer[bibliotek.id] = mål
+        fargebiblioteker.append(bibliotek)
+        sorter()
+        return bibliotek
+    }
+
+    func fjern(_ bibliotek: Fargebibliotek) {
+        slettFil(for: bibliotek.id)
+        fargebiblioteker.removeAll { $0.id == bibliotek.id }
+    }
+
     func fjern(_ profil: ICCProfil) {
-        if let fil = filer[profil.id] {
+        slettFil(for: profil.id)
+        importerte.removeAll { $0.id == profil.id }
+    }
+
+    private func slettFil(for id: String) {
+        if let fil = filer[id] {
             var feil: NSError?
             NSFileCoordinator().coordinate(writingItemAt: fil, options: .forDeleting, error: &feil) { url in
                 try? FileManager.default.removeItem(at: url)
             }
         }
-        filer[profil.id] = nil
-        importerte.removeAll { $0.id == profil.id }
+        filer[id] = nil
     }
 
     // MARK: - Lesing
@@ -113,15 +143,26 @@ final class ProfilBibliotek {
     private func lastInn() {
         let urler = (try? FileManager.default.contentsOfDirectory(at: mappe, includingPropertiesForKeys: nil)) ?? []
         var nye: [ICCProfil] = []
+        var nyeBiblioteker: [Fargebibliotek] = []
         var nyeFiler: [String: URL] = [:]
-        for url in urler where ["icc", "icm"].contains(url.pathExtension.lowercased()) {
-            guard let data = les(url), let p = ICCProfil(data: data, navn: url.deletingPathExtension().lastPathComponent),
-                  nyeFiler[p.id] == nil
-            else { continue }
-            nye.append(p)
-            nyeFiler[p.id] = url
+        for url in urler {
+            let endelse = url.pathExtension.lowercased()
+            if ["icc", "icm"].contains(endelse) {
+                guard let data = les(url), let p = ICCProfil(data: data, navn: url.deletingPathExtension().lastPathComponent),
+                      nyeFiler[p.id] == nil
+                else { continue }
+                nye.append(p)
+                nyeFiler[p.id] = url
+            } else if Self.bibliotekendelser.contains(endelse) {
+                guard let data = les(url), let b = try? Fargebibliotek(data: data, filnavn: url.lastPathComponent),
+                      nyeFiler[b.id] == nil
+                else { continue }
+                nyeBiblioteker.append(b)
+                nyeFiler[b.id] = url
+            }
         }
         importerte = nye
+        fargebiblioteker = nyeBiblioteker
         filer = nyeFiler
         sorter()
     }
@@ -144,14 +185,14 @@ final class ProfilBibliotek {
     }
 
     /// Lesbare filnavn, siden brukeren ser mappen i Filer/Finder.
-    private func ledigFilnavn(for navn: String) -> URL {
+    private func ledigFilnavn(for navn: String, endelse: String = "icc") -> URL {
         let rent = navn.components(separatedBy: CharacterSet(charactersIn: "/\\:?%*|\"<>")).joined(separator: "-")
             .trimmingCharacters(in: .whitespaces)
-        let basis = rent.isEmpty ? "Profil" : rent
-        var url = mappe.appending(path: "\(basis).icc")
+        let basis = rent.isEmpty ? (endelse == "icc" ? "Profil" : "Fargebibliotek") : rent
+        var url = mappe.appending(path: "\(basis).\(endelse)")
         var n = 2
         while FileManager.default.fileExists(atPath: url.path) {
-            url = mappe.appending(path: "\(basis) \(n).icc")
+            url = mappe.appending(path: "\(basis) \(n).\(endelse)")
             n += 1
         }
         return url
@@ -159,6 +200,7 @@ final class ProfilBibliotek {
 
     private func sorter() {
         importerte.sort { $0.navn.localizedStandardCompare($1.navn) == .orderedAscending }
+        fargebiblioteker.sort { $0.navn.localizedStandardCompare($1.navn) == .orderedAscending }
     }
 
     // MARK: - iCloud
@@ -184,10 +226,11 @@ final class ProfilBibliotek {
     /// Profiler importert før iCloud var tilgjengelig, flyttes inn i iCloud-mappen.
     private func flyttLokaleProfiler(til skyMappe: URL) {
         let lokale = (try? FileManager.default.contentsOfDirectory(at: Self.lokalMappe, includingPropertiesForKeys: nil)) ?? []
-        for fil in lokale where ["icc", "icm"].contains(fil.pathExtension.lowercased()) {
-            let navn = ICCBeskrivelseNavn.navn(for: fil) ?? fil.deletingPathExtension().lastPathComponent
-            var mål = skyMappe.appending(path: "\(navn).icc")
-            if FileManager.default.fileExists(atPath: mål.path) { mål = skyMappe.appending(path: "\(navn) \(UUID().uuidString.prefix(4)).icc") }
+        for fil in lokale where (["icc", "icm"] + Self.bibliotekendelser).contains(fil.pathExtension.lowercased()) {
+            let endelse = fil.pathExtension.lowercased()
+            let navn = (endelse == "icc" || endelse == "icm" ? ICCBeskrivelseNavn.navn(for: fil) : nil) ?? fil.deletingPathExtension().lastPathComponent
+            var mål = skyMappe.appending(path: "\(navn).\(endelse)")
+            if FileManager.default.fileExists(atPath: mål.path) { mål = skyMappe.appending(path: "\(navn) \(UUID().uuidString.prefix(4)).\(endelse)") }
             try? FileManager.default.setUbiquitous(true, itemAt: fil, destinationURL: mål)
         }
     }
@@ -196,8 +239,10 @@ final class ProfilBibliotek {
     private func startSpørring() {
         let q = NSMetadataQuery()
         q.searchScopes = [NSMetadataQueryUbiquitousDocumentsScope]
-        q.predicate = NSPredicate(format: "%K LIKE[c] '*.icc' OR %K LIKE[c] '*.icm'",
-                                  NSMetadataItemFSNameKey, NSMetadataItemFSNameKey)
+        let endelser = ["icc", "icm"] + Self.bibliotekendelser
+        q.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: endelser.map {
+            NSPredicate(format: "%K LIKE[c] %@", NSMetadataItemFSNameKey, "*.\($0)")
+        })
         let oppdater: @Sendable (Notification) -> Void = { [weak self] _ in
             Task { @MainActor in self?.håndterSpørring() }
         }

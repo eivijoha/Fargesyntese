@@ -19,12 +19,9 @@ enum Skjermbildemodus {
         palett.farger = farger.map { PalettFarge(farge: $0, opphav: .manuell) }
         try? kontekst.save()
         UserDefaults.standard.set(palett.id.uuidString, forKey: "vurderingPalett")
-        // `-bibliotekfil <sti>`: importer et fargebibliotek (til test av «Nærmeste i bibliotek» i simulatoren).
-        if let sti = UserDefaults.standard.string(forKey: "bibliotekfil"), let data = FileManager.default.contents(atPath: sti),
-           let bibliotek = try? Bibliotekimport.les(data, filnavn: (sti as NSString).lastPathComponent),
-           !((try? kontekst.fetch(FetchDescriptor<PalettDokument>()))?.contains { $0.navn == bibliotek.navn } ?? false) {
-            kontekst.insert(PalettDokument(bibliotek))
-            try? kontekst.save()
+        // `-bibliotekfil <sti>`: importer et fargebibliotek (til test i simulatoren, der dokumentvelgeren ikke virker).
+        if let sti = UserDefaults.standard.string(forKey: "bibliotekfil") {
+            _ = try? ProfilBibliotek.delt.importerBibliotek(fra: URL(fileURLWithPath: sti))
         }
     }
 }

@@ -10,9 +10,7 @@ struct ICCSeksjon: View {
     @Binding var profilID: String
     @Environment(ProfilBibliotek.self) private var bibliotek
     @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
-    @State private var importerer = false
     @State private var visMineProfiler = false
-    @State private var feil: String?
 
     private var profil: ICCProfil { bibliotek.profil(id: profilID) ?? .sRGB }
 
@@ -57,34 +55,18 @@ struct ICCSeksjon: View {
             VStack(alignment: .leading, spacing: 6) {
                 MetodeHenvisning(.icc, .renCMYK, .ciede2000)
                 HStack {
-                    Button("Importer profil …", systemImage: "square.and.arrow.down") { importerer = true }
-                    if !bibliotek.importerte.isEmpty {
-                        // Sletting skjer i oversikten, med bekreftelse – filen forsvinner fra alle enhetene.
-                        Button("Mine profiler …", systemImage: "list.bullet") { visMineProfiler = true }
-                    }
+                    // Import og sletting skjer i oversikten, med bekreftelse – filen forsvinner fra alle enhetene.
+                    Button("Mine fargerom …", systemImage: "books.vertical") { visMineProfiler = true }
                 }
                 .buttonStyle(.borderless)
                 .font(.callout)
                 Text(bibliotek.brukerICloud
-                     ? "Importerte profiler ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge .icc-filer der fra Filer eller Finder."
-                     : "Importerte profiler lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
+                     ? "Importerte ICC-profiler og fargebiblioteker ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge filer der fra Filer eller Finder."
+                     : "Importerte ICC-profiler og fargebiblioteker lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
                     .font(.caption)
             }
         }
         .sheet(isPresented: $visMineProfiler) { MineProfilerArk(valgtID: $profilID) }
-        .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
-            do {
-                let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }
-                if let siste = profiler.last { profilID = siste.id }
-            } catch {
-                feil = error.localizedDescription
-            }
-        }
-        .alert("Kunne ikke importere", isPresented: Binding(get: { feil != nil }, set: { if !$0 { feil = nil } })) {
-            Button("OK") {}
-        } message: {
-            Text(feil ?? "")
-        }
     }
 
     static let profiltyper: [UTType] = [

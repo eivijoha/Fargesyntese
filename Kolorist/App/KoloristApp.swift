@@ -60,7 +60,10 @@ final class Arbeidsbenk {
             // Unngå løkke: begrens bare når fargen faktisk er utenfor.
             // Verdier angitt direkte i begrensningsprofilen er innenfor per definisjon (en rundtur kan
             // likevel gi små avvik, særlig i mørke CMYK-farger).
-            if let profil = begrensning, profilverdier(for: profil) == nil, !aktivFarge.erInnenfor(profil) {
+            if let bibliotek = bibliotekbegrensning {
+                // Fargebibliotek: fargen låses til nærmeste tone (ingen løkke – tonen er sin egen nærmeste).
+                if let n = bibliotek.nærmeste(til: aktivFarge), n.avstand > 0.001 { aktivFarge = n.tone.farge }
+            } else if let profil = begrensning, profilverdier(for: profil) == nil, !aktivFarge.erInnenfor(profil) {
                 aktivFarge = aktivFarge.begrenset(til: profil)
             }
         }
@@ -79,12 +82,21 @@ final class Arbeidsbenk {
         didSet { if begrensAktiv { aktivFarge = begrens(aktivFarge) } }
     }
 
-    var begrensning: ICCProfil? { begrensAktiv ? begrensProfil : nil }
+    /// Fargebiblioteket som er valgt under «Vis også» (i stedet for en ICC-profil). Settes av Studio.
+    var begrensBibliotek: Fargebibliotek? {
+        didSet { if begrensAktiv { aktivFarge = begrens(aktivFarge) } }
+    }
+
+    var begrensning: ICCProfil? { begrensAktiv && begrensBibliotek == nil ? begrensProfil : nil }
+    var bibliotekbegrensning: Fargebibliotek? { begrensAktiv ? begrensBibliotek : nil }
 
     /// Grov gamut for beregninger i kjernen; den nøyaktige begrensningen gjøres av `begrens`.
-    var gamut: Gamut { begrensAktiv && begrensProfil.id == ICCProfil.sRGB.id ? .sRGB : .displayP3 }
+    var gamut: Gamut { begrensAktiv && begrensBibliotek == nil && begrensProfil.id == ICCProfil.sRGB.id ? .sRGB : .displayP3 }
 
+    /// Brukes på alle nye og avledede farger (toner, harmonier, overganger): innenfor valgt profil,
+    /// eller nærmeste tone i valgt fargebibliotek.
     func begrens(_ farge: Farge) -> Farge {
+        if let bibliotek = bibliotekbegrensning { return bibliotek.nærmeste(til: farge)?.tone.farge ?? farge }
         guard let profil = begrensning else { return farge }
         return farge.begrenset(til: profil)
     }
