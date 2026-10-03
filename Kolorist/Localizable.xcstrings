@@ -389,6 +389,16 @@
         }
       }
     },
+    "%lld verdier er skjult. Velg hvilke som vises under «Tilpass visningen».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld values are hidden. Choose which are shown under “Customise view”."
+          }
+        }
+      }
+    },
     "%lld°": {
       "localizations": {
         "en": {
@@ -405,6 +415,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 hard-to-tell pair"
+          }
+        }
+      }
+    },
+    "1 verdi er skjult. Velg hvilke som vises under «Tilpass visningen».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 value is hidden. Choose which are shown under “Customise view”."
           }
         }
       }
@@ -455,16 +475,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Active colour"
-          }
-        }
-      }
-    },
-    "Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The active colour is tested as text/graphics against the background. “Fix” only changes lightness and keeps hue and saturation. “Show with” simulates a colour vision deficiency in the preview; the WCAG requirements always apply to the actual colours."
           }
         }
       }
@@ -585,6 +595,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Background"
+          }
+        }
+      }
+    },
+    "Bakgrunn eller tilstøtende flate": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background or adjacent surface"
           }
         }
       }
@@ -939,6 +959,16 @@
         }
       }
     },
+    "Dra for å endre rekkefølgen. Slå av for å legge panelet sammen – det kan også gjøres med pilen i overskriften.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to change the order. Turn off to collapse the panel – you can also use the arrow in its header."
+          }
+        }
+      }
+    },
     "Dra i sirkelen for å endre grunnfargens kulør, eller trykk i midten for å starte fra en lagret farge. Metning og lyshet gjelder hele harmonien.": {
       "localizations": {
         "en": {
@@ -1125,6 +1155,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Colour model"
+          }
+        }
+      }
+    },
+    "Fargen testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The colour is tested as text/graphics against the background. “Fix” only changes lightness and keeps hue and saturation. “Show with” simulates a colour vision deficiency in the preview; the WCAG requirements always apply to the actual colours."
           }
         }
       }
@@ -2769,6 +2809,16 @@
         }
       }
     },
+    "Lagt sammen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collapsed"
+          }
+        }
+      }
+    },
     "Laster bilde …": {
       "localizations": {
         "en": {
@@ -2845,6 +2895,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add active colour"
+          }
+        }
+      }
+    },
+    "Legger panelet sammen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collapses the panel"
           }
         }
       }
@@ -3551,6 +3611,16 @@
         }
       }
     },
+    "Paneler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Panels"
+          }
+        }
+      }
+    },
     "Par som er tydelig ulike med normalt syn (ΔE00 ≥ 10), men kommer under 10 med avviket. Under 5 er de nesten like. Skill dem med lyshet, ikke bare kulør, eller bruk mønster, ikon eller tekst i tillegg.": {
       "localizations": {
         "en": {
@@ -3817,6 +3887,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide light panel"
+          }
+        }
+      }
+    },
+    "Skjulte verdier vises ikke under «Verdier» og kan ikke kopieres derfra. Oppsettet synkroniseres via iCloud.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden values are not shown under “Values” and cannot be copied from there. The layout syncs through iCloud."
           }
         }
       }
@@ -4181,6 +4261,16 @@
         }
       }
     },
+    "Tilbakestill": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        }
+      }
+    },
     "Tilbakestill til grunnfargen": {
       "localizations": {
         "en": {
@@ -4207,6 +4297,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fit to sRGB"
+          }
+        }
+      }
+    },
+    "Tilpass visningen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Customise view"
+          }
+        }
+      }
+    },
+    "Tilpass visningen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Customise view …"
           }
         }
       }
@@ -4539,6 +4649,16 @@
         }
       }
     },
+    "Verdier som vises": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Values shown"
+          }
+        }
+      }
+    },
     "Verdiord": {
       "localizations": {
         "en": {
@@ -4639,6 +4759,16 @@
         }
       }
     },
+    "Viser panelet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the panel"
+          }
+        }
+      }
+    },
     "Vurder paletten": {
       "localizations": {
         "en": {
@@ -4735,6 +4865,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "±%lld %%-points"
+          }
+        }
+      }
+    },
+    "Åpen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expanded"
           }
         }
       }

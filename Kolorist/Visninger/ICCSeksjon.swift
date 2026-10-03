@@ -16,7 +16,7 @@ struct ICCSeksjon: View {
     private var profil: ICCProfil { bibliotek.profil(id: profilID) ?? .sRGB }
 
     var body: some View {
-        Section {
+        PanelSeksjon(panel: .fargestyring) {
             Picker("Gjengivelse", selection: $hensikt) {
                 ForEach(Gjengivelseshensikt.allCases, id: \.self) { Text($0.visningsnavn).tag($0) }
             }
@@ -54,9 +54,7 @@ struct ICCSeksjon: View {
             Button { visMineFargerom = true } label: {
                 Label("Mine fargerom …", systemImage: "books.vertical")
             }
-        } header: {
-            Text("Fargestyring (ICC)")
-        } footer: {
+        } fot: {
             VStack(alignment: .leading, spacing: 6) {
                 MetodeHenvisning(.icc, .renCMYK, .ciede2000)
                 Text(bibliotek.brukerICloud

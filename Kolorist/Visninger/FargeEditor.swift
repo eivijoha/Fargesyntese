@@ -200,7 +200,22 @@ extension FargeEditor {
     @ViewBuilder
     fileprivate func fargeModus(_ farge: Farge) -> some View {
         @Bindable var arbeidsbenk = arbeidsbenk
-        Section {
+        // Panelene i brukerens rekkefølge, sammenleggbare (Panelinnstillinger, synkronisert).
+        ForEach(Panelinnstillinger.delt.paneler(for: .studioFarge)) { panel in
+            switch panel {
+            case .fargemodell: modellpanel(farge)
+            case .verdier: verdipanel(farge)
+            case .fargestyring: ICCSeksjon(farge: $arbeidsbenk.aktivFarge, profilID: $visOgsåID, visMineFargerom: $visMineFargerom)
+            default: EmptyView()
+            }
+        }
+        TilpassKnapp(skjerm: .studioFarge)
+    }
+
+    @ViewBuilder
+    private func modellpanel(_ farge: Farge) -> some View {
+        @Bindable var arbeidsbenk = arbeidsbenk
+        PanelSeksjon(panel: .fargemodell) {
             Picker("Fargemodell", selection: $arbeidsbenk.modell) {
                 ForEach(Fargemodell.redigerbare) { Text($0.navn).tag($0) }
             }
@@ -208,7 +223,7 @@ extension FargeEditor {
                              farge: $arbeidsbenk.aktivFarge) { profil, verdier, farge in
                 arbeidsbenk.profilverdier = .init(profilID: profil.id, verdier: verdier, farge: farge)
             }
-        } footer: {
+        } fot: {
             VStack(alignment: .leading, spacing: 6) {
                 if let p = kobletProfil {
                     Text("\(arbeidsbenk.modell.navn)-verdiene angis i \(p.navn) og vises slik de gjengis i dette fargerommet.")
@@ -217,19 +232,30 @@ extension FargeEditor {
                 MetodeHenvisning(.cssColor4, .oklab, .cieLab, .munsell, .lrv, .icc)
             }
         }
+    }
 
-        Seksjon("Verdier") {
-            VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
-            ForEach(Fargemodell.allCases) { modell in
+    @ViewBuilder
+    private func verdipanel(_ farge: Farge) -> some View {
+        let innstillinger = Panelinnstillinger.delt
+        let skjult = Panelinnstillinger.Verdi.alle.filter { !innstillinger.viser($0) }.count
+        PanelSeksjon(panel: .verdier) {
+            if innstillinger.viser(.hex) {
+                VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
+            }
+            ForEach(Fargemodell.allCases.filter { innstillinger.viser(.modell($0)) }) { modell in
                 VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
             }
-            // For arkitekter: lysrefleksjonsverdi (Munsell står blant modellene over).
-            let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
-            VerdiRad(navn: "LRV", tekst: lrv) { Utklippstavle.kopierTekst(lrv) }
-            GamutOversikt(farge: farge)
+            if innstillinger.viser(.lrv) {
+                let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
+                VerdiRad(navn: "LRV", tekst: lrv) { Utklippstavle.kopierTekst(lrv) }
+            }
+            if innstillinger.viser(.gamut) { GamutOversikt(farge: farge) }
+        } fot: {
+            if skjult > 0 {
+                Text(skjult == 1 ? "1 verdi er skjult. Velg hvilke som vises under «Tilpass visningen»." : "\(skjult) verdier er skjult. Velg hvilke som vises under «Tilpass visningen».")
+                    .foregroundStyle(Color.sekundærTekst)
+            }
         }
-
-        ICCSeksjon(farge: $arbeidsbenk.aktivFarge, profilID: $visOgsåID, visMineFargerom: $visMineFargerom)
     }
 
     @ViewBuilder

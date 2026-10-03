@@ -14,9 +14,43 @@ struct KontrastSeksjon: View {
 
     var body: some View {
         let test = Kontrasttest(forgrunn: forgrunn, bakgrunn: bakgrunn)
+        PanelSeksjon(panel: .wcag) {
+            Picker("Vis med", selection: $fargesyn) {
+                Text("Normalt syn").tag("normalt")
+                ForEach(Fargesynstype.allCases) { Text($0.navn).tag($0.rawValue) }
+            }
+            if let type = fargesynstype {
+                let f = forgrunn.simulert(type), b = bakgrunn.simulert(type)
+                KontrastForhåndsvisning(forgrunn: f, bakgrunn: b, test: Kontrasttest(forgrunn: f, bakgrunn: b),
+                                        merknad: type.navn)
+            } else {
+                KontrastForhåndsvisning(forgrunn: forgrunn, bakgrunn: bakgrunn, test: test)
+            }
+
+            ForEach(WCAGKrav.allCases) { krav in
+                KravRad(krav: krav, test: test) { forgrunn = test.rettet(for: krav) }
+            }
+        } fot: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Fargen testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
+                MetodeHenvisning(.wcag, .oklab, .machado)
+            }
+        }
+    }
+}
+
+/// Fargen som testes og bakgrunnen (tilstøtende flate), felles for WCAG- og LRV-panelet.
+struct KontrastFargerSeksjon: View {
+    @Binding var forgrunn: Farge
+    @AppStorage("kontrastBakgrunn") private var bakgrunnHex = "#FFFFFF"
+
+    private var bakgrunn: Farge { Fargetolk.tolk(bakgrunnHex) ?? Farge(hex: "#FFFFFF")! }
+
+    var body: some View {
         Section {
+            FargeValgRad(tittel: String(localized: "Farge som testes"), farge: $forgrunn)
             // Lagres som CSS-tekst i Display P3, så P3-bakgrunner ikke rundes av til sRGB-hex.
-            FargeValgRad(tittel: String(localized: "Bakgrunn"), farge: Binding(
+            FargeValgRad(tittel: String(localized: "Bakgrunn eller tilstøtende flate"), farge: Binding(
                 get: { bakgrunn },
                 set: { bakgrunnHex = $0.erISRGB ? $0.hex() : Fargemodell.displayP3.tekst(for: $0) }
             ))
@@ -34,30 +68,7 @@ struct KontrastSeksjon: View {
             .buttonStyle(.bordered)
             .controlSize(.small)
 
-            Picker("Vis med", selection: $fargesyn) {
-                Text("Normalt syn").tag("normalt")
-                ForEach(Fargesynstype.allCases) { Text($0.navn).tag($0.rawValue) }
-            }
-            if let type = fargesynstype {
-                let f = forgrunn.simulert(type), b = bakgrunn.simulert(type)
-                KontrastForhåndsvisning(forgrunn: f, bakgrunn: b, test: Kontrasttest(forgrunn: f, bakgrunn: b),
-                                        merknad: type.navn)
-            } else {
-                KontrastForhåndsvisning(forgrunn: forgrunn, bakgrunn: bakgrunn, test: test)
-            }
-
-            ForEach(WCAGKrav.allCases) { krav in
-                KravRad(krav: krav, test: test) { forgrunn = test.rettet(for: krav) }
-            }
-        } header: { Group {
-            Text("Tekst og grafikk (WCAG 2.2)")
-        }.foregroundStyle(Color.sekundærTekst) } footer: {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
-                MetodeHenvisning(.wcag, .oklab, .machado)
-            }
         }
-        FlatekontrastSeksjon(flate: $forgrunn, bakgrunn: bakgrunn)
     }
 }
 
@@ -233,7 +244,7 @@ struct FlatekontrastSeksjon: View {
 
     var body: some View {
         let k = Flatekontrast(flate, bakgrunn)
-        Section {
+        PanelSeksjon(panel: .lrv) {
             HStack(spacing: 0) {
                 verdi(String(localized: "LRV flate"), flate.lrv.formatted(.number.precision(.fractionLength(0))))
                 verdi(String(localized: "LRV bakgrunn"), bakgrunn.lrv.formatted(.number.precision(.fractionLength(0))))
@@ -263,9 +274,7 @@ struct FlatekontrastSeksjon: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityValue(bestått ? "Bestått" : "Ikke bestått")
             }
-        } header: { Group {
-            Text("Flater (LRV)")
-        }.foregroundStyle(Color.sekundærTekst) } footer: {
+        } fot: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("For vegg, gulv, dør og håndlist: lysrefleksjonsverdien (LRV) er andelen lys flaten reflekterer, som på malingskart. BS 8300 ber om minst 30 poeng forskjell mellom tilstøtende flater; NS 11001 bruker luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂), minst 0,4 for viktige flater og 0,8 for skilt.")
                 MetodeHenvisning(.lrv, .oklab)

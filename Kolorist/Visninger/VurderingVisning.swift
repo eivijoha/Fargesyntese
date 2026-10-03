@@ -52,14 +52,22 @@ struct VurderingVisning: View {
 /// WCAG-kontrast for aktiv farge mot en valgt bakgrunn.
 private struct KontrastVurdering: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
+    @State private var innstillinger = Panelinnstillinger.delt
+    @AppStorage("kontrastBakgrunn") private var bakgrunnHex = "#FFFFFF"
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         Form {
-            Section {
-                FargeValgRad(tittel: String(localized: "Farge som testes"), farge: $arbeidsbenk.aktivFarge)
+            KontrastFargerSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
+            // Panelene i brukerens rekkefølge; begge bruker fargene over.
+            ForEach(innstillinger.paneler(for: .kontrast)) { panel in
+                switch panel {
+                case .wcag: KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
+                case .lrv: FlatekontrastSeksjon(flate: $arbeidsbenk.aktivFarge, bakgrunn: Fargetolk.tolk(bakgrunnHex) ?? Farge(hex: "#FFFFFF")!)
+                default: EmptyView()
+                }
             }
-            KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
+            TilpassKnapp(skjerm: .kontrast)
         }
         .formStyle(.grouped)
         .navigationTitle("Kontrast")
