@@ -138,7 +138,11 @@ struct PalettKolonne: View {
     private func fargerutenett(_ farger: [PalettFarge], fra palett: PalettDokument?) -> some View {
         LazyVGrid(columns: rutenett, alignment: .leading, spacing: 4) {
             ForEach(farger) { pf in
-                FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6, palettFarge: pf,
+                FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6,
+                          fjern: {
+                              if let palett { palett.farger.removeAll { $0.id == pf.id } } else { slettEnkeltfarge(pf.id, i: kontekst) }
+                          },
+                          palettFarge: pf,
                           ekstraMeny: palett.map { AnyView(FlyttMeny(farge: pf, fra: $0)) })
                     .aspectRatio(1, contentMode: .fit)
                     .onTapGesture { arbeidsbenk.aktivFarge = pf.farge }

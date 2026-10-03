@@ -57,6 +57,7 @@ final class Arbeidsbenk {
 
     var aktivFarge = Farge(hex: "#2F7FD8")! {
         didSet {
+            if oldValue != aktivFarge { merkForAngring(fra: oldValue) }
             // Unngå løkke: begrens bare når fargen faktisk er utenfor.
             // Verdier angitt direkte i begrensningsprofilen er innenfor per definisjon (en rundtur kan
             // likevel gi små avvik, særlig i mørke CMYK-farger).
@@ -198,6 +199,51 @@ final class Arbeidsbenk {
 
     func tømMålinger() { målinger.removeAll() }
 
+    // MARK: - Angre (⌘Z)
+
+    /// Vinduets angrehåndterer. Settes av rotvisningen; deles med SwiftData, så endringer i paletter,
+    /// enkeltfarger og gradienter og endringer i aktiv farge ligger i samme angrehistorikk.
+    @ObservationIgnored weak var angring: UndoManager?
+    @ObservationIgnored private var angreStart: Farge?
+    @ObservationIgnored private var angreOppgave: Task<Void, Never>?
+    @ObservationIgnored private var angrer = false
+
+    /// Samler endringer i aktiv farge som kommer tett (en glider som dras) til ett angresteg.
+    private func merkForAngring(fra gammel: Farge) {
+        guard !angrer, angring != nil else { return }
+        if angreStart == nil { angreStart = gammel }
+        angreOppgave?.cancel()
+        angreOppgave = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(450))
+            guard !Task.isCancelled else { return }
+            self?.fullførAngresteg()
+        }
+    }
+
+    /// Registrerer en ventende fargeendring som angresteg med en gang (f.eks. før ⌘Z).
+    func fullførAngresteg() {
+        angreOppgave?.cancel()
+        angreOppgave = nil
+        guard let start = angreStart else { return }
+        angreStart = nil
+        if start != aktivFarge { registrerFargeendring(fra: start, til: aktivFarge) }
+    }
+
+    private func registrerFargeendring(fra: Farge, til: Farge) {
+        guard let angring else { return }
+        angring.registerUndo(withTarget: self) { benk in
+            benk.angreOppgave?.cancel()
+            benk.angreStart = nil
+            benk.angrer = true
+            benk.aktivFarge = fra
+            benk.angrer = false
+            // Registrert mens det angres, havner dette som «Gjør om».
+            benk.registrerFargeendring(fra: til, til: fra)
+        }
+        angring.setActionName(String(localized: "Endre farge"))
+    }
+
+
     func registrerMåling(_ farge: Farge) {
         målinger.append(farge)
         if målinger.count > 20 { målinger.removeFirst(målinger.count - 20) }
@@ -214,6 +260,21 @@ final class Arbeidsbenk {
 
 struct InnholdsVisning: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
+    @Environment(\.undoManager) private var undoManager
+    @Environment(\.modelContext) private var kontekst
+    @State private var observertAngring: ObjectIdentifier?
+
+    private func kobleAngring() {
+        kontekst.undoManager = undoManager
+        arbeidsbenk.angring = undoManager
+        // Fullfør en ventende fargeendring før et angresteg, så ⌘Z rett etter en dragning angrer den.
+        if let undoManager, observertAngring != ObjectIdentifier(undoManager) {
+            observertAngring = ObjectIdentifier(undoManager)
+            NotificationCenter.default.addObserver(forName: .NSUndoManagerWillUndoChange, object: undoManager, queue: .main) { _ in
+                MainActor.assumeIsolated { Arbeidsbenk.delt.fullførAngresteg() }
+            }
+        }
+    }
     @AppStorage("visPalettkolonne") private var visPalettkolonne = true
 
     /// Minste vindusbredde for palettkolonnen: 13"-iPad i liggende format, eller et bredt Mac-vindu.
@@ -269,6 +330,9 @@ struct InnholdsVisning: View {
             // Paletter-fanen forsvinner fra menyen: gå til Studio i stedet.
             if til, arbeidsbenk.valgtFane == .paletter { arbeidsbenk.valgtFane = .studio }
         }
+        // ⌘Z: én angrehistorikk for paletter, lagrede farger og aktiv farge.
+        .onAppear { kobleAngring() }
+        .onChange(of: undoManager) { kobleAngring() }
         .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { bredde in
             #if os(iOS)
             let stor = UIDevice.current.userInterfaceIdiom == .pad && bredde >= Self.palettkolonneBredde

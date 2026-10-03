@@ -135,9 +135,31 @@ struct PalettListe: View {
                 Text("Fargene i paletten slettes også. Dette kan ikke angres.")
             }
             .navigationDestination(for: Valg.self) { v in
-                switch v {
-                case .enkeltfarger: EnkeltfargerVisning()
-                case .palett(let p): PalettDetalj(dokument: p)
+                Group {
+                    switch v {
+                    case .enkeltfarger: EnkeltfargerVisning()
+                    case .palett(let p): PalettDetalj(dokument: p)
+                    }
+                }
+                .environment(\.iPalettkolonne, iKolonne)
+                // Vinduets egen tilbakepil (fra kolonnens navigasjon) skjules; knappen over brukes i stedet.
+                .navigationBarBackButtonHidden(iKolonne)
+                // I palettkolonnen på Mac vises ingen navigasjonslinje med tilbakeknapp; lag en selv.
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    if iKolonne {
+                        HStack {
+                            Button { sti.removeAll() } label: {
+                                Label("Alle paletter", systemImage: "chevron.left")
+                            }
+                            .buttonStyle(.borderless)
+                            .keyboardShortcut("[", modifiers: .command)
+                            .help("Tilbake til alle paletter (⌘[)")
+                            Spacer()
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(.bar)
+                    }
                 }
             }
         }
@@ -225,6 +247,7 @@ func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext, navngi
 struct EnkeltfargerRad: View {
     let farger: [PalettFarge]
     let paletter: [PalettDokument]
+    @Environment(\.modelContext) private var kontekst
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -237,6 +260,7 @@ struct EnkeltfargerRad: View {
                 HStack(spacing: 4) {
                     ForEach(farger.prefix(60)) { pf in
                         FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6,
+                                  fjern: { slettEnkeltfarge(pf.id, i: kontekst) },
                                   palettFarge: pf, ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: nil)))
                             .frame(width: 36, height: 36)
                     }
@@ -339,7 +363,8 @@ struct PalettRad: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 3) {
                     ForEach(dokument.farger) { pf in
-                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6, palettFarge: pf,
+                        FargeRute(farge: pf.farge, navn: pf.navn, visTekst: false, hjørne: 6,
+                                  fjern: { dokument.farger.removeAll { $0.id == pf.id } }, palettFarge: pf,
                                   ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
                             .frame(width: 36, height: 36)
                     }
@@ -370,77 +395,62 @@ struct PalettDetalj: View {
     @State private var visSkala: PalettFarge?
     @State private var visKontrast = false
     @State private var vurdering: PalettVurdering?
-    @State private var foreslåtteNavn: [String]?
     @State private var kiArbeider = false
     @State private var kiFeil: String?
     @State private var navngisPalettfarge: PalettFarge?
-    @State private var omdøpes: PalettDokument?
+    /// I palettkolonnen på Mac: handlingene ligger i en rad under tittelen, ikke i vinduets verktøylinje.
+    @Environment(\.iPalettkolonne) private var iKolonne
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
     var body: some View {
         ScrollView {
+            // Tittelfelt: navnet redigeres direkte.
+            TextField("Navn på paletten", text: $dokument.navn)
+                .font(.title2.weight(.semibold))
+                .textFieldStyle(.plain)
+                .submitLabel(.done)
+                .padding(.horizontal)
+                .padding(.top, 8)
+            if iKolonne {
+                HStack(spacing: 14) { handlinger }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.borderless)
+                    .menuIndicator(.hidden)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.top, 4)
+            }
             LazyVGrid(columns: rutenett, spacing: 10) {
                 ForEach(dokument.farger) { pf in
+                    // Fargerutens egen meny (høyreklikk / trykk og hold) har Slett; den overstyrer en ytre meny.
                     FargeRute(farge: pf.farge, navn: pf.navn,
+                              fjern: { dokument.farger.removeAll { $0.id == pf.id } },
                               navngi: { navngisPalettfarge = pf }, palettFarge: pf,
-                              ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
+                              ekstraMeny: AnyView(Group {
+                                  Button("Lag toneskala", systemImage: "square.3.layers.3d") { visSkala = pf }
+                                  FlyttMeny(farge: pf, fra: dokument)
+                              }))
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
                             arbeidsbenk.aktivFarge = pf.farge
                             arbeidsbenk.valgtFane = .studio
                         }
-                        .contextMenu {
-                            KopierMeny(farge: pf.farge)
-                            KopierTilMeny(farger: [pf], navn: pf.navn)
-                            Button("Lag toneskala", systemImage: "square.3.layers.3d") { visSkala = pf }
-                            Button("Fjern", systemImage: "trash", role: .destructive) {
-                                dokument.farger.removeAll { $0.id == pf.id }
-                            }
-                        }
                 }
             }
             .padding()
         }
-        .navigationTitle($dokument.navn)
+        // Navnet står i tittelfeltet; navigasjonslinjen viser det ikke i tillegg.
+        .navigationTitle("")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .dropDestination(for: PalettFarge.self) { farger, _ in
             flytt(farger, til: dokument, i: kontekst)
         }
         .toolbar {
-            ToolbarItemGroup {
-                Button("Legg til aktiv farge", systemImage: "plus") {
-                    dokument.farger.append(PalettFarge(farge: arbeidsbenk.aktivFarge))
-                }
-                Button("Lim inn farger", systemImage: "doc.on.clipboard") {
-                    dokument.farger += Utklippstavle.limInnListe()
-                }
-                if dokument.farger.contains(where: { !$0.farge.erISRGB }) {
-                    Button("Tilpass til sRGB", systemImage: "square.dashed.inset.filled") {
-                        var f = dokument.farger
-                        for i in f.indices { f[i].farge = f[i].farge.gamutKartlagt(til: .sRGB) }
-                        dokument.farger = f
-                    }
-                    .help("Gamut-kartlegg farger utenfor sRGB (bevarer lyshet og kulør)")
-                }
-                Button("Kontrast", systemImage: "circle.lefthalf.filled") { visKontrast = true }
-                    .disabled(dokument.farger.count < 2)
-                Menu {
-                    Button("Gi fargene navn", systemImage: "character.cursor.ibeam") { Task { await navngi() } }
-                    Button("Vurder paletten", systemImage: "text.magnifyingglass") { Task { await vurder() } }
-                } label: {
-                    if kiArbeider { ProgressView() } else { Label("KI", systemImage: "sparkles") }
-                }
-                .disabled(dokument.farger.isEmpty || kiArbeider)
-                Button("Gi nytt navn", systemImage: "character.cursor.ibeam") { omdøpes = dokument }
-                Menu("Eksporter", systemImage: "square.and.arrow.up") {
-                    ForEach(Eksportformat.allCases) { f in
-                        Button(f.navn) { eksportformat = f }
-                    }
-                    Divider()
-                    Button("Kopier alle som hex") { Utklippstavle.kopier(dokument.palett) }
-                    Button("Kopier alle som OKLCH") { Utklippstavle.kopier(dokument.palett, som: .okLCH) }
-                    KopierTilMeny(farger: dokument.farger, navn: dokument.navn)
-                }
+            if !iKolonne {
+                ToolbarItemGroup { handlinger }
             }
         }
         .fileExporter(
@@ -453,7 +463,6 @@ struct PalettDetalj: View {
             ToneskalaArk(grunnfarge: pf) { nye in dokument.farger += nye }
         }
         .sheet(isPresented: $visKontrast) { KontrastmatriseArk(palett: dokument.palett) }
-        .omdøpPalett($omdøpes)
         .sheet(item: $navngisPalettfarge) { pf in
             NavngiArk(farge: pf) { navn in
                 var f = dokument.farger
@@ -462,29 +471,41 @@ struct PalettDetalj: View {
             }
         }
         .sheet(item: $vurdering) { VurderingArk(vurdering: $0) }
-        .confirmationDialog("Bruke foreslåtte navn?", isPresented: Binding(get: { foreslåtteNavn != nil }, set: { if !$0 { foreslåtteNavn = nil } }),
-                            titleVisibility: .visible) {
-            Button("Bruk navnene") {
-                if let navn = foreslåtteNavn {
-                    var f = dokument.farger
-                    for i in f.indices where i < navn.count { f[i].navn = navn[i] }
-                    dokument.farger = f
-                }
-            }
-            Button("Avbryt", role: .cancel) {}
-        } message: {
-            Text(foreslåtteNavn?.joined(separator: " · ") ?? "")
-        }
         .alert("KI", isPresented: Binding(get: { kiFeil != nil }, set: { if !$0 { kiFeil = nil } })) {
             Button("OK") {}
         } message: { Text(kiFeil ?? "") }
     }
 
-    private func navngi() async {
-        kiArbeider = true
-        defer { kiArbeider = false }
-        do { foreslåtteNavn = try await Fargenavngiver.navngi(dokument.farger.map(\.farge), tema: dokument.navn) }
-        catch { kiFeil = error.localizedDescription }
+    /// Knappene for paletten: i verktøylinjen, eller i en rad under tittelen i palettkolonnen.
+    @ViewBuilder private var handlinger: some View {
+        Button("Legg til aktiv farge", systemImage: "plus") {
+            dokument.farger.append(PalettFarge(farge: arbeidsbenk.aktivFarge))
+        }
+        .help("Legg til aktiv farge")
+        Button("Lim inn farger", systemImage: "doc.on.clipboard") {
+            dokument.farger += Utklippstavle.limInnListe()
+        }
+        .help("Lim inn farger")
+        Button("Kontrast", systemImage: "circle.lefthalf.filled") { visKontrast = true }
+            .disabled(dokument.farger.count < 2)
+            .help("Kontrastmatrise")
+        Button {
+            Task { await vurder() }
+        } label: {
+            if kiArbeider { ProgressView().controlSize(.small) } else { Label("Vurder paletten", systemImage: "text.magnifyingglass") }
+        }
+        .disabled(dokument.farger.isEmpty || kiArbeider)
+        .help("Vurder paletten")
+        Menu("Eksporter", systemImage: "square.and.arrow.up") {
+            ForEach(Eksportformat.allCases) { f in
+                Button(f.navn) { eksportformat = f }
+            }
+            Divider()
+            Button("Kopier alle som hex") { Utklippstavle.kopier(dokument.palett) }
+            Button("Kopier alle som OKLCH") { Utklippstavle.kopier(dokument.palett, som: .okLCH) }
+            KopierTilMeny(farger: dokument.farger, navn: dokument.navn)
+        }
+        .help("Eksporter og kopier")
     }
 
     private func vurder() async {
@@ -861,4 +882,16 @@ struct SveipForÅSlette<Innhold: View>: View {
     // Mac: slett via høyreklikkmenyen.
     var body: some View { innhold }
     #endif
+}
+
+extension EnvironmentValues {
+    /// Visningen ligger i palettkolonnen på Mac (uten egen verktøylinje).
+    @Entry var iPalettkolonne = false
+}
+
+/// Sletter en enkeltfarge (lagret uten palett) ut fra id-en.
+func slettEnkeltfarge(_ id: UUID, i kontekst: ModelContext) {
+    for lagret in (try? kontekst.fetch(FetchDescriptor<LagretFarge>())) ?? [] where lagret.id == id {
+        kontekst.delete(lagret)
+    }
 }

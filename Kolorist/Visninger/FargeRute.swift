@@ -77,7 +77,7 @@ struct FargeRute: View {
                 KopierTilMeny(farger: [palettFarge ?? PalettFarge(navn: navn ?? "", farge: farge)], navn: navn ?? "")
                 if let ekstraMeny { ekstraMeny }
                 if let fjern {
-                    Button("Fjern", systemImage: "trash", role: .destructive, action: fjern)
+                    Button("Slett", systemImage: "trash", role: .destructive, action: fjern)
                 }
             }
     }

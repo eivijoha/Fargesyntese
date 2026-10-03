@@ -539,6 +539,16 @@
         }
       }
     },
+    "Alle paletter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All palettes"
+          }
+        }
+      }
+    },
     "Andre": {
       "localizations": {
         "en": {
@@ -739,16 +749,6 @@
         }
       }
     },
-    "Bruk navnene": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use the names"
-          }
-        }
-      }
-    },
     "Bruk som aktiv farge": {
       "localizations": {
         "en": {
@@ -765,16 +765,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use as palette"
-          }
-        }
-      }
-    },
-    "Bruke foreslåtte navn?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use suggested names?"
           }
         }
       }
@@ -1039,12 +1029,32 @@
         }
       }
     },
+    "Eksporter og kopier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export and copy"
+          }
+        }
+      }
+    },
     "Endepunkter": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Endpoints"
+          }
+        }
+      }
+    },
+    "Endre farge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change colour"
           }
         }
       }
@@ -1389,16 +1399,6 @@
         }
       }
     },
-    "Fjern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remove"
-          }
-        }
-      }
-    },
     "Flater (LRV)": {
       "localizations": {
         "en": {
@@ -1565,26 +1565,6 @@
         }
       }
     },
-    "Gamut-kartlegg farger utenfor sRGB (bevarer lyshet og kulør)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gamut-map colours outside sRGB (keeps lightness and hue)"
-          }
-        }
-      }
-    },
-    "Gi fargene navn": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Name the colours"
-          }
-        }
-      }
-    },
     "Gi gradienten navn": {
       "localizations": {
         "en": {
@@ -1611,16 +1591,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Name …"
-          }
-        }
-      }
-    },
-    "Gi nytt navn": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rename"
           }
         }
       }
@@ -4421,6 +4391,16 @@
         }
       }
     },
+    "Tilbake til alle paletter (⌘[)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to all palettes (⌘[)"
+          }
+        }
+      }
+    },
     "Tilbakestill": {
       "localizations": {
         "en": {
@@ -4447,16 +4427,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reset zoom"
-          }
-        }
-      }
-    },
-    "Tilpass til sRGB": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fit to sRGB"
           }
         }
       }
