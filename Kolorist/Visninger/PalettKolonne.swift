@@ -2,7 +2,7 @@ import FargeKjerne
 import SwiftData
 import SwiftUI
 
-/// Palettene som egen kolonne til høyre på store skjermer (Mac og store iPader i liggende format),
+/// Palettene som kompakt kolonne til høyre på store iPader i liggende format (Mac bruker hele palettvisningen),
 /// tilgjengelig fra alle faner. Trykk på en farge gjør den aktiv; farger kan dras inn i en palett
 /// (fra Studio, Overgang, Utplukk eller en annen palett) og ut igjen.
 struct PalettKolonne: View {
@@ -28,6 +28,10 @@ struct PalettKolonne: View {
     var body: some View {
         List {
             aktivFargeSeksjon
+
+            if !arbeidsbenk.målinger.isEmpty {
+                Section { MidlertidigeFarger(kompakt: true) }
+            }
 
             if !enkeltfarger.isEmpty {
                 Section {
@@ -148,11 +152,19 @@ struct PalettKolonne: View {
 
 /// Knapp i verktøylinjen som viser eller skjuler palettkolonnen (bare når vinduet er bredt nok).
 struct PalettkolonneKnapp: ToolbarContent {
+    private var erMac: Bool {
+        #if os(macOS)
+        true
+        #else
+        false
+        #endif
+    }
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @AppStorage("visPalettkolonne") private var vis = true
 
     var body: some ToolbarContent {
-        if arbeidsbenk.palettkolonneMulig {
+        // Bare iPad: på Mac ligger Paletter fast til høyre når vinduet er bredt nok.
+        if arbeidsbenk.palettkolonneMulig && !erMac {
             ToolbarItem(placement: .primaryAction) {
                 Button(vis ? "Skjul paletter" : "Vis paletter", systemImage: "sidebar.trailing") { vis.toggle() }
                     .help(vis ? "Skjul palettkolonnen" : "Vis palettkolonnen")

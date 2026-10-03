@@ -19,6 +19,10 @@ enum Skjermbildemodus {
         palett.farger = farger.map { PalettFarge(farge: $0, opphav: .manuell) }
         try? kontekst.save()
         UserDefaults.standard.set(palett.id.uuidString, forKey: "vurderingPalett")
+        // `-testmaalinger YES`: noen plukkede farger, som om de kom fra kamera og bilder.
+        if UserDefaults.standard.bool(forKey: "testmaalinger") {
+            for hex in ["#C4553B", "#E8B04A", "#3F7D5A", "#2E5E8C", "#D9CBB4"] { Arbeidsbenk.delt.registrerMåling(Farge(hex: hex)!) }
+        }
         // `-bibliotekfil <sti>`: importer et fargebibliotek (til test i simulatoren, der dokumentvelgeren ikke virker).
         if let sti = UserDefaults.standard.string(forKey: "bibliotekfil") {
             _ = try? ProfilBibliotek.delt.importerBibliotek(fra: URL(fileURLWithPath: sti))

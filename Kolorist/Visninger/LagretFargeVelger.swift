@@ -9,6 +9,7 @@ struct FargeValgRad: View {
     @Binding var farge: Farge
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var visVelger = false
+    @State private var målrettet = false
 
     var body: some View {
         HStack(spacing: 12) {
@@ -38,6 +39,18 @@ struct FargeValgRad: View {
                 #endif
             }
             .labelStyle(.iconOnly)
+        }
+        // Slipp en farge (fra palettkolonnen, en palett, Studio eller et annet program) for å bruke den.
+        .contentShape(Rectangle())
+        .dropDestination(for: PalettFarge.self) { farger, _ in
+            guard let f = farger.first else { return false }
+            farge = f.farge
+            return true
+        } isTargeted: { målrettet = $0 }
+        .background {
+            if målrettet {
+                RoundedRectangle(cornerRadius: 10, style: .continuous).strokeBorder(Color.accentColor, lineWidth: 2).padding(-4)
+            }
         }
         .sheet(isPresented: $visVelger) {
             LagretFargeArk(tittel: tittel) { farge = $0 }

@@ -11,6 +11,7 @@
         }
       }
     },
+    " (%@)": {},
     "%@": {
       "localizations": {
         "en": {
@@ -153,6 +154,16 @@
         }
       }
     },
+    "%@ – ikke lagret": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ – not saved"
+          }
+        }
+      }
+    },
     "%@ – utenfor gamut": {
       "localizations": {
         "en": {
@@ -191,6 +202,16 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$@, %2$@ til %3$@, %4$lld toner"
+          }
+        }
+      }
+    },
+    "%@, ikke lagret": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, not saved"
           }
         }
       }
@@ -1505,6 +1526,16 @@
         }
       }
     },
+    "Fra kamera, bilder og skjermpipetten. Forsvinner når appen lukkes – dra en farge til en palett, eller lagre dem.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the camera, photos and the screen eyedropper. They disappear when the app closes – drag a colour to a palette, or save them."
+          }
+        }
+      }
+    },
     "Fysiologisk basert modell for protan-, deutan- og tritanavvik, med matriser i lineær sRGB og alvorlighetsgrad som blanding med normalt syn. Akromatopsi vises som luminans alene. Brukes i Vurdering › Fargesyn, kontrastforhåndsvisningen og kamerafilteret. Simuleringen er en tilnærming; opplevelsen varierer mellom personer.": {
       "localizations": {
         "en": {
@@ -1911,6 +1942,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Failed"
+          }
+        }
+      }
+    },
+    "Ikke lagret": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not saved"
           }
         }
       }
@@ -2693,6 +2734,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save active colour"
+          }
+        }
+      }
+    },
+    "Lagre alle som enkeltfarger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save all as single colours"
           }
         }
       }
@@ -3741,6 +3792,16 @@
         }
       }
     },
+    "Plukkede farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picked colours"
+          }
+        }
+      }
+    },
     "På, %lld prosent": {
       "localizations": {
         "en": {
@@ -4513,6 +4574,16 @@
         }
       }
     },
+    "Tøm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear"
+          }
+        }
+      }
+    },
     "UCR/GCR": {
       "localizations": {
         "en": {
@@ -4625,6 +4696,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Colour options"
+          }
+        }
+      }
+    },
+    "Valg for plukkede farger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options for picked colours"
           }
         }
       }

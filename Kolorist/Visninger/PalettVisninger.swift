@@ -8,7 +8,11 @@ import UniformTypeIdentifiers
 /// dra-gesten, slik at enkeltfarger ikke kan dras ut av den. Her kan hver fargeprøve dras,
 /// og hvert kort tar imot farger som slippes på det.
 struct PalettListe: View {
+    /// I palettkolonnen på Mac: «Ny palett» ligger i listen, ikke i verktøylinjen (knapper fra en
+    /// lukket inspektør blir ellers hengende igjen når vinduet gjøres smalt).
+    var iKolonne = false
     @Environment(\.modelContext) private var kontekst
+    @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
     /// Navigasjonssti: oversikten fyller hele hovedvisningen (også på Mac og iPad), valgt palett åpnes over.
@@ -25,10 +29,27 @@ struct PalettListe: View {
         case palett(PalettDokument)
     }
 
+    private var nyPalettMeny: some View {
+        Menu("Ny palett", systemImage: "plus") {
+            Button("Ny tom palett …", systemImage: "square.dashed") {
+                nyPalettNavn = ""
+                visNyPalett = true
+            }
+            Button("Ny palett fra verdiord (KI)", systemImage: "sparkles") { visVerdiord = true }
+        }
+    }
+
     var body: some View {
         NavigationStack(path: $sti) {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 12) {
+                    if !arbeidsbenk.målinger.isEmpty {
+                        MidlertidigeFarger()
+                            .padding(12)
+                            .background(.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .strokeBorder(Color.sekundærTekst.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [5, 3])))
+                    }
                     kort(.enkeltfarger) {
                         EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge), paletter: paletter)
                     } slipp: { farger in
@@ -37,7 +58,12 @@ struct PalettListe: View {
 
                     GradientSeksjon()
 
-                    Text("Paletter").font(.title3.weight(.semibold)).padding(.top, 8)
+                    HStack {
+                        Text("Paletter").font(.title3.weight(.semibold))
+                        Spacer()
+                        if iKolonne { nyPalettMeny.labelStyle(.iconOnly).menuIndicator(.hidden).fixedSize() }
+                    }
+                    .padding(.top, 8)
                     if paletter.isEmpty {
                         Text("Ingen paletter ennå. Trykk + for en tom palett eller en palett fra verdiord, eller lag en fra Studio, Overgang eller Utplukk.")
                             .font(.callout)
@@ -74,13 +100,7 @@ struct PalettListe: View {
             .background(Color(white: 0.5).opacity(0.06))
             .navigationTitle("Paletter")
             .toolbar {
-                Menu("Ny palett", systemImage: "plus") {
-                    Button("Ny tom palett …", systemImage: "square.dashed") {
-                        nyPalettNavn = ""
-                        visNyPalett = true
-                    }
-                    Button("Ny palett fra verdiord (KI)", systemImage: "sparkles") { visVerdiord = true }
-                }
+                if !iKolonne { nyPalettMeny }
             }
             .sheet(isPresented: $visVerdiord) {
                 NavigationStack {

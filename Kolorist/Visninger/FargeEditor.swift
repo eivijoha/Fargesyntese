@@ -326,6 +326,13 @@ struct KomponentGlidere: View {
         return modell.farge(fra: v, alfa: alfa)
     }
 
+    /// Navnet ved glideren. Lab-modellene får også aksenavnet – «Lyshet (L)», «Grønn–rød (a)», «Blå–gul (b)» –
+    /// så verdiene kan kjennes igjen fra Photoshop og CSS.
+    private func gliderTittel(_ k: Fargemodell.Komponent) -> Text {
+        guard profil == nil, [.okLab, .cieLab].contains(modell) else { return Text(k.navn) }
+        return Text(k.navn) + Text(" (\(k.kortnavn))").foregroundStyle(Color.sekundærTekst)
+    }
+
     /// Verdien slik den vises ved glideren. Munsell-kulør vises som notasjon («5.5PB»), ikke som tall 0–100.
     private func verditekst(_ v: Double, _ k: Fargemodell.Komponent) -> String {
         if profil == nil, modell == .munsell, k.erKulør { return Munsell(kulør: v, valør: 5, kroma: 2).kulørnavn }
@@ -355,9 +362,9 @@ struct KomponentGlidere: View {
             // Kompakt: navn, glider og verdi på én linje, så gliderne og fargeflaten får plass samtidig.
             if i < gjeldende.count {
             HStack(spacing: 10) {
-                Text(k.navn)
+                gliderTittel(k)
                     .font(.callout)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .frame(width: 78, alignment: .leading)
                 FargeGlider(verdi: Binding(
@@ -379,7 +386,9 @@ struct KomponentGlidere: View {
                 Text(verditekst(gjeldende[i], k))
                     .font(.callout.monospacedDigit())
                     .foregroundStyle(Color.sekundærTekst)
-                    .frame(width: 52, alignment: .trailing)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .frame(width: 60, alignment: .trailing)
             }
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             .accessibilityElement(children: .contain)
