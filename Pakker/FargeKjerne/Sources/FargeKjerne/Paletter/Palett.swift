@@ -45,7 +45,7 @@ public struct PalettFarge: Hashable, Codable, Sendable, Identifiable {
     public var representasjon: Fargerepresentasjon?
 
     public enum Opphav: String, Codable, Sendable {
-        case manuell, kamera, pipette, ki, overgang, toneskala, bilde
+        case manuell, kamera, pipette, ki, overgang, toneskala, bilde, bibliotek
     }
 
     public init(id: UUID = UUID(), navn: String = "", farge: Farge, opphav: Opphav = .manuell,

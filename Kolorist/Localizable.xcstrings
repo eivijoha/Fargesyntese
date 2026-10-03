@@ -113,15 +113,15 @@
     },
     "%@ · %@": {
       "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · %2$@"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
             "value": "%1$@ · %2$@"
           }
         }
@@ -639,6 +639,16 @@
         }
       }
     },
+    "Bibliotek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library"
+          }
+        }
+      }
+    },
     "Bilde": {
       "localizations": {
         "en": {
@@ -865,6 +875,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "CSS gradient"
+          }
+        }
+      }
+    },
+    "De fem tonene i biblioteket som ligger nærmest fargen, etter ΔE2000. Under 2 er knapt synlig forskjell; over 5 er en annen farge. «Bruk» gjør tonen til aktiv farge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The five tones in the library closest to the colour, by ΔE2000. Below 2 the difference is barely visible; above 5 it is a different colour. “Use” makes the tone the active colour."
           }
         }
       }
@@ -1771,6 +1791,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Import .icc or .icm files, for example the press profile from your printer."
+          }
+        }
+      }
+    },
+    "Importer et fargebibliotek (ASE, ACO eller ACB) i Paletter for å finne nærmeste navngitte tone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import a colour library (ASE, ACO or ACB) in Palettes to find the nearest named tone."
+          }
+        }
+      }
+    },
+    "Importer fargebibliotek …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import colour library …"
           }
         }
       }
@@ -3191,6 +3231,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "New suggestion"
+          }
+        }
+      }
+    },
+    "Nærmeste i bibliotek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearest in library"
           }
         }
       }

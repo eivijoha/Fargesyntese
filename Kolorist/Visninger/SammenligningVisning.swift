@@ -57,6 +57,9 @@ struct SammenligningVisning: View {
             Section { FargeValgRad(tittel: String(localized: "Farge A"), farge: $a) }
             Section { FargeValgRad(tittel: String(localized: "Farge B"), farge: $b) }
 
+            // Farge A mot et importert fargebibliotek: nærmeste navngitte toner.
+            NærmesteIBibliotekSeksjon(farge: a)
+
             Section {
                 let la = a.cieLab, lb = b.cieLab, ca = a.cieLCH, cb = b.cieLCH
                 rad("ΔE00 (CIEDE2000)", de00, 2)

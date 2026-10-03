@@ -177,12 +177,32 @@
         }
       }
     },
+    "Fargebiblioteket kunne ikke leses.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The colour library could not be read."
+          }
+        }
+      }
+    },
     "Figma-variabler (.json)": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Figma variables (.json)"
+          }
+        }
+      }
+    },
+    "Filen er ikke et ASE-, ACO- eller ACB-fargebibliotek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file is not an ASE, ACO or ACB colour library."
           }
         }
       }

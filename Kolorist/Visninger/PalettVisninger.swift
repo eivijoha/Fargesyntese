@@ -17,6 +17,13 @@ struct PalettListe: View {
     @State private var slettes: PalettDokument?
     @State private var omdøpes: PalettDokument?
     @State private var visVerdiord = false
+    @State private var importererBibliotek = false
+    @State private var importfeil: String?
+
+    /// ASE, ACO og ACB. Typene er ikke registrert i systemet, så de hentes fra filendelsen.
+    static let bibliotektyper: [UTType] = [
+        UTType(filenameExtension: "ase"), UTType(filenameExtension: "aco"), UTType(filenameExtension: "acb"), .data,
+    ].compactMap { $0 }
     @State private var visNyPalett = false
     @State private var nyPalettNavn = ""
 
@@ -80,7 +87,26 @@ struct PalettListe: View {
                         visNyPalett = true
                     }
                     Button("Ny palett fra verdiord (KI)", systemImage: "sparkles") { visVerdiord = true }
+                    Divider()
+                    Button("Importer fargebibliotek …", systemImage: "books.vertical") { importererBibliotek = true }
                 }
+            }
+            .fileImporter(isPresented: $importererBibliotek, allowedContentTypes: Self.bibliotektyper, allowsMultipleSelection: true) { resultat in
+                do {
+                    for url in try resultat.get() {
+                        let tilgang = url.startAccessingSecurityScopedResource()
+                        defer { if tilgang { url.stopAccessingSecurityScopedResource() } }
+                        let palett = try Bibliotekimport.les(try Data(contentsOf: url), filnavn: url.lastPathComponent)
+                        kontekst.insert(PalettDokument(palett))
+                    }
+                } catch {
+                    importfeil = error.localizedDescription
+                }
+            }
+            .alert("Kunne ikke importere", isPresented: Binding(get: { importfeil != nil }, set: { if !$0 { importfeil = nil } })) {
+                Button("OK") {}
+            } message: {
+                Text(importfeil ?? "")
             }
             .sheet(isPresented: $visVerdiord) {
                 NavigationStack {
