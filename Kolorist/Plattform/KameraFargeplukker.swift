@@ -207,6 +207,12 @@ final class KameraFargeplukker {
         leser.sett(mål: enhetspunkt, fang: true)
     }
 
+    /// Flytter målpunktet uten å fange (Mac: følger pekeren over forhåndsvisningen).
+    func sikt(enhetspunkt: CGPoint, visningspunkt: CGPoint) {
+        markør = visningspunkt
+        leser.sett(mål: enhetspunkt, fang: false)
+    }
+
     /// Fanger fargen i gjeldende målpunkt (utløserknappen).
     func fang() {
         if let gjeldende { vedFangst?(gjeldende) }
@@ -291,6 +297,8 @@ nonisolated private final class BufferLeser: NSObject, AVCaptureVideoDataOutputS
 
     func sett(mål nytt: CGPoint, fang: Bool) {
         lås.withLock {
+            // En ventende fangst (klikk) skal ikke avbrytes eller flyttes av at pekeren beveger seg.
+            if !fang && ventendeFangst { return }
             mål = CGPoint(x: min(max(nytt.x, 0), 1), y: min(max(nytt.y, 0), 1))
             ventendeFangst = fang
             sist = .distantPast  // les neste bilde med en gang
@@ -433,12 +441,15 @@ struct KameraForhåndsvisning: UIViewRepresentable {
 struct KameraForhåndsvisning: NSViewRepresentable {
     let økt: AVCaptureSession
     var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
+    /// Pekeren over forhåndsvisningen (enhetspunkt, visningspunkt): målpunktet følger den.
+    var vedSveve: (CGPoint, CGPoint) -> Void = { _, _ in }
     var filterlag: CALayer? = nil
     var vedOrientering: (CGFloat, Bool) -> Void = { _, _ in }
 
     final class Visning: NSView {
         let lag: AVCaptureVideoPreviewLayer
         var vedTrykk: (CGPoint, CGPoint) -> Void = { _, _ in }
+        var vedSveve: (CGPoint, CGPoint) -> Void = { _, _ in }
 
         init(økt: AVCaptureSession) {
             lag = AVCaptureVideoPreviewLayer(session: økt)
@@ -450,10 +461,21 @@ struct KameraForhåndsvisning: NSViewRepresentable {
 
         required init?(coder: NSCoder) { fatalError("init(coder:) er ikke støttet") }
 
-        override func mouseDown(with event: NSEvent) {
-            // Visning og lag har begge origo nede til venstre; SwiftUI har origo oppe til venstre.
+        /// Punktet under pekeren som (enhetspunkt, visningspunkt). Visning og lag har begge origo nede
+        /// til venstre; SwiftUI har origo oppe til venstre.
+        private func punkter(_ event: NSEvent) -> (CGPoint, CGPoint) {
             let p = convert(event.locationInWindow, from: nil)
-            vedTrykk(lag.captureDevicePointConverted(fromLayerPoint: p), CGPoint(x: p.x, y: bounds.height - p.y))
+            return (lag.captureDevicePointConverted(fromLayerPoint: p), CGPoint(x: p.x, y: bounds.height - p.y))
+        }
+
+        override func mouseDown(with event: NSEvent) { let (e, v) = punkter(event); vedTrykk(e, v) }
+        override func mouseMoved(with event: NSEvent) { let (e, v) = punkter(event); vedSveve(e, v) }
+
+        override func updateTrackingAreas() {
+            super.updateTrackingAreas()
+            trackingAreas.forEach(removeTrackingArea)
+            addTrackingArea(NSTrackingArea(rect: bounds, options: [.mouseMoved, .activeInKeyWindow, .inVisibleRect],
+                                           owner: self))
         }
 
         override func resetCursorRects() { addCursorRect(bounds, cursor: .crosshair) }
@@ -477,6 +499,7 @@ struct KameraForhåndsvisning: NSViewRepresentable {
         }
         if let k = nsView.lag.connection { vedOrientering(k.videoRotationAngle, k.isVideoMirrored) }
         nsView.vedTrykk = vedTrykk
+        nsView.vedSveve = vedSveve
     }
 }
 #endif

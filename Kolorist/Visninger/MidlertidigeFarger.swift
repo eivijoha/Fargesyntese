@@ -18,11 +18,7 @@ struct MidlertidigeFarger: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 Label("Plukkede farger", systemImage: "eyedropper.halffull").font(kompakt ? .subheadline.weight(.semibold) : .headline)
-                Text("Ikke lagret")
-                    .font(.caption2.weight(.semibold))
-                    .padding(.horizontal, 6).padding(.vertical, 2)
-                    .foregroundStyle(Color.advarsel)
-                    .background(Color.advarsel.opacity(0.12), in: Capsule())
+                IkkeLagretMerke()
                 Spacer()
                 Menu {
                     Button("Lagre alle som enkeltfarger", systemImage: "square.and.arrow.down") {
@@ -64,6 +60,46 @@ struct MidlertidigeFarger: View {
                 .help(String(localized: "\(pf.farge.hex()) – ikke lagret"))
                 .accessibilityLabel(String(localized: "\(pf.farge.hex()), ikke lagret"))
                 .accessibilityAction(named: "Gjør til aktiv farge") { arbeidsbenk.aktivFarge = pf.farge }
+        }
+    }
+}
+
+/// Blå merkelapp «Ikke lagret» for plukkede farger.
+struct IkkeLagretMerke: View {
+    var body: some View {
+        Text("Ikke lagret")
+            .font(.caption2.weight(.semibold))
+            .padding(.horizontal, 6).padding(.vertical, 2)
+            .foregroundStyle(Color.blue)
+            .background(Color.blue.opacity(0.12), in: Capsule())
+    }
+}
+
+/// De plukkede fargene som en vannrett rad under kamera og bilde – de samme som «Plukkede farger» i
+/// Paletter (nyeste først). Trykk gjør fargen aktiv; menyen kan lagre, legge i palett eller fjerne den.
+struct PlukkedeFargerRad: View {
+    let opphav: PalettFarge.Opphav
+    var størrelse: CGFloat = 36
+    var leggIPalett: (Farge) -> Void
+    @Environment(Arbeidsbenk.self) private var arbeidsbenk
+
+    var body: some View {
+        let målinger = arbeidsbenk.målinger
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 6) {
+                ForEach(Array(målinger.indices.reversed()), id: \.self) { i in
+                    let farge = målinger[i]
+                    FargeRute(farge: farge, visTekst: false, hjørne: 6,
+                              leggIPalett: leggIPalett,
+                              fjern: { arbeidsbenk.fjernMåling(i) },
+                              palettFarge: PalettFarge(farge: farge, opphav: opphav))
+                        .frame(width: størrelse, height: størrelse)
+                        .overlay(RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .strokeBorder(Color.sekundærTekst.opacity(0.6), style: StrokeStyle(lineWidth: 1, dash: [3, 2])))
+                        .onTapGesture { arbeidsbenk.aktivFarge = farge }
+                        .help(String(localized: "\(farge.hex()) – ikke lagret"))
+                }
+            }
         }
     }
 }

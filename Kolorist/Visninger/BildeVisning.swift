@@ -18,6 +18,8 @@ struct UtplukkVisning: View {
             case .bilde: BildeVisning()
             }
         }
+        // Egen tittel, ellers viser Mac-vinduet tittelen fra palettkolonnen («Paletter»).
+        .navigationTitle("Utplukk")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
@@ -49,7 +51,6 @@ struct BildeVisning: View {
     @State private var forskyvning: CGSize = .zero
     @State private var knipStart: (skala: CGFloat, forskyvning: CGSize, senter: CGPoint)?
     @State private var knipIDenneBerøringen = false
-    @State private var fanget: [Farge] = []
     @State private var antallKlynger = 6
     @State private var klynger: [Bildepalett.Klynge] = []
     @State private var lagre: [PalettFarge]?
@@ -210,7 +211,6 @@ struct BildeVisning: View {
                 let f = arbeidsbenk.begrens(målt)
                 arbeidsbenk.aktivFarge = f
                 arbeidsbenk.registrerMåling(f)
-                fanget.fang(f)
             }
         case .avbrutt:
             drar = false
@@ -257,40 +257,29 @@ struct BildeVisning: View {
                           leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] })
                     .frame(width: 88, height: 56)
                 LagreMeny(lagre: {
-                    guard let f = fanget.last ?? gjeldende else { return }
+                    guard let f = arbeidsbenk.målinger.last ?? gjeldende else { return }
                     lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)], i: kontekst)
                 }, leggIPalett: {
-                    if let f = fanget.last ?? gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)] }
+                    if let f = arbeidsbenk.målinger.last ?? gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .bilde)] }
                 })
                 .font(.title2)
                 .foregroundStyle(.tint)
                 .help("Lagre sist fangede farge")
-                ScrollView(.horizontal) {
-                    HStack(spacing: 6) {
-                        ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in
-                            FargeRute(farge: farge, visTekst: false, hjørne: 6,
-                                      leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .bilde)] },
-                                      fjern: { if fanget.indices.contains(i) { fanget.remove(at: i) } })
-                                .frame(width: 36, height: 36)
-                                .onTapGesture { arbeidsbenk.aktivFarge = farge }
-                        }
-                    }
-                }
+                PlukkedeFargerRad(opphav: .bilde) { lagre = [PalettFarge(farge: $0, opphav: .bilde)] }
                 Button("Fang", systemImage: "plus.circle.fill") {
                     if let målt = gjeldende {
                         let f = arbeidsbenk.begrens(målt)
-                        fanget.fang(f)
                         arbeidsbenk.registrerMåling(f)
                     }
                 }
                 .labelStyle(.iconOnly)
                 .font(.system(size: 36))
-                .sensoryFeedback(.impact, trigger: fanget)
+                .sensoryFeedback(.impact, trigger: arbeidsbenk.målinger)
                 Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
-                    lagre = fanget.map { PalettFarge(farge: $0, opphav: .bilde) }
+                    lagre = arbeidsbenk.målinger.map { PalettFarge(farge: $0, opphav: .bilde) }
                 }
                 .labelStyle(.iconOnly)
-                .disabled(fanget.isEmpty)
+                .disabled(arbeidsbenk.målinger.isEmpty)
             }
 
             HStack(spacing: 8) {
@@ -315,7 +304,7 @@ struct BildeVisning: View {
         }
         .padding()
         .background(.bar)
-        .overlay(alignment: .top) { DeltaEMerke(fanget: fanget).offset(y: -44) }
+        .overlay(alignment: .top) { DeltaEMerke(fanget: arbeidsbenk.målinger).offset(y: -44) }
     }
 
     // MARK: - Lasting

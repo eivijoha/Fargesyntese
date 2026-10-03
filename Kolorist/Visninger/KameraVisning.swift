@@ -3,9 +3,15 @@ import SwiftData
 import SwiftUI
 
 struct KameraVisning: View {
+    private var erMac: Bool {
+        #if os(macOS)
+        true
+        #else
+        false
+        #endif
+    }
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @State private var plukker = KameraFargeplukker()
-    @State private var fanget: [Farge] = []
     @State private var lagre: [PalettFarge]?
     @Environment(\.modelContext) private var kontekst
     /// Slukk lykt/lysfelt når en farge er fanget (lyset trengs bare under målingen).
@@ -20,9 +26,11 @@ struct KameraVisning: View {
             vedDobbelttrykk: { plukker.settZoom(1) },
         )
         #else
+        // Mac: målpunktet følger pekeren, og et klikk fanger fargen der.
         KameraForhåndsvisning(
             økt: plukker.økt,
-            vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) }
+            vedTrykk: { enhet, visning in plukker.plukk(enhetspunkt: enhet, visningspunkt: visning) },
+            vedSveve: { enhet, visning in plukker.sikt(enhetspunkt: enhet, visningspunkt: visning) }
         )
         #endif
     }
@@ -32,13 +40,16 @@ struct KameraVisning: View {
             GeometryReader { geo in
                 ZStack {
                     kameraflate
-                    Circle()
-                        .strokeBorder(.white, lineWidth: 2)
-                        .shadow(radius: 2)
-                        .frame(width: 44, height: 44)
-                        .position(plukker.markør ?? CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
-                        .animation(.snappy(duration: 0.2), value: plukker.markør)
-                        .allowsHitTesting(false)
+                    // På Mac vises markøren først når pekeren er over bildet (ingen fast midtmarkør).
+                    if !erMac || plukker.markør != nil {
+                        Circle()
+                            .strokeBorder(.white, lineWidth: 2)
+                            .shadow(radius: 2)
+                            .frame(width: 44, height: 44)
+                            .position(plukker.markør ?? CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
+                            .animation(erMac ? nil : .snappy(duration: 0.2), value: plukker.markør)
+                            .allowsHitTesting(false)
+                    }
                     if plukker.tilgangNektet {
                         ContentUnavailableView("Ingen kameratilgang", systemImage: "camera.fill",
                                                description: Text("Gi tilgang i Innstillinger for å plukke farger fra omgivelsene."))
@@ -56,44 +67,34 @@ struct KameraVisning: View {
                 LevendeKamerafarge(plukker: plukker) { lagre = [PalettFarge(farge: $0, opphav: .kamera)] }
                     .frame(width: 88, height: 64)
                 LagreMeny(lagre: {
-                    guard let f = fanget.last ?? plukker.gjeldende else { return }
+                    guard let f = arbeidsbenk.målinger.last ?? plukker.gjeldende else { return }
                     lagreEnkeltfarger([PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .kamera)], i: kontekst)
                 }, leggIPalett: {
-                    if let f = fanget.last ?? plukker.gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .kamera)] }
+                    if let f = arbeidsbenk.målinger.last ?? plukker.gjeldende { lagre = [PalettFarge(farge: arbeidsbenk.begrens(f), opphav: .kamera)] }
                 })
                 .font(.title2)
                 .foregroundStyle(.tint)
                 .help("Lagre sist fangede farge")
-                ScrollView(.horizontal) {
-                    HStack(spacing: 6) {
-                        ForEach(Array(fanget.enumerated()), id: \.offset) { i, farge in
-                            FargeRute(farge: farge, visTekst: false, hjørne: 6,
-                                      leggIPalett: { lagre = [PalettFarge(farge: $0, opphav: .kamera)] },
-                                      fjern: { if fanget.indices.contains(i) { fanget.remove(at: i) } })
-                                .frame(width: 40, height: 40)
-                                .onTapGesture { arbeidsbenk.aktivFarge = farge }
-                        }
-                    }
-                }
+                PlukkedeFargerRad(opphav: .kamera, størrelse: 40) { lagre = [PalettFarge(farge: $0, opphav: .kamera)] }
                 Button {
                     plukker.fang()
                 } label: {
                     Image(systemName: "circle.inset.filled").font(.system(size: 44))
                 }
                 .accessibilityLabel("Fang farge")
-                .sensoryFeedback(.impact, trigger: fanget)
+                .sensoryFeedback(.impact, trigger: arbeidsbenk.målinger)
             }
             .padding()
             .background(.bar)
-            .overlay(alignment: .top) { DeltaEMerke(fanget: fanget).offset(y: -44) }
+            .overlay(alignment: .top) { DeltaEMerke(fanget: arbeidsbenk.målinger).offset(y: -44) }
         }
         .toolbar {
             ToolbarItemGroup {
                 LyskildeKnapper(plukker: plukker, slukkEtterFangst: $slukkEtterFangst)
                 Button("Legg alle i palett", systemImage: "square.and.arrow.down.on.square") {
-                    lagre = fanget.map { PalettFarge(farge: $0, opphav: .kamera) }
+                    lagre = arbeidsbenk.målinger.map { PalettFarge(farge: $0, opphav: .kamera) }
                 }
-                .disabled(fanget.isEmpty)
+                .disabled(arbeidsbenk.målinger.isEmpty)
             }
         }
         .sheet(isPresented: Binding(get: { lagre != nil }, set: { if !$0 { lagre = nil } })) {
@@ -106,11 +107,10 @@ struct KameraVisning: View {
         .task {
             plukker.vedFangst = { målt in
                 let farge = arbeidsbenk.begrens(målt)
-                fanget.fang(farge)
                 arbeidsbenk.aktivFarge = farge
                 arbeidsbenk.registrerMåling(farge)
-                // Klar for neste farge: punktet tilbake i midten.
-                plukker.tilbakestillMarkør()
+                // Klar for neste farge: punktet tilbake i midten (på Mac følger det pekeren).
+                if !erMac { plukker.tilbakestillMarkør() }
                 if slukkEtterFangst {
                     if plukker.lyktPå { plukker.settLykt(på: false) }
                     #if os(macOS)
@@ -169,16 +169,6 @@ private struct LevendeKamerafarge: View {
 
     var body: some View {
         FargeRute(farge: plukker.gjeldende ?? Farge(hex: "#808080")!, hjørne: 10, leggIPalett: leggIPalett)
-    }
-}
-
-extension Array where Element == Farge {
-    /// Utplukk holder bare de siste fangede fargene (rullerende), nyeste sist.
-    static let maksFanget = 3
-
-    mutating func fang(_ farge: Farge) {
-        append(farge)
-        if count > Self.maksFanget { removeFirst(count - Self.maksFanget) }
     }
 }
 

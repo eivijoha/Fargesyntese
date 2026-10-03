@@ -198,6 +198,8 @@ final class Arbeidsbenk {
     }
 
     func tømMålinger() { målinger.removeAll() }
+    /// Fjerner én måling (indeks i `målinger`, nyeste sist).
+    func fjernMåling(_ indeks: Int) { if målinger.indices.contains(indeks) { målinger.remove(at: indeks) } }
 
     // MARK: - Angre (⌘Z)
 
