@@ -83,6 +83,7 @@ Kolorist 1.1 er laget for flere fagfelt – også arkitektur og interiør – og
 • Paneler kan legges sammen og flyttes, og verdier kan skjules og sorteres – oppsettet synkroniseres.
 • Bedre paletter fra verdiord: bygget etter harmoniprinsipper med lesbar kontrast.
 • Vurderingen av en palett viser hva den bygger på.
+• Skriv ut en palett på A4 – fargeflater i CIELab med navn og verdier – eller lagre den som PDF.
 • «Sammenlign» heter nå «Forskjell».
 ```
 
@@ -137,6 +138,7 @@ KOPIER TIL OG EKSPORT
 • Dra fargeprøver rett inn i andre programmer på Mac
 • Eksport til ASE- og ACO-fargeprøver, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI og hex
 • Fargene eksporteres i formatet de er lagret i – for eksempel som CMYK
+• Skriv ut paletten på A4: fargeflater i CIELab med navn og verdier
 
 PALETTER OG ICLOUD
 Samle farger i paletter, lagre enkeltfarger og hele gradienter, og synkroniser via din egen, private iCloud. På store iPader i liggende format ligger palettene i en kolonne ved siden av verktøyene, og farger kan dras rett inn i fargevalgene. Angre overalt, også med ⌘Z.
@@ -192,6 +194,7 @@ Kolorist 1.1 reaches more disciplines – including architecture and interiors �
 • Panels can be collapsed and reordered, and values hidden and sorted – the layout syncs.
 • Better palettes from value words: built on harmony principles with legible contrast.
 • A palette critique now shows what it is based on.
+• Print a palette on A4 – CIELab swatches with names and values – or save it as a PDF.
 • “Compare” is now called “Difference”.
 ```
 
@@ -246,6 +249,7 @@ COPY TO AND EXPORT
 • Drag swatches straight into other apps on Mac
 • Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
 • Colours are exported in the format they were saved in – for example as CMYK
+• Print the palette on A4: CIELab swatches with names and values
 
 PALETTES AND ICLOUD
 Collect colours in palettes, save single colours and whole gradients, and sync through your own private iCloud. On large iPads in landscape your palettes sit in a column beside the tools, and colours can be dragged straight onto colour wells. Undo everywhere, including ⌘Z.
@@ -297,6 +301,7 @@ Kolorist 1.1 er laget for flere fagfelt – også arkitektur og interiør – og
 • Plukkede farger fra kamera, bilder og skjermpipetten samles øverst i Paletter til du lagrer dem.
 • Kamera: målepunktet følger pekeren, og et klikk fanger fargen der.
 • Angre (⌘Z) overalt.
+• Skriv ut en palett (⌘P) på A4 – fargeflater i CIELab med navn og verdier – eller arkiver den som PDF.
 • Klikk på en farge i palettoversikten for å velge den. Høyreklikk på en palett for vurdering og kontrastmatrise.
 • Paneler kan legges sammen og flyttes, og verdier kan skjules og sorteres – oppsettet synkroniseres.
 • Bedre paletter fra verdiord: bygget etter harmoniprinsipper med lesbar kontrast.
@@ -327,7 +332,7 @@ ALLE FARGEROMMENE
 FARGEBIBLIOTEKER OG ICC-PROFILER
 • Importer egne fargekart i ASE, ACO eller ACB (Adobe Color Book) med navngitte toner
 • Studio viser nærmeste tone og avstanden i ΔE2000 – og kan låse farger, toner og harmonier til bibliotekets toner
-• Bruk profilene som allerede er installert på Macen, ordnet etter mappe
+• Bruk profilene som er installert på Macen, etter mappe
 • Importer egne .icc- og .icm-profiler
 • Alt samles under «Mine fargerom» og følger med til iPhone og iPad via iCloud Drive
 • Konverter mellom profiler og sammenlign gjengivelseshensiktene med ΔE2000
@@ -356,6 +361,7 @@ KOPIER TIL OG EKSPORT
 • «Kopier til» designverktøy, layout-, bilde- og presentasjonsprogrammer – i formatet hvert program tar imot
 • Eksport til ASE- og ACO-fargeprøver, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI og hex
 • Fargene eksporteres i formatet de er lagret i – for eksempel som CMYK
+• Skriv ut paletten på A4: fargeflater i CIELab med navn og verdier
 
 PALETTER OG ICLOUD
 Samle farger i paletter, lagre enkeltfarger og hele gradienter, og synkroniser med iPhone og iPad via din egen, private iCloud.
@@ -403,6 +409,7 @@ Kolorist 1.1 reaches more disciplines – including architecture and interiors �
 • Colours picked from the camera, photos and the screen eyedropper gather at the top of Palettes until you save them.
 • Camera: the sampling point follows the pointer, and a click captures the colour there.
 • Undo (⌘Z) everywhere.
+• Print a palette (⌘P) on A4 – CIELab swatches with names and values – or save it as a PDF.
 • Click a colour in the palette overview to select it. Right-click a palette for a critique and contrast matrix.
 • Panels can be collapsed and reordered, and values hidden and sorted – the layout syncs.
 • Better palettes from value words: built on harmony principles with legible contrast.
@@ -432,8 +439,8 @@ EVERY COLOUR SPACE
 
 COLOUR LIBRARIES AND ICC PROFILES
 • Import your own colour charts in ASE, ACO or ACB (Adobe Color Book) with named tones
-• Studio shows the nearest tone and its ΔE2000 distance – and can lock colours, tones and harmonies to the library’s tones
-• Use the profiles already installed on your Mac, organised by folder
+• Studio shows the nearest tone and its ΔE2000 distance, and can lock colours to the library
+• Use the profiles installed on your Mac, by folder
 • Import your own .icc and .icm profiles
 • All gathered under “My colour spaces”, synced to iPhone and iPad through iCloud Drive
 • Convert between profiles and compare rendering intents with ΔE2000
@@ -460,8 +467,9 @@ Everything runs locally. Without Apple Intelligence, palettes are built straight
 
 COPY TO AND EXPORT
 • “Copy to” design tools, layout, photo and presentation apps – in the format each app accepts
-• Export to ASE and ACO swatches, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
+• Export to ASE, ACO, Design Tokens (DTCG), SVG, CSS, GPL, SwiftUI and hex
 • Colours are exported in the format they were saved in – for example as CMYK
+• Print the palette on A4: CIELab swatches with names and values
 
 PALETTES AND ICLOUD
 Collect colours in palettes, save single colours and whole gradients, and sync with iPhone and iPad through your own private iCloud.
@@ -535,6 +543,7 @@ NEW IN 1.1 – HOW TO TEST
 • LRV: Assess › Contrast › Surfaces (LRV).
 • Palette column: on a 13-inch iPad in landscape, or on a Mac with a window at least 1300 points wide. Drag a colour from the column onto From or To in Gradient.
 • Undo: ⌘Z (Edit › Undo) after changing a colour or editing a palette.
+• Print: open a palette › Print … (or ⌘P on Mac), or Export › PDF with swatches (A4).
 
 CAMERA
 The camera is used live, on device only, to pick colours and to show the colour vision filter. No photos or video are stored or sent. If no camera is available (for example on a Mac without one), picking from photos and the screen eyedropper still work.

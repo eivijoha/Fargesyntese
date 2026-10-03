@@ -53,6 +53,16 @@
         }
       }
     },
+    "%@ (utenfor gamut)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (out of gamut)"
+          }
+        }
+      }
+    },
     "%@ er utviklet av Eivind Arnstein Johansen – Institutt for design, NTNU.": {
       "localizations": {
         "en": {
@@ -165,6 +175,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ · clean colours"
+          }
+        }
+      }
+    },
+    "%@ · ΔE00 %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · ΔE00 %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · ΔE00 %2$@"
           }
         }
       }
@@ -1155,6 +1181,16 @@
         }
       }
     },
+    "Fargebibliotek: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour library: %@"
+          }
+        }
+      }
+    },
     "Fargebiblioteker": {
       "localizations": {
         "en": {
@@ -1261,6 +1297,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Colour space"
+          }
+        }
+      }
+    },
+    "Fargerom: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour space: %@"
           }
         }
       }
@@ -2277,6 +2323,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kolorist"
+          }
+        }
+      }
+    },
+    "Kolorist · %@ · Fargeflater i CIELab (D50) · %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Kolorist · %1$@ · Fargeflater i CIELab (D50) · %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kolorist · %1$@ · Swatches in CIELab (D50) · %2$@"
           }
         }
       }
@@ -3687,6 +3749,16 @@
         }
       }
     },
+    "PDF med fargeflater (A4)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF with swatches (A4)"
+          }
+        }
+      }
+    },
     "Palett": {
       "localizations": {
         "en": {
@@ -3987,6 +4059,22 @@
         }
       }
     },
+    "Side %lld av %lld": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Side %1$lld av %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Page %1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "Simulering av fargesynsavvik": {
       "localizations": {
         "en": {
@@ -4073,6 +4161,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide the palette column"
+          }
+        }
+      }
+    },
+    "Skriv ut paletten (A4, fargeflater i CIELab)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print the palette (A4, swatches in CIELab)"
+          }
+        }
+      }
+    },
+    "Skriv ut «%@» …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print “%@” …"
+          }
+        }
+      }
+    },
+    "Skriv ut …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print …"
           }
         }
       }

@@ -24,6 +24,8 @@ struct KoloristApp: App {
                 #endif
         }
         .modelContainer(Lagring.container)
+        // ⌘P (Arkiv › Skriv ut) for paletten som er åpen – Mac, og iPad med tastatur.
+        .commands { UtskriftKommando() }
         #if os(macOS)
         .commands {
             CommandGroup(after: .pasteboard) {
@@ -362,4 +364,19 @@ extension Color {
     static let tertiærTekst = Color("TertiaerTekst")
     // Statusfargene .advarsel, .suksess og .feil genereres fra Assets (minst 4,5:1 i lys og mørk modus;
     // systemets .orange/.green er ca. 2,2:1 mot hvit).
+}
+
+/// Arkiv › Skriv ut (⌘P): erstatter systemets punkt og skriver ut den åpne paletten.
+struct UtskriftKommando: Commands {
+    @FocusedValue(\.palettutskrift) private var utskrift
+
+    var body: some Commands {
+        CommandGroup(replacing: .printItem) {
+            Button(utskrift.map { String(localized: "Skriv ut «\($0.navn)» …") } ?? String(localized: "Skriv ut …")) {
+                if let utskrift { PalettUtskrift.skrivUt(utskrift.palett()) }
+            }
+            .keyboardShortcut("p", modifiers: .command)
+            .disabled(utskrift == nil)
+        }
+    }
 }

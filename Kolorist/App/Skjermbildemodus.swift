@@ -24,6 +24,14 @@ enum Skjermbildemodus {
         if UserDefaults.standard.bool(forKey: "testmaalinger") {
             for hex in ["#C4553B", "#E8B04A", "#3F7D5A", "#2E5E8C", "#D9CBB4"] { Arbeidsbenk.delt.registrerMåling(Farge(hex: hex)!) }
         }
+        // `-palettpdf <navn>`: skriv PDF-en av alle eksempelpalettene samlet til appens tmp-mappe (test av utskriften).
+        if let navn = UserDefaults.standard.string(forKey: "palettpdf") {
+            let alle = ((try? kontekst.fetch(FetchDescriptor<PalettDokument>())) ?? []).flatMap(\.farger)
+            let samlet = Palett(navn: "Eksempelpaletter", farger: alle + alle.prefix(4))
+            let url = FileManager.default.temporaryDirectory.appending(path: navn)
+            try? PalettUtskrift.pdf(for: samlet).write(to: url)
+            print("PDF:", url.path)
+        }
         // `-bibliotekfil <sti>`: importer et fargebibliotek (til test i simulatoren, der dokumentvelgeren ikke virker).
         if let sti = UserDefaults.standard.string(forKey: "bibliotekfil") {
             _ = try? ProfilBibliotek.delt.importerBibliotek(fra: URL(fileURLWithPath: sti))

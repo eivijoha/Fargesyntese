@@ -86,6 +86,8 @@ struct PalettListe: View {
                                         .disabled(p.farger.isEmpty)
                                     Button("Kontrastmatrise", systemImage: "square.grid.3x3.fill") { matrise = p }
                                         .disabled(p.farger.count < 2)
+                                    Button("Skriv ut …", systemImage: "printer") { PalettUtskrift.skrivUt(p.palett) }
+                                        .disabled(p.farger.isEmpty)
                                     Divider()
                                     Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
                                     KopierTilMeny(farger: p.farger, navn: p.navn)
@@ -416,7 +418,8 @@ struct PalettDetalj: View {
     @Bindable var dokument: PalettDokument
     @Environment(\.modelContext) private var kontekst
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
-    @State private var eksportformat: Eksportformat?
+    /// Filen som eksporteres (ett av eksportformatene eller PDF) – én filvelger for alle.
+    @State private var eksport: (data: Data, filnavn: String)?
     @State private var visSkala: PalettFarge?
     @State private var visKontrast = false
     @State private var vurdering: PalettVurdering?
@@ -505,17 +508,19 @@ struct PalettDetalj: View {
         .tarImotFarger { farger in
             flytt(farger, til: dokument, i: kontekst)
         }
+        // ⌘P skriver ut denne paletten.
+        .focusedSceneValue(\.palettutskrift, Palettutskrift(id: dokument.id, navn: dokument.navn) { dokument.palett })
         .toolbar {
             if !iKolonne {
                 ToolbarItemGroup { handlinger }
             }
         }
         .fileExporter(
-            isPresented: Binding(get: { eksportformat != nil }, set: { if !$0 { eksportformat = nil } }),
-            document: eksportformat.map { EksportDokument(data: $0.data(for: dokument.palett)) },
+            isPresented: Binding(get: { eksport != nil }, set: { if !$0 { eksport = nil } }),
+            document: eksport.map { EksportDokument(data: $0.data) },
             contentType: .data,
-            defaultFilename: "\(eksportnavn).\(eksportformat?.filendelse ?? "")"
-        ) { _ in eksportformat = nil }
+            defaultFilename: eksport?.filnavn ?? eksportnavn
+        ) { _ in eksport = nil }
         .sheet(item: $visSkala) { pf in
             ToneskalaArk(grunnfarge: pf) { nye in dokument.farger += nye }
         }
@@ -553,10 +558,15 @@ struct PalettDetalj: View {
         }
         .disabled(dokument.farger.isEmpty || kiArbeider)
         .help("Vurder paletten")
+        Button("Skriv ut …", systemImage: "printer") { PalettUtskrift.skrivUt(dokument.palett) }
+            .disabled(dokument.farger.isEmpty)
+            .help("Skriv ut paletten (A4, fargeflater i CIELab)")
         Menu("Eksporter", systemImage: "square.and.arrow.up") {
             ForEach(Eksportformat.allCases) { f in
-                Button(f.navn) { eksportformat = f }
+                Button(f.navn) { eksport = (f.data(for: dokument.palett), "\(eksportnavn).\(f.filendelse)") }
             }
+            Button("PDF med fargeflater (A4)") { eksport = (PalettUtskrift.pdf(for: dokument.palett), "\(eksportnavn).pdf") }
+                .disabled(dokument.farger.isEmpty)
             Divider()
             Button("Kopier alle som hex") { Utklippstavle.kopier(dokument.palett) }
             Button("Kopier alle som OKLCH") { Utklippstavle.kopier(dokument.palett, som: .okLCH) }
