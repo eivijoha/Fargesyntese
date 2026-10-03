@@ -8,7 +8,7 @@ import SwiftUI
 struct PalettKolonne: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @Environment(\.modelContext) private var kontekst
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
     /// Paletter som er foldet ut (id-er), husket mellom oppstarter.
     @AppStorage("palettkolonneÅpne") private var åpneTekst = ""

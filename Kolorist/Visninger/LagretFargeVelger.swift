@@ -65,7 +65,7 @@ struct LagretFargeArk: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
     @Environment(\.dismiss) private var lukk
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
 
     private let rutenett = [GridItem(.adaptive(minimum: 52), spacing: 8)]
     /// Kjent verdi skrevet inn: hex (sRGB), eller annen CSS-farge.

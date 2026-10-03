@@ -76,7 +76,7 @@ private struct KontrastVurdering: View {
 
 /// Vurdering av en hel palett: KI-vurdering (med eksakte WCAG-fakta) og kontrastmatrise.
 private struct PalettVurderingDel: View {
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
     /// Delt med Vurdering › Fargesyn, så samme palett er valgt i begge.
     @AppStorage("vurderingPalett") private var valgtIDTekst = ""
     @State private var bruk = ""

@@ -13,7 +13,7 @@ struct PalettListe: View {
     var iKolonne = false
     @Environment(\.modelContext) private var kontekst
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var enkeltfarger: [LagretFarge]
     /// Navigasjonssti: oversikten fyller hele hovedvisningen (også på Mac og iPad), valgt palett åpnes over.
     @State private var sti: [Valg] = []
@@ -430,7 +430,9 @@ struct PalettDetalj: View {
                     if redigererNavn { redigererNavn = false } else { startNavneredigering() }
                 } label: {
                     Image(systemName: redigererNavn ? "checkmark.circle.fill" : "pencil")
-                        .font(.body.weight(.semibold))
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(Color.accentColor)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.borderless)
                 .help(redigererNavn ? "Ferdig" : "Endre navnet")
@@ -439,7 +441,7 @@ struct PalettDetalj: View {
             }
             .font(.title2.weight(.semibold))
             .padding(.horizontal)
-            .padding(.top, 24)
+            .padding(.top, 40)
             .onChange(of: navnIFokus) { _, fokus in if !fokus { redigererNavn = false } }
             if iKolonne {
                 HStack(spacing: 14) { handlinger }
@@ -579,7 +581,7 @@ struct VelgPalettArk: View {
     var tilbyEnkeltfarger = true
     @Environment(\.modelContext) private var kontekst
     @Environment(\.dismiss) private var lukk
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
     @State private var nyttNavn = ""
     @FocusState private var navnIFokus: Bool
 
@@ -695,7 +697,7 @@ struct ToneskalaArk: View {
 struct FlyttMeny: View {
     let farge: PalettFarge
     let fra: PalettDokument?
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
 
     var body: some View {
         let andre = paletter.filter { $0.id != fra?.id }
@@ -825,7 +827,7 @@ struct Utviklerlinje: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("\(appnavn) er utviklet av Eivind Arnstein Johansen.")
+            Text("\(appnavn) er utviklet av Eivind Arnstein Johansen – Institutt for design, NTNU.")
             if !versjon.isEmpty { Text("Versjon \(versjon)") }
             Button("Metoder og kilder", systemImage: "books.vertical") { visMetoder = true }
                 .buttonStyle(.borderless)

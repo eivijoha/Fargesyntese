@@ -47,12 +47,12 @@
         }
       }
     },
-    "%@ er utviklet av Eivind Arnstein Johansen.": {
+    "%@ er utviklet av Eivind Arnstein Johansen – Institutt for design, NTNU.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ is developed by Eivind Arnstein Johansen."
+            "value": "%@ is developed by Eivind Arnstein Johansen – Department of Design, NTNU."
           }
         }
       }

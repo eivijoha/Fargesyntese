@@ -15,7 +15,7 @@ enum Skjermbildemodus {
         let farger = Harmoni.jevn.farger(fra: Farge(hex: "#2F7FD8")!, antall: 5).map { $0.gamutKartlagt(til: .displayP3) }
         let palett = (try? kontekst.fetch(FetchDescriptor<PalettDokument>()))?.first { $0.navn == navn }
             ?? { let p = PalettDokument(navn: navn); kontekst.insert(p); return p }()
-        // Setter fargene på nytt hver gang, så paletten også blir sist endret og står først.
+        // Setter fargene på nytt hver gang, så de er de samme på alle plattformer.
         palett.farger = farger.map { PalettFarge(farge: $0, opphav: .manuell) }
         try? kontekst.save()
         UserDefaults.standard.set(palett.id.uuidString, forKey: "vurderingPalett")

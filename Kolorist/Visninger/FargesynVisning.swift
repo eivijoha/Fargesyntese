@@ -5,7 +5,7 @@ import SwiftUI
 /// Vurdering › Fargesyn: hvordan en palett ser ut med fargesynsavvik (CVD), og hvilke fargepar
 /// som blir vanskelige å skille.
 struct FargesynVurdering: View {
-    @Query(sort: \PalettDokument.endret, order: .reverse) private var paletter: [PalettDokument]
+    @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
     /// Delt med Vurdering › Palett, så samme palett er valgt i begge.
     @AppStorage("vurderingPalett") private var valgtIDTekst = ""
     @AppStorage("fargesynGrad") private var grad = 1.0
