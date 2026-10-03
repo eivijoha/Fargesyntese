@@ -367,7 +367,8 @@ struct KomponentGlidere: View {
     /// så verdiene kan kjennes igjen fra Photoshop og CSS.
     private func gliderTittel(_ k: Fargemodell.Komponent) -> Text {
         guard profil == nil, [.okLab, .cieLab].contains(modell) else { return Text(k.navn) }
-        return Text(k.navn) + Text(" (\(k.kortnavn))").foregroundStyle(Color.sekundærTekst)
+        let akse = Text(verbatim: "(\(k.kortnavn))").foregroundStyle(Color.sekundærTekst)
+        return Text("\(k.navn) \(akse)")
     }
 
     /// Verdien slik den vises ved glideren. Munsell-kulør vises som notasjon («5.5PB»), ikke som tall 0–100.
