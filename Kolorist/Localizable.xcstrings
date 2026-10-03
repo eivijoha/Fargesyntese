@@ -111,6 +111,22 @@
         }
       }
     },
+    "%@ · %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
     "%@ · minst %@:1": {
       "localizations": {
         "en": {
@@ -1043,6 +1059,16 @@
         }
       }
     },
+    "Farge som testes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour under test"
+          }
+        }
+      }
+    },
     "Fargeharmonier": {
       "localizations": {
         "en": {
@@ -1213,12 +1239,32 @@
         }
       }
     },
+    "Flater (LRV)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Surfaces (LRV)"
+          }
+        }
+      }
+    },
     "Flytt til": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Move to"
+          }
+        }
+      }
+    },
+    "For vegg, gulv, dør og håndlist: lysrefleksjonsverdien (LRV) er andelen lys flaten reflekterer, som på malingskart. BS 8300 ber om minst 30 poeng forskjell mellom tilstøtende flater; NS 11001 bruker luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂), minst 0,4 for viktige flater og 0,8 for skilt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For walls, floors, doors and handrails: the light reflectance value (LRV) is the share of light a surface reflects, as given on paint charts. BS 8300 asks for at least 30 points difference between adjacent surfaces; NS 11001 uses luminance contrast (Y₁ − Y₂)/(Y₁ + Y₂), at least 0.4 for important surfaces and 0.8 for signage."
           }
         }
       }
@@ -1259,6 +1305,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Shape"
+          }
+        }
+      }
+    },
+    "Forskjell": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difference"
           }
         }
       }
@@ -2005,16 +2061,6 @@
         }
       }
     },
-    "Kontrast (WCAG 2.2)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contrast (WCAG 2.2)"
-          }
-        }
-      }
-    },
     "Kontrasten er %@ (%@). %@.": {
       "localizations": {
         "en": {
@@ -2231,6 +2277,16 @@
         }
       }
     },
+    "Kulør, valør og kroma etter Munsell. Omregningen bruker renotasjonsdataene fra 1943 (CIE xyY under lyskilde C, offentlige data) med interpolasjon i kroma, kulør og valør, Bradford-tilpasning til D65, og ASTM D1535 for sammenhengen mellom valør og luminans. Notasjonen er en tilnærming; fysiske Munsell-prøver kan avvike.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hue, value and chroma after Munsell. The conversion uses the 1943 renotation data (CIE xyY under illuminant C, public data) with interpolation in chroma, hue and value, Bradford adaptation to D65, and ASTM D1535 for the relation between value and luminance. The notation is an approximation; physical Munsell chips may differ."
+          }
+        }
+      }
+    },
     "Kunne ikke importere": {
       "localizations": {
         "en": {
@@ -2267,6 +2323,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "LCH"
+          }
+        }
+      }
+    },
+    "LRV bakgrunn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LRV background"
+          }
+        }
+      }
+    },
+    "LRV er CIE-luminansen Y i prosent – andelen synlig lys en flate reflekterer, slik malingsprodusentene oppgir den. Kolorist regner den for fargen slik den vises i sRGB. Kontrast mellom flater oppgis som forskjell i LRV-poeng (BS 8300: minst 30) og som luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂) etter NS 11001 (0,4 for viktige flater, 0,8 for skilt). «Rett opp» endrer bare lysheten i OKLCH.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LRV is the CIE luminance Y in per cent – the share of visible light a surface reflects, as paint manufacturers state it. Kolorist computes it for the colour as shown in sRGB. Contrast between surfaces is given as a difference in LRV points (BS 8300: at least 30) and as luminance contrast (Y₁ − Y₂)/(Y₁ + Y₂) per NS 11001 (0.4 for important surfaces, 0.8 for signage). “Fix” changes only lightness in OKLCH."
+          }
+        }
+      }
+    },
+    "LRV flate": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LRV surface"
           }
         }
       }
@@ -2703,6 +2789,16 @@
         }
       }
     },
+    "Luminanskontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luminance contrast"
+          }
+        }
+      }
+    },
     "Lykt": {
       "localizations": {
         "en": {
@@ -2781,6 +2877,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lightness of the tones"
+          }
+        }
+      }
+    },
+    "Lysrefleksjonsverdi og luminanskontrast": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light reflectance value and luminance contrast"
           }
         }
       }
@@ -2943,6 +3049,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mode"
+          }
+        }
+      }
+    },
+    "Munsell-systemet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Munsell system"
           }
         }
       }
@@ -3845,12 +3961,12 @@
         }
       }
     },
-    "Tekst og grafikk": {
+    "Tekst og grafikk (WCAG 2.2)": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Text and graphics"
+            "value": "Text and graphics (WCAG 2.2)"
           }
         }
       }

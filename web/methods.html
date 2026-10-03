@@ -83,6 +83,14 @@
     <p>Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten tolker ordene og velger kulørfamilier og uttrykk. Selve paletten komponeres deretter etter faste regler i OKLCH: harmoniprinsipp, lik valør eller lik metning, én aksent, lys eller mørk bakgrunn og tekst med minst 7:1 kontrast. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.</p>
     <p class="dempet">Kilde: Utviklet for Kolorist; språkmodell fra Apple (Foundation Models)</p>
     
+    <h2 id="lrv">Lysrefleksjonsverdi og luminanskontrast</h2>
+    <p>LRV er CIE-luminansen Y i prosent – andelen synlig lys en flate reflekterer, slik malingsprodusentene oppgir den. Kolorist regner den for fargen slik den vises i sRGB. Kontrast mellom flater oppgis som forskjell i LRV-poeng (BS 8300: minst 30) og som luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂) etter NS 11001 (0,4 for viktige flater, 0,8 for skilt).</p>
+    <p class="dempet">Kilde: CIE 15 (luminansfaktor Y); BS 8300-2:2018; NS 11001-1:2018 og Byggforsk 220.300</p>
+
+    <h2 id="munsell">Munsell-systemet</h2>
+    <p>Kulør, valør og kroma etter Munsell. Omregningen bruker renotasjonsdataene fra 1943 (CIE xyY under lyskilde C, offentlige data) med interpolasjon i kroma, kulør og valør, Bradford-tilpasning til D65, og ASTM D1535 for sammenhengen mellom valør og luminans. Notasjonen er en tilnærming; fysiske Munsell-prøver kan avvike.</p>
+    <p class="dempet">Kilde: <a href="https://doi.org/10.1364/JOSA.33.000385">Newhall, Nickerson &amp; Judd: «Final Report of the O.S.A. Subcommittee on the Spacing of the Munsell Colors», JOSA 33(7), 1943</a>; ASTM D1535</p>
+
     <div class="boks">
       <h2>Om implementasjonen</h2>
       <p>Formlene er implementert i appen ut fra de publiserte spesifikasjonene og artiklene over, og kontrollert med tester mot referanseverdier der slike finnes. Har du spørsmål om en metode eller finner du noe som ikke stemmer, send gjerne e-post til <a href="mailto:eivind.johansen@ntnu.no">eivind.johansen@ntnu.no</a>.</p>

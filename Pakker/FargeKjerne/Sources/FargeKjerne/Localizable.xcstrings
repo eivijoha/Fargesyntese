@@ -187,6 +187,16 @@
         }
       }
     },
+    "Flater, 30 LRV-poeng": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Surfaces, 30 LRV points"
+          }
+        }
+      }
+    },
     "GIMP-palett (.gpl)": {
       "localizations": {
         "en": {
@@ -597,6 +607,16 @@
         }
       }
     },
+    "Skilt og tekst, 0,8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signage and text, 0.8"
+          }
+        }
+      }
+    },
     "Sort": {
       "localizations": {
         "en": {
@@ -703,6 +723,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Warmer"
+          }
+        }
+      }
+    },
+    "Viktige flater, 0,4": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Important surfaces, 0.4"
           }
         }
       }
@@ -867,6 +897,26 @@
         }
       }
     },
+    "luminanskontrast minst 0,4": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "luminance contrast at least 0.4"
+          }
+        }
+      }
+    },
+    "luminanskontrast minst 0,8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "luminance contrast at least 0.8"
+          }
+        }
+      }
+    },
     "lys": {
       "localizations": {
         "en": {
@@ -883,6 +933,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "magenta"
+          }
+        }
+      }
+    },
+    "minst 30 poeng forskjell i LRV": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "at least 30 points difference in LRV"
           }
         }
       }

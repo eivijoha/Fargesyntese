@@ -19,6 +19,8 @@ public enum Fargetolk {
         if s.isEmpty { return nil }
         if let f = Farge(hex: s) { return f }
         if let f = navngitte[s] { return f }
+        // Munsell-notasjon («5R 4/14», «N 5/»).
+        if let m = Munsell(s), let f = Farge(munsell: m) { return f }
         guard let parentes = s.firstIndex(of: "("), s.hasSuffix(")") else { return nil }
         let funksjon = String(s[..<parentes]).trimmingCharacters(in: .whitespaces)
         let innhold = String(s[s.index(after: parentes)..<s.index(before: s.endIndex)])

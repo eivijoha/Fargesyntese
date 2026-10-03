@@ -202,7 +202,7 @@ extension FargeEditor {
                     Text("\(arbeidsbenk.modell.navn)-verdiene angis i \(p.navn) og vises slik de gjengis i dette fargerommet.")
                         .foregroundStyle(Color.sekundærTekst)
                 }
-                MetodeHenvisning(.cssColor4, .oklab, .cieLab, .icc)
+                MetodeHenvisning(.cssColor4, .oklab, .cieLab, .munsell, .lrv, .icc)
             }
         }
 
@@ -211,6 +211,11 @@ extension FargeEditor {
             ForEach(Fargemodell.allCases) { modell in
                 VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
             }
+            // For arkitekter: Munsell-notasjon og lysrefleksjonsverdi.
+            let munsell = farge.munsell.notasjon
+            VerdiRad(navn: "Munsell", tekst: munsell) { Utklippstavle.kopierTekst(munsell) }
+            let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
+            VerdiRad(navn: "LRV", tekst: lrv) { Utklippstavle.kopierTekst(lrv) }
             GamutOversikt(farge: farge)
         }
 

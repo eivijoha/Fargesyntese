@@ -4,7 +4,7 @@ import SwiftUI
 /// Vises per seksjon («Metode: …») og samlet under «Metoder og kilder», så brukeren alltid kan se
 /// hva tallene og fargene bygger på – også hva som er utviklet for appen og hva som er etablert fag.
 enum Metode: String, CaseIterable, Identifiable {
-    case oklab, cssColor4, cieLab, ciede2000, wcag, machado, icc, renCMYK, harmonier, kunnskapsbase
+    case oklab, cssColor4, cieLab, ciede2000, wcag, lrv, munsell, machado, icc, renCMYK, harmonier, kunnskapsbase
 
     var id: String { rawValue }
 
@@ -16,6 +16,8 @@ enum Metode: String, CaseIterable, Identifiable {
         case .cieLab: "CIELab D50"
         case .ciede2000: "CIEDE2000"
         case .wcag: "WCAG 2.2"
+        case .lrv: "LRV"
+        case .munsell: "Munsell"
         case .machado: String(localized: "Machado mfl. 2009")
         case .icc: "ICC/ColorSync"
         case .renCMYK: String(localized: "UCR/GCR")
@@ -31,6 +33,8 @@ enum Metode: String, CaseIterable, Identifiable {
         case .cieLab: String(localized: "CIELab, CIE LCH og Bradford-tilpasning")
         case .ciede2000: String(localized: "CIEDE2000 (ΔE00)")
         case .wcag: String(localized: "WCAG 2.2 kontrast")
+        case .lrv: String(localized: "Lysrefleksjonsverdi og luminanskontrast")
+        case .munsell: String(localized: "Munsell-systemet")
         case .machado: String(localized: "Simulering av fargesynsavvik")
         case .icc: String(localized: "ICC-profiler og fargestyring")
         case .renCMYK: String(localized: "Rene CMYK-verdier (UCR/GCR)")
@@ -47,6 +51,8 @@ enum Metode: String, CaseIterable, Identifiable {
         case .cieLab: "CIE 15:2018 Colorimetry; K. M. Lam (1985), Bradford-transformasjonen"
         case .ciede2000: "G. Sharma, W. Wu, E. N. Dalal: Color Research & Application 30(1), 2005; CIE 142-2001"
         case .wcag: "W3C: Web Content Accessibility Guidelines 2.2, suksesskriterium 1.4.3, 1.4.6 og 1.4.11"
+        case .lrv: "CIE 15 (luminansfaktor Y); BS 8300-2:2018; NS 11001-1:2018 og Byggforsk 220.300"
+        case .munsell: "Newhall, Nickerson & Judd: «Final Report of the O.S.A. Subcommittee on the Spacing of the Munsell Colors», JOSA 33(7), 1943; ASTM D1535"
         case .machado: "G. M. Machado, M. M. Oliveira, L. A. F. Fernandes: IEEE TVCG 15(6), 2009"
         case .icc: "International Color Consortium (ICC.1); Apple ColorSync via Core Graphics"
         case .renCMYK: String(localized: "Etablert trykkteknikk; søket er utviklet for Kolorist")
@@ -67,6 +73,10 @@ enum Metode: String, CaseIterable, Identifiable {
             String(localized: "CIEs formel for opplevd fargeforskjell. Brukes ved sammenligning av farger, gamutavvik og i analysen av farger som blir vanskelige å skille med fargesynsavvik. Implementasjonen er kontrollert mot testdataene i Sharma mfl.")
         case .wcag:
             String(localized: "W3Cs krav til kontrast mellom tekst/grafikk og bakgrunn, regnet ut fra relativ luminans. «Rett opp» endrer bare lysheten (OKLCH) til kravet er oppfylt.")
+        case .lrv:
+            String(localized: "LRV er CIE-luminansen Y i prosent – andelen synlig lys en flate reflekterer, slik malingsprodusentene oppgir den. Kolorist regner den for fargen slik den vises i sRGB. Kontrast mellom flater oppgis som forskjell i LRV-poeng (BS 8300: minst 30) og som luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂) etter NS 11001 (0,4 for viktige flater, 0,8 for skilt). «Rett opp» endrer bare lysheten i OKLCH.")
+        case .munsell:
+            String(localized: "Kulør, valør og kroma etter Munsell. Omregningen bruker renotasjonsdataene fra 1943 (CIE xyY under lyskilde C, offentlige data) med interpolasjon i kroma, kulør og valør, Bradford-tilpasning til D65, og ASTM D1535 for sammenhengen mellom valør og luminans. Notasjonen er en tilnærming; fysiske Munsell-prøver kan avvike.")
         case .machado:
             String(localized: "Fysiologisk basert modell for protan-, deutan- og tritanavvik, med matriser i lineær sRGB og alvorlighetsgrad som blanding med normalt syn. Akromatopsi vises som luminans alene. Brukes i Vurdering › Fargesyn, kontrastforhåndsvisningen og kamerafilteret. Simuleringen er en tilnærming; opplevelsen varierer mellom personer.")
         case .icc:
@@ -87,6 +97,8 @@ enum Metode: String, CaseIterable, Identifiable {
         case .cieLab: URL(string: "https://cie.co.at/publications/colorimetry-4th-edition")
         case .ciede2000: URL(string: "https://doi.org/10.1002/col.20070")
         case .wcag: URL(string: "https://www.w3.org/TR/WCAG22/")
+        case .lrv: URL(string: "https://www.standard.no/no/Nettbutikk/produktkatalogen/Produktpresentasjon/?ProductID=1000883")
+        case .munsell: URL(string: "https://doi.org/10.1364/JOSA.33.000385")
         case .machado: URL(string: "https://doi.org/10.1109/TVCG.2009.113")
         case .icc: URL(string: "https://www.color.org/specification/ICC.1-2022-05.pdf")
         case .renCMYK, .harmonier, .kunnskapsbase: nil

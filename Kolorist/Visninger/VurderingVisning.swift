@@ -57,7 +57,7 @@ private struct KontrastVurdering: View {
         @Bindable var arbeidsbenk = arbeidsbenk
         Form {
             Section {
-                FargeValgRad(tittel: String(localized: "Tekst og grafikk"), farge: $arbeidsbenk.aktivFarge)
+                FargeValgRad(tittel: String(localized: "Farge som testes"), farge: $arbeidsbenk.aktivFarge)
             }
             KontrastSeksjon(forgrunn: $arbeidsbenk.aktivFarge)
         }

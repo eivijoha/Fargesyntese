@@ -58,7 +58,7 @@ enum Matriser {
     static let d65TilD50 = bradford(fra: hvitD65, til: hvitD50)
     static let d50TilD65 = d65TilD50.invertert
 
-    private static func bradford(fra kilde: Vektor3, til mål: Vektor3) -> Matrise3 {
+    static func bradford(fra kilde: Vektor3, til mål: Vektor3) -> Matrise3 {
         let mA = Matrise3([[0.8951, 0.2664, -0.1614], [-0.7502, 1.7135, 0.0367], [0.0389, -0.0685, 1.0296]])
         let k = mA * kilde, m = mA * mål
         let skalering = Matrise3([[m.x / k.x, 0, 0], [0, m.y / k.y, 0], [0, 0, m.z / k.z]])

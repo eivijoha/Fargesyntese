@@ -50,13 +50,14 @@ struct KontrastSeksjon: View {
                 KravRad(krav: krav, test: test) { forgrunn = test.rettet(for: krav) }
             }
         } header: { Group {
-            Text("Kontrast (WCAG 2.2)")
+            Text("Tekst og grafikk (WCAG 2.2)")
         }.foregroundStyle(Color.sekundærTekst) } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Aktiv farge testes som tekst/grafikk mot bakgrunnen. «Rett opp» endrer bare lysheten, og beholder kulør og metning. «Vis med» simulerer et fargesynsavvik i forhåndsvisningen; WCAG-kravene gjelder alltid de faktiske fargene.")
                 MetodeHenvisning(.wcag, .oklab, .machado)
             }
         }
+        FlatekontrastSeksjon(flate: $forgrunn, bakgrunn: bakgrunn)
     }
 }
 
@@ -222,4 +223,62 @@ struct KontrastmatriseArk: View {
 
 extension Kontrasttest: @retroactive Identifiable {
     public var id: String { forgrunn.hex(medAlfa: true) + bakgrunn.hex(medAlfa: true) }
+}
+
+/// Kontrast mellom flater for bygg og universell utforming: forskjell i lysrefleksjonsverdi (LRV)
+/// og luminanskontrast, slik arkitekter og NS 11001 / BS 8300 bruker det.
+struct FlatekontrastSeksjon: View {
+    @Binding var flate: Farge
+    let bakgrunn: Farge
+
+    var body: some View {
+        let k = Flatekontrast(flate, bakgrunn)
+        Section {
+            HStack(spacing: 0) {
+                verdi(String(localized: "LRV flate"), flate.lrv.formatted(.number.precision(.fractionLength(0))))
+                verdi(String(localized: "LRV bakgrunn"), bakgrunn.lrv.formatted(.number.precision(.fractionLength(0))))
+                verdi(String(localized: "Forskjell"), k.lrvForskjell.formatted(.number.precision(.fractionLength(0))) + " p.")
+                verdi(String(localized: "Luminanskontrast"), k.michelson.formatted(.number.precision(.fractionLength(2))))
+            }
+            .padding(.vertical, 4)
+            ForEach(Flatekrav.allCases) { krav in
+                let bestått = k.består(krav)
+                HStack {
+                    Image(systemName: bestått ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .foregroundStyle(bestått ? Color.suksess : Color.feil)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(krav.navn)
+                        Text("\(krav.kilde) · \(krav.kravtekst)")
+                            .font(.caption)
+                            .foregroundStyle(Color.sekundærTekst)
+                    }
+                    Spacer()
+                    if !bestått {
+                        Button("Rett opp") { flate = k.rettet(for: krav) }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityValue(bestått ? "Bestått" : "Ikke bestått")
+            }
+        } header: { Group {
+            Text("Flater (LRV)")
+        }.foregroundStyle(Color.sekundærTekst) } footer: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("For vegg, gulv, dør og håndlist: lysrefleksjonsverdien (LRV) er andelen lys flaten reflekterer, som på malingskart. BS 8300 ber om minst 30 poeng forskjell mellom tilstøtende flater; NS 11001 bruker luminanskontrast (Y₁ − Y₂)/(Y₁ + Y₂), minst 0,4 for viktige flater og 0,8 for skilt.")
+                MetodeHenvisning(.lrv, .oklab)
+            }
+        }
+    }
+
+    private func verdi(_ tittel: String, _ tekst: String) -> some View {
+        VStack(spacing: 2) {
+            Text(tekst).font(.title3.weight(.semibold).monospacedDigit())
+            Text(tittel).font(.caption2).foregroundStyle(Color.sekundærTekst).multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+    }
 }
