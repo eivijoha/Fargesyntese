@@ -21,7 +21,9 @@ nonisolated enum PalettPDF {
     private static let marg: CGFloat = 42
     private static let kolonner = 3
     private static let mellomrom: CGFloat = 14
-    private static let flatehøyde: CGFloat = 92
+    /// Luft mellom radene (under teksten til én rad og over flatene i neste).
+    private static let radavstand: CGFloat = 22
+    private static let flatehøyde: CGFloat = 80
 
     static func lag(tittel: String, undertittel: String, felt: [Felt], sidetekst: (Int, Int) -> String) -> Data {
         let data = NSMutableData()
@@ -49,7 +51,7 @@ nonisolated enum PalettPDF {
                 y = toppNeste
             }
             sider[sider.count - 1].append((rad, y))
-            y += radhøyde + mellomrom
+            y += radhøyde + radavstand
         }
 
         let lab = CGColorSpace(labWhitePoint: [0.9642, 1.0, 0.8249], blackPoint: [0, 0, 0], range: [-128, 127, -128, 127])
