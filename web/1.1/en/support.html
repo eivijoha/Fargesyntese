@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support – Kolorist</title>
+  <meta name="description" content="Help and frequently asked questions about Kolorist: colour spaces, Display P3 and sRGB, ICC profiles, iCloud sync, Apple Intelligence, camera and export.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="../assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/stil.css">
+  <link rel="canonical" href="https://kolorist.no/en/support.html">
+  <link rel="alternate" hreflang="nb" href="https://kolorist.no/support.html">
+  <link rel="alternate" hreflang="en" href="https://kolorist.no/en/support.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolorist.no/support.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Skip to main content</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="../assets/ikon.svg" alt="" width="32" height="32">
+        Kolorist
+      </a>
+      <nav class="hovednav" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="support.html" aria-current="page">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Language">
+        <a href="../support.html" hreflang="nb" lang="nb">Norsk</a>
+        <span aria-current="true" lang="en">English</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold lesetekst" tabindex="-1">
+    <h1>Support</h1>
+    <p class="ingress">Answers to common questions about Kolorist – and how to get in touch if you can’t find what you’re looking for.</p>
+
+    <section class="boks" aria-labelledby="kontakt">
+      <h2 id="kontakt">Contact</h2>
+      <p>Send an email to
+        <a href="mailto:eivind.johansen@ntnu.no">eivind.johansen@ntnu.no</a>.
+        Inquiries are answered as soon as possible.
+      </p>
+      <p>It helps if you include:</p>
+      <ul>
+        <li>your device (iPhone, iPad or Mac) and iOS, iPadOS or macOS version</li>
+        <li>the version of Kolorist</li>
+        <li>what you did, what you expected and what happened</li>
+        <li>a screenshot or the colour values involved, if possible</li>
+      </ul>
+      <p class="dempet">Kolorist is made by Eivind Arnstein Johansen, who works at NTNU – Faculty of Architecture and Design, Department of Design. The app is an independent project.</p>
+    </section>
+
+    <section class="faq" aria-labelledby="faq">
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <details>
+        <summary>Which colour spaces and colour models are supported?</summary>
+        <div class="svar">
+          <p>You can edit colours in OKLCH, OKLab, CIE LCH, CIELab, Munsell, HSB, HSL, RGB and CMYK. RGB colours can be in Display P3, beyond sRGB. You can also view and edit the values in any ICC profile – built in or imported.</p>
+          <p>CIELab and CIE LCH use the D50 white point, like ICC profiles, Photoshop and CSS <code>lab()</code>, so the values match your design tools.</p>
+          <p>The colour value field also understands CSS text: hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>lab()</code>, <code>lch()</code>, <code>oklab()</code>, <code>oklch()</code>, <code>color()</code>, <code>cmyk()</code>, CSS colour names and Munsell notation such as <code>5R 4/14</code>. If you type a description, such as “deep ocean blue” or “dusty pink”, the colour is made in OKLCH and shown in Studio.</p>
+          <p>When the colour model is CMYK and you show a CMYK profile (or RGB and an RGB profile), the values are entered directly in the profile. The colour is then rendered as it will be in that colour space, without a gamut warning.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the difference between Display P3 and sRGB?</summary>
+        <div class="svar">
+          <p>Display P3 is a wider gamut than sRGB. The screens on recent iPhone, iPad and Mac models can show P3, and saturated reds, oranges and greens in particular can fall outside what sRGB can hold. Much of the web, older software and many workflows still use sRGB.</p>
+          <p>Kolorist shows the colour in Display P3 side by side with another colour space – sRGB, Adobe RGB, CMYK or an installed ICC profile – and warns you when the colour is outside that space. When a colour has to fit into a smaller space, its saturation (chroma) is reduced while lightness and hue are preserved, rather than clipping the values. You can also choose to limit new colours to a specific profile.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I import an ICC profile?</summary>
+        <div class="svar">
+          <p>Use the import option in the app’s ICC profile section and choose an <code>.icc</code> or <code>.icm</code> file. The profile’s name is read from the file itself.</p>
+          <p>If you’re signed in to iCloud with iCloud Drive turned on, imported profiles are stored in <code>iCloud Drive › Kolorist › Profiler</code>. The folder is visible in Files (iPhone and iPad) and Finder (Mac), and the profiles become available on your other devices. You can also put <code>.icc</code> files directly into that folder. Without iCloud Drive, profiles are stored on the device only.</p>
+          <p>When converting between profiles you choose a rendering intent (perceptual, relative colorimetric, saturation or absolute colorimetric), and you can compare the results of all four.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I use colour charts such as RAL, NCS or Freetone?</summary>
+        <div class="svar">
+          <p>Import the chart as a colour library under <strong>My colour spaces … › Import colour library …</strong>. Kolorist reads <code>.ase</code> (Adobe Swatch Exchange), <code>.aco</code> (Photoshop swatches) and <code>.acb</code> (Adobe Color Book), with the tone names. Kolorist ships no such charts – you use the files you have access to, for example from the supplier or from the Adobe apps.</p>
+          <p>Then choose the library under <strong>Also show</strong> in Studio. The right half shows the nearest named tone and how far away it is (ΔE2000). Turn on <strong>Limit new colours to …</strong> and the colour, tones, harmonies and gradients are locked to the chart’s tones. Under <strong>Assess › Compare</strong> you see the five nearest tones.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is LRV, and how do I check contrast between surfaces?</summary>
+        <div class="svar">
+          <p>Light reflectance value (LRV) is how much light a surface reflects, from 0 (black) to 100 (white), as paint manufacturers state it. You find it under <strong>Values</strong> in Studio.</p>
+          <p>Under <strong>Assess › Contrast › Surfaces (LRV)</strong> you compare two surfaces, for example door and wall: difference in LRV points (BS 8300: at least 30) and luminance contrast per NS 11001 (at least 0.4 for important surfaces, 0.8 for signage). “Fix” changes only lightness. The values apply to the colour as shown on screen; the finished paint may differ.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How does iCloud sync work?</summary>
+        <div class="svar">
+          <p>Palettes and saved colours sync through your private iCloud database when you’re signed in to iCloud with the same Apple Account on all your devices. Only you can access this data – it is not stored with the developer.</p>
+          <p>If something doesn’t show up on another device:</p>
+          <ul>
+            <li>Check that you’re signed in to iCloud with the same Apple Account on both devices.</li>
+            <li>Check that iCloud is turned on for Kolorist in your iCloud settings, and that iCloud Drive is on (for ICC profiles).</li>
+            <li>Give it a little time and a network connection – syncing happens in the background and can take a few minutes.</li>
+          </ul>
+          <p>Without iCloud the app works as usual, but your data is stored on the device only.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why are the AI features unavailable or simpler than expected?</summary>
+        <div class="svar">
+          <p>The AI features use Apple Intelligence and the on-device language model. They require</p>
+          <ul>
+            <li>an iPhone, iPad or Mac that supports Apple Intelligence,</li>
+            <li>Apple Intelligence turned on in Settings (System Settings on Mac),</li>
+            <li>the model to have finished downloading, and</li>
+            <li>Apple Intelligence to be available for the language and region you use.</li>
+          </ul>
+          <p>Palettes from value words are grounded in a knowledge base of more than a hundred colour concepts – nature, materials, styles and values – in Norwegian and English. The language model is given the relevant concepts and chooses hue family, lightness and saturation; the colours themselves are computed in OKLCH. The app shows which concepts a suggestion is based on.</p>
+          <p>When Apple Intelligence isn’t available, the app builds the palette directly from the knowledge base. It works offline, but is less flexible than the language model – for example, free-text adjustments, naming and palette critique may be limited or unavailable.</p>
+          <p>Either way, everything happens on device. What you type is not sent to the developer.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>The app can’t use the camera. What do I do?</summary>
+        <div class="svar">
+          <p>The first time you open the camera, the system asks for permission. If you declined, you can change it here:</p>
+          <ul>
+            <li><strong>iPhone and iPad:</strong> Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
+            <li><strong>Mac:</strong> System Settings › Privacy &amp; Security › Camera › turn on Kolorist.</li>
+          </ul>
+          <p>The camera is only used live on the device to pick colours and for the colour vision filter. No images are stored or sent.</p>
+          <p>You can also pick colours from images you choose yourself, without camera access.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can I pick colours from other apps?</summary>
+        <div class="svar">
+          <p><strong>On Mac:</strong> Yes, the screen eyedropper picks colours from anywhere on screen.</p>
+          <p><strong>On iPhone and iPad:</strong> The system doesn’t let apps read the screen outside themselves. Take a screenshot and pick the colour from the image in Kolorist instead.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What does “Copy to …” do?</summary>
+        <div class="svar">
+          <p>Touch and hold a colour or a palette (right-click on Mac) and choose <strong>Copy to</strong> and the app you’ll paste into. Kolorist puts the colours on the clipboard in the format that app accepts:</p>
+          <ul>
+            <li><strong>Figma, Sketch and Affinity:</strong> filled shapes (SVG) you paste straight onto the canvas.</li>
+            <li><strong>Illustrator and InDesign:</strong> vector shapes (PDF) with colour space and ICC profile – colours saved in a CMYK profile arrive as CMYK.</li>
+            <li><strong>Photoshop:</strong> shape layers (PDF, with an image as fallback), and the hex value for the colour picker.</li>
+            <li><strong>Pages, Keynote and Numbers:</strong> swatches as PDF and image, and on Mac also as a system colour.</li>
+            <li><strong>CSS and SwiftUI:</strong> code as text.</li>
+          </ul>
+          <p>With Universal Clipboard you can copy on iPhone or iPad and paste on Mac. On Mac you can also drag swatches straight into other apps.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How does the app simulate colour vision deficiency?</summary>
+        <div class="svar">
+          <p>Under <strong>Assess › Colour vision</strong> you see the palette with protanopia, deuteranopia, tritanopia and achromatopsia. Severity can be set below 100 % for partial deficiencies, which are the most common. The app shows which colour pairs become hard to tell apart (ΔE2000), and the camera button next to each deficiency shows your surroundings through the same filter.</p>
+          <p>The simulation is based on the model by Machado, Oliveira and Fernandes (2009). It is an approximation – how colours are perceived varies between people. <a href="methods.html">Read more about the methods</a>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I get my colours into Adobe apps?</summary>
+        <div class="svar">
+          <ul>
+            <li><strong>Adobe ASE</strong> (Adobe Swatch Exchange) can be imported as swatches in Photoshop, Illustrator, InDesign and others.</li>
+            <li><strong>Photoshop ACO</strong> is Photoshop’s own swatch format, with colour names. Colours outside sRGB are stored as Lab so they aren’t clipped.</li>
+          </ul>
+          <p>Export from the palette, save the file in Files or Finder, and open it from the Swatches panel in the Adobe app. For one colour at a time, <strong>Copy to</strong> is quicker.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I get my colours into Figma?</summary>
+        <div class="svar">
+          <ul>
+            <li><strong>Figma variables:</strong> Export as DTCG JSON and use Figma’s variable import.</li>
+            <li><strong>Tokens Studio:</strong> Export in the Tokens Studio format and load it in the plugin.</li>
+            <li><strong>SVG swatches:</strong> Copy and paste into Figma – the colours arrive as filled shapes.</li>
+          </ul>
+          <p>Other formats: CSS, W3C Design Tokens, GIMP GPL, SwiftUI and hex list.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Which methods and sources does the app build on?</summary>
+        <div class="svar">
+          <p>Every section in the app has a “Method: …” line. Tap it to see the explanation and source. All of them are collected at the bottom of Palettes under <strong>Methods and sources</strong>, and on the <a href="methods.html">Methods and sources</a> page.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I use Siri and Shortcuts?</summary>
+        <div class="svar">
+          <p>Kolorist provides actions in the Shortcuts app: <em>create a palette from value words</em>, <em>create a gradient</em>, <em>convert a colour</em>, <em>check contrast</em> and <em>describe a colour</em>. Use them in your own shortcuts or ask Siri.</p>
+        </div>
+      </details>
+    </section>
+
+    <p>See also the <a href="privacy.html">privacy policy</a> and the <a href="terms.html">terms of use</a>.</p>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Footer menu">
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="methods.html">Methods and sources</a></li>
+          <li><a href="../support.html" hreflang="nb" lang="nb">Norsk</a></li>
+        </ul>
+      </nav>
+      <p class="utvikler">Kolorist is developed by Eivind Arnstein Johansen, NTNU – Faculty of Architecture and Design, Department of Design.</p>
+      <p>© 2026 Eivind Arnstein Johansen. Apple, iPhone, iPad, Mac, iCloud, Siri and Apple Intelligence are trademarks of Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

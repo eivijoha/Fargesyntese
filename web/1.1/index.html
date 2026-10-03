@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kolorist – fargepaletter for designere</title>
+  <meta name="description" content="Kolorist er et fargeverktøy for designere på iPhone, iPad og Mac: OKLCH, OKLab, CIELab, CMYK og ICC-profiler, perseptuelt jevne overganger, WCAG-kontrast, kamerautplukk og eksport til Adobe og Figma.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kolorist">
+  <meta property="og:title" content="Kolorist – fargepaletter for designere">
+  <meta property="og:description" content="Kolorist er et fargeverktøy for designere på iPhone, iPad og Mac: OKLCH, OKLab, CIELab, CMYK og ICC-profiler, perseptuelt jevne overganger, WCAG-kontrast, kamerautplukk og eksport til Adobe og Figma.">
+  <meta property="og:url" content="https://kolorist.no/">
+  <meta property="og:locale" content="nb_NO">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <!-- TODO: app-id – legg inn App Store-ID-en for å vise Smart App Banner i Safari på iPhone/iPad:
+  <meta name="apple-itunes-app" content="app-id=0000000000">
+  -->
+  <link rel="icon" href="assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/stil.css">
+  <link rel="canonical" href="https://kolorist.no/">
+  <link rel="alternate" hreflang="nb" href="https://kolorist.no/">
+  <link rel="alternate" hreflang="en" href="https://kolorist.no/en/">
+  <link rel="alternate" hreflang="x-default" href="https://kolorist.no/">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Hopp til hovedinnhold</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="assets/ikon.svg" alt="" width="32" height="32">
+        Kolorist
+      </a>
+      <nav class="hovednav" aria-label="Hovedmeny">
+        <ul>
+          <li><a href="index.html" aria-current="page">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Språk">
+        <span aria-current="true" lang="nb">Norsk</span>
+        <a href="en/index.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold" tabindex="-1">
+    <section class="helt" aria-labelledby="tittel">
+      <div>
+        <img class="helt-ikon" src="assets/ikon.svg" alt="" width="88" height="88">
+        <h1 id="tittel">Kolorist</h1>
+        <p class="ingress">Bygg fargepaletter på tvers av fargerom – med perseptuelt jevne overganger, kontrastsjekk, ICC-profiler og eksport til verktøyene du allerede bruker.</p>
+
+        <div class="handlinger">
+          <!-- Lenken til App Store: bytt til <a class="knapp" href="https://apps.apple.com/…"> når appen er godkjent. -->
+          <span class="knapp knapp-kommer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            <span>Kommer snart i App Store</span>
+          </span>
+          <a class="knapp knapp-sekundaer" href="support.html">Støtte og spørsmål</a>
+        </div>
+
+        <ul class="plattformer" aria-label="Plattformer">
+          <li>iPhone</li>
+          <li>iPad</li>
+          <li>Mac</li>
+        </ul>
+        <p class="dempet">Krever iOS 26, iPadOS 26 eller macOS 26.</p>
+      </div>
+
+      <figure class="helt-kunst">
+        <ul class="proverad" aria-hidden="true">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+        <div class="overgang" aria-hidden="true"></div>
+        <figcaption>Sju like perseptuelle steg i OKLab – fra dyp blå til lys sand.</figcaption>
+      </figure>
+    </section>
+
+    <section class="seksjon" aria-labelledby="funksjoner">
+      <h2 id="funksjoner">Funksjoner</h2>
+      <p class="lesetekst">Kolorist er laget for iPhone først. På iPad og Mac får du mer plass – i liggende format på iPad ligger fargeflatene ved siden av verktøyene – og på Mac en pipette som plukker farger fra hele skjermen.</p>
+
+      <ul class="kort-rutenett">
+        <li>
+          <article class="kort">
+            <h3>Alle fargerommene</h3>
+            <p>Rediger farger i OKLCH, OKLab, CIE LCH, CIELab, Munsell, HSB, HSL, RGB og CMYK – med Display P3 som bredt fargeområde.</p>
+            <ul>
+              <li>Display P3 side om side med sRGB, Adobe RGB, Rec. 2020, ProPhoto RGB, CMYK eller en hvilken som helst installert ICC-profil</li>
+              <li>Varsel når fargen er utenfor fargeområdet</li>
+              <li>Begrens nye farger til en valgt profil om du vil</li>
+              <li>Angi CMYK eller RGB direkte i en valgt ICC-profil</li>
+              <li>Lagre en farge i fargemodellen eller i profilen – eksporten følger formatet</li>
+              <li>Rene CMYK-verdier: grått innslag flyttes til sort (UCR/GCR), med færrest mulig trykkfarger</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>ICC-profiler og fargebiblioteker</h3>
+            <p>Importer egne ICC-profiler (.icc, .icm) og fargebiblioteker (.ase, .aco, .acb) under «Mine fargerom». De ligger i appens mappe i iCloud Drive og følger med til de andre enhetene dine.</p>
+            <ul>
+              <li>Konverter mellom profiler med valgt gjengivelseshensikt</li>
+              <li>Sammenlign gjengivelseshensiktene med ΔE2000</li>
+              <li>Fargekart som RAL, NCS, malingsprodusentenes kart eller Freetone: se nærmeste navngitte tone, og lås farger, toner og harmonier til kartet</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Overganger</h3>
+            <p>Lag overgangstoner mellom to farger i like perseptuelle steg i OKLab, med lysere og mørkere rader.</p>
+            <ul>
+              <li>Eksporter som CSS-gradient i <code>oklab</code> med sRGB-reserve</li>
+              <li>Lineær, radiell eller konisk</li>
+              <li>Lagre hele gradienter i Paletter og åpne dem igjen</li>
+              <li>Trykk og hold på en tone for å lagre den</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Toner og harmonier</h3>
+            <p>Lysere og mørkere trinn, toneskalaer fra 50 til 950 og fargeharmonier:</p>
+            <ul>
+              <li>Komplementær, split-komplementær, analog og jevn fordeling med valgfritt antall</li>
+              <li>På fargesirkel i OKLCH, CIE LCH, HSL eller RYB</li>
+              <li>Metning og lyshet for hele harmonien, vist direkte i fargesirkelen</li>
+              <li>Lysere og mørkere toner i like eller avtagende steg</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Plukk farger</h3>
+            <ul>
+              <li>Kamera: trykk for å plukke, knip for å zoome, makrofokus og lykt – lysfelt på skjermen på Mac</li>
+              <li>Bilder: zoom og dominerende farger</li>
+              <li>Skjermpipette på Mac</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Apple Intelligence på enheten</h3>
+            <ul>
+              <li>Fra verdiord til palett, forankret i en kunnskapsbase med over hundre fargebegreper – natur, materialer, stiler og verdier</li>
+              <li>Beskriv en farge – «dyp havblå», «støvete rosa» – og se den i Studio</li>
+              <li>Juster med fritekst – «varmere», «mer eksklusiv»</li>
+              <li>Navngi farger og få en vurdering av paletten</li>
+            </ul>
+            <p>Appen viser hvilke begreper forslaget bygger på. Alt kjøres på enheten. Ingenting sendes ut.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Tilgjengelighet</h3>
+            <ul>
+              <li>WCAG 2.2-kontrast: AA og AAA, stor tekst og grafikk</li>
+              <li>«Rett opp» som justerer fargen til den består</li>
+              <li>Kontrastmatrise for hele paletten</li>
+              <li>Lysrefleksjonsverdi (LRV) og kontrast mellom flater for bygg og interiør – BS 8300 og NS 11001</li>
+              <li>Sammenlign farger med ΔE2000</li>
+              <li>Se paletten med protan-, deutan- og tritanavvik og akromatopsi, med valgfri alvorlighetsgrad – og hvilke farger som blir vanskelige å skille</li>
+              <li>Kamera med fargesynsfilter: se omgivelsene slik de kan oppleves med hvert avvik</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Paletter og iCloud</h3>
+            <p>Samle farger i paletter, lagre enkeltfarger og hele gradienter. Gi dem navn, og dra farger mellom paletter.</p>
+            <p>Alt synkroniseres via din egen, private iCloud.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Eksport</h3>
+            <p>Adobe ASE, Photoshop ACO, Figma-variabler (DTCG-JSON), Tokens Studio, SVG-fargeprøver, CSS, Design Tokens, GIMP GPL, SwiftUI og hex-liste.</p>
+            <p>Fargene eksporteres i formatet de er lagret i – for eksempel CMYK til Adobe.</p>
+            <p><strong>Kopier til …</strong> Figma, Illustrator, InDesign, Photoshop, Sketch og Affinity, Pages, Keynote og Numbers, CSS eller SwiftUI – i formatet hvert program tar imot. Det gjelder både enkeltfarger og hele paletter.</p>
+            <p>På Mac kan du dra fargeprøver rett inn i andre programmer.</p>
+            <p><strong>Fargebiblioteker:</strong> importer egne fargekart i ASE, ACO eller ACB (Adobe Color Book) – RAL, NCS, malingsprodusentenes kart eller Freetone – og velg dem under «Vis også». Studio viser nærmeste navngitte tone, og «Begrens nye farger» låser farger, toner og harmonier til kartets toner.</p>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Siri og Snarveier</h3>
+            <ul>
+              <li>Lag palett fra verdiord</li>
+              <li>Lag overgang</li>
+              <li>Konverter farge</li>
+              <li>Sjekk kontrast</li>
+              <li>Beskriv en farge</li>
+            </ul>
+          </article>
+        </li>
+        <li>
+          <article class="kort">
+            <h3>Åpent om metodene</h3>
+            <p>Hver del av appen viser hvilke metoder den bygger på – OKLab, CSS Color 4, CIEDE2000, WCAG, simulering av fargesyn, ICC – med kilde og forklaring. Det som er utviklet for Kolorist, er merket som det.</p>
+            <p><a href="methods.html">Les om metodene og kildene</a></p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon" aria-labelledby="skjermbilder">
+      <h2 id="skjermbilder">Skjermbilder</h2>
+      <!-- Plassholdere: bytt ut assets/skjermbilde-*.png med ekte skjermbilder (1206 × 2622) med samme filnavn, og juster alt-tekstene. -->
+      <ul class="skjermbilder" tabindex="0" aria-label="Skjermbilder – rull sidelengs">
+        <li>
+          <figure class="skjermbilde">
+            <img src="assets/skjermbilde-studio.png" alt="Studio med en farge i OKLCH og Display P3 side om side med CMYK" width="1206" height="2622" loading="lazy">
+            <figcaption>Studio</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <img src="assets/skjermbilde-harmoni.png" alt="Fargeharmoni med fargeprøver over fargesirkelen" width="1284" height="2778" loading="lazy">
+            <figcaption>Harmoni</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <img src="assets/skjermbilde-overgang.png" alt="Overgang mellom to farger i like perseptuelle steg, med lysere og mørkere rader" width="1206" height="2622" loading="lazy">
+            <figcaption>Overgang</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <img src="assets/skjermbilde-kontrast.png" alt="Kontrast mellom tekstfarge og bakgrunn, vurdert mot WCAG AA og AAA" width="1284" height="2778" loading="lazy">
+            <figcaption>Kontrast</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="skjermbilde">
+            <img src="assets/skjermbilde-fargesyn.png" alt="En palett slik den ser ut med ulike fargesynsavvik" width="1284" height="2778" loading="lazy">
+            <figcaption>Fargesyn</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seksjon lesetekst" aria-labelledby="personvern">
+      <h2 id="personvern">Personvern</h2>
+      <div class="boks">
+        <p><strong>Ingen konto, ingen analyse, ingen reklame og ingen sporing.</strong> Utvikleren samler ikke inn noen data. Palettene dine ligger på enheten og i din private iCloud, og Apple Intelligence kjøres på enheten.</p>
+        <p><a href="privacy.html">Les personvernerklæringen</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Bunnmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+          <li><a href="methods.html">Metoder og kilder</a></li>
+          <li><a href="en/index.html" hreflang="en" lang="en">English</a></li>
+        </ul>
+      </nav>
+      <p class="utvikler">Kolorist er utviklet av Eivind Arnstein Johansen, NTNU – Fakultet for arkitektur og design, Institutt for design.</p>
+      <p>© 2026 Eivind Arnstein Johansen. Apple, iPhone, iPad, Mac, iCloud, Siri og Apple Intelligence er varemerker for Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metoder og kilder – Kolorist</title>
+  <meta name="description" content="Metodene og kildene Kolorist bygger på: OKLab, CSS Color 4, CIELab, CIEDE2000, WCAG 2.2, simulering av fargesyn, ICC og det som er utviklet for appen.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="assets/ikon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/stil.css">
+  <link rel="canonical" href="https://kolorist.no/methods.html">
+  <link rel="alternate" hreflang="nb" href="https://kolorist.no/methods.html">
+  <link rel="alternate" hreflang="en" href="https://kolorist.no/en/methods.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolorist.no/methods.html">
+</head>
+<body>
+  <a class="hopp" href="#hovedinnhold">Hopp til hovedinnhold</a>
+  <div class="regnbuestripe" aria-hidden="true"></div>
+
+  <header class="topp">
+    <div class="topp-innhold">
+      <a class="merkenavn" href="index.html">
+        <img src="assets/ikon.svg" alt="" width="32" height="32">
+        Kolorist
+      </a>
+      <nav class="hovednav" aria-label="Hovedmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+        </ul>
+      </nav>
+      <nav class="sprakvalg" aria-label="Språk">
+        <span aria-current="true" lang="nb">Norsk</span>
+        <a href="en/methods.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hovedinnhold" class="innhold lesetekst" tabindex="-1">
+    <h1>Metoder og kilder</h1>
+    <p class="ingress">Kolorist bygger på etablert fargefag og åpne standarder. Her står hva appen bruker, hvor det kommer fra, og hva som er utviklet for appen. De samme forklaringene finnes i appen: trykk på «Metode: …» under en seksjon, eller velg <strong>Metoder og kilder</strong> nederst i Paletter.</p>
+    
+    <h2 id="oklab">OKLab og OKLCH</h2>
+    <p>Et perseptuelt fargerom der like tallsteg oppleves som like store fargeforskjeller. Kolorist regner overganger i OKLab, og toneskalaer, lysere/mørkere trinn, harmonier og metning i OKLCH (lyshet, kroma, kulør).</p>
+    <p class="dempet">Kilde: <a href="https://bottosson.github.io/posts/oklab/">Björn Ottosson: «A perceptual color space for image processing» (2020)</a></p>
+    
+    <h2 id="css">CSS Color Module Level 4</h2>
+    <p>Standarden for farger på nettet. Kolorist bruker spesifikasjonens matriser og overføringsfunksjoner for sRGB, Display P3, Adobe RGB, Lab og OKLab, dens gamut-kartlegging (kroma reduseres i OKLCH mens lyshet og kulør bevares) og dens tekstsyntaks for farger.</p>
+    <p class="dempet">Kilde: <a href="https://www.w3.org/TR/css-color-4/">W3C: CSS Color Module Level 4 (Candidate Recommendation)</a></p>
+    
+    <h2 id="cielab">CIELab, CIE LCH og Bradford-tilpasning</h2>
+    <p>CIEs fargerom basert på menneskets fargesyn. Kolorist oppgir Lab og LCH med hvitpunkt D50, som ICC-profiler og Photoshop, og bruker Bradford-transformasjonen mellom D65 og D50.</p>
+    <p class="dempet">Kilde: <a href="https://cie.co.at/publications/colorimetry-4th-edition">CIE 15:2018 Colorimetry; K. M. Lam (1985), Bradford-transformasjonen</a></p>
+    
+    <h2 id="ciede2000">CIEDE2000 (ΔE00)</h2>
+    <p>CIEs formel for opplevd fargeforskjell. Brukes ved sammenligning av farger, gamutavvik og i analysen av farger som blir vanskelige å skille med fargesynsavvik. Implementasjonen er kontrollert mot testdataene i Sharma mfl.</p>
+    <p class="dempet">Kilde: <a href="https://doi.org/10.1002/col.20070">G. Sharma, W. Wu, E. N. Dalal: Color Research &amp; Application 30(1), 2005; CIE 142-2001</a></p>
+    
+    <h2 id="wcag">WCAG 2.2 kontrast</h2>
+    <p>W3Cs krav til kontrast mellom tekst/grafikk og bakgrunn, regnet ut fra relativ luminans. «Rett opp» endrer bare lysheten (OKLCH) til kravet er oppfylt.</p>
+    <p class="dempet">Kilde: <a href="https://www.w3.org/TR/WCAG22/">W3C: Web Content Accessibility Guidelines 2.2, suksesskriterium 1.4.3, 1.4.6 og 1.4.11</a></p>
+    
+    <h2 id="fargesyn">Simulering av fargesynsavvik</h2>
+    <p>Fysiologisk basert modell for protan-, deutan- og tritanavvik, med matriser i lineær sRGB og alvorlighetsgrad som blanding med normalt syn. Akromatopsi vises som luminans alene. Brukes i Vurdering › Fargesyn, kontrastforhåndsvisningen og kamerafilteret. Simuleringen er en tilnærming; opplevelsen varierer mellom personer.</p>
+    <p class="dempet">Kilde: <a href="https://doi.org/10.1109/TVCG.2009.113">G. M. Machado, M. M. Oliveira, L. A. F. Fernandes: IEEE TVCG 15(6), 2009</a></p>
+    
+    <h2 id="icc">ICC-profiler og fargestyring</h2>
+    <p>Konvertering mellom fargerom via ICC-profiler, med valgt gjengivelseshensikt. Gjøres av Apples fargestyring (ColorSync). Profiler følger ikke med appen; Kolorist bruker systemets profiler og profiler du importerer.</p>
+    <p class="dempet">Kilde: <a href="https://www.color.org/specification/ICC.1-2022-05.pdf">International Color Consortium (ICC.1); Apple ColorSync via Core Graphics</a></p>
+    
+    <h2 id="cmyk">Rene CMYK-verdier (UCR/GCR)</h2>
+    <p>Felles grått innslag i C, M og Y flyttes til sort, og Kolorist søker etter separasjonen med færrest trykkfarger som holder seg innenfor 1 ΔE00 av profilens egen separasjon.</p>
+    <p class="dempet">Kilde: Etablert trykkteknikk; søket er utviklet for Kolorist</p>
+    
+    <h2 id="harmonier">Fargesirkler og harmonier</h2>
+    <p>Komplementær, split-komplementær, analog og jevn fordeling beregnes som vinkler på valgt fargesirkel: OKLCH, CIE LCH, HSL eller RYB. RYB-sirkelen er en stykkevis lineær avbildning til RGB-kulør laget for appen.</p>
+    <p class="dempet">Kilde: Klassisk fargelære (Johannes Itten for RYB); avbildningene er utviklet for Kolorist</p>
+    
+    <h2 id="ki">Fargesemantikk og KI</h2>
+    <p>Paletter fra verdiord og «Beskriv en farge» bygger på en kunnskapsbase med fargebegreper laget for appen. Språkmodellen på enheten tolker ordene og velger kulørfamilier og uttrykk. Selve paletten komponeres deretter etter faste regler i OKLCH: harmoniprinsipp, lik valør eller lik metning, én aksent, lys eller mørk bakgrunn og tekst med minst 7:1 kontrast. Tekst om fargebetydning er konvensjoner, ikke vitenskapelige fakta.</p>
+    <p class="dempet">Kilde: Utviklet for Kolorist; språkmodell fra Apple (Foundation Models)</p>
+    
+    <div class="boks">
+      <h2>Om implementasjonen</h2>
+      <p>Formlene er implementert i appen ut fra de publiserte spesifikasjonene og artiklene over, og kontrollert med tester mot referanseverdier der slike finnes. Har du spørsmål om en metode eller finner du noe som ikke stemmer, send gjerne e-post til <a href="mailto:eivind.johansen@ntnu.no">eivind.johansen@ntnu.no</a>.</p>
+    </div>
+  </main>
+
+  <footer class="bunn">
+    <div class="bunn-innhold">
+      <nav aria-label="Bunnmeny">
+        <ul>
+          <li><a href="index.html">Om appen</a></li>
+          <li><a href="support.html">Støtte</a></li>
+          <li><a href="privacy.html">Personvern</a></li>
+          <li><a href="terms.html">Vilkår</a></li>
+          <li><a href="methods.html" aria-current="page">Metoder og kilder</a></li>
+          <li><a href="en/methods.html" hreflang="en" lang="en">English</a></li>
+        </ul>
+      </nav>
+      <p class="utvikler">Kolorist er utviklet av Eivind Arnstein Johansen, NTNU – Fakultet for arkitektur og design, Institutt for design.</p>
+      <p>© 2026 Eivind Arnstein Johansen. Apple, iPhone, iPad, Mac, iCloud, Siri og Apple Intelligence er varemerker for Apple Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>

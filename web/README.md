@@ -5,6 +5,22 @@ og engelsk. Ren HTML og ett felles stilark. Ingen byggesteg, ingen rammeverk, in
 skrifter, ingen sporing og ingen informasjonskapsler (cookies). Alle lenker er relative, så sidene fungerer
 både lokalt (åpne `index.html` i nettleseren) og på kolorist.no.
 
+## Versjoner
+
+Nettstedet ligger i én mappe per appversjon, så siden som er publisert alltid beskriver den versjonen
+som ligger i App Store:
+
+| Mappe | Innhold |
+|---|---|
+| `1.0/` | Versjon 1.0 – det som sendes til App Review først |
+| `1.1/` | Versjon 1.1 – i tillegg fargebiblioteker (ASE/ACO/ACB) og «Mine fargerom», Munsell som fargemodell, LRV og kontrast mellom flater |
+
+Publiser **innholdet** i mappen for versjonen som er godkjent i App Store (se «Publisering på kolorist.no»).
+Ny versjon: kopier forrige mappe (`cp -R 1.1 1.2`) og oppdater tekstene der. Rett feil i alle mapper
+der de finnes.
+
+Stiene i tabellen under gjelder innenfor hver versjonsmappe.
+
 ## Filer
 
 | Fil | Innhold |
@@ -32,8 +48,8 @@ Sidene publiseres manuelt på **https://kolorist.no/**.
 
 ## Publisering på kolorist.no
 
-Nettstedet publiseres manuelt. Last opp **innholdet** i `web/` (ikke selve mappen) til rotmappen for
-kolorist.no, slik at `index.html` ligger øverst og `en/` og `assets/` ved siden av.
+Nettstedet publiseres manuelt. Last opp **innholdet** i versjonsmappen (for eksempel `web/1.0/`, ikke selve
+mappen) til rotmappen for kolorist.no, slik at `index.html` ligger øverst og `en/` og `assets/` ved siden av.
 
 - Last opp alle `.html`-filene, `en/`, `assets/`, `robots.txt` og `sitemap.xml`.
 - Ikke last opp `README.md`, `.DS_Store` eller `CNAME` (`CNAME` var bare for GitHub Pages).
