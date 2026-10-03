@@ -131,7 +131,7 @@ struct PalettKolonne: View {
             }
         }
         .padding(.vertical, 2)
-        .dropDestination(for: PalettFarge.self) { farger, _ in flytt(farger, til: p, i: kontekst) }
+        .tarImotFarger { farger in flytt(farger, til: p, i: kontekst) }
         .accessibilityElement(children: .contain)
     }
 

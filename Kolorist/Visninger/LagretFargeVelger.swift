@@ -42,7 +42,7 @@ struct FargeValgRad: View {
         }
         // Slipp en farge (fra palettkolonnen, en palett, Studio eller et annet program) for å bruke den.
         .contentShape(Rectangle())
-        .dropDestination(for: PalettFarge.self) { farger, _ in
+        .tarImotFarger { farger in
             guard let f = farger.first else { return false }
             farge = f.farge
             return true

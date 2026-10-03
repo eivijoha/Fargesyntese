@@ -11,6 +11,7 @@ struct FargeEditor: View {
     @State private var lagreNavn = ""
     @State private var beskriver = false
     @State private var visMineFargerom = false
+    @State private var tonerMål = false
     @Environment(\.modelContext) private var kontekst
     @AppStorage("studioModus") private var modus: Modus = .farge
     @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
@@ -188,9 +189,10 @@ struct FargeEditor: View {
         // Biblioteket kan komme inn via iCloud etter at Studio ble vist.
         .onChange(of: bibliotek.fargebiblioteker.map(\.id)) { arbeidsbenk.begrensBibliotek = visOgsåBibliotek }
         .onChange(of: farge) { _, ny in hexTekst = ny.hex() }
-        .dropDestination(for: Farge.self) { farger, _ in
+        // PalettFarge tar også imot rene farger og tekst (hex/CSS), så alle dra-kilder virker.
+        .tarImotFarger { farger in
             guard let f = farger.first else { return false }
-            arbeidsbenk.aktivFarge = f
+            arbeidsbenk.aktivFarge = f.farge
             return true
         }
     }
@@ -287,6 +289,15 @@ extension FargeEditor {
                             .foregroundStyle(Color.sekundærTekst)
                     }
                 }
+            }
+            // Slipp en farge på raden for å gjøre den til grunnfargen (midten).
+            .tarImotFarger { farger in
+                guard let f = farger.first else { return false }
+                arbeidsbenk.aktivFarge = f.farge
+                return true
+            } isTargeted: { tonerMål = $0 }
+            .overlay {
+                if tonerMål { RoundedRectangle(cornerRadius: 8).strokeBorder(Color.accentColor, lineWidth: 2).padding(-3) }
             }
             LyshetstrinnKontroller(trinn: $arbeidsbenk.lyshetstrinn, grunnlyshet: farge.okLCH.l)
             Button("Legg raden i palett", systemImage: "plus.square.on.square") {

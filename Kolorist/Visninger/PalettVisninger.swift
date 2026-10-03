@@ -185,7 +185,7 @@ struct PalettListe: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .onTapGesture { velg(v) }
-        .dropDestination(for: PalettFarge.self) { farger, _ in
+        .tarImotFarger { farger in
             slipp(farger)
         } isTargeted: { over in
             målrettet = over ? v : (målrettet == v ? nil : målrettet)
@@ -308,7 +308,7 @@ struct EnkeltfargerVisning: View {
             }
         }
         .navigationTitle("Enkeltfarger")
-        .dropDestination(for: PalettFarge.self) { farger, _ in
+        .tarImotFarger { farger in
             flyttTilEnkeltfarger(farger, i: kontekst)
         }
         .toolbar {
@@ -400,18 +400,47 @@ struct PalettDetalj: View {
     @State private var navngisPalettfarge: PalettFarge?
     /// I palettkolonnen på Mac: handlingene ligger i en rad under tittelen, ikke i vinduets verktøylinje.
     @Environment(\.iPalettkolonne) private var iKolonne
+    @State private var redigererNavn = false
+    @FocusState private var navnIFokus: Bool
+
+    private func startNavneredigering() {
+        redigererNavn = true
+        // Fokus etter at feltet er på plass.
+        Task { @MainActor in navnIFokus = true }
+    }
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
     var body: some View {
         ScrollView {
-            // Tittelfelt: navnet redigeres direkte.
-            TextField("Navn på paletten", text: $dokument.navn)
-                .font(.title2.weight(.semibold))
-                .textFieldStyle(.plain)
-                .submitLabel(.done)
-                .padding(.horizontal)
-                .padding(.top, 8)
+            // Tittel med blyant: trykk på blyanten (eller tittelen) for å endre navnet.
+            HStack(spacing: 8) {
+                if redigererNavn {
+                    TextField("Navn på paletten", text: $dokument.navn)
+                        .textFieldStyle(.plain)
+                        .focused($navnIFokus)
+                        .submitLabel(.done)
+                        .onSubmit { redigererNavn = false }
+                } else {
+                    Text(dokument.navn.isEmpty ? String(localized: "Uten navn") : dokument.navn)
+                        .foregroundStyle(dokument.navn.isEmpty ? Color.sekundærTekst : Color.primary)
+                        .onTapGesture { startNavneredigering() }
+                }
+                Button {
+                    if redigererNavn { redigererNavn = false } else { startNavneredigering() }
+                } label: {
+                    Image(systemName: redigererNavn ? "checkmark.circle.fill" : "pencil")
+                        .font(.body.weight(.semibold))
+                }
+                .buttonStyle(.borderless)
+                .help(redigererNavn ? "Ferdig" : "Endre navnet")
+                .accessibilityLabel(redigererNavn ? "Ferdig med navnet" : "Endre navnet på paletten")
+                Spacer(minLength: 0)
+            }
+            .font(.title2.weight(.semibold))
+            .padding(.horizontal)
+            .padding(.top, 24)
+            .onChange(of: navnIFokus) { _, fokus in if !fokus { redigererNavn = false } }
             if iKolonne {
                 HStack(spacing: 14) { handlinger }
                     .labelStyle(.iconOnly)
@@ -445,7 +474,7 @@ struct PalettDetalj: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .dropDestination(for: PalettFarge.self) { farger, _ in
+        .tarImotFarger { farger in
             flytt(farger, til: dokument, i: kontekst)
         }
         .toolbar {

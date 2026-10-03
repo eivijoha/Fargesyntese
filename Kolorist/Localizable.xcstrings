@@ -1059,6 +1059,26 @@
         }
       }
     },
+    "Endre navnet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        }
+      }
+    },
+    "Endre navnet på paletten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename the palette"
+          }
+        }
+      }
+    },
     "Enkeltfarger": {
       "localizations": {
         "en": {
@@ -1095,16 +1115,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "E.g. safe, warm, Nordic, innovative"
-          }
-        }
-      }
-    },
-    "Fakta vurderingen bygger på": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Facts the critique is based on"
           }
         }
       }
@@ -1229,6 +1239,16 @@
         }
       }
     },
+    "Fargepar som er tydelig ulike med normalt syn, men blir vanskelige å skille med protan-, deutan- eller tritanavvik eller akromatopsi (ΔE2000 under 10).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour pairs that are clearly different with normal vision but become hard to tell apart with protan, deutan or tritan deficiency or achromatopsia (ΔE2000 below 10)."
+          }
+        }
+      }
+    },
     "Farger (hex)": {
       "localizations": {
         "en": {
@@ -1245,6 +1265,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Colours saved without a palette end up here"
+          }
+        }
+      }
+    },
+    "Farger utenfor sRGB, som bare vises riktig på P3-skjermer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colours outside sRGB, which only display correctly on P3 screens."
+          }
+        }
+      }
+    },
+    "Fargerom": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour space"
           }
         }
       }
@@ -1335,6 +1375,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Done"
+          }
+        }
+      }
+    },
+    "Ferdig med navnet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done renaming"
           }
         }
       }
@@ -1725,6 +1775,16 @@
         }
       }
     },
+    "Grunnlag for vurderingen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basis for the assessment"
+          }
+        }
+      }
+    },
     "Gråtone": {
       "localizations": {
         "en": {
@@ -1841,6 +1901,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The quick buttons change the colours precisely in OKLCH. Free text is interpreted by the language model, which remembers the conversation."
+          }
+        }
+      }
+    },
+    "Hvilke kulører paletten består av, og om det bare er nøytrale.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which hues the palette consists of, and whether they are all neutrals."
           }
         }
       }
@@ -2493,6 +2563,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hue, value and chroma after Munsell. The conversion uses the 1943 renotation data (CIE xyY under illuminant C, public data) with interpolation in chroma, hue and value, Bradford adaptation to D65, and ASTM D1535 for the relation between value and luminance. The notation is an approximation; physical Munsell chips may differ."
+          }
+        }
+      }
+    },
+    "Kulører": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hues"
           }
         }
       }
@@ -4201,6 +4281,16 @@
         }
       }
     },
+    "Spennet i lyshet (OKLCH) – om paletten har lyse og mørke farger nok til hierarki og lesbarhet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The range of lightness (OKLCH) – whether the palette has enough light and dark colours for hierarchy and legibility."
+          }
+        }
+      }
+    },
     "Standard": {
       "localizations": {
         "en": {
@@ -4297,6 +4387,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "System"
+          }
+        }
+      }
+    },
+    "Tallene for denne paletten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Figures for this palette"
+          }
+        }
+      }
+    },
+    "Tallene regnes ut nøyaktig i appen, og vurderingen lages etter faste regler: lyshetsspenn minst 0,50, minst ett fargepar på 4,5:1, og ingen fargepar som forveksles ved rød-grønt fargesynsavvik.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The figures are calculated exactly in the app, and the assessment follows fixed rules: a lightness range of at least 0.50, at least one colour pair at 4.5:1, and no colour pairs confused with red–green colour vision deficiency."
+          }
+        }
+      }
+    },
+    "Tallene regnes ut nøyaktig i appen. Apple Intelligence på enheten skriver vurderingen ut fra dem, og regner ikke selv.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The figures are calculated exactly in the app. Apple Intelligence on the device writes the assessment from them and does no calculating itself."
           }
         }
       }
@@ -4969,6 +5089,16 @@
         }
       }
     },
+    "Vurderingen sier ikke noe om smak, stemning eller om fargene passer til et formål – bare om kontrast, lesbarhet og skillbarhet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The assessment says nothing about taste, mood or whether the colours suit a purpose – only about contrast, legibility and distinguishability."
+          }
+        }
+      }
+    },
     "W3Cs krav til kontrast mellom tekst/grafikk og bakgrunn, regnet ut fra relativ luminans. «Rett opp» endrer bare lysheten (OKLCH) til kravet er oppfylt.": {
       "localizations": {
         "en": {
@@ -4985,6 +5115,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "WCAG 2.2 contrast"
+          }
+        }
+      }
+    },
+    "WCAG 2.2-kontrast mellom alle fargepar, og hvor mange som kan brukes til tekst (4,5:1).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WCAG 2.2 contrast between all colour pairs, and how many can be used for text (4.5:1)."
           }
         }
       }
