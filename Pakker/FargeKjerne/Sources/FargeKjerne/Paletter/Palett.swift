@@ -58,6 +58,47 @@ public struct PalettFarge: Hashable, Codable, Sendable, Identifiable {
     }
 }
 
+/// Lagringsformatet holdes lesbart for eldre versjoner av appen, som kan synkronisere de samme palettene
+/// via iCloud. Kan ikke 1.0 lese én farge, blir hele paletten tom der – og lagres den derfra, er fargene borte.
+/// - Opphav `bibliotek` (fra 1.1) lagres som `manuell`; opphavet er bare til informasjon.
+/// - Representasjon i Munsell (fra 1.1) lagres i et eget felt som eldre versjoner hopper over.
+/// - Ukjente verdier fra nyere versjoner gir en farge uten opphav/representasjon i stedet for en tom palett.
+extension PalettFarge {
+    private enum Nøkler: String, CodingKey {
+        case id, navn, farge, opphav, representasjon
+        /// Representasjon i en fargemodell som 1.0 ikke kjenner (Munsell).
+        case representasjonUtvidet
+    }
+
+    /// Fargemodellene som fantes i 1.0.
+    private static let modeller10: Set<Fargemodell> = [.okLCH, .okLab, .cieLCH, .cieLab, .hsb, .hsl, .rgb, .displayP3, .cmyk]
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: Nøkler.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        navn = try c.decodeIfPresent(String.self, forKey: .navn) ?? ""
+        farge = try c.decode(Farge.self, forKey: .farge)
+        opphav = (try? c.decodeIfPresent(Opphav.self, forKey: .opphav)) ?? .manuell
+        representasjon = (try? c.decodeIfPresent(Fargerepresentasjon.self, forKey: .representasjonUtvidet))
+            ?? (try? c.decodeIfPresent(Fargerepresentasjon.self, forKey: .representasjon))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: Nøkler.self)
+        try c.encode(id, forKey: .id)
+        try c.encode(navn, forKey: .navn)
+        try c.encode(farge, forKey: .farge)
+        try c.encode(opphav == .bibliotek ? .manuell : opphav, forKey: .opphav)
+        if let representasjon {
+            if case .modell(let m) = representasjon.rom, !Self.modeller10.contains(m) {
+                try c.encode(representasjon, forKey: .representasjonUtvidet)
+            } else {
+                try c.encode(representasjon, forKey: .representasjon)
+            }
+        }
+    }
+}
+
 /// Plattformnøytral palett. Appen persisterer denne (SwiftData), eksportørene leser den.
 public struct Palett: Hashable, Codable, Sendable, Identifiable {
     public var id: UUID

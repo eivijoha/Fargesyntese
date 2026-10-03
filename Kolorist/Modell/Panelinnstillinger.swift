@@ -74,7 +74,17 @@ final class Panelinnstillinger {
         static let verdirekkefølge = "verdier.rekkefølge"
     }
 
+    /// Skjermbilder (Debug): standardoppsettet, uten å lese eller endre brukerens synkroniserte oppsett.
+    private let standardOppsett: Bool = {
+        #if DEBUG
+        UserDefaults.standard.bool(forKey: "skjermbilde")
+        #else
+        false
+        #endif
+    }()
+
     private init() {
+        guard !standardOppsett else { return }
         last()
         NotificationCenter.default.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: sky, queue: .main) { [weak self] _ in
@@ -147,6 +157,7 @@ final class Panelinnstillinger {
     }
 
     private func lagre() {
+        guard !standardOppsett else { return }
         let verdier: [(String, Any)] = [
             (Nøkkel.rekkefølge, rekkefølger),
             (Nøkkel.lagtSammen, Array(lagtSammen).sorted()),

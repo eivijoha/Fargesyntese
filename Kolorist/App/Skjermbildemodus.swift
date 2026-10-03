@@ -11,6 +11,7 @@ enum Skjermbildemodus {
 
     static func forbered(_ kontekst: ModelContext) {
         guard på else { return }
+        leggInnEksempler(kontekst)
         let navn = Harmoni.jevn.navn
         let farger = Harmoni.jevn.farger(fra: Farge(hex: "#2F7FD8")!, antall: 5).map { $0.gamutKartlagt(til: .displayP3) }
         let palett = (try? kontekst.fetch(FetchDescriptor<PalettDokument>()))?.first { $0.navn == navn }
@@ -27,6 +28,32 @@ enum Skjermbildemodus {
         if let sti = UserDefaults.standard.string(forKey: "bibliotekfil") {
             _ = try? ProfilBibliotek.delt.importerBibliotek(fra: URL(fileURLWithPath: sti))
         }
+    }
+
+    /// Eksempelpaletter, enkeltfarger og en gradient i skjermbildelageret (i minnet), på appens språk.
+    /// «Jevn fordeling» legges inn sist av `forbered` og står derfor øverst.
+    private static func leggInnEksempler(_ kontekst: ModelContext) {
+        guard ((try? kontekst.fetchCount(FetchDescriptor<PalettDokument>())) ?? 0) == 0 else { return }
+        let engelsk = Bundle.main.preferredLocalizations.first?.hasPrefix("en") == true
+        let paletter: [(String, String, [String])] = [
+            ("Soloppgang", "Sunrise", ["#2B2D5C", "#7B3F6E", "#D9576B", "#F29E6D", "#F7D488"]),
+            ("Skog", "Forest", ["#1E3B2B", "#2F5D3A", "#6E8B4E", "#C9B77D", "#F2EBDD"]),
+            ("Nordisk kyst", "Nordic coast", ["#1F3A4D", "#3E6A80", "#8FB3C2", "#E6DCC8", "#C8553D"]),
+        ]
+        let nå = Date.now
+        for (i, (nb, en, hex)) in paletter.enumerated() {
+            let p = PalettDokument(navn: engelsk ? en : nb,
+                                   farger: hex.map { PalettFarge(farge: Farge(hex: $0)!, opphav: .manuell) })
+            p.opprettet = nå.addingTimeInterval(Double(i - 10) * 60)
+            kontekst.insert(p)
+        }
+        for (i, hex) in ["#C4553B", "#2E5E8C", "#E8B04A"].enumerated() {
+            let f = LagretFarge(PalettFarge(farge: Farge(hex: hex)!, opphav: .manuell))
+            f.opprettet = nå.addingTimeInterval(Double(-i) * 60)
+            kontekst.insert(f)
+        }
+        let oppsett = Gradientoppsett(fra: Farge(hex: "#1F3A4D")!, til: Farge(hex: "#F29E6D")!, antall: 7, trinn: Lyshetstrinn())
+        kontekst.insert(LagretGradient(navn: engelsk ? "Dusk" : "Skumring", oppsett: oppsett))
     }
 }
 #endif

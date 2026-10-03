@@ -1,5 +1,7 @@
 # App Store Connect og App Review – Kolorist
 
+*Frosset: tekstene og skjermbildene slik de var for versjon 1.0. Gjeldende tekster ligger i `Dokumentasjon/1.1/AppStore.md`.*
+
 Tekster klare til å lime inn. Én app-post med universelt kjøp for iPhone, iPad og Mac (samme bundle-ID
 `no.engenett.Kolorist`, plattformene iOS og macOS lagt til i samme post). Primærspråk: norsk (bokmål),
 i tillegg engelsk. Tegngrensene står i parentes, og alle tekstene er innenfor.
@@ -379,7 +381,7 @@ colour,color,palette,picker,eyedropper,OKLCH,CMYK,ICC,contrast,WCAG,gradient,har
 
 ## 3d. Skjermbilder
 
-Alle i `Dokumentasjon/Skjermbilder/`, fem per plattform og språk: Studio, Harmoni, Overgang, Kontrast, Fargesyn.
+Alle i `Dokumentasjon/1.0/Skjermbilder/`, fem per plattform og språk: Studio, Harmoni, Overgang, Kontrast, Fargesyn.
 
 | Mappe | Plattform | Størrelse |
 |---|---|---|

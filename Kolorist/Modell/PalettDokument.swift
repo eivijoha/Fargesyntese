@@ -108,6 +108,15 @@ enum Lagring {
     private(set) static var synkroniserer = false
 
     static let container: ModelContainer = {
+        #if DEBUG
+        // Skjermbilder: eget lager i minnet med eksempelpaletter (Skjermbildemodus), så brukerens egne
+        // paletter ikke havner i bildene og ikke endres. Teksten om iCloud vises som ved vanlig bruk.
+        if UserDefaults.standard.bool(forKey: "skjermbilde") {
+            synkroniserer = true
+            let oppsett = ModelConfiguration(schema: skjema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+            return try! ModelContainer(for: skjema, configurations: oppsett)
+        }
+        #endif
         if kanBrukeICloud {
             do {
                 let oppsett = ModelConfiguration(schema: skjema, cloudKitDatabase: .private(containerID))
