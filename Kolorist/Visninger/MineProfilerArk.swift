@@ -70,7 +70,7 @@ struct MineProfilerArk: View {
                 } footer: {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("ICC-profiler: .icc og .icm – for eksempel trykkprofilen fra trykkeriet (FOGRA, GRACoL) eller en skjermprofil.")
-                        Text("Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner, som RAL, NCS, malingsprodusentenes kart eller Freetone. Kolorist leverer ingen slike kart; du importerer dine egne.")
+                        Text("Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner, som RAL, NCS eller malingsprodusentenes kart. Kolorist leverer ingen slike kart; du importerer dine egne.")
                         Text(bibliotek.brukerICloud
                              ? "Filene ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene dine."
                              : "Filene lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")

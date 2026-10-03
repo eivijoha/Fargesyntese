@@ -1,8 +1,7 @@
 import Foundation
 
 /// Import av fargebiblioteker: Adobe Swatch Exchange (.ase), Photoshop-fargeprøver (.aco) og
-/// Adobe Color Book (.acb), som brukes for fargekart med navngitte toner (f.eks. Stuart Semples
-/// Freetone). Lab-verdier tolkes med D50 som i Adobe, CMYK naivt (uten profil), og navn beholdes
+/// Adobe Color Book (.acb), som brukes for fargekart med navngitte toner . Lab-verdier tolkes med D50 som i Adobe, CMYK naivt (uten profil), og navn beholdes
 /// så nærmeste tone kan finnes med ΔE2000 i Vurdering › Sammenlign.
 public enum Bibliotekimport {
     public enum Feil: LocalizedError {

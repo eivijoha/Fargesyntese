@@ -1,7 +1,7 @@
 import CryptoKit
 import Foundation
 
-/// Et importert fargebibliotek (ASE, ACO eller ACB), f.eks. et fargekart med navngitte toner som Freetone.
+/// Et importert fargebibliotek (ASE, ACO eller ACB), f.eks. et fargekart med navngitte toner.
 /// Brukes som «fargerom» i Studio: nærmeste tone vises ved siden av fargen, og «Begrens nye farger»
 /// låser fargen til nærmeste tone. Id-en er en hash av filen, så valget er stabilt mellom enheter.
 public struct Fargebibliotek: Sendable, Hashable, Identifiable {

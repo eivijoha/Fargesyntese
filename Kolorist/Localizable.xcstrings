@@ -1099,12 +1099,12 @@
         }
       }
     },
-    "Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner, som RAL, NCS, malingsprodusentenes kart eller Freetone. Kolorist leverer ingen slike kart; du importerer dine egne.": {
+    "Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner, som RAL, NCS eller malingsprodusentenes kart. Kolorist leverer ingen slike kart; du importerer dine egne.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Colour libraries: .ase (Adobe Swatch Exchange), .aco (Photoshop swatches) and .acb (Adobe Color Book) – colour charts with named tones, such as RAL, NCS, paint manufacturers’ charts or Freetone. Kolorist ships no such charts; you import your own."
+            "value": "Colour libraries: .ase (Adobe Swatch Exchange), .aco (Photoshop swatches) and .acb (Adobe Color Book) – colour charts with named tones, such as RAL, NCS or paint manufacturers’ charts. Kolorist ships no such charts; you import your own."
           }
         }
       }

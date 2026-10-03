@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Tonene i et importert fargebibliotek som ligger nærmest en farge, rangert etter ΔE2000.
 /// Brukes når en målt eller blandet farge skal oversettes til et fargekart med navngitte toner
-/// (RAL, NCS, Freetone …). Bibliotekene importeres under «Mine profiler».
+/// (RAL, NCS …). Bibliotekene importeres under «Mine fargerom».
 struct NærmesteIBibliotekSeksjon: View {
     let farge: Farge
     @Environment(ProfilBibliotek.self) private var bibliotek
