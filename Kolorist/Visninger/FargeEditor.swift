@@ -606,6 +606,7 @@ struct VisOgsåMeny: View {
     @Environment(ProfilBibliotek.self) private var bibliotek
     @State private var importerer = false
     @State private var importfeil: String?
+    @State private var visMineProfiler = false
 
     /// Standardrommene: sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB og Generic CMYK.
     private var standard: [ICCProfil] { ICCProfil.innebygde }
@@ -645,6 +646,9 @@ struct VisOgsåMeny: View {
             }
             Divider()
             Button("ICC-profil", systemImage: "plus") { importerer = true }
+            if !bibliotek.importerte.isEmpty {
+                Button("Mine profiler …", systemImage: "list.bullet") { visMineProfiler = true }
+            }
             Divider()
             Picker("Standard", selection: $valgtID) {
                 ForEach(standard) { valg($0) }
@@ -708,6 +712,7 @@ struct VisOgsåMeny: View {
                 importfeil = error.localizedDescription
             }
         }
+        .sheet(isPresented: $visMineProfiler) { MineProfilerArk(valgtID: $valgtID) }
         .alert("Kunne ikke legge til profilen", isPresented: Binding(get: { importfeil != nil }, set: { if !$0 { importfeil = nil } })) {
             Button("OK") {}
         } message: {

@@ -11,6 +11,7 @@ struct ICCSeksjon: View {
     @Environment(ProfilBibliotek.self) private var bibliotek
     @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
     @State private var importerer = false
+    @State private var visMineProfiler = false
     @State private var feil: String?
 
     private var profil: ICCProfil { bibliotek.profil(id: profilID) ?? .sRGB }
@@ -57,11 +58,9 @@ struct ICCSeksjon: View {
                 MetodeHenvisning(.icc, .renCMYK, .ciede2000)
                 HStack {
                     Button("Importer profil …", systemImage: "square.and.arrow.down") { importerer = true }
-                    if bibliotek.importerte.contains(where: { $0.id == profil.id }) {
-                        Button("Fjern", systemImage: "trash", role: .destructive) {
-                            bibliotek.fjern(profil)
-                            profilID = ICCProfil.sRGB.id
-                        }
+                    if !bibliotek.importerte.isEmpty {
+                        // Sletting skjer i oversikten, med bekreftelse – filen forsvinner fra alle enhetene.
+                        Button("Mine profiler …", systemImage: "list.bullet") { visMineProfiler = true }
                     }
                 }
                 .buttonStyle(.borderless)
@@ -72,6 +71,7 @@ struct ICCSeksjon: View {
                     .font(.caption)
             }
         }
+        .sheet(isPresented: $visMineProfiler) { MineProfilerArk(valgtID: $profilID) }
         .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
             do {
                 let profiler = try resultat.get().map { try bibliotek.importer(fra: $0) }
