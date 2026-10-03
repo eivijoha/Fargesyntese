@@ -26,6 +26,7 @@ struct KoloristApp: App {
         .modelContainer(Lagring.container)
         #if os(macOS)
         .commands {
+            CommandGroup(after: .sidebar) { PalettkolonneKommando(arbeidsbenk: arbeidsbenk) }
             CommandGroup(after: .pasteboard) {
                 Button("Kopier aktiv farge som OKLCH") { Utklippstavle.kopier(arbeidsbenk.aktivFarge, som: .okLCH) }
                     .keyboardShortcut("c", modifiers: [.command, .option])
@@ -102,6 +103,8 @@ final class Arbeidsbenk {
     }
     var modell: Fargemodell = .okLCH
     var valgtFane: Fane = Arbeidsbenk.startfane
+    /// Vinduet er bredt nok til palettkolonnen (Mac og store iPader i liggende format). Settes av rotvisningen.
+    var palettkolonneMulig = false
     /// Lysere/mørkere-innstillinger, delt mellom Studio og Overgang og husket mellom oppstarter.
     var lyshetstrinn: Lyshetstrinn = Arbeidsbenk.lastTrinn() {
         didSet { try? UserDefaults.standard.set(JSONEncoder().encode(lyshetstrinn), forKey: "lyshetstrinn") }
@@ -210,27 +213,47 @@ final class Arbeidsbenk {
 
 struct InnholdsVisning: View {
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
+    @AppStorage("visPalettkolonne") private var visPalettkolonne = true
+
+    /// Minste vindusbredde for palettkolonnen: 13"-iPad i liggende format, eller et bredt Mac-vindu.
+    static let palettkolonneBredde: CGFloat = 1300
 
     var body: some View {
         @Bindable var arbeidsbenk = arbeidsbenk
         TabView(selection: $arbeidsbenk.valgtFane) {
             Tab("Studio", systemImage: "slider.horizontal.3", value: .studio) {
-                NavigationStack { FargeEditor() }
+                NavigationStack { FargeEditor().palettkolonneKnapp() }
             }
             Tab("Paletter", systemImage: "swatchpalette", value: .paletter) {
                 PalettListe()
             }
             Tab("Overgang", systemImage: "square.stack.3d.forward.dottedline", value: .overgang) {
-                NavigationStack { OvergangVisning() }
+                NavigationStack { OvergangVisning().palettkolonneKnapp() }
             }
             Tab("Utplukk", systemImage: "eyedropper.halffull", value: .utplukk) {
-                NavigationStack { UtplukkVisning() }
+                NavigationStack { UtplukkVisning().palettkolonneKnapp() }
             }
             Tab("Vurdering", systemImage: "checkmark.seal", value: .vurdering) {
-                NavigationStack { VurderingVisning() }
+                NavigationStack { VurderingVisning().palettkolonneKnapp() }
             }
         }
         .tabViewStyle(.sidebarAdaptable)
+        // Palettkolonne til høyre når vinduet er bredt nok – ikke i Paletter-fanen, som viser det samme.
+        .inspector(isPresented: Binding(
+            get: { arbeidsbenk.palettkolonneMulig && visPalettkolonne && arbeidsbenk.valgtFane != .paletter },
+            set: { ny in if arbeidsbenk.palettkolonneMulig { visPalettkolonne = ny } }
+        )) {
+            PalettKolonne()
+                .inspectorColumnWidth(min: 240, ideal: 300, max: 420)
+        }
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { bredde in
+            #if os(iOS)
+            let stor = UIDevice.current.userInterfaceIdiom == .pad && bredde >= Self.palettkolonneBredde
+            #else
+            let stor = bredde >= Self.palettkolonneBredde
+            #endif
+            if arbeidsbenk.palettkolonneMulig != stor { arbeidsbenk.palettkolonneMulig = stor }
+        }
         .sheet(item: $arbeidsbenk.sammenligning) { par in
             SammenligningVisning(a: par.a, b: par.b)
         }
@@ -251,3 +274,17 @@ extension Color {
     // Statusfargene .advarsel, .suksess og .feil genereres fra Assets (minst 4,5:1 i lys og mørk modus;
     // systemets .orange/.green er ca. 2,2:1 mot hvit).
 }
+
+#if os(macOS)
+/// Vis › Vis paletter (⌥⌘I): palettkolonnen til høyre, når vinduet er bredt nok.
+private struct PalettkolonneKommando: View {
+    let arbeidsbenk: Arbeidsbenk
+    @AppStorage("visPalettkolonne") private var vis = true
+
+    var body: some View {
+        Toggle("Vis paletter", isOn: $vis)
+            .keyboardShortcut("i", modifiers: [.command, .option])
+            .disabled(!arbeidsbenk.palettkolonneMulig)
+    }
+}
+#endif
