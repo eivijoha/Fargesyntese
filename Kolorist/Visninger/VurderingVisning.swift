@@ -11,7 +11,7 @@ struct VurderingVisning: View {
         var navn: String {
             switch self {
             case .kontrast: String(localized: "Kontrast")
-            case .sammenlign: String(localized: "Sammenlign")
+            case .sammenlign: String(localized: "Forskjell")
             case .palett: String(localized: "Palett")
             case .fargesyn: String(localized: "Fargesyn")
             }

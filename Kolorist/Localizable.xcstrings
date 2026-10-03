@@ -3971,16 +3971,6 @@
         }
       }
     },
-    "Sammenlign": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Compare"
-          }
-        }
-      }
-    },
     "Se med kamera: %@": {
       "localizations": {
         "en": {

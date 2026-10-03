@@ -78,7 +78,7 @@ struct SammenligningVisning: View {
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("Sammenlign")
+        .navigationTitle("Forskjell")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

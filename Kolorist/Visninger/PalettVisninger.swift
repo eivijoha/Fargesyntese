@@ -51,7 +51,7 @@ struct PalettListe: View {
                                 .strokeBorder(Color.sekundærTekst.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [5, 3])))
                     }
                     kort(.enkeltfarger) {
-                        EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge), paletter: paletter)
+                        EnkeltfargerRad(farger: enkeltfarger.map(\.palettFarge), paletter: paletter, velg: velgFarge)
                     } slipp: { farger in
                         flyttTilEnkeltfarger(farger, i: kontekst)
                     }
@@ -75,7 +75,7 @@ struct PalettListe: View {
                         ForEach(paletter) { p in
                             SveipForÅSlette(slett: { slettes = p }) {
                                 kort(.palett(p)) {
-                                    PalettRad(dokument: p)
+                                    PalettRad(dokument: p, velg: velgFarge)
                                 } slipp: { farger in
                                     flytt(farger, til: p, i: kontekst)
                                 }
@@ -169,6 +169,13 @@ struct PalettListe: View {
         sti = [v]
     }
 
+    /// Trykk på en fargeprøve: fargen blir aktiv. I palettkolonnen blir du der du er; på egen
+    /// Paletter-fane går appen til Studio, som når en farge velges inne i en palett.
+    private func velgFarge(_ farge: Farge) {
+        arbeidsbenk.aktivFarge = farge
+        if !iKolonne { arbeidsbenk.valgtFane = .studio }
+    }
+
     /// Kort som kan trykkes (åpner) og som tar imot slippede farger.
     private func kort<Innhold: View>(_ v: Valg, @ViewBuilder innhold: () -> Innhold,
                                      slipp: @escaping ([PalettFarge]) -> Bool) -> some View {
@@ -247,6 +254,7 @@ func lagreEnkeltfarger(_ farger: [PalettFarge], i kontekst: ModelContext, navngi
 struct EnkeltfargerRad: View {
     let farger: [PalettFarge]
     let paletter: [PalettDokument]
+    var velg: (Farge) -> Void = { _ in }
     @Environment(\.modelContext) private var kontekst
 
     var body: some View {
@@ -263,6 +271,8 @@ struct EnkeltfargerRad: View {
                                   fjern: { slettEnkeltfarge(pf.id, i: kontekst) },
                                   palettFarge: pf, ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: nil)))
                             .frame(width: 36, height: 36)
+                            .onTapGesture { velg(pf.farge) }
+                            .accessibilityAction(named: "Gjør til aktiv farge") { velg(pf.farge) }
                     }
                     if farger.isEmpty {
                         Text("Farger lagret uten palett havner her").font(.caption).foregroundStyle(Color.sekundærTekst)
@@ -352,6 +362,8 @@ func leggTil(_ farger: [PalettFarge], i dokument: PalettDokument) -> Bool {
 /// Rad i palettlisten: navn og små fargeprøver som kan dras til andre paletter.
 struct PalettRad: View {
     let dokument: PalettDokument
+    /// Trykk på en fargeprøve velger fargen (resten av kortet åpner paletten).
+    var velg: (Farge) -> Void = { _ in }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -367,6 +379,8 @@ struct PalettRad: View {
                                   fjern: { dokument.farger.removeAll { $0.id == pf.id } }, palettFarge: pf,
                                   ekstraMeny: AnyView(FlyttMeny(farge: pf, fra: dokument)))
                             .frame(width: 36, height: 36)
+                            .onTapGesture { velg(pf.farge) }
+                            .accessibilityAction(named: "Gjør til aktiv farge") { velg(pf.farge) }
                     }
                     if dokument.farger.isEmpty {
                         Text("Slipp farger her").font(.caption).foregroundStyle(Color.sekundærTekst)
