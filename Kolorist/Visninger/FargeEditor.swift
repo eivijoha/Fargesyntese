@@ -19,6 +19,25 @@ struct FargeEditor: View {
     @AppStorage("renCMYK") private var renCMYK = false
     @Environment(ProfilBibliotek.self) private var bibliotek
 
+    private var modusvelger: some View {
+        // Tekst, ikke symboler: i verktøylinjen viser en segmentkontroll ellers bare symbolene.
+        Picker("Modus", selection: $modus) {
+            ForEach(Modus.allCases) { Text($0.navn).tag($0) }
+        }
+        .pickerStyle(.segmented)
+        .labelsHidden()
+        .fixedSize()
+    }
+
+    /// iPhone skjuler tittellinjen i Studio; der står velgeren i skjemaet i stedet.
+    private var velgerIVerktøylinje: Bool {
+        #if os(iOS)
+        UIDevice.current.userInterfaceIdiom != .phone
+        #else
+        true
+        #endif
+    }
+
     private var visOgsåProfil: ICCProfil { bibliotek.profil(id: visOgsåID) ?? .sRGB }
     /// Fargebibliotek valgt under «Vis også» (i stedet for en profil): høyre halvdel viser nærmeste tone.
     private var visOgsåBibliotek: Fargebibliotek? { bibliotek.fargebibliotek(id: visOgsåID) }
@@ -137,14 +156,15 @@ struct FargeEditor: View {
         fargepanel(farge, bred: bred)
             .frame(width: bred ? geo.size.width / 2 : nil)
         Form {
-            Section {
-                Picker("Modus", selection: $modus) {
-                    ForEach(Modus.allCases) { Label($0.navn, systemImage: $0.symbol).tag($0) }
+            if !velgerIVerktøylinje {
+                // iPhone: tittellinjen er skjult, så velgeren står sentrert og fritt øverst i skjemaet.
+                Section {
+                    modusvelger
+                        .frame(maxWidth: .infinity)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
                 }
-                .pickerStyle(.segmented)
-                .labelsHidden()
             }
-
             switch modus {
             case .farge: fargeModus(farge)
             case .toner: tonerModus(farge)
@@ -166,6 +186,12 @@ struct FargeEditor: View {
         .background(Color.skjemabakgrunn)
         }
         .navigationTitle("Studio")
+        // iPad og Mac: Farge | Toner | Harmoni midt i verktøylinjen, som velgerne i Utplukk og Vurdering.
+        .toolbar {
+            if velgerIVerktøylinje {
+                ToolbarItem(placement: .principal) { modusvelger }
+            }
+        }
         #if os(iOS)
         // Liten tittel: fargepanelet står fast øverst og trenger plassen.
         .navigationBarTitleDisplayMode(.inline)

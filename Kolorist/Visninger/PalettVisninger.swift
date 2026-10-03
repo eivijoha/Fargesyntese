@@ -20,6 +20,8 @@ struct PalettListe: View {
     @State private var målrettet: Valg?
     @State private var slettes: PalettDokument?
     @State private var omdøpes: PalettDokument?
+    @State private var vurderes: PalettDokument?
+    @State private var matrise: PalettDokument?
     @State private var visVerdiord = false
     @State private var visNyPalett = false
     @State private var nyPalettNavn = ""
@@ -80,6 +82,11 @@ struct PalettListe: View {
                                     flytt(farger, til: p, i: kontekst)
                                 }
                                 .contextMenu {
+                                    Button("Vurder paletten", systemImage: "text.magnifyingglass") { vurderes = p }
+                                        .disabled(p.farger.isEmpty)
+                                    Button("Kontrastmatrise", systemImage: "square.grid.3x3.fill") { matrise = p }
+                                        .disabled(p.farger.count < 2)
+                                    Divider()
                                     Button("Gi nytt navn …", systemImage: "character.cursor.ibeam") { omdøpes = p }
                                     KopierTilMeny(farger: p.farger, navn: p.navn)
                                     Button("Slett palett", systemImage: "trash", role: .destructive) { slettes = p }
@@ -111,6 +118,8 @@ struct PalettListe: View {
                 }
             }
             .omdøpPalett($omdøpes)
+            .sheet(item: $vurderes) { PalettVurderingArk(palett: $0.palett) }
+            .sheet(item: $matrise) { KontrastmatriseArk(palett: $0.palett) }
             .alert("Ny palett", isPresented: $visNyPalett) {
                 TextField("Navn", text: $nyPalettNavn)
                 Button("Avbryt", role: .cancel) {}
@@ -558,6 +567,37 @@ struct PalettDetalj: View {
         defer { kiArbeider = false }
         do { vurdering = try await Palettvurderer.vurder(dokument.palett) }
         catch { kiFeil = error.localizedDescription }
+    }
+}
+
+/// Vurderer paletten når arket åpnes (fra palettens meny i oversikten), med fremdrift mens det pågår.
+struct PalettVurderingArk: View {
+    let palett: Palett
+    @State private var vurdering: PalettVurdering?
+    @State private var feil: String?
+    @Environment(\.dismiss) private var lukk
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if let vurdering {
+                    Form { PalettVurderingInnhold(vurdering: vurdering) }.formStyle(.grouped)
+                } else if let feil {
+                    ContentUnavailableView("Kunne ikke vurdere paletten", systemImage: "xmark.circle", description: Text(feil))
+                } else {
+                    ProgressView("Vurderer «\(palett.navn)» …").frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .navigationTitle("Vurdering")
+            .toolbar { Button("Ferdig") { lukk() } }
+        }
+        #if os(macOS)
+        .frame(minWidth: 480, minHeight: 520)
+        #endif
+        .task {
+            do { vurdering = try await Palettvurderer.vurder(palett) }
+            catch { feil = error.localizedDescription }
+        }
     }
 }
 

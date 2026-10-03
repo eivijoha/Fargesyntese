@@ -13,6 +13,8 @@ struct PalettKolonne: View {
     /// Paletter som er foldet ut (id-er), husket mellom oppstarter.
     @AppStorage("palettkolonneÅpne") private var åpneTekst = ""
     @State private var nyPalett = false
+    @State private var vurderes: PalettDokument?
+    @State private var matrise: PalettDokument?
     @State private var nyttNavn = ""
 
     private var åpne: Set<String> { Set(åpneTekst.split(separator: ",").map(String.init)) }
@@ -54,6 +56,8 @@ struct PalettKolonne: View {
             }
         }
         .listStyle(.sidebar)
+        .sheet(item: $vurderes) { PalettVurderingArk(palett: $0.palett) }
+        .sheet(item: $matrise) { KontrastmatriseArk(palett: $0.palett) }
         // Ingen egen verktøylinje: på Mac blir knapper fra en lukket inspektør hengende igjen.
         .alert("Ny palett", isPresented: $nyPalett) {
             TextField("Navn", text: $nyttNavn)
@@ -132,6 +136,12 @@ struct PalettKolonne: View {
         }
         .padding(.vertical, 2)
         .tarImotFarger { farger in flytt(farger, til: p, i: kontekst) }
+        .contextMenu {
+            Button("Vurder paletten", systemImage: "text.magnifyingglass") { vurderes = p }
+                .disabled(p.farger.isEmpty)
+            Button("Kontrastmatrise", systemImage: "square.grid.3x3.fill") { matrise = p }
+                .disabled(p.farger.count < 2)
+        }
         .accessibilityElement(children: .contain)
     }
 
