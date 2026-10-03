@@ -80,7 +80,7 @@ struct ProfilkonverteringVisning: View {
         .onChange(of: fraID) { verdier = [] }
     }
 
-    private func profilvelger(_ tittel: String, valgt: Binding<String>) -> some View {
+    private func profilvelger(_ tittel: LocalizedStringKey, valgt: Binding<String>) -> some View {
         Picker(tittel, selection: valgt) {
             Seksjon("Innebygde") { ForEach(ICCProfil.innebygde) { Text($0.navn).tag($0.id) } }
             if !bibliotek.importerte.isEmpty {

@@ -122,7 +122,7 @@ struct FargeRute: View {
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(navn ?? farge.hex())
+            .accessibilityLabel(navn.flatMap { $0.isEmpty ? nil : $0 } ?? farge.hex())
             .accessibilityValue(Fargemodell.okLCH.tekst(for: farge))
     }
 }

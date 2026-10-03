@@ -3,7 +3,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 /// Fargestyring i Studio for profilen valgt under «Vis også»: verdiene i profilen, gjengivelseshensikt,
-/// varsel utenfor gamut, justering innenfor profilen og import av egne profiler (FOGRA39, GRACoL …).
+/// varsel utenfor gamut og justering innenfor profilen. Egne profiler importeres under «Mine fargerom».
 struct ICCSeksjon: View {
     @Binding var farge: Farge
     /// Profilen fra «Vis også» – én felles profil i Studio.

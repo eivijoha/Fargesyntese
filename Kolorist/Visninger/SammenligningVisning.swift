@@ -13,7 +13,8 @@ struct SammenligningVisning: View {
 
     var body: some View {
         if innebygd {
-            skjema
+            // Fanen holdes i live, og @State beholder første verdi: A følger aktiv farge når den endres.
+            skjema.onChange(of: arbeidsbenk.aktivFarge) { _, ny in a = ny }
         } else {
             NavigationStack {
                 skjema
@@ -86,7 +87,7 @@ struct SammenligningVisning: View {
         }
     }
 
-    private func rad(_ navn: String, _ verdi: Double, _ desimaler: Int) -> some View {
+    private func rad(_ navn: LocalizedStringKey, _ verdi: Double, _ desimaler: Int) -> some View {
         LabeledContent(navn) {
             Text(verdi, format: .number.precision(.fractionLength(desimaler))).monospacedDigit()
         }

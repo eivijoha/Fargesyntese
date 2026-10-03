@@ -27,12 +27,4 @@ public struct Fargebibliotek: Sendable, Hashable, Identifiable {
         }
         return beste.map { (tone: $0.0, avstand: $0.1) }
     }
-
-    /// De `antall` nærmeste tonene, nærmest først.
-    public func nærmeste(til farge: Farge, antall: Int) -> [(tone: PalettFarge, avstand: Double)] {
-        farger.map { ($0, farge.deltaE2000(til: $0.farge)) }
-            .sorted { $0.1 < $1.1 }
-            .prefix(antall)
-            .map { (tone: $0.0, avstand: $0.1) }
-    }
 }

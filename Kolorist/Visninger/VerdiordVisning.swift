@@ -120,7 +120,7 @@ struct VerdiordVisning: View {
             }
         } header: { Group {
             HStack {
-                Text(forslag.tittel.isEmpty ? "Forslag" : forslag.tittel)
+                Text(forslag.tittel.isEmpty ? String(localized: "Forslag") : forslag.tittel)
                 if samtale.arbeider { ProgressView().controlSize(.small) }
             }
         }.foregroundStyle(Color.sekundærTekst) } footer: {

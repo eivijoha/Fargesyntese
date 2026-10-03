@@ -299,6 +299,7 @@ struct EnkeltfargerVisning: View {
     @Query(sort: \LagretFarge.opprettet, order: .reverse) private var lagrede: [LagretFarge]
     @State private var leggIPalett: [PalettFarge]?
     @State private var navngis: LagretFarge?
+    @Environment(\.iPalettkolonne) private var iKolonne
 
     private let rutenett = [GridItem(.adaptive(minimum: 96), spacing: 10)]
 
@@ -314,7 +315,8 @@ struct EnkeltfargerVisning: View {
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
                             arbeidsbenk.aktivFarge = pf.farge
-                            arbeidsbenk.valgtFane = .studio
+                            // I palettkolonnen blir du der du er; ellers vises fargen i Studio.
+                            if !iKolonne { arbeidsbenk.valgtFane = .studio }
                         }
                 }
             }
@@ -488,7 +490,8 @@ struct PalettDetalj: View {
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
                             arbeidsbenk.aktivFarge = pf.farge
-                            arbeidsbenk.valgtFane = .studio
+                            // I palettkolonnen blir du der du er; ellers vises fargen i Studio.
+                            if !iKolonne { arbeidsbenk.valgtFane = .studio }
                         }
                 }
             }
@@ -511,7 +514,7 @@ struct PalettDetalj: View {
             isPresented: Binding(get: { eksportformat != nil }, set: { if !$0 { eksportformat = nil } }),
             document: eksportformat.map { EksportDokument(data: $0.data(for: dokument.palett)) },
             contentType: .data,
-            defaultFilename: "\(dokument.navn).\(eksportformat?.filendelse ?? "")"
+            defaultFilename: "\(eksportnavn).\(eksportformat?.filendelse ?? "")"
         ) { _ in eksportformat = nil }
         .sheet(item: $visSkala) { pf in
             ToneskalaArk(grunnfarge: pf) { nye in dokument.farger += nye }
@@ -560,6 +563,13 @@ struct PalettDetalj: View {
             KopierTilMeny(farger: dokument.farger, navn: dokument.navn)
         }
         .help("Eksporter og kopier")
+    }
+
+    /// Filnavn uten tegn som ikke tåles i filnavn, og aldri tomt (ellers blir filen skjult, f.eks. «.ase»).
+    private var eksportnavn: String {
+        let rent = dokument.navn.components(separatedBy: CharacterSet(charactersIn: "/\\:?%*|\"<>")).joined(separator: "-")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return rent.isEmpty ? String(localized: "Uten navn") : rent
     }
 
     private func vurder() async {

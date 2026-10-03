@@ -6,7 +6,7 @@ import SwiftUI
 /// som blir vanskelige å skille.
 struct FargesynVurdering: View {
     @Query(sort: \PalettDokument.opprettet, order: .reverse) private var paletter: [PalettDokument]
-    /// Delt med Vurdering › Palett, så samme palett er valgt i begge.
+    /// Valgt palett, husket mellom oppstarter.
     @AppStorage("vurderingPalett") private var valgtIDTekst = ""
     @AppStorage("fargesynGrad") private var grad = 1.0
     /// Åpent kamera med fargesynsfilter.
@@ -25,7 +25,7 @@ struct FargesynVurdering: View {
                 let farger = valgt.farger
                 Section {
                     Picker("Palett", selection: Binding(get: { valgt.id.uuidString }, set: { valgtIDTekst = $0 })) {
-                        ForEach(paletter) { Text($0.navn.isEmpty ? "Uten navn" : $0.navn).tag($0.id.uuidString) }
+                        ForEach(paletter) { Text($0.navn.isEmpty ? String(localized: "Uten navn") : $0.navn).tag($0.id.uuidString) }
                     }
                     HStack(spacing: 10) {
                         Text("Grad")

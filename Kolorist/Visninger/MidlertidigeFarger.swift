@@ -82,6 +82,7 @@ struct PlukkedeFargerRad: View {
     var størrelse: CGFloat = 36
     var leggIPalett: (Farge) -> Void
     @Environment(Arbeidsbenk.self) private var arbeidsbenk
+    @Environment(\.modelContext) private var kontekst
 
     var body: some View {
         let målinger = arbeidsbenk.målinger
@@ -90,6 +91,7 @@ struct PlukkedeFargerRad: View {
                 ForEach(Array(målinger.indices.reversed()), id: \.self) { i in
                     let farge = målinger[i]
                     FargeRute(farge: farge, visTekst: false, hjørne: 6,
+                              lagre: { lagreEnkeltfarger([PalettFarge(farge: $0, opphav: opphav)], i: kontekst) },
                               leggIPalett: leggIPalett,
                               fjern: { arbeidsbenk.fjernMåling(i) },
                               palettFarge: PalettFarge(farge: farge, opphav: opphav))

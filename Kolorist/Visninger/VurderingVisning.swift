@@ -25,7 +25,7 @@ struct VurderingVisning: View {
             switch del {
             case .kontrast: KontrastVurdering()
             case .sammenlign:
-                // Ny identitet ved hver visning, slik at A/B hentes fra aktiv farge og siste måling.
+                // A/B hentes fra aktiv farge og siste måling; A følger aktiv farge (se SammenligningVisning).
                 SammenligningVisning(a: arbeidsbenk.aktivFarge,
                                      b: arbeidsbenk.målinger.last(where: { $0 != arbeidsbenk.aktivFarge }) ?? Farge(hex: "#FFFFFF")!,
                                      innebygd: true)
@@ -72,8 +72,8 @@ private struct KontrastVurdering: View {
     }
 }
 
-/// Resultatet av en palettvurdering som seksjoner i en liste/et skjema. Brukes både i
-/// Vurdering › Palett og i vurderingsarket fra en palett, så de ser like ut.
+/// Resultatet av en palettvurdering som seksjoner i en liste/et skjema. Brukes i vurderingsarket,
+/// både fra en åpen palett og fra palettens meny i oversikten.
 struct PalettVurderingInnhold: View {
     let vurdering: PalettVurdering
 

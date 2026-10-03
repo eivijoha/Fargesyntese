@@ -708,7 +708,10 @@ struct Fargeflate: View {
 
     private func halvdel(_ pf: PalettFarge, tittel: String, tekst: String, merknad: String? = nil) -> some View {
         let f = pf.farge
-        return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false, palettFarge: pf)
+        // Fargerutens egen meny overstyrer en ytre meny, så alle valgene sendes inn i den.
+        return FargeRute(farge: f, visTekst: false, hjørne: 0, visMerke: false,
+                         lagre: { _ in lagre(pf) }, leggIPalett: { _ in leggIPalett(pf) }, palettFarge: pf,
+                         ekstraMeny: AnyView(Button("Kopier verdier", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }))
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(tittel).font(.caption.weight(.semibold)).lineLimit(2).minimumScaleFactor(0.85)
@@ -725,13 +728,6 @@ struct Fargeflate: View {
                     .font(.body.weight(.semibold))
                     .foregroundStyle(f.lesbarTekstfarge.swiftUI)
                     .padding(6)
-            }
-            .contextMenu {
-                Button("Lagre som enkeltfarge", systemImage: "plus.square") { lagre(pf) }
-                Button("Legg i palett …", systemImage: "plus.square.on.square") { leggIPalett(pf) }
-                Button("Kopier verdier", systemImage: "doc.on.doc") { Utklippstavle.kopierTekst(tekst) }
-                Button("Kopier hex", systemImage: "number") { Utklippstavle.kopier(f) }
-                KopierTilMeny(farger: [pf])
             }
             .accessibilityElement(children: .contain)
             .accessibilityLabel("\(tittel): \(tekst)")
@@ -779,7 +775,7 @@ struct VisOgsåMeny: View {
 
     var body: some View {
         Menu {
-            // Innstillinger for valgt profil øverst, så profilvalg og «+ ICC-profil», så listene.
+            // Innstillinger for valgt profil øverst, så profilvalg og «Mine fargerom …», så listene.
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
             if bibliotek.profil(id: valgtID)?.modell == .cmyk {
                 // UCR/GCR: færrest mulig trykkfarger, med det grå innslaget flyttet til sort, så lenge

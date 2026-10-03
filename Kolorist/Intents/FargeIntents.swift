@@ -98,7 +98,7 @@ struct LagOvergangIntent: AppIntent {
         guard let b = Fargetolk.tolk(til) else { throw UgyldigFarge(tekst: til) }
         let toner = Overgang.toner(fra: a, til: b, antall: antall)
         if lagre {
-            let dokument = PalettDokument(navn: "Overgang \(a.hex()) → \(b.hex())",
+            let dokument = PalettDokument(navn: String(localized: "Overgang \(a.hex()) → \(b.hex())"),
                                           farger: toner.map { PalettFarge(farge: $0, opphav: .overgang) })
             Lagring.container.mainContext.insert(dokument)
             try Lagring.container.mainContext.save()
@@ -151,7 +151,7 @@ struct SjekkKontrastIntent: AppIntent {
         guard let fg = Fargetolk.tolk(forgrunn) else { throw UgyldigFarge(tekst: forgrunn) }
         guard let bg = Fargetolk.tolk(bakgrunn) else { throw UgyldigFarge(tekst: bakgrunn) }
         let test = Kontrasttest(forgrunn: fg, bakgrunn: bg)
-        let krav = WCAGKrav.allCases.map { "\($0.navn): \(test.består($0) ? "bestått" : "ikke bestått")" }.joined(separator: ", ")
+        let krav = WCAGKrav.allCases.map { "\($0.navn): \(test.består($0) ? String(localized: "bestått") : String(localized: "ikke bestått"))" }.joined(separator: ", ")
         return .result(value: test.forhold, dialog: "Kontrasten er \(test.formatert) (\(test.sammendrag)). \(krav).")
     }
 }

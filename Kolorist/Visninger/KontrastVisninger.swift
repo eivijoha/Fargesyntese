@@ -227,7 +227,7 @@ struct KontrastmatriseArk: View {
                 .opacity(bestått ? 1 : 0.55)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("\(t.forgrunn.hex()) på \(t.bakgrunn.hex()), \(t.formatert), \(bestått ? "bestått" : "ikke bestått")")
+            .accessibilityLabel("\(t.forgrunn.hex()) på \(t.bakgrunn.hex()), \(t.formatert), \(bestått ? String(localized: "bestått") : String(localized: "ikke bestått"))")
         }
     }
 }

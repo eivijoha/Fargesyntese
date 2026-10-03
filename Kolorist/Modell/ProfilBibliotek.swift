@@ -110,7 +110,9 @@ final class ProfilBibliotek {
         let data = try Data(contentsOf: url)
         let bibliotek = try Fargebibliotek(data: data, filnavn: url.lastPathComponent)
         if let finnes = fargebiblioteker.first(where: { $0.id == bibliotek.id }) { return finnes }
-        let mål = ledigFilnavn(for: bibliotek.navn, endelse: url.pathExtension.lowercased())
+        // Endelsen etter innholdet, ikke filnavnet: lastInn() leser bare .ase/.aco/.acb, og en fil med
+        // annen endelse ville ellers forsvunnet fra listen ved neste oppstart.
+        let mål = ledigFilnavn(for: bibliotek.navn, endelse: Bibliotekimport.endelse(for: data) ?? "ase")
         try skriv(data, til: mål)
         filer[bibliotek.id] = mål
         fargebiblioteker.append(bibliotek)

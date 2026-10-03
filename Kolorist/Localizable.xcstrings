@@ -359,13 +359,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld color"
+                  "value": "%lld colour"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld colors"
+                  "value": "%lld colours"
                 }
               }
             }
@@ -1325,16 +1325,6 @@
         }
       }
     },
-    "Fargevelger med pipette": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Colour picker with eyedropper"
-          }
-        }
-      }
-    },
     "Felles grått innslag i C, M og Y flyttes til sort, og Kolorist søker etter separasjonen med færrest trykkfarger som holder seg innenfor 1 ΔE00 av profilens egen separasjon.": {
       "localizations": {
         "en": {
@@ -2231,12 +2221,32 @@
         }
       }
     },
+    "Kamerabilde. Trykk for å plukke fargen der, knip for å zoome.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera view. Tap to pick the colour there, pinch to zoom."
+          }
+        }
+      }
+    },
     "Kilde": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Source"
+          }
+        }
+      }
+    },
+    "Kildeprofil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source profile"
           }
         }
       }
@@ -2711,13 +2721,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Created “%@” with %lld color."
+                  "value": "Created “%@” with %lld colour."
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Created “%@” with %lld colors."
+                  "value": "Created “%@” with %lld colours."
                 }
               }
             }
@@ -2749,13 +2759,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Save %lld color"
+                  "value": "Save %lld colour"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Save %lld colors"
+                  "value": "Save %lld colours"
                 }
               }
             }
@@ -2851,13 +2861,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Save as %lld single color"
+                  "value": "Save as %lld single colour"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "Save as %lld single colors"
+                  "value": "Save as %lld single colours"
                 }
               }
             }
@@ -3385,6 +3395,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The Munsell system"
+          }
+        }
+      }
+    },
+    "Målprofil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destination profile"
           }
         }
       }
@@ -5085,6 +5105,26 @@
         }
       }
     },
+    "bestått": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "passed"
+          }
+        }
+      }
+    },
+    "ikke bestått": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not passed"
+          }
+        }
+      }
+    },
     "sRGB-hex som #2F7FD8 eller 2F7FD8; CSS-farger som oklch(…) og rgb(…) går også.": {
       "localizations": {
         "en": {
@@ -5165,6 +5205,26 @@
         }
       }
     },
+    "ΔC* (kroma)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔC* (chroma)"
+          }
+        }
+      }
+    },
+    "ΔE OK (OKLab)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE OK (OKLab)"
+          }
+        }
+      }
+    },
     "ΔE00 %@": {
       "localizations": {
         "en": {
@@ -5207,12 +5267,52 @@
         }
       }
     },
+    "ΔE00 (CIEDE2000)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE00 (CIEDE2000)"
+          }
+        }
+      }
+    },
     "ΔE00 måler avviket fra kildefargen. Hensiktene skiller seg bare når profilene har egne tabeller for dem, typisk CMYK-profiler fra trykkerier; rene matriseprofiler som sRGB og Display P3 gir samme svar for alle.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "ΔE00 measures the deviation from the source colour. The intents only differ when the profiles have their own tables for them, typically CMYK profiles from print shops; pure matrix profiles like sRGB and Display P3 give the same result for all."
+          }
+        }
+      }
+    },
+    "ΔE76 (CIELab)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔE76 (CIELab)"
+          }
+        }
+      }
+    },
+    "ΔL* (lyshet)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ΔL* (lightness)"
+          }
+        }
+      }
+    },
+    "Δh (kulør, grader)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Δh (hue, degrees)"
           }
         }
       }

@@ -18,8 +18,10 @@ struct MineProfilerArk: View {
         var navn: String { switch self { case .profil(let p): p.navn; case .bibliotek(let b): b.navn } }
     }
     @State private var slettes: Sletting?
+    /// Én filvelger for begge typene: SwiftUI viser bare én av flere `fileImporter` på samme visning.
+    private enum Import { case profil, bibliotek }
+    @State private var importtype: Import = .profil
     @State private var importerer = false
-    @State private var importererBibliotek = false
     @State private var feil: String?
 
     /// ASE, ACO og ACB. Typene er ikke registrert i systemet, så de hentes fra filendelsen.
@@ -63,8 +65,8 @@ struct MineProfilerArk: View {
                     }
                 }
                 Section {
-                    Button("Importer ICC-profil …", systemImage: "square.and.arrow.down") { importerer = true }
-                    Button("Importer fargebibliotek …", systemImage: "square.and.arrow.down") { importererBibliotek = true }
+                    Button("Importer ICC-profil …", systemImage: "square.and.arrow.down") { importtype = .profil; importerer = true }
+                    Button("Importer fargebibliotek …", systemImage: "square.and.arrow.down") { importtype = .bibliotek; importerer = true }
                 } header: {
                     Text("Importer")
                 } footer: {
@@ -107,16 +109,16 @@ struct MineProfilerArk: View {
                          : "Filen slettes fra denne enheten.")
                 }
             }
-            .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
+            .fileImporter(isPresented: $importerer,
+                          allowedContentTypes: importtype == .bibliotek ? Self.bibliotektyper : ICCSeksjon.profiltyper,
+                          allowsMultipleSelection: true) { resultat in
                 do {
-                    _ = try resultat.get().map { try bibliotek.importer(fra: $0) }
-                } catch {
-                    feil = error.localizedDescription
-                }
-            }
-            .fileImporter(isPresented: $importererBibliotek, allowedContentTypes: Self.bibliotektyper, allowsMultipleSelection: true) { resultat in
-                do {
-                    _ = try resultat.get().map { try bibliotek.importerBibliotek(fra: $0) }
+                    let urler = try resultat.get()
+                    if importtype == .bibliotek {
+                        _ = try urler.map { try bibliotek.importerBibliotek(fra: $0) }
+                    } else {
+                        _ = try urler.map { try bibliotek.importer(fra: $0) }
+                    }
                 } catch {
                     feil = error.localizedDescription
                 }

@@ -420,7 +420,7 @@ struct KameraForhåndsvisning: UIViewRepresentable {
         v.addGestureRecognizer(dobbelt)
         v.addGestureRecognizer(UIPinchGestureRecognizer(target: v, action: #selector(Visning.knepet(_:))))
         v.isAccessibilityElement = true
-        v.accessibilityLabel = "Kamerabilde. Trykk for å plukke fargen der, knip for å zoome."
+        v.accessibilityLabel = String(localized: "Kamerabilde. Trykk for å plukke fargen der, knip for å zoome.")
         return v
     }
 

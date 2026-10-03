@@ -2,7 +2,7 @@ import Foundation
 
 /// Import av fargebiblioteker: Adobe Swatch Exchange (.ase), Photoshop-fargeprøver (.aco) og
 /// Adobe Color Book (.acb), som brukes for fargekart med navngitte toner. Lab-verdier tolkes med D50 som i Adobe, CMYK naivt (uten profil), og navn beholdes
-/// så nærmeste tone kan finnes med ΔE2000 i Vurdering › Sammenlign.
+/// så nærmeste tone kan vises med ΔE2000 i Studio («Vis også»).
 public enum Bibliotekimport {
     public enum Feil: LocalizedError {
         case ukjentFormat, ødelagt
@@ -14,13 +14,23 @@ public enum Bibliotekimport {
         }
     }
 
+    /// Filendelsen for innholdet (ase, acb eller aco), ut fra filhodet – uavhengig av filnavnet.
+    public static func endelse(for data: Data) -> String? {
+        if data.starts(with: Data("ASEF".utf8)) { return "ase" }
+        if data.starts(with: Data("8BCB".utf8)) { return "acb" }
+        if data.count >= 4, data[0] == 0, data[1] == 1 || data[1] == 2 { return "aco" }
+        return nil
+    }
+
     /// Leser filen og gir en palett med filnavnet (eller bokens navn) som palettnavn.
     public static func les(_ data: Data, filnavn: String) throws -> Palett {
         let navn = (filnavn as NSString).deletingPathExtension
-        if data.starts(with: Data("ASEF".utf8)) { return try ase(data, navn: navn) }
-        if data.starts(with: Data("8BCB".utf8)) { return try acb(data, navn: navn) }
-        if data.count >= 4, data[0] == 0, data[1] == 1 || data[1] == 2 { return try aco(data, navn: navn) }
-        throw Feil.ukjentFormat
+        switch endelse(for: data) {
+        case "ase": return try ase(data, navn: navn)
+        case "acb": return try acb(data, navn: navn)
+        case "aco": return try aco(data, navn: navn)
+        default: throw Feil.ukjentFormat
+        }
     }
 
     // MARK: - ASE
