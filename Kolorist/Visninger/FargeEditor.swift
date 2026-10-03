@@ -10,6 +10,7 @@ struct FargeEditor: View {
     @State private var lagreFarger: [PalettFarge]?
     @State private var lagreNavn = ""
     @State private var beskriver = false
+    @State private var visMineFargerom = false
     @Environment(\.modelContext) private var kontekst
     @AppStorage("studioModus") private var modus: Modus = .farge
     @AppStorage("visOgsåProfil") private var visOgsåID = ICCProfil.sRGB.id
@@ -90,7 +91,7 @@ struct FargeEditor: View {
                         if beskriver { ProgressView().controlSize(.small) }
                     }
                 // Menyen får plass først; profilnavnet kortes ned når feltet ellers ville blitt for smalt.
-                VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge)
+                VisOgsåMeny(valgtID: $visOgsåID, begrens: $arbeidsbenk.begrensAktiv, farge: farge, visMineFargerom: $visMineFargerom)
                     .layoutPriority(1)
                 #if os(macOS)
                 // Skjermpipette (hele skjermen). På iPhone/iPad brukes Utplukk-fanen.
@@ -170,6 +171,8 @@ struct FargeEditor: View {
         // iPhone: ingen tittellinje – fanen sier allerede «Studio», og fargeflaten får plassen.
         .toolbar(UIDevice.current.userInterfaceIdiom == .phone ? .hidden : .automatic, for: .navigationBar)
         #endif
+        // Arket presenteres herfra, ikke fra menyen: iOS viser ikke ark fra et menyvalg som er i ferd med å lukkes.
+        .sheet(isPresented: $visMineFargerom) { MineProfilerArk(valgtID: $visOgsåID) }
         .sheet(isPresented: Binding(get: { lagreFarger != nil }, set: { if !$0 { lagreFarger = nil } })) {
             VelgPalettArk(farger: lagreFarger ?? [], foreslåttNavn: lagreNavn)
         }
@@ -228,7 +231,7 @@ extension FargeEditor {
             GamutOversikt(farge: farge)
         }
 
-        ICCSeksjon(farge: $arbeidsbenk.aktivFarge, profilID: $visOgsåID)
+        ICCSeksjon(farge: $arbeidsbenk.aktivFarge, profilID: $visOgsåID, visMineFargerom: $visMineFargerom)
     }
 
     @ViewBuilder
@@ -629,9 +632,10 @@ struct VisOgsåMeny: View {
     @Binding var valgtID: String
     @Binding var begrens: Bool
     let farge: Farge
+    /// Åpner «Mine fargerom» – eies av Studio, som presenterer arket.
+    @Binding var visMineFargerom: Bool
     @AppStorage("renCMYK") private var renCMYK = false
     @Environment(ProfilBibliotek.self) private var bibliotek
-    @State private var visMineProfiler = false
 
     /// Standardrommene: sRGB, Display P3, Adobe RGB, Rec. 2020, ProPhoto RGB og Generic CMYK.
     private var standard: [ICCProfil] { ICCProfil.innebygde }
@@ -673,7 +677,7 @@ struct VisOgsåMeny: View {
             }
             Divider()
             // Import og sletting av ICC-profiler og fargebiblioteker skjer i «Mine fargerom».
-            Button("Mine fargerom …", systemImage: "books.vertical") { visMineProfiler = true }
+            Button("Mine fargerom …", systemImage: "books.vertical") { visMineFargerom = true }
             Divider()
             Picker("Standard", selection: $valgtID) {
                 ForEach(standard) { valg($0) }

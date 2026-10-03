@@ -8,9 +8,10 @@ struct ICCSeksjon: View {
     @Binding var farge: Farge
     /// Profilen fra «Vis også» – én felles profil i Studio.
     @Binding var profilID: String
+    /// Åpner «Mine fargerom». Arket presenteres av Studio – et `.sheet` på en seksjon i et skjema er upålitelig.
+    @Binding var visMineFargerom: Bool
     @Environment(ProfilBibliotek.self) private var bibliotek
     @AppStorage("gjengivelseshensikt") private var hensikt: Gjengivelseshensikt = .relativKolorimetrisk
-    @State private var visMineProfiler = false
 
     private var profil: ICCProfil { bibliotek.profil(id: profilID) ?? .sRGB }
 
@@ -49,24 +50,21 @@ struct ICCSeksjon: View {
             } label: {
                 Label("Konverter mellom profiler …", systemImage: "arrow.triangle.swap")
             }
+            // Import og sletting av ICC-profiler og fargebiblioteker, med bekreftelse.
+            Button { visMineFargerom = true } label: {
+                Label("Mine fargerom …", systemImage: "books.vertical")
+            }
         } header: {
             Text("Fargestyring (ICC)")
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 MetodeHenvisning(.icc, .renCMYK, .ciede2000)
-                HStack {
-                    // Import og sletting skjer i oversikten, med bekreftelse – filen forsvinner fra alle enhetene.
-                    Button("Mine fargerom …", systemImage: "books.vertical") { visMineProfiler = true }
-                }
-                .buttonStyle(.borderless)
-                .font(.callout)
                 Text(bibliotek.brukerICloud
                      ? "Importerte ICC-profiler og fargebiblioteker ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene. Du kan også legge filer der fra Filer eller Finder."
                      : "Importerte ICC-profiler og fargebiblioteker lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
                     .font(.caption)
             }
         }
-        .sheet(isPresented: $visMineProfiler) { MineProfilerArk(valgtID: $profilID) }
     }
 
     static let profiltyper: [UTType] = [

@@ -10,8 +10,14 @@ struct MineProfilerArk: View {
     @Binding var valgtID: String
     @Environment(ProfilBibliotek.self) private var bibliotek
     @Environment(\.dismiss) private var lukk
-    @State private var slettes: ICCProfil?
-    @State private var slettesBibliotek: Fargebibliotek?
+    /// Det som skal slettes, etter bekreftelse. Én dialog for begge typene – to `confirmationDialog`
+    /// på samme visning hindrer hverandre i å presenteres.
+    enum Sletting: Identifiable {
+        case profil(ICCProfil), bibliotek(Fargebibliotek)
+        var id: String { switch self { case .profil(let p): p.id; case .bibliotek(let b): b.id } }
+        var navn: String { switch self { case .profil(let p): p.navn; case .bibliotek(let b): b.navn } }
+    }
+    @State private var slettes: Sletting?
     @State private var importerer = false
     @State private var importererBibliotek = false
     @State private var feil: String?
@@ -34,7 +40,7 @@ struct MineProfilerArk: View {
                             rad(profil)
                                 #if os(iOS)
                                 .swipeActions {
-                                    Button("Slett", systemImage: "trash", role: .destructive) { slettes = profil }
+                                    Button("Slett", systemImage: "trash", role: .destructive) { slettes = .profil(profil) }
                                 }
                                 #endif
                         }
@@ -46,7 +52,7 @@ struct MineProfilerArk: View {
                             bibliotekrad(b)
                                 #if os(iOS)
                                 .swipeActions {
-                                    Button("Slett", systemImage: "trash", role: .destructive) { slettesBibliotek = b }
+                                    Button("Slett", systemImage: "trash", role: .destructive) { slettes = .bibliotek(b) }
                                 }
                                 #endif
                         }
@@ -78,27 +84,28 @@ struct MineProfilerArk: View {
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Ferdig") { lukk() } } }
             .confirmationDialog(slettes.map { String(localized: "Slette «\($0.navn)»?") } ?? "",
                                 isPresented: Binding(get: { slettes != nil }, set: { if !$0 { slettes = nil } }),
-                                titleVisibility: .visible, presenting: slettes) { profil in
-                Button("Slett profilen", role: .destructive) { slett(profil) }
-                Button("Avbryt", role: .cancel) {}
-            } message: { _ in
-                Text(bibliotek.brukerICloud
-                     ? "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine. Farger som er lagret i profilen, beholder verdiene sine."
-                     : "Filen slettes fra denne enheten. Farger som er lagret i profilen, beholder verdiene sine.")
-            }
-            .confirmationDialog(slettesBibliotek.map { String(localized: "Slette «\($0.navn)»?") } ?? "",
-                                isPresented: Binding(get: { slettesBibliotek != nil }, set: { if !$0 { slettesBibliotek = nil } }),
-                                titleVisibility: .visible, presenting: slettesBibliotek) { b in
-                Button("Slett biblioteket", role: .destructive) {
-                    if valgtID == b.id { valgtID = ICCProfil.sRGB.id }
-                    bibliotek.fjern(b)
-                    slettesBibliotek = nil
+                                titleVisibility: .visible, presenting: slettes) { hva in
+                switch hva {
+                case .profil(let profil): Button("Slett profilen", role: .destructive) { slett(profil) }
+                case .bibliotek(let b):
+                    Button("Slett biblioteket", role: .destructive) {
+                        if valgtID == b.id { valgtID = ICCProfil.sRGB.id }
+                        bibliotek.fjern(b)
+                        slettes = nil
+                    }
                 }
                 Button("Avbryt", role: .cancel) {}
-            } message: { _ in
-                Text(bibliotek.brukerICloud
-                     ? "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine."
-                     : "Filen slettes fra denne enheten.")
+            } message: { hva in
+                switch hva {
+                case .profil:
+                    Text(bibliotek.brukerICloud
+                         ? "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine. Farger som er lagret i profilen, beholder verdiene sine."
+                         : "Filen slettes fra denne enheten. Farger som er lagret i profilen, beholder verdiene sine.")
+                case .bibliotek:
+                    Text(bibliotek.brukerICloud
+                         ? "Filen slettes fra iCloud Drive og forsvinner fra alle enhetene dine."
+                         : "Filen slettes fra denne enheten.")
+                }
             }
             .fileImporter(isPresented: $importerer, allowedContentTypes: ICCSeksjon.profiltyper, allowsMultipleSelection: true) { resultat in
                 do {
@@ -135,7 +142,7 @@ struct MineProfilerArk: View {
             }
             Spacer()
             #if os(macOS)
-            Button("Slett", systemImage: "trash") { slettes = profil }
+            Button("Slett", systemImage: "trash") { slettes = .profil(profil) }
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderless)
                 .help("Slett profilen")
@@ -154,7 +161,7 @@ struct MineProfilerArk: View {
             }
             Spacer()
             #if os(macOS)
-            Button("Slett", systemImage: "trash") { slettesBibliotek = b }
+            Button("Slett", systemImage: "trash") { slettes = .bibliotek(b) }
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderless)
                 .help("Slett biblioteket")
