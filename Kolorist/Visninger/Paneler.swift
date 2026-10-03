@@ -93,14 +93,15 @@ struct TilpasningArk: View {
 
                 if skjerm == .studioFarge {
                     Section {
-                        ForEach(Panelinnstillinger.Verdi.alle) { verdi in
+                        ForEach(innstillinger.verdier) { verdi in
                             Toggle(verdi.navn, isOn: Binding(get: { innstillinger.viser(verdi) },
                                                              set: { innstillinger.settViser(verdi, $0) }))
                         }
+                        .onMove { innstillinger.flyttVerdier(fra: $0, til: $1) }
                     } header: {
                         Text("Verdier som vises")
                     } footer: {
-                        Text("Skjulte verdier vises ikke under «Verdier» og kan ikke kopieres derfra. Oppsettet synkroniseres via iCloud.")
+                        Text("Dra for å endre rekkefølgen under «Verdier». Du kan også skjule en verdi ved å sveipe fra høyre på den. Oppsettet synkroniseres via iCloud.")
                     }
                 }
 

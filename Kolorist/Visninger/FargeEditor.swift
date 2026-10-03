@@ -239,17 +239,22 @@ extension FargeEditor {
         let innstillinger = Panelinnstillinger.delt
         let skjult = Panelinnstillinger.Verdi.alle.filter { !innstillinger.viser($0) }.count
         PanelSeksjon(panel: .verdier) {
-            if innstillinger.viser(.hex) {
-                VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1)) { Utklippstavle.kopier(farge) }
+            // I brukerens rekkefølge; sveip fra høyre (eller hold inne) for å skjule en verdi.
+            ForEach(innstillinger.verdier.filter(innstillinger.viser)) { v in
+                let skjul = { withAnimation { innstillinger.settViser(v, false) } }
+                switch v {
+                case .hex:
+                    VerdiRad(navn: "Hex", tekst: farge.hex(medAlfa: farge.alfa < 1), skjul: skjul) { Utklippstavle.kopier(farge) }
+                case .modell(let modell):
+                    VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge), skjul: skjul) { Utklippstavle.kopier(farge, som: modell) }
+                case .lrv:
+                    let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
+                    VerdiRad(navn: "LRV", tekst: lrv, skjul: skjul) { Utklippstavle.kopierTekst(lrv) }
+                case .gamut:
+                    GamutOversikt(farge: farge)
+                        .swipeActions(edge: .trailing) { Button("Skjul", systemImage: "eye.slash", action: skjul).tint(.gray) }
+                }
             }
-            ForEach(Fargemodell.allCases.filter { innstillinger.viser(.modell($0)) }) { modell in
-                VerdiRad(navn: modell.navn, tekst: modell.tekst(for: farge)) { Utklippstavle.kopier(farge, som: modell) }
-            }
-            if innstillinger.viser(.lrv) {
-                let lrv = farge.lrv.formatted(.number.precision(.fractionLength(1)))
-                VerdiRad(navn: "LRV", tekst: lrv) { Utklippstavle.kopierTekst(lrv) }
-            }
-            if innstillinger.viser(.gamut) { GamutOversikt(farge: farge) }
         } fot: {
             if skjult > 0 {
                 Text(skjult == 1 ? "1 verdi er skjult. Velg hvilke som vises under «Tilpass visningen»." : "\(skjult) verdier er skjult. Velg hvilke som vises under «Tilpass visningen».")
@@ -396,18 +401,48 @@ struct KomponentGlidere: View {
 struct VerdiRad: View {
     let navn: String
     let tekst: String
+    /// Sveip fra høyre skjuler raden (når satt).
+    var skjul: (() -> Void)? = nil
     var kopier: () -> Void
     @State private var kopiert = false
 
     var body: some View {
-        HStack {
-            Text(navn)
-            Spacer(minLength: 12)
-            Text(tekst)
-                .font(.callout.monospaced())
-                .foregroundStyle(Color.sekundærTekst)
-                .textSelection(.enabled)
-                .multilineTextAlignment(.trailing)
+        // Får ikke navn og verdi plass på én linje, legges verdien under navnet – aldri avkortet.
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Text(navn).fixedSize()
+                Spacer(minLength: 12)
+                verdi.fixedSize()
+                kopiknapp
+            }
+            HStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(navn)
+                    verdi.fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                kopiknapp
+            }
+        }
+        .contextMenu {
+            Button("Kopier \(navn)", systemImage: "doc.on.doc", action: kopier)
+            if let skjul { Button("Skjul \(navn)", systemImage: "eye.slash", action: skjul) }
+        }
+        .swipeActions(edge: .trailing) {
+            if let skjul {
+                Button("Skjul", systemImage: "eye.slash", action: skjul).tint(.gray)
+            }
+        }
+    }
+
+    private var verdi: some View {
+        Text(tekst)
+            .font(.callout.monospaced())
+            .foregroundStyle(Color.sekundærTekst)
+            .textSelection(.enabled)
+    }
+
+    private var kopiknapp: some View {
             Button {
                 kopier()
                 kopiert = true
@@ -423,8 +458,6 @@ struct VerdiRad: View {
             .buttonStyle(.borderless)
             .accessibilityLabel(kopiert ? "Kopiert" : "Kopier \(navn)")
             .sensoryFeedback(.success, trigger: kopiert) { _, ny in ny }
-        }
-        .contextMenu { Button("Kopier \(navn)", systemImage: "doc.on.doc", action: kopier) }
     }
 }
 

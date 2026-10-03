@@ -959,6 +959,16 @@
         }
       }
     },
+    "Dra for å endre rekkefølgen under «Verdier». Du kan også skjule en verdi ved å sveipe fra høyre på den. Oppsettet synkroniseres via iCloud.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to change the order under “Values”. You can also hide a value by swiping left on it. The layout syncs through iCloud."
+          }
+        }
+      }
+    },
     "Dra for å endre rekkefølgen. Slå av for å legge panelet sammen – det kan også gjøres med pilen i overskriften.": {
       "localizations": {
         "en": {
@@ -3881,22 +3891,22 @@
         }
       }
     },
+    "Skjul %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide %@"
+          }
+        }
+      }
+    },
     "Skjul lysfelt": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Hide light panel"
-          }
-        }
-      }
-    },
-    "Skjulte verdier vises ikke under «Verdier» og kan ikke kopieres derfra. Oppsettet synkroniseres via iCloud.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hidden values are not shown under “Values” and cannot be copied from there. The layout syncs through iCloud."
           }
         }
       }

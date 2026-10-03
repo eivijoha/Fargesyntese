@@ -63,6 +63,7 @@ final class Panelinnstillinger {
     private(set) var rekkefølger: [String: [String]] = [:]
     private(set) var lagtSammen: Set<String> = []
     private(set) var skjulteVerdier: Set<String> = []
+    private(set) var verdirekkefølge: [String] = []
 
     private let sky = NSUbiquitousKeyValueStore.default
     private let lokalt = UserDefaults.standard
@@ -70,6 +71,7 @@ final class Panelinnstillinger {
         static let rekkefølge = "paneler.rekkefølge"
         static let lagtSammen = "paneler.lagtSammen"
         static let skjulteVerdier = "verdier.skjult"
+        static let verdirekkefølge = "verdier.rekkefølge"
     }
 
     private init() {
@@ -87,6 +89,20 @@ final class Panelinnstillinger {
     func paneler(for skjerm: Skjerm) -> [Panel] {
         let lagret = (rekkefølger[skjerm.rawValue] ?? []).compactMap(Panel.init(rawValue:)).filter(skjerm.paneler.contains)
         return lagret + skjerm.paneler.filter { !lagret.contains($0) }
+    }
+
+    /// Alle verdiene (viste og skjulte) i brukerens rekkefølge. Nye verdier legges til sist.
+    var verdier: [Verdi] {
+        let alle = Verdi.alle
+        let lagret = verdirekkefølge.compactMap { id in alle.first { $0.id == id } }
+        return lagret + alle.filter { !lagret.contains($0) }
+    }
+
+    func flyttVerdier(fra kilde: IndexSet, til mål: Int) {
+        var v = verdier.map(\.id)
+        v.move(fromOffsets: kilde, toOffset: mål)
+        verdirekkefølge = v
+        lagre()
     }
 
     func erLagtSammen(_ panel: Panel) -> Bool { lagtSammen.contains(panel.rawValue) }
@@ -116,7 +132,7 @@ final class Panelinnstillinger {
     func tilbakestill(_ skjerm: Skjerm) {
         rekkefølger[skjerm.rawValue] = nil
         for p in skjerm.paneler { lagtSammen.remove(p.rawValue) }
-        if skjerm == .studioFarge { skjulteVerdier = [] }
+        if skjerm == .studioFarge { skjulteVerdier = []; verdirekkefølge = [] }
         lagre()
     }
 
@@ -127,6 +143,7 @@ final class Panelinnstillinger {
         rekkefølger = les(Nøkkel.rekkefølge) ?? [:]
         lagtSammen = Set(les(Nøkkel.lagtSammen) as [String]? ?? [])
         skjulteVerdier = Set(les(Nøkkel.skjulteVerdier) as [String]? ?? [])
+        verdirekkefølge = les(Nøkkel.verdirekkefølge) ?? []
     }
 
     private func lagre() {
@@ -134,6 +151,7 @@ final class Panelinnstillinger {
             (Nøkkel.rekkefølge, rekkefølger),
             (Nøkkel.lagtSammen, Array(lagtSammen).sorted()),
             (Nøkkel.skjulteVerdier, Array(skjulteVerdier).sorted()),
+            (Nøkkel.verdirekkefølge, verdirekkefølge),
         ]
         for (nøkkel, verdi) in verdier {
             sky.set(verdi, forKey: nøkkel)
