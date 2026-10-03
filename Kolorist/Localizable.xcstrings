@@ -181,15 +181,15 @@
     },
     "%@ · ΔE00 %@": {
       "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · ΔE00 %2$@"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
+            "value": "%1$@ · ΔE00 %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
             "value": "%1$@ · ΔE00 %2$@"
           }
         }
@@ -1007,6 +1007,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Drag in the wheel to change the base colour’s hue, or tap the center to start from a saved colour. Saturation and lightness apply to the whole harmony."
+          }
+        }
+      }
+    },
+    "Du kan også dra filer hit.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can also drag files here."
           }
         }
       }
@@ -2027,16 +2037,6 @@
         }
       }
     },
-    "Importer ICC-profil …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import ICC profile …"
-          }
-        }
-      }
-    },
     "Importer ICC-profiler eller fargebiblioteker nedenfor. De vises under «Vis også» i Studio.": {
       "localizations": {
         "en": {
@@ -2047,12 +2047,12 @@
         }
       }
     },
-    "Importer fargebibliotek …": {
+    "Importer …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Import colour library …"
+            "value": "Import …"
           }
         }
       }
@@ -2329,16 +2329,16 @@
     },
     "Kolorist · %@ · Fargeflater i CIELab (D50) · %@": {
       "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Kolorist · %1$@ · Fargeflater i CIELab (D50) · %2$@"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Kolorist · %1$@ · Swatches in CIELab (D50) · %2$@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Kolorist · %1$@ · Fargeflater i CIELab (D50) · %2$@"
           }
         }
       }
@@ -4061,16 +4061,16 @@
     },
     "Side %lld av %lld": {
       "localizations": {
-        "nb": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Side %1$lld av %2$lld"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Page %1$lld of %2$lld"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Side %1$lld av %2$lld"
           }
         }
       }
@@ -5279,6 +5279,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "“%@” is not a valid colour. Use hex or CSS, e.g. #2F7FD8 or oklch(0.6 0.15 250)."
+          }
+        }
+      }
+    },
+    "«%@» er verken en ICC-profil (.icc, .icm) eller et fargebibliotek (.ase, .aco, .acb).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is neither an ICC profile (.icc, .icm) nor a colour library (.ase, .aco, .acb)."
           }
         }
       }

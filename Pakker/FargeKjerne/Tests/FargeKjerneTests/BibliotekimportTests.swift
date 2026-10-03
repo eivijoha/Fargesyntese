@@ -10,6 +10,20 @@ struct BibliotekimportTests {
         PalettFarge(navn: "Dyp P3-grønn", farge: Farge(displayP3: DisplayP3(r: 0, g: 0.8, b: 0.2))),
     ])
 
+    /// Én importknapp: formatet avgjøres av innholdet. En ICC-profil over 64 KB begynner med 00 01 og må
+    /// ikke tas for en ACO-fil.
+    @Test func formatGjenkjennesFraInnholdet() throws {
+        #expect(Bibliotekimport.endelse(for: Eksportformat.ase.data(for: palett)) == "ase")
+        #expect(Bibliotekimport.endelse(for: Eksportformat.aco.data(for: palett)) == "aco")
+        let cmyk = try Data(contentsOf: URL(fileURLWithPath: "/System/Library/ColorSync/Profiles/Generic CMYK Profile.icc"))
+        #expect(Bibliotekimport.erICCProfil(cmyk))
+        #expect(Bibliotekimport.endelse(for: cmyk) == nil)
+        var stor = cmyk
+        stor.replaceSubrange(0..<4, with: [0x00, 0x01, 0x20, 0x00])   // som en profil på 73 KB
+        #expect(Bibliotekimport.endelse(for: stor) == nil)
+        #expect(!Bibliotekimport.erICCProfil(Eksportformat.ase.data(for: palett)))
+    }
+
     @Test func aseRundtur() throws {
         let data = Eksportformat.ase.data(for: palett)
         let lest = try Bibliotekimport.les(data, filnavn: "Test.ase")

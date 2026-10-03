@@ -775,7 +775,7 @@ struct VisOgsåMeny: View {
 
     var body: some View {
         Menu {
-            // Innstillinger for valgt profil øverst, så profilvalg og «Mine fargerom …», så listene.
+            // Innstillinger for valgt profil øverst, så «Mine fargerom …» og (Mac) installerte profiler, så listene.
             Toggle("Begrens nye farger til \(valgtNavn)", isOn: $begrens)
             if bibliotek.profil(id: valgtID)?.modell == .cmyk {
                 // UCR/GCR: færrest mulig trykkfarger, med det grå innslaget flyttet til sort, så lenge
@@ -785,24 +785,6 @@ struct VisOgsåMeny: View {
             Divider()
             // Import og sletting av ICC-profiler og fargebiblioteker skjer i «Mine fargerom».
             Button("Mine fargerom …", systemImage: "books.vertical") { visMineFargerom = true }
-            Divider()
-            Picker("Standard", selection: $valgtID) {
-                ForEach(standard) { valg($0) }
-            }
-            .pickerStyle(.inline)
-            if !bibliotek.importerte.isEmpty {
-                Picker("Mine ICC-profiler", selection: $valgtID) {
-                    ForEach(bibliotek.importerte) { valg($0) }
-                }
-                .pickerStyle(.inline)
-            }
-            if !bibliotek.fargebiblioteker.isEmpty {
-                // Fargebibliotek som «fargerom»: høyre halvdel viser nærmeste tone, og begrensningen låser til den.
-                Picker("Fargebiblioteker", selection: $valgtID) {
-                    ForEach(bibliotek.fargebiblioteker) { b in Text("\(b.navn) (\(b.farger.count))").tag(b.id) }
-                }
-                .pickerStyle(.inline)
-            }
             #if os(macOS)
             let installerte = bibliotek.installerte.filter { p in !bibliotek.importerte.contains { $0.id == p.id } }
             if !installerte.isEmpty {
@@ -827,6 +809,24 @@ struct VisOgsåMeny: View {
                 }
             }
             #endif
+            Divider()
+            Picker("Standard", selection: $valgtID) {
+                ForEach(standard) { valg($0) }
+            }
+            .pickerStyle(.inline)
+            if !bibliotek.importerte.isEmpty {
+                Picker("Mine ICC-profiler", selection: $valgtID) {
+                    ForEach(bibliotek.importerte) { valg($0) }
+                }
+                .pickerStyle(.inline)
+            }
+            if !bibliotek.fargebiblioteker.isEmpty {
+                // Fargebibliotek som «fargerom»: høyre halvdel viser nærmeste tone, og begrensningen låser til den.
+                Picker("Fargebiblioteker", selection: $valgtID) {
+                    ForEach(bibliotek.fargebiblioteker) { b in Text("\(b.navn) (\(b.farger.count))").tag(b.id) }
+                }
+                .pickerStyle(.inline)
+            }
         } label: {
             HStack(spacing: 4) {
                 // Eksplisitte farger: menyetiketter tones ellers i aksentfarge, og «sekundær» av

@@ -18,14 +18,15 @@ struct MineProfilerArk: View {
         var navn: String { switch self { case .profil(let p): p.navn; case .bibliotek(let b): b.navn } }
     }
     @State private var slettes: Sletting?
-    /// Én filvelger for begge typene: SwiftUI viser bare én av flere `fileImporter` på samme visning.
-    private enum Import { case profil, bibliotek }
-    @State private var importtype: Import = .profil
+    /// Én importknapp for alle formatene: typen avgjøres av filinnholdet (`importerFil(fra:)`).
     @State private var importerer = false
+    /// Filer dras over arket (Mac, og iPad).
+    @State private var slippMål = false
     @State private var feil: String?
 
-    /// ASE, ACO og ACB. Typene er ikke registrert i systemet, så de hentes fra filendelsen.
-    static let bibliotektyper: [UTType] = [
+    /// ICC-profiler, ASE, ACO og ACB. Bibliotektypene er ikke registrert i systemet, så de hentes fra
+    /// filendelsen; `.data` slipper gjennom filer med annen endelse (innholdet avgjør).
+    static let importtyper: [UTType] = ICCSeksjon.profiltyper + [
         UTType(filenameExtension: "ase"), UTType(filenameExtension: "aco"), UTType(filenameExtension: "acb"), .data,
     ].compactMap { $0 }
 
@@ -58,25 +59,28 @@ struct MineProfilerArk: View {
                                 }
                                 #endif
                         }
+                        // Forklaring som rad, ikke fotnote: fotnoter i en liste kortes av på Mac.
+                        Text("Velges under «Vis også» i Studio: høyre halvdel viser nærmeste tone i biblioteket, og «Begrens nye farger» låser farger, toner og harmonier til bibliotekets toner.")
+                            .forklaring()
                     } header: {
                         Text("Fargebiblioteker")
-                    } footer: {
-                        Text("Velges under «Vis også» i Studio: høyre halvdel viser nærmeste tone i biblioteket, og «Begrens nye farger» låser farger, toner og harmonier til bibliotekets toner.")
                     }
                 }
                 Section {
-                    Button("Importer ICC-profil …", systemImage: "square.and.arrow.down") { importtype = .profil; importerer = true }
-                    Button("Importer fargebibliotek …", systemImage: "square.and.arrow.down") { importtype = .bibliotek; importerer = true }
-                } header: {
-                    Text("Importer")
-                } footer: {
+                    Button("Importer …", systemImage: "square.and.arrow.down") { importerer = true }
                     VStack(alignment: .leading, spacing: 6) {
+                        #if os(macOS)
+                        Text("Du kan også dra filer hit.")
+                        #endif
                         Text("ICC-profiler: .icc og .icm – for eksempel trykkprofilen fra trykkeriet (FOGRA, GRACoL) eller en skjermprofil.")
                         Text("Fargebiblioteker: .ase (Adobe Swatch Exchange), .aco (Photoshop-fargeprøver) og .acb (Adobe Color Book) – fargekart med navngitte toner. Kolorist leverer ingen slike kart; du importerer dine egne.")
                         Text(bibliotek.brukerICloud
                              ? "Filene ligger i iCloud Drive › Kolorist › Profiler og synkroniseres mellom enhetene dine."
                              : "Filene lagres på denne enheten (iCloud Drive er ikke tilgjengelig).")
                     }
+                    .forklaring()
+                } header: {
+                    Text("Importer")
                 }
             }
             .navigationTitle("Mine fargerom")
@@ -109,18 +113,22 @@ struct MineProfilerArk: View {
                          : "Filen slettes fra denne enheten.")
                 }
             }
-            .fileImporter(isPresented: $importerer,
-                          allowedContentTypes: importtype == .bibliotek ? Self.bibliotektyper : ICCSeksjon.profiltyper,
-                          allowsMultipleSelection: true) { resultat in
-                do {
-                    let urler = try resultat.get()
-                    if importtype == .bibliotek {
-                        _ = try urler.map { try bibliotek.importerBibliotek(fra: $0) }
-                    } else {
-                        _ = try urler.map { try bibliotek.importer(fra: $0) }
-                    }
-                } catch {
-                    feil = error.localizedDescription
+            .fileImporter(isPresented: $importerer, allowedContentTypes: Self.importtyper, allowsMultipleSelection: true) { resultat in
+                do { importer(try resultat.get()) } catch { feil = error.localizedDescription }
+            }
+            // Slipp filer på arket (Finder på Mac, Filer på iPad).
+            .dropDestination(for: URL.self) { urler, _ in
+                let filer = urler.filter(\.isFileURL)
+                guard !filer.isEmpty else { return false }
+                importer(filer)
+                return true
+            } isTargeted: { slippMål = $0 }
+            .overlay {
+                if slippMål {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .strokeBorder(Color.accentColor, style: StrokeStyle(lineWidth: 3, dash: [8, 5]))
+                        .padding(6)
+                        .allowsHitTesting(false)
                 }
             }
             .alert("Kunne ikke importere", isPresented: Binding(get: { feil != nil }, set: { if !$0 { feil = nil } })) {
@@ -130,8 +138,18 @@ struct MineProfilerArk: View {
             }
         }
         #if os(macOS)
-        .frame(minWidth: 460, minHeight: 360)
+        // Høyt nok til at importdelen og forklaringene synes uten å rulle.
+        .frame(minWidth: 520, idealWidth: 560, minHeight: 620, idealHeight: 680)
         #endif
+    }
+
+    /// Importerer filene som finnes gyldige; de andre samles i én feilmelding.
+    private func importer(_ urler: [URL]) {
+        var feilmeldinger: [String] = []
+        for url in urler {
+            do { try bibliotek.importerFil(fra: url) } catch { feilmeldinger.append(error.localizedDescription) }
+        }
+        if !feilmeldinger.isEmpty { feil = feilmeldinger.joined(separator: "\n") }
     }
 
     private func rad(_ profil: ICCProfil) -> some View {
@@ -188,5 +206,15 @@ extension ICCProfil {
         case .lab: "Lab"
         default: String(localized: "\(antallKomponenter) kanaler")
         }
+    }
+}
+
+private extension View {
+    /// Forklarende tekst i en rad: liten, dempet og alltid brutt over flere linjer (aldri avkortet).
+    func forklaring() -> some View {
+        font(.footnote)
+            .foregroundStyle(Color.sekundærTekst)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

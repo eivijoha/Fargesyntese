@@ -16,10 +16,17 @@ public enum Bibliotekimport {
 
     /// Filendelsen for innholdet (ase, acb eller aco), ut fra filhodet – uavhengig av filnavnet.
     public static func endelse(for data: Data) -> String? {
+        // En ICC-profil kan begynne med 00 01 (størrelse over 64 KB) og ligne en ACO-fil.
+        if erICCProfil(data) { return nil }
         if data.starts(with: Data("ASEF".utf8)) { return "ase" }
         if data.starts(with: Data("8BCB".utf8)) { return "acb" }
         if data.count >= 4, data[0] == 0, data[1] == 1 || data[1] == 2 { return "aco" }
         return nil
+    }
+
+    /// ICC-profiler har signaturen «acsp» i byte 36–39 i hodet.
+    public static func erICCProfil(_ data: Data) -> Bool {
+        data.count >= 40 && data.subdata(in: data.startIndex + 36 ..< data.startIndex + 40) == Data("acsp".utf8)
     }
 
     /// Leser filen og gir en palett med filnavnet (eller bokens navn) som palettnavn.

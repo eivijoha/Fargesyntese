@@ -62,8 +62,13 @@ final class ProfilBibliotek {
 
     enum Feil: LocalizedError {
         case ugyldig(String)
+        case ukjentFormat(String)
         var errorDescription: String? {
-            switch self { case .ugyldig(let navn): String(localized: "«\(navn)» er ikke en gyldig ICC-profil.") }
+            switch self {
+            case .ugyldig(let navn): String(localized: "«\(navn)» er ikke en gyldig ICC-profil.")
+            case .ukjentFormat(let navn):
+                String(localized: "«\(navn)» er verken en ICC-profil (.icc, .icm) eller et fargebibliotek (.ase, .aco, .acb).")
+            }
         }
     }
 
@@ -100,6 +105,20 @@ final class ProfilBibliotek {
         importerte.append(profil)
         sorter()
         return true
+    }
+
+    /// Det som ble importert av `importerFil(fra:)`.
+    enum Importert { case profil(ICCProfil), bibliotek(Fargebibliotek) }
+
+    /// Importerer en ICC-profil eller et fargebibliotek. Typen avgjøres av innholdet, ikke filendelsen.
+    @discardableResult
+    func importerFil(fra url: URL) throws -> Importert {
+        let tilgang = url.startAccessingSecurityScopedResource()
+        defer { if tilgang { url.stopAccessingSecurityScopedResource() } }
+        let data = try Data(contentsOf: url)
+        if Bibliotekimport.endelse(for: data) != nil { return .bibliotek(try importerBibliotek(fra: url)) }
+        guard Bibliotekimport.erICCProfil(data) else { throw Feil.ukjentFormat(url.lastPathComponent) }
+        return .profil(try importer(fra: url))
     }
 
     /// Importerer et fargebibliotek (.ase/.aco/.acb) til profilmappen.
